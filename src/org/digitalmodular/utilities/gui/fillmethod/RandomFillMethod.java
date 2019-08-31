@@ -28,8 +28,8 @@ package org.digitalmodular.utilities.gui.fillmethod;
 
 import java.awt.Rectangle;
 
-import org.digitalmodular.utilities.math.RandomUtilities;
 import org.digitalmodular.utilities.gui.swing.window.PixelImage;
+import org.digitalmodular.utilities.math.RandomUtilities;
 
 /**
  * @author Mark Jeronimus

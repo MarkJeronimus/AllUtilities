@@ -31,7 +31,8 @@ import java.awt.geom.AffineTransform;
 import org.digitalmodular.utilities.gui.transform.AffineTransformFloat;
 
 /**
- * {@link ImageMatrixFloat} transformation using an {@link AffineTransform}. The transformation uses Backward Mapping using
+ * {@link ImageMatrixFloat} transformation using an {@link AffineTransform}. The transformation uses Backward Mapping
+ * using
  * Linear Interpolation. This means that each output pixel coordinate is multiplied with the transform matrix to obtain
  * the input coordinate. The destination color is the weighted linear average of the four closest integer coordinates.
  *

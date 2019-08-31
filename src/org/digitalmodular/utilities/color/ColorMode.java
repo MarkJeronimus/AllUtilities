@@ -331,7 +331,9 @@ public enum ColorMode {
 			throw new UnsupportedOperationException();
 		}
 	},
-	/** */
+	/**
+	 *
+	 */
 	XYZ {
 		@Override
 		public void fromRGB(Color3f src, Color3f dst) {
@@ -348,7 +350,9 @@ public enum ColorMode {
 			throw new UnsupportedOperationException();
 		}
 	},
-	/** */
+	/**
+	 *
+	 */
 	LAB {
 		@Override
 		public void fromRGB(Color3f src, Color3f dst) {

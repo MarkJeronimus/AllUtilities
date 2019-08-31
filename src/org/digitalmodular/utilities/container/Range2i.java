@@ -175,7 +175,7 @@ public class Range2i {
 	}
 
 	/**
-	 * @return
+	 *
 	 */
 	private boolean normalize() {
 		if (begin > end) {

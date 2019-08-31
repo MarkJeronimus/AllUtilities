@@ -42,12 +42,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.DeflaterInputStream;
 import java.util.zip.GZIPInputStream;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-import static java.util.logging.Level.*;
+import static java.util.logging.Level.WARNING;
 
 import org.jetbrains.annotations.Nullable;
 

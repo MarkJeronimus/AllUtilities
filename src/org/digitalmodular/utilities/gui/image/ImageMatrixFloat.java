@@ -1025,7 +1025,10 @@ public class ImageMatrixFloat extends AbstractImageMatrix {
 	/**
 	 * this[component] += addImage[addComponent] * scaleImage[scaleComponent]
 	 */
-	public void addScaledComponent(int component, ImageMatrixFloat addImage, int addComponent, ImageMatrixFloat scaleImage,
+	public void addScaledComponent(int component,
+	                               ImageMatrixFloat addImage,
+	                               int addComponent,
+	                               ImageMatrixFloat scaleImage,
 	                               int scaleComponent) {
 		if (!(isCompatibleByBorderAndSize(addImage) && isCompatibleByBorderAndSize(scaleImage))) {
 			throw new IllegalArgumentException("Other ImageMatrix not compatible");

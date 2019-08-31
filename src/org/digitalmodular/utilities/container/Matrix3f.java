@@ -95,8 +95,7 @@ public class Matrix3f {
 	}
 
 	/**
-	 * @param rotx
-	 * @return
+	 *
 	 */
 	public Matrix3f rotatex(float rotx) {
 		float c = (float)Math.cos(rotx);
@@ -112,8 +111,7 @@ public class Matrix3f {
 	}
 
 	/**
-	 * @param roty
-	 * @return
+	 *
 	 */
 	public Matrix3f rotatey(float roty) {
 		float c = (float)Math.cos(roty);
@@ -129,8 +127,7 @@ public class Matrix3f {
 	}
 
 	/**
-	 * @param m
-	 * @return
+	 *
 	 */
 	private Matrix3f multiply(Matrix3f m) {
 		return new Matrix3f( //
@@ -148,8 +145,7 @@ public class Matrix3f {
 	}
 
 	/**
-	 * @param rotz
-	 * @return
+	 *
 	 */
 	public Matrix3f rotatez(float rotz) {
 		float c = (float)Math.cos(rotz);

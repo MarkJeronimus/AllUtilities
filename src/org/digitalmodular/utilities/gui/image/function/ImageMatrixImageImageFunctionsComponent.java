@@ -29,7 +29,8 @@ package org.digitalmodular.utilities.gui.image.function;
 import org.digitalmodular.utilities.gui.image.ImageMatrixFloat;
 
 /**
- * Functions of the form:<br> {@link ImageMatrixFloat} = ImageMatrix<br> {@link ImageMatrixFloat} = ImageMatrix &lt;operator&gt;
+ * Functions of the form:<br> {@link ImageMatrixFloat} = ImageMatrix<br> {@link ImageMatrixFloat} = ImageMatrix &lt;
+ * operator&gt;
  * ImageMatrix<br>
  *
  * @author Mark Jeronimus
@@ -228,7 +229,8 @@ public class ImageMatrixImageImageFunctionsComponent {
 		}
 	}
 
-	public static void addAdd(ImageMatrixFloat out, float[][] outComponent, float[][] offset1Component, float offset2) {
+	public static void addAdd(ImageMatrixFloat out, float[][] outComponent, float[][] offset1Component,
+	                          float offset2) {
 		// Inner loop
 		int     x; // 4
 		float[] rowOut; // 2

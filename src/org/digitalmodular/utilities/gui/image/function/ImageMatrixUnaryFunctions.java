@@ -31,7 +31,8 @@ import org.digitalmodular.utilities.gui.image.ImageMatrixFloat;
 
 /**
  * Functions of the form:<br> {@link ImageMatrixFloat} = &lt;operator&gt;(ImageMatrix)<br> {@link ImageMatrixFloat} =
- * &lt;operator&gt;(ImageMatrix, scalar)<br> {@link ImageMatrixFloat} = &lt;operator&gt;(ImageMatrix, scalar, scalar)<br>
+ * &lt;operator&gt;(ImageMatrix, scalar)<br> {@link ImageMatrixFloat} = &lt;operator&gt;(ImageMatrix, scalar, scalar)
+ * <br>
  *
  * @author Mark Jeronimus
  */

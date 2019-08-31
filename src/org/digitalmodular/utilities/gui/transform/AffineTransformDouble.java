@@ -253,7 +253,8 @@ public class AffineTransformDouble implements TransformDouble {
 		double det = x0 * y1 - x1 * y0;
 		if (det == 0)
 			throw new IllegalStateException(
-					"Transformation is not invertible because it is singular. (it projects all points to a single line" +
+					"Transformation is not invertible because it is singular. (it projects all points to a single " +
+					"line" +
 					" or " +
 					"point)");
 

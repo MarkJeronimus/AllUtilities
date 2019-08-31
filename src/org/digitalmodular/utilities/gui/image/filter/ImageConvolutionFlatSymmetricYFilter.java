@@ -84,7 +84,8 @@ public class ImageConvolutionFlatSymmetricYFilter extends ImageFilter {
 	 * @param precision   the precision of the filter. It will try keeping the values on the boundary smaller than
 	 *                    {@code precision} times the peak value.
 	 * @param maxRadius   the maximum radius of the kernel allowed (set to the same as the border width of the {@link
-	 *                    ImageMatrixFloat}. Specifying a too small maximum radius or a too big standard deviation may cause
+	 *                    ImageMatrixFloat}. Specifying a too small maximum radius or a too big standard deviation may
+	 *                    cause
 	 *                    the precision to be worse than the requested {@code maxRadius}. It is good practice to
 	 *                    choose the maximum radius well above the expected radius.
 	 */

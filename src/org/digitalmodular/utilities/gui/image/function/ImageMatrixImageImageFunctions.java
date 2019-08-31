@@ -29,10 +29,13 @@ package org.digitalmodular.utilities.gui.image.function;
 import org.digitalmodular.utilities.gui.image.ImageMatrixFloat;
 
 /**
- * Functions of the form:<br> {@link ImageMatrixFloat} = ImageMatrix<br> {@link ImageMatrixFloat} = ImageMatrix &lt;operator&gt;
- * ImageMatrix<br> {@link ImageMatrixFloat} = operator(ImageMatrix, ImageMatrix)<br> {@link ImageMatrixFloat} = ImageMatrix
+ * Functions of the form:<br> {@link ImageMatrixFloat} = ImageMatrix<br> {@link ImageMatrixFloat} = ImageMatrix &lt;
+ * operator&gt;
+ * ImageMatrix<br> {@link ImageMatrixFloat} = operator(ImageMatrix, ImageMatrix)<br> {@link ImageMatrixFloat} =
+ * ImageMatrix
  * &lt;operator&gt; (ImageMatrix &lt;operator&gt; scalar)<br> {@link ImageMatrixFloat} = (ImageMatrix &lt;operator&gt;
- * ImageMatrix) &lt;operator&gt; scalar<br> {@link ImageMatrixFloat} = ImageMatrix &lt;operator&gt; (scalar &lt;operator&gt;
+ * ImageMatrix) &lt;operator&gt; scalar<br> {@link ImageMatrixFloat} = ImageMatrix &lt;operator&gt; (scalar &lt;
+ * operator&gt;
  * ImageMatrix)<br> {@link ImageMatrixFloat} = (ImageMatrix &lt;operator&gt; scalar) &lt;operator&gt; ImageMatrix<br>
  *
  * @author Mark Jeronimus

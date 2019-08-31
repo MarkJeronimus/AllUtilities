@@ -29,8 +29,8 @@ package org.digitalmodular.utilities.gui.pixelsorter;
 import java.awt.Point;
 import java.util.List;
 
-import org.digitalmodular.utilities.math.RandomUtilities;
 import org.digitalmodular.utilities.gui.pixelsorter.SpiralPixelSorter.SpiralType;
+import org.digitalmodular.utilities.math.RandomUtilities;
 
 /**
  * @author Mark Jeronimus

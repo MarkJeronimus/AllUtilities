@@ -50,9 +50,7 @@ public class TCPListener implements Runnable {
 
 	public void disconnect() {
 		try {
-			if (serverSocket != null)
-
-			{
+			if (serverSocket != null) {
 				if (!serverSocket.isClosed()) {
 					System.out.println("Stopping serverSocket");
 					serverSocket.close();

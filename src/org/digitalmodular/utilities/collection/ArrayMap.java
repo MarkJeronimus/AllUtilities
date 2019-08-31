@@ -133,7 +133,8 @@ public class ArrayMap<K, V> extends AbstractMap<K, V> implements Cloneable, Seri
 
 					@Override
 					public Entry<K, V> next() {
-						return new SimpleImmutableEntry<>(ArrayMap.this.keys.get(this.i), ArrayMap.this.values.get(this.i++));
+						return new SimpleImmutableEntry<>(ArrayMap.this.keys.get(this.i),
+						                                  ArrayMap.this.values.get(this.i++));
 					}
 
 					@Override

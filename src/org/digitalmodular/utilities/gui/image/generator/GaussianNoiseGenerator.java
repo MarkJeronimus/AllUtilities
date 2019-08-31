@@ -28,8 +28,8 @@ package org.digitalmodular.utilities.gui.image.generator;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import org.digitalmodular.utilities.math.FastRandom;
 import org.digitalmodular.utilities.gui.image.ImageMatrixFloat;
+import org.digitalmodular.utilities.math.FastRandom;
 import org.digitalmodular.utilities.nodes.DoubleParam;
 import org.digitalmodular.utilities.nodes.Node;
 import static org.digitalmodular.utilities.ValidatorUtilities.requireAbove;
