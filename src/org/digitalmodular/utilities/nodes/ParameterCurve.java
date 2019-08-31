@@ -2,7 +2,6 @@ package org.digitalmodular.utilities.nodes;
 
 /**
  * @author Mark Jeronimus
- * @since 2.6.10
  */
 // Created 2014-04-23
 public enum ParameterCurve {

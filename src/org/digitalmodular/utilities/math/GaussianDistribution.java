@@ -2,7 +2,6 @@ package org.digitalmodular.utilities.math;
 
 /**
  * @author Mark Jeronimus
- * @since 1.0
  */
 public class GaussianDistribution {
 	private double runningSum;

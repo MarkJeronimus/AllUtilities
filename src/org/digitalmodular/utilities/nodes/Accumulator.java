@@ -33,7 +33,6 @@ package org.digitalmodular.utilities.nodes;
  * @param <S> Source type of the objects to accumulate
  * @param <R> Result type of the accumulator
  * @author Mark Jeronimus
- * @since TBD
  */
 // Created 2014-04-15
 // Changed 2014-11-23
