@@ -4,7 +4,7 @@ import org.digitalmodular.utilities.annotation.UtilityClass;
 import static org.digitalmodular.utilities.NumberUtilities.DIGITS;
 
 /**
- * @author Zom-B
+ * @author Mark Jeronimus
  */
 // Created 2019-08-08
 @UtilityClass

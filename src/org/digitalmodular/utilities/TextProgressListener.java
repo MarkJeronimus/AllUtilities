@@ -8,7 +8,7 @@ import static org.digitalmodular.utilities.ValidatorUtilities.requireAtLeast;
 import static org.digitalmodular.utilities.ValidatorUtilities.requireNonNull;
 
 /**
- * @author Zom-B
+ * @author Mark Jeronimus
  */
 // Created 2011-02-24
 public class TextProgressListener implements ProgressListener {

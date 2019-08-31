@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author Zom-B
+ * @author Mark Jeronimus
  */
 // Created 2019-08-30
 @Target(ElementType.FIELD)

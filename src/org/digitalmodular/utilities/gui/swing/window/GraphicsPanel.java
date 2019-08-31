@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * @author Zom-B
+ * @author Mark Jeronimus
  */
 // Created 2019-08-14
 public abstract class GraphicsPanel extends JPanel {

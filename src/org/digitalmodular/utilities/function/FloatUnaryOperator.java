@@ -12,7 +12,7 @@ import java.util.function.UnaryOperator;
  * <p>This is a <a href="package-summary.html">functional interface</a>
  * whose functional method is {@link #applyAsFloat(float)}.
  *
- * @author Zom-B
+ * @author Mark Jeronimus
  * @see UnaryOperator
  * @see DoubleUnaryOperator
  */

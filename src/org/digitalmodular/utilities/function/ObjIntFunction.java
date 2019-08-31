@@ -3,7 +3,7 @@ package org.digitalmodular.utilities.function;
 /**
  * @param <T> the type of the object argument to the operation
  * @param <R> the type of the result of the function
- * @author Zom-B
+ * @author Mark Jeronimus
  */
 // Created 2019-07-29
 @FunctionalInterface
