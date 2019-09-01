@@ -60,8 +60,9 @@ import java.util.Arrays;
  *
  * @author Mark Jeronimus
  * @see LayoutManager
- * @see Component#getPreferredSize() date 2006-11-24
+ * @see Component#getPreferredSize()
  */
+// Created 2006-11-24
 @Deprecated
 public class TableLayout implements LayoutManager, Serializable {
 	private int   hgap;

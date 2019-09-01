@@ -32,7 +32,7 @@ import java.io.InputStream;
 /**
  * @author Mark Jeronimus
  */
-// date Jun -7- 2009
+// Created 2009-06-?7
 public class HexInputStream extends InputStream {
 	private String string;
 	int pos = 0;

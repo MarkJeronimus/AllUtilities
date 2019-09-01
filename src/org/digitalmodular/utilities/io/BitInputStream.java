@@ -33,7 +33,7 @@ import java.io.InputStream;
 /**
  * @author Mark Jeronimus
  */
-// date Jun -6- 2009
+// Created 2009-06-?6
 public class BitInputStream extends FilterInputStream {
 	int pos    = 8;
 	int buffer = 0;

@@ -34,7 +34,7 @@ import java.io.InputStream;
 /**
  * @author Mark Jeronimus
  */
-// date Jun -0- 2010
+// Created 2010-06-?0
 public class GeneralDataInputStream extends DataInputStream {
 	public GeneralDataInputStream(InputStream in) {
 		super(in);

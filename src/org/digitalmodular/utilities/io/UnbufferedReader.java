@@ -33,7 +33,7 @@ import java.io.Reader;
 /**
  * @author Mark Jeronimus
  */
-// date May -6- 2009
+// Created 2009-05-?6
 public class UnbufferedReader extends Reader {
 	private static final int defaultExpectedLineLength = 80;
 

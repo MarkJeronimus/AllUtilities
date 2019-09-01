@@ -33,7 +33,7 @@ import java.io.OutputStream;
 /**
  * @author Mark Jeronimus
  */
-// date Jun -7- 2009
+// Created 2009-06-?7
 public class HexOutputStream extends FilterOutputStream {
 	public HexOutputStream(OutputStream out) {
 		super(out);

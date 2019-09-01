@@ -39,7 +39,7 @@ import javax.swing.table.TableCellEditor;
 /**
  * @author Mark Jeronimus
  */
-// date May -1- 2009
+// Created 2009-05-?1
 public class TextFieldCellEditor extends AbstractCellEditor implements TableCellEditor {
 	JTextField tf = new JTextField();
 

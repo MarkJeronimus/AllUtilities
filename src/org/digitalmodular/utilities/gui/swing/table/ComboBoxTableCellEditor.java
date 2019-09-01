@@ -43,7 +43,7 @@ import javax.swing.table.TableCellEditor;
 /**
  * @author Mark Jeronimus
  */
-// date May -7- 2009
+// Created 2009-05-?7
 public class ComboBoxTableCellEditor extends JPanel implements TableCellEditor, ItemListener {
 	private JComboBox<String>  comboBox;
 	private CellEditorListener cellEditorListener = null;
