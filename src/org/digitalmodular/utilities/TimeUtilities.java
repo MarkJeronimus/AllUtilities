@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities;
 
 import java.util.Calendar;
@@ -63,10 +56,10 @@ public enum TimeUtilities {
 	public static String dayToString(int day) {
 		Calendar cal = new GregorianCalendar();
 		cal.setTimeInMillis(day * 86400000L);
-		return Integer.toString(cal.get(Calendar.YEAR)) +
+		return cal.get(Calendar.YEAR) +
 		       "-" +
 		       UnsignedInteger.valueOf(cal.get(Calendar.MONTH) + 1).toString(2) +
-		       "-" +
+		       '-' +
 		       UnsignedInteger.valueOf(cal.get(Calendar.DAY_OF_MONTH)).toString(2);
 	}
 
@@ -113,16 +106,16 @@ public enum TimeUtilities {
 	}
 
 	public static String timeToStringHM(int time) {
-		return Integer.toString(time / 3600) +
+		return time / 3600 +
 		       ":" +
 		       UnsignedInteger.valueOf(time / 60 % 60).toString(2);
 	}
 
 	public static String timeToString(int time) {
-		return Integer.toString(time / 3600) +
+		return time / 3600 +
 		       ":" +
 		       UnsignedInteger.valueOf(time / 60 % 60).toString(2) +
-		       ":" +
+		       ':' +
 		       UnsignedInteger.valueOf(time % 60).toString(2);
 	}
 }

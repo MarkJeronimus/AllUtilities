@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.container;
 
 import java.awt.Dimension;
@@ -49,15 +42,23 @@ public class DoubleDimension extends Dimension2D implements Serializable {
 		this.height = height;
 	}
 
-	public void setWidth(double width)   { this.width = width; }
+	public void setWidth(double width) {
+		this.width = width;
+	}
 
-	public void setHeight(double height) { this.height = height; }
+	public void setHeight(double height) {
+		this.height = height;
+	}
 
 	@Override
-	public double getWidth() { return width; }
+	public double getWidth() {
+		return width;
+	}
 
 	@Override
-	public double getHeight() { return height; }
+	public double getHeight() {
+		return height;
+	}
 
 	@Override
 	public void setSize(double width, double height) {

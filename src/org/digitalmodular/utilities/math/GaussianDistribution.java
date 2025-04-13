@@ -1,42 +1,72 @@
 package org.digitalmodular.utilities.math;
 
+import java.util.DoubleSummaryStatistics;
+import java.util.function.DoubleConsumer;
+
+import net.jcip.annotations.NotThreadSafe;
+
 /**
  * @author Mark Jeronimus
+ * @see DoubleSummaryStatistics
  */
-public class GaussianDistribution {
-	private double runningSum;
-	private double runningSumSquared;
-
-	private long numSamples;
-
-	public GaussianDistribution() {
-		reset();
-	}
+// Created 2018-05-07
+@NotThreadSafe
+public class GaussianDistribution implements DoubleConsumer {
+	private long   count             = 0;
+	private double runningSum        = 0;
+	private double runningSumSquared = 0;
 
 	public void reset() {
+		count = 0;
 		runningSum = 0;
 		runningSumSquared = 0;
-		numSamples = 0;
 	}
 
-	public void addSample(double value) {
+	@Override
+	public void accept(double value) {
 		runningSum += value;
 		runningSumSquared += value * value;
+		count++;
+	}
 
-		numSamples++;
+	public long getCount() {
+		return count;
 	}
 
 	public double getMean() {
-		return runningSum / numSamples;
+		return runningSum / count;
 	}
 
 	public double getVariance() {
-		double runningMean = runningSum / numSamples;
-		return runningSumSquared / numSamples - runningMean * runningMean;
+		double runningMean = runningSum / count;
+		return runningSumSquared / count - runningMean * runningMean;
 	}
 
 	public double getStandardDeviation() {
-		double runningMean = runningSum / numSamples;
-		return Math.sqrt(runningSumSquared / numSamples - runningMean * runningMean);
+		return Math.sqrt(getVariance());
+	}
+
+	/**
+	 * (Copied from {@link DoubleSummaryStatistics})
+	 * <p>
+	 * Combines the state of another {@code DoubleSummaryStatistics} into this
+	 * one.
+	 *
+	 * @param other another {@code DoubleSummaryStatistics}
+	 * @throws NullPointerException if {@code other} is null
+	 */
+	public void combine(GaussianDistribution other) {
+		count += other.count;
+		runningSum += other.runningSum;
+		runningSumSquared += other.runningSumSquared;
+	}
+
+	@Override
+	public String toString() {
+		return "GaussianDistribution{" +
+		       "mean=" + getMean() +
+		       ", variance=" + getVariance() +
+		       ", standardDeviation=" + getStandardDeviation() +
+		       '}';
 	}
 }

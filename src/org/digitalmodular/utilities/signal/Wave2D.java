@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.signal;
 
 import java.awt.Image;
@@ -36,7 +29,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 
-import org.digitalmodular.utilities.gui.image.ImageMatrixFloat;
+import org.digitalmodular.utilities.graphics.image.ImageMatrixFloat;
 
 /**
  * @author Mark Jeronimus
@@ -53,7 +46,7 @@ public class Wave2D {
 		this.numSamplesX = numSamplesX;
 		this.numSamplesY = numSamplesY;
 
-		samples = new double[this.numSamplesY][this.numSamplesX];
+		samples = new double[numSamplesY][numSamplesX];
 
 		for (int y = 0; y < this.numSamplesY; y++) {
 			Arrays.fill(samples[y], 0);
@@ -68,21 +61,25 @@ public class Wave2D {
 		for (int y = 0; y < numSamplesY; y++) {
 			for (int x = 0; x < numSamplesX; x++) {
 				if (b == 1) {
-					samples[y][x] = image.getRaster().getDataBuffer().getElem(0, source++);
+					samples[y][x] = image.getRaster().getDataBuffer().getElem(0, source);
+					source++;
 				} else {
-					samples[y][x] = 0.299 * image.getRaster().getDataBuffer().getElem(0, source++) //
-					                + 0.587 * image.getRaster().getDataBuffer().getElem(0, source++) //
-					                + 0.114 * image.getRaster().getDataBuffer().getElem(0, source++);
+					samples[y][x] = 0.299 * image.getRaster().getDataBuffer().getElem(0, source) //
+					                + 0.587 * image.getRaster().getDataBuffer().getElem(0, source) //
+					                + 0.114 * image.getRaster().getDataBuffer().getElem(0, source);
+					source++;
+					source++;
+					source++;
 				}
 			}
 		}
 	}
 
 	/**
-	 * Create a {@link Wave2D} instance with a rectangular part of a specified image as the source for the samples. The
+	 * Create a  instance with a rectangular part of a specified image as the source for the samples. The
 	 * size of the 2-dimensional audio array is always equal to the size of the image slice. When the specified image
 	 * slice lies partly outside the bounds of the image, the remaining samples are set to {@code 0}. The bounds
-	 * array is always altered to reflect the bounds of the image relative to the {@link Wave2D}'s coordinates.
+	 * array is always altered to reflect the bounds of the image relative to the 's coordinates.
 	 *
 	 * @param image  the image to extract a rectangle from
 	 * @param bounds initially, the bounds of the part of the image to extract, and after returning, the bounds within
@@ -127,11 +124,15 @@ public class Wave2D {
 		for (int y = bounds.y; y < stopY; y++) {
 			for (int x = bounds.x; x < stopX; x++) {
 				if (b == 1) {
-					samples[y][x] = image.getRaster().getDataBuffer().getElem(0, source++);
+					samples[y][x] = image.getRaster().getDataBuffer().getElem(0, source);
+					source++;
 				} else {
-					samples[y][x] = 0.299 * image.getRaster().getDataBuffer().getElem(0, source++) //
-					                + 0.587 * image.getRaster().getDataBuffer().getElem(0, source++) //
-					                + 0.114 * image.getRaster().getDataBuffer().getElem(0, source++);
+					samples[y][x] = 0.299 * image.getRaster().getDataBuffer().getElem(0, source) //
+					                + 0.587 * image.getRaster().getDataBuffer().getElem(0, source) //
+					                + 0.114 * image.getRaster().getDataBuffer().getElem(0, source);
+					source++;
+					source++;
+					source++;
 				}
 			}
 			source += b * (sourceWidth - bounds.width);
@@ -153,9 +154,12 @@ public class Wave2D {
 							+ 0.114 * (c >> 16 & 0xFF);
 				} else {
 					samples[y][x] = //
-							0.299 * image.getRaster().getDataBuffer().getElem(0, source++) //
-							+ 0.587 * image.getRaster().getDataBuffer().getElem(0, source++) //
-							+ 0.114 * image.getRaster().getDataBuffer().getElem(0, source++);
+							0.299 * image.getRaster().getDataBuffer().getElem(0, source) //
+							+ 0.587 * image.getRaster().getDataBuffer().getElem(0, source) //
+							+ 0.114 * image.getRaster().getDataBuffer().getElem(0, source);
+					source++;
+					source++;
+					source++;
 				}
 			}
 		}
@@ -196,7 +200,8 @@ public class Wave2D {
 		for (int y = bounds.y; y < stopY; y++) {
 			int i = sourceX;
 			for (int x = bounds.x; x < stopX; x++) {
-				out.samples[y][x] = samples[j][i++];
+				out.samples[y][x] = samples[j][i];
+				i++;
 			}
 			j++;
 		}
@@ -257,7 +262,8 @@ public class Wave2D {
 		for (int v = targetY; v < stopY; v++) {
 			int i = sourceX;
 			for (int u = targetX; u < stopX; u++) {
-				samples[v][u] += audio.samples[j][i++];
+				samples[v][u] += audio.samples[j][i];
+				i++;
 			}
 			j++;
 		}
@@ -279,7 +285,8 @@ public class Wave2D {
 					}
 				}
 			}
-		} catch (IOException e) {}
+		} catch (IOException ignored) {
+		}
 	}
 
 	public void addNoise(double amplitude) {
@@ -327,10 +334,10 @@ public class Wave2D {
 		}
 	}
 
-	public void treshold(double treshold, int lower, int higher) {
+	public void threshold(double threshold, int lower, int higher) {
 		for (int y = 0; y < numSamplesY; y++) {
 			for (int x = 0; x < numSamplesX; x++) {
-				samples[y][x] = samples[y][x] > treshold ? higher : lower;
+				samples[y][x] = samples[y][x] > threshold ? higher : lower;
 			}
 		}
 	}
@@ -346,7 +353,8 @@ public class Wave2D {
 				} else if (c > 0xFF) {
 					c = 0xFF;
 				}
-				rgbArray[i++] = 0xFF000000 | 0x00010101 * c;
+				rgbArray[i] = 0xFF000000 | 0x00010101 * c;
+				i++;
 			}
 		}
 		return rgbArray;

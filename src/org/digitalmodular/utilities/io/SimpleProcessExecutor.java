@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.io;
 
 import java.io.IOException;
@@ -36,7 +29,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 
 import org.digitalmodular.utilities.concurrent.NamedThreadFactory;
-import static org.digitalmodular.utilities.ValidatorUtilities.requireArrayLengthAtLeast;
+import static org.digitalmodular.utilities.ArrayValidatorUtilities.requireArrayLengthAtLeast;
 
 /**
  * @author Mark Jeronimus
@@ -79,14 +72,15 @@ public class SimpleProcessExecutor {
 		} catch (InterruptedException ignored) {
 		} catch (ExecutionException ex) {
 			Throwable th = ex.getCause();
-			if (th instanceof IOException)
+			if (th instanceof IOException) {
 				throw (IOException)th;
-			else if (th instanceof InterruptedException)
+			} else if (th instanceof InterruptedException) {
 				throw (InterruptedException)th;
-			else if (th instanceof RuntimeException)
+			} else if (th instanceof RuntimeException) {
 				throw (RuntimeException)th;
-			else
+			} else {
 				throw new RuntimeException(th);
+			}
 		}
 
 		return this;
@@ -105,8 +99,9 @@ public class SimpleProcessExecutor {
 
 			while (true) {
 				int b = in.read();
-				if (b < 0)
+				if (b < 0) {
 					break;
+				}
 
 				sb.append((char)b);
 			}
@@ -115,9 +110,15 @@ public class SimpleProcessExecutor {
 		}
 	}
 
-	public int getExitCode()  { return exitCode; }
+	public int getExitCode() {
+		return exitCode;
+	}
 
-	public String getStdOut() { return stdOut; }
+	public String getStdOut() {
+		return stdOut;
+	}
 
-	public String getStdErr() { return stdErr; }
+	public String getStdErr() {
+		return stdErr;
+	}
 }

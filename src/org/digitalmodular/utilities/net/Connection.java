@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.net;
 
 import java.io.DataInputStream;
@@ -52,19 +45,19 @@ public class Connection implements Runnable {
 		try {
 			dataOutputStream = new DataOutputStream(this.socket.getOutputStream());
 			dataInputStream = new DataInputStream(this.socket.getInputStream());
-		} catch (IOException e) {
-			return;
+		} catch (IOException ignored) {
 		}
 	}
 
 	public NetRequest sendReceive(NetRequest message) {
 		try {
+
 			busy = true;
 			dataOutputStream.writeUTF(message.toString());
 			message = new NetRequest(dataInputStream.readUTF());
 
 			return message;
-		} catch (IOException except) {
+		} catch (IOException ignored) {
 			disconnect();
 			return null;
 		} finally {
@@ -78,7 +71,7 @@ public class Connection implements Runnable {
 		} else {
 			try {
 				dataOutputStream.writeUTF(NetRequest.DisconnectRequest.toString());
-			} catch (IOException except) {
+			} catch (IOException ignored) {
 				close();
 			}
 		}
@@ -87,7 +80,8 @@ public class Connection implements Runnable {
 	private void close() {
 		try {
 			socket.close();
-		} catch (IOException e) {}
+		} catch (IOException ignored) {
+		}
 	}
 
 	/**
@@ -119,7 +113,7 @@ public class Connection implements Runnable {
 
 				dataOutputStream.writeUTF(result.toString());
 			}
-		} catch (IOException except) {
+		} catch (IOException ignored) {
 			close();
 		}
 	}
@@ -130,13 +124,13 @@ public class Connection implements Runnable {
 
 	public String getIP() {
 		byte[] ip = ((InetSocketAddress)socket.getRemoteSocketAddress()).getAddress().getAddress();
-		return "" + ip[0] + "." + ip[1] + "." + ip[2] + "." + ip[3];
+		return String.valueOf(ip[0]) + '.' + ip[1] + '.' + ip[2] + '.' + ip[3];
 	}
 
 	public Vector<Object> toVector() {
 		Vector<Object> out = new Vector<>();
 		out.add(getIP());
-		out.add("" + socket.getLocalPort());
+		out.add(String.valueOf(socket.getLocalPort()));
 		out.add(getHostName());
 		return out;
 	}

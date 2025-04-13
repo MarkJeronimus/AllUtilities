@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities;
 
 import java.util.concurrent.TimeUnit;
@@ -37,28 +30,28 @@ import java.util.concurrent.locks.ReentrantLock;
 // Created 2005-10-23
 @Deprecated
 public class PausableThread extends Thread {
-	public static final int THREADSTATUS_DISPOSE = 0;
-	public static final int THREADSTATUS_PAUSED  = 1;
-	public static final int THREADSTATUS_RUNNING = 2;
+	public static final int THREAD_STATUS_DISPOSE = 0;
+	public static final int THREAD_STATUS_PAUSED  = 1;
+	public static final int THREAD_STATUS_RUNNING = 2;
 
-	private PausableRunnable target;
+	private final PausableRunnable target;
 	/**
 	 * The number of milliseconds per run
 	 */
-	private long             runningMillis;
+	private       long             runningMillis;
 	/**
 	 * The number of milliseconds per pause
 	 */
-	private long             pauseMillis;
+	private       long             pauseMillis;
 
-	private int     currentStatus = PausableThread.THREADSTATUS_PAUSED;
+	private int     currentStatus = THREAD_STATUS_PAUSED;
 	private boolean running       = false;
 
 	/**
 	 * The Lock and Condition to synchronize operations.
 	 */
 	private final Lock      lock      = new ReentrantLock();
-	private final Condition locksleep = lock.newCondition();
+	private final Condition lockSleep = lock.newCondition();
 
 	/**
 	 * if runningMillis==0 then maximum speed will be approached without excessive CPU demand (uses yield() instead of
@@ -84,11 +77,11 @@ public class PausableThread extends Thread {
 
 		this.runningMillis = runningMillis;
 
-		if (faster && currentStatus == THREADSTATUS_RUNNING) {
+		if (faster && currentStatus == THREAD_STATUS_RUNNING) {
 			try {
 				lock.lock();
 
-				locksleep.signalAll();
+				lockSleep.signalAll();
 			} finally {
 				lock.unlock();
 			}
@@ -104,11 +97,11 @@ public class PausableThread extends Thread {
 
 		this.pauseMillis = pauseMillis;
 
-		if (faster && currentStatus == THREADSTATUS_PAUSED) {
+		if (faster && currentStatus == THREAD_STATUS_PAUSED) {
 			try {
 				lock.lock();
 
-				locksleep.signalAll();
+				lockSleep.signalAll();
 			} finally {
 				lock.unlock();
 			}
@@ -116,8 +109,8 @@ public class PausableThread extends Thread {
 	}
 
 	public void setRelativePriority(int difference) {
-		super.setPriority(
-				Math.min(Thread.MAX_PRIORITY, Math.max(Thread.MIN_PRIORITY, super.getPriority() - difference)));
+		setPriority(
+				Math.min(Thread.MAX_PRIORITY, Math.max(Thread.MIN_PRIORITY, getPriority() - difference)));
 	}
 
 	public void start(int initialThreadStatus) {
@@ -129,13 +122,13 @@ public class PausableThread extends Thread {
 		}
 	}
 
-	public void setThreadStatus(int newstatus) {
+	public void setThreadStatus(int newStatus) {
 		if (running) {
-			if (currentStatus != newstatus) {
+			if (currentStatus != newStatus) {
 				// interrupt();
 			}
 
-			currentStatus = newstatus;
+			currentStatus = newStatus;
 		}
 	}
 
@@ -164,9 +157,9 @@ public class PausableThread extends Thread {
 		try {
 			lock.lock();
 
-			while (currentStatus != PausableThread.THREADSTATUS_DISPOSE) {
+			while (currentStatus != THREAD_STATUS_DISPOSE) {
 				switch (currentStatus) {
-					case PausableThread.THREADSTATUS_RUNNING: {
+					case THREAD_STATUS_RUNNING: {
 						lock.unlock();
 						try {
 							target.doStarting();
@@ -174,9 +167,9 @@ public class PausableThread extends Thread {
 							ex.printStackTrace();
 						}
 						lock.lock();
-						if (currentStatus == PausableThread.THREADSTATUS_RUNNING) {
+						if (currentStatus == THREAD_STATUS_RUNNING) {
 							long start = System.currentTimeMillis();
-							while (currentStatus == PausableThread.THREADSTATUS_RUNNING) {
+							while (currentStatus == THREAD_STATUS_RUNNING) {
 								lock.unlock();
 								try {
 									target.doRunning();
@@ -188,8 +181,9 @@ public class PausableThread extends Thread {
 								long delay = Math.max(0, runningMillis - time + start);
 								if (delay > 0) {
 									try {
-										locksleep.await(delay, TimeUnit.MILLISECONDS);
-									} catch (InterruptedException ex) {}
+										lockSleep.await(delay, TimeUnit.MILLISECONDS);
+									} catch (InterruptedException ex) {
+									}
 								} else {
 									Thread.yield();
 								}
@@ -206,9 +200,9 @@ public class PausableThread extends Thread {
 						}
 						break;
 					}
-					case PausableThread.THREADSTATUS_PAUSED: {
+					case THREAD_STATUS_PAUSED: {
 						long start = System.currentTimeMillis();
-						while (currentStatus == PausableThread.THREADSTATUS_PAUSED) {
+						while (currentStatus == THREAD_STATUS_PAUSED) {
 							lock.unlock();
 							try {
 								target.doPause();
@@ -220,8 +214,9 @@ public class PausableThread extends Thread {
 							long delay = Math.max(0, pauseMillis - time + start);
 							if (delay > 0) {
 								try {
-									locksleep.await(delay, TimeUnit.MILLISECONDS);
-								} catch (InterruptedException ex) {}
+									lockSleep.await(delay, TimeUnit.MILLISECONDS);
+								} catch (InterruptedException ex) {
+								}
 							} else {
 								Thread.yield();
 							}
@@ -237,9 +232,6 @@ public class PausableThread extends Thread {
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public synchronized void start() {
 		throw new IllegalArgumentException("'initialThreadStatus' required");

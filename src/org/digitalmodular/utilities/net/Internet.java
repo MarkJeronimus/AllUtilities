@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.net;
 
 import java.awt.Desktop;
@@ -38,6 +31,7 @@ import java.net.Socket;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.zip.DeflaterInputStream;
 import java.util.zip.GZIPInputStream;
@@ -45,13 +39,13 @@ import java.util.zip.GZIPInputStream;
 import org.jetbrains.annotations.Nullable;
 
 import org.digitalmodular.utilities.Debug;
-import org.digitalmodular.utilities.gui.swing.progress.ProgressEvent;
-import org.digitalmodular.utilities.gui.swing.progress.ProgressListener;
+import org.digitalmodular.utilities.graphics.swing.progress.ProgressEvent;
+import org.digitalmodular.utilities.graphics.swing.progress.ProgressListener;
 import org.digitalmodular.utilities.io.ProgressInputStream;
 
 /**
  * @author Mark Jeronimus
- * @deprecated in favor of {@link HttpDownloader}
+ * @deprecated in favor of {@link HTTPDownloader}
  */
 @Deprecated
 public enum Internet {
@@ -91,8 +85,9 @@ public enum Internet {
 				in = connection.getInputStream();
 			} catch (IOException ex) {
 				in = connection.getErrorStream();
-				if (in == null)
+				if (in == null) {
 					throw ex;
+				}
 			}
 
 			in = getDecompressedStream(connection, in);
@@ -100,11 +95,12 @@ public enum Internet {
 			int length = attemptGetStreamLength(connection);
 
 			return new ProgressInputStream(in, length);
-		} catch (IOException e) {
-			if (connection != null)
+		} catch (IOException ex) {
+			if (connection != null) {
 				connection.disconnect();
+			}
 
-			throw e;
+			throw ex;
 		}
 	}
 
@@ -113,8 +109,9 @@ public enum Internet {
 			if (extraRequestProperties.length != 1 || extraRequestProperties[0] != null) {
 				for (String s : extraRequestProperties) {
 					int i = s.indexOf(": ");
-					if (i == -1)
+					if (i == -1) {
 						throw new IllegalArgumentException("Not a request property (must contain \": \"): " + s);
+					}
 
 					connection.addRequestProperty(s.substring(0, i), s.substring(i + 2));
 				}
@@ -141,10 +138,11 @@ public enum Internet {
 	}
 
 	private static InputStream getDecompressedStream(HttpURLConnection connection, InputStream in) throws IOException {
-		if ("gzip".equals(connection.getHeaderField("Content-Encoding")))
+		if ("gzip".equals(connection.getHeaderField("Content-Encoding"))) {
 			in = new GZIPInputStream(in);
-		else if ("deflate".equals(connection.getHeaderField("Content-Encoding")))
+		} else if ("deflate".equals(connection.getHeaderField("Content-Encoding"))) {
 			in = new DeflaterInputStream(in);
+		}
 		return in;
 	}
 
@@ -170,24 +168,24 @@ public enum Internet {
 			sd.setSoTimeout(10);
 			try (InputStream is = sd.getInputStream()) {
 				try (OutputStream os = sd.getOutputStream()) {
-					os.write(("GET " + path + " HTTP/1.0\n").getBytes());
-					os.write(("Host: " + host + "\n").getBytes());
-					os.write("Connection: close\n\n".getBytes());
+					os.write(("GET " + path + " HTTP/1.0\n").getBytes(StandardCharsets.UTF_8));
+					os.write(("Host: " + host + '\n').getBytes(StandardCharsets.UTF_8));
+					os.write("Connection: close\n\n".getBytes(StandardCharsets.UTF_8));
 					os.flush();
 
 					System.out.println("Getting data from " + path);
 
 					byte[] b;
 					int    i;
-					for (; ; ) {
+					while (true) {
 						i = is.available();
 						if (i > 0) {
 							b = new byte[i];
 							i = is.read(b);
-							String s = new String(b);
+							String s = new String(b, StandardCharsets.UTF_8);
 							result.append(s);
 
-							Debug.println(String.valueOf(i) + " (" + result.length() + ")");
+							Debug.println(i + " (" + result.length() + ')');
 
 							// Can be made more efficient, right?
 							// System.out.println(s);
@@ -200,7 +198,7 @@ public enum Internet {
 					}
 				}
 			}
-		} catch (Exception e) {
+		} catch (Exception ignored) {
 			return null;
 		}
 
@@ -233,7 +231,7 @@ public enum Internet {
 			if (post != null) {
 				connection.setDoOutput(true);
 				try (OutputStream os = connection.getOutputStream()) {
-					os.write(post.getBytes());
+					os.write(post.getBytes(StandardCharsets.UTF_8));
 					os.flush();
 				}
 			}
@@ -242,8 +240,9 @@ public enum Internet {
 				throw new EOFException("HTTP returned code " + connection.getResponseCode());
 			}
 
-			if (listener != null)
+			if (listener != null) {
 				listener.progressUpdated(new ProgressEvent(url, -1, -1, ""));
+			}
 
 			InputStream in = connection.getInputStream();
 
@@ -259,33 +258,38 @@ public enum Internet {
 				}
 			}
 
-			if (listener != null)
+			if (listener != null) {
 				listener.progressUpdated(new ProgressEvent(url, 0, size, ""));
+			}
 
-			try (InputStreamReader ir = new InputStreamReader(in, "UTF-8")) {
+			try (InputStreamReader ir = new InputStreamReader(in, StandardCharsets.UTF_8)) {
 				StringBuilder b = new StringBuilder(size == -1 ? 4096 : size);
 				int           i = 0;
 				int           c;
 				while ((c = ir.read()) != -1) {
 					b.append((char)c);
 
-					if ((++i & 1023) == 0)
-						if (listener != null)
+					++i;
+					if ((i & 1023) == 0) {
+						if (listener != null) {
 							listener.progressUpdated(new ProgressEvent(url, i, size, ""));
+						}
+					}
 				}
 
-				if (listener != null)
+				if (listener != null) {
 					listener.progressUpdated(new ProgressEvent(url, size, size, ""));
+				}
 
 				connection.disconnect();
 
 				return b.toString();
 			}
-		} catch (IOException e) {
+		} catch (IOException ex) {
 			if (connection != null) {
 				connection.disconnect();
 			}
-			throw e;
+			throw ex;
 		}
 	}
 
@@ -320,29 +324,35 @@ public enum Internet {
 					}
 				}
 
-				if (listener != null)
+				if (listener != null) {
 					listener.progressUpdated(new ProgressEvent(url, 0, size, ""));
+				}
 
 				int i = 0;
 				int c;
 				while ((c = in.read()) != -1) {
 					out.write((char)c);
 
-					if (++i % 10000 == 0)
-						if (listener != null)
+					++i;
+					if (i % 10000 == 0) {
+						if (listener != null) {
 							listener.progressUpdated(new ProgressEvent(url, i, size, ""));
+						}
+					}
 				}
 
-				if (listener != null)
+				if (listener != null) {
 					listener.progressUpdated(new ProgressEvent(url, size, size, ""));
+				}
 
 				connection.disconnect();
 			}
-		} catch (IOException e) {
+		} catch (IOException ex) {
 			if (connection != null) {
 				connection.disconnect();
 			}
-			throw e;
+
+			throw ex;
 		}
 	}
 

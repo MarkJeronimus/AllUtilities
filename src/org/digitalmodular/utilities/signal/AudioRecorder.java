@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,21 +14,16 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.signal;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
+import javax.sound.sampled.Line;
+import javax.sound.sampled.Mixer;
 import javax.sound.sampled.TargetDataLine;
 
 import org.digitalmodular.utilities.PausableRunnable;
@@ -46,9 +41,9 @@ public class AudioRecorder implements AudioProvider, PausableRunnable {
 	private int   bitsPerSample;
 	private int   numChannels;
 
-	private TargetDataLine targetDataLine = null;
-	private byte[][]       buffer         = new byte[2][];
-	private int            currentBuffer  = 0;
+	private       TargetDataLine targetDataLine = null;
+	private final byte[][]       buffer         = new byte[2][];
+	private       int            currentBuffer  = 0;
 
 	private boolean isProviding = false;
 
@@ -61,7 +56,7 @@ public class AudioRecorder implements AudioProvider, PausableRunnable {
 		setBufferSize(bufferSize);
 
 		thread = new PausableThread(1000, 100, this);
-		thread.start(PausableThread.THREADSTATUS_PAUSED);
+		thread.start(PausableThread.THREAD_STATUS_PAUSED);
 		thread.setPriority(5);
 	}
 
@@ -71,8 +66,8 @@ public class AudioRecorder implements AudioProvider, PausableRunnable {
 			throw new IllegalStateException("Cannot modify recording parameter when recording.");
 		}
 		this.bufferSize = bufferSize;
-		buffer[0] = new byte[this.bufferSize];
-		buffer[1] = new byte[this.bufferSize];
+		buffer[0] = new byte[bufferSize];
+		buffer[1] = new byte[bufferSize];
 	}
 
 	@Override
@@ -106,7 +101,7 @@ public class AudioRecorder implements AudioProvider, PausableRunnable {
 
 	@Override
 	public void setProviding(boolean providing) {
-		thread.setThreadStatus(providing ? PausableThread.THREADSTATUS_RUNNING : PausableThread.THREADSTATUS_PAUSED);
+		thread.setThreadStatus(providing ? PausableThread.THREAD_STATUS_RUNNING : PausableThread.THREAD_STATUS_PAUSED);
 	}
 
 	@Override
@@ -115,23 +110,48 @@ public class AudioRecorder implements AudioProvider, PausableRunnable {
 	}
 
 	@Override
-	public void doInitialize() {}
+	public void doInitialize() {
+	}
 
 	@Override
 	public void doStarting() {
-		AudioFormat   audioFormat  = new AudioFormat(sampleRate, bitsPerSample, numChannels, true, true);
-		DataLine.Info dataLineInfo = new DataLine.Info(TargetDataLine.class, audioFormat, bufferSize);
+		AudioFormat audioFormat = new AudioFormat(sampleRate, bitsPerSample, numChannels, true, true);
 
 		try {
+			Mixer.Info[] mixerInfo1 = AudioSystem.getMixerInfo();
+			for (int i = 0; i < mixerInfo1.length; i++) {
+				Mixer.Info  mixerInfo = mixerInfo1[i];
+				Mixer       mixer     = AudioSystem.getMixer(mixerInfo);
+				Line.Info[] lines     = mixer.getTargetLineInfo();
+				for (int j = 0; j < lines.length; j++) {
+					Line.Info line = lines[j];
+					if (line instanceof DataLine.Info) {
+						AudioFormat[] formats = ((DataLine.Info)line).getFormats();
+						for (int k = 0; k < formats.length; k++) {
+							AudioFormat format = formats[k];
+							System.out.println("[" + i + "][" + j + "][" + k + "] = " + mixerInfo + " | " + format);
+						}
+					}
+				}
+			}
+
+			Mixer.Info mixerInfo = mixerInfo1[11];
+
+//			Mixer         mixer          = AudioSystem.getMixer(mixerInfo);
+//			DataLine.Info sourceLineInfo = (DataLine.Info)mixer.getTargetLineInfo()[0];
+//			System.out.println(Arrays.toString(sourceLineInfo.getFormats()));
+//
+//			new DataLine.Info(TargetDataLine.class, audioFormat).matches(sourceLineInfo);
+
 			// AudioFormat[] af = dataLineInfo.getFormats();
 			// Get a TargetDataLine from the selected data line.
-			targetDataLine = (TargetDataLine)AudioSystem.getLine(dataLineInfo);
+			targetDataLine = AudioSystem.getTargetDataLine(audioFormat, mixerInfo);
 
 			// Prepare the line for use.
 			targetDataLine.open(audioFormat, bufferSize * 2);
 			targetDataLine.start();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 			System.exit(2);
 		}
 
@@ -146,8 +166,8 @@ public class AudioRecorder implements AudioProvider, PausableRunnable {
 			int n = 0;
 			try {
 				n = targetDataLine.read(buffer[currentBuffer], 0, bufferSize);
-			} catch (Exception e) {
-				System.out.println(e);
+			} catch (Exception ex) {
+				System.out.println(ex);
 				System.exit(1);
 			}
 
@@ -172,5 +192,6 @@ public class AudioRecorder implements AudioProvider, PausableRunnable {
 	}
 
 	@Override
-	public void doPause() {}
+	public void doPause() {
+	}
 }

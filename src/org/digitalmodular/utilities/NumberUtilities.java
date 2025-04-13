@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities;
 
 import java.awt.geom.Point2D;
@@ -55,16 +48,6 @@ import org.digitalmodular.utilities.container.UnsignedShort;
 @SuppressWarnings("OverloadedMethodsWithSameNumberOfParameters")
 @UtilityClass
 public final class NumberUtilities {
-	private NumberUtilities() { throw new AssertionError(); }
-
-	public static final DecimalFormat COMMA_NUMBER = new DecimalFormat("#,###");
-	public static final DecimalFormat DEC3_NUMBER  = new DecimalFormat("0.000");
-	public static final DecimalFormat SCI3_NUMBER  = new DecimalFormat("0.000E0");
-	public static final DecimalFormat ENG3_NUMBER  = new DecimalFormat("##0.000E0");
-	public static final DecimalFormat DEC6_NUMBER  = new DecimalFormat("0.000000");
-	public static final DecimalFormat SCI6_NUMBER  = new DecimalFormat("0.000000E0");
-	public static final DecimalFormat ENG6_NUMBER  = new DecimalFormat("##0.000000E0");
-
 	/**
 	 * All possible chars for representing a number as a String
 	 */
@@ -73,18 +56,6 @@ public final class NumberUtilities {
 			'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 
 	private static SecureRandom secureRnd = null;
-
-	static {
-		// Canonicalize floating point numbers.
-		DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(Locale.US);
-		COMMA_NUMBER.setDecimalFormatSymbols(symbols);
-		DEC3_NUMBER.setDecimalFormatSymbols(symbols);
-		SCI3_NUMBER.setDecimalFormatSymbols(symbols);
-		ENG3_NUMBER.setDecimalFormatSymbols(symbols);
-		DEC6_NUMBER.setDecimalFormatSymbols(symbols);
-		SCI6_NUMBER.setDecimalFormatSymbols(symbols);
-		ENG6_NUMBER.setDecimalFormatSymbols(symbols);
-	}
 
 	public static Random getSecureRandom() {
 		if (secureRnd == null) {
@@ -212,27 +183,29 @@ public final class NumberUtilities {
 
 	public static int bitCount1(int i) {
 		// Java implementation
-		i = i - (i >>> 1 & 0x55555555);
+		i -= (i >>> 1 & 0x55555555);
 		i = (i & 0x33333333) + (i >>> 2 & 0x33333333);
 		i = i + (i >>> 4) & 0x0f0f0f0f;
-		i = i + (i >>> 8);
-		i = i + (i >>> 16);
+		i += (i >>> 8);
+		i += (i >>> 16);
 		return i & 0x3f;
 	}
 
 	public static int bitCount(int i) {
 		// Faster than Java implementation
-		i = i - (i >>> 1 & 0x55555555);
+		i -= (i >>> 1 & 0x55555555);
 		i = (i & 0x33333333) + (i >>> 2 & 0x33333333);
 		i = i + (i >>> 4) & 0x0f0f0f0f;
 		return i * 0x01010101 >>> 24;
 	}
 
 	public static int compareUnsigned(int lhs, int rhs) {
-		if (rhs >= 0 && lhs < 0)
+		if (rhs >= 0 && lhs < 0) {
 			return 1;
-		if (rhs < 0 && lhs >= 0)
+		}
+		if (rhs < 0 && lhs >= 0) {
 			return -1;
+		}
 
 		return Integer.signum(lhs - rhs);
 	}
@@ -292,14 +265,16 @@ public final class NumberUtilities {
 	 */
 	public static int gcd(int a, int b) {
 		// From Wikipedia
-		if (a == 0)
+		if (a == 0) {
 			return b;
+		}
 
 		while (b != 0) {
-			if (a > b)
+			if (a > b) {
 				a -= b;
-			else
+			} else {
 				b -= a;
+			}
 		}
 
 		return a;
@@ -314,14 +289,16 @@ public final class NumberUtilities {
 	 */
 	public static long gcd(long a, long b) {
 		// From Wikipedia
-		if (a == 0)
+		if (a == 0) {
 			return b;
+		}
 
 		while (b != 0) {
-			if (a > b)
-				a -= b;
-			else
-				b -= a;
+			if (a > b) {
+				a = (a + b - 1) % b + 1;
+			} else {
+				b %= a;
+			}
 		}
 
 		return a;
@@ -460,6 +437,22 @@ public final class NumberUtilities {
 		return pos < size ? pos : modulo - pos - 1;
 	}
 
+	public static int sqr(int value) {
+		return value * value;
+	}
+
+	public static long sqr(long value) {
+		return value * value;
+	}
+
+	public static float sqr(float value) {
+		return value * value;
+	}
+
+	public static double sqr(double value) {
+		return value * value;
+	}
+
 	/**
 	 * Sign-preserving version of {@link Math#pow(double, double)}.
 	 */
@@ -519,8 +512,9 @@ public final class NumberUtilities {
 	}
 
 	public static int compareNumbers(Number a, Number b) {
-		if ((a instanceof Double || a instanceof Float) && (b instanceof Double || b instanceof Float))
+		if ((a instanceof Double || a instanceof Float) && (b instanceof Double || b instanceof Float)) {
 			return Double.compare(a.doubleValue(), b.doubleValue());
+		}
 
 		// Note UnsignedLong is missing, this's because it's longValue() method is lossy.
 		if ((a instanceof Long || a instanceof Integer || a instanceof Short || a instanceof Byte
@@ -529,51 +523,66 @@ public final class NumberUtilities {
 		    && (b instanceof Long || b instanceof Integer || b instanceof Short || b instanceof Byte
 		        || b instanceof UnsignedInteger || b instanceof UnsignedShort
 		        || b instanceof UnsignedByte
-		        || b instanceof AtomicLong || b instanceof AtomicInteger))
+		        || b instanceof AtomicLong || b instanceof AtomicInteger)) {
 			return Long.compare(a.longValue(), b.longValue());
+		}
 
 		// Handle incompatible or larger types with BigDecimals.
 		return toBigDecimal(a).compareTo(toBigDecimal(b));
 	}
 
 	public static BigDecimal toBigDecimal(Number a) {
-		if (a instanceof Float || a instanceof Double)
-			return new BigDecimal(a.doubleValue());
+		if (a instanceof Float || a instanceof Double) {
+			return BigDecimal.valueOf(a.doubleValue());
+		}
 		if (a instanceof Long || a instanceof Integer || a instanceof Short || a instanceof Byte
 		    || a instanceof UnsignedInteger || a instanceof UnsignedShort || a instanceof UnsignedByte
-		    || a instanceof AtomicLong || a instanceof AtomicInteger)
+		    || a instanceof AtomicLong || a instanceof AtomicInteger) {
 			return new BigDecimal(a.longValue());
-		if (a instanceof BigInteger)
+		}
+		if (a instanceof BigInteger) {
 			return new BigDecimal((BigInteger)a);
-		if (a instanceof BigDecimal)
+		}
+		if (a instanceof BigDecimal) {
 			return (BigDecimal)a;
+		}
 
 		try {
 			return new BigDecimal(a.toString());
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException ex) {
 			throw new RuntimeException("The given Number (\"" + a + "\" of class " + a.getClass().getName()
 			                           + ") doesn't have a parsable toString() representation",
-			                           e);
+			                           ex);
 		}
 	}
 
-	public static int clamp(int min, int max, int value) {
+	public static int clamp(int value, int min, int max) {
 		return Math.max(min, Math.min(max, value));
 	}
 
-	public static float clamp(float min, float max, float value) {
+	public static long clamp(long value, long min, long max) {
 		return Math.max(min, Math.min(max, value));
 	}
 
-	public static double clamp(double min, double max, double value) {
+	public static float clamp(float value, float min, float max) {
 		return Math.max(min, Math.min(max, value));
 	}
 
+	public static double clamp(double value, double min, double max) {
+		return Math.max(min, Math.min(max, value));
+	}
+
+	/**
+	 * Linearly interpolate two values.
+	 */
 	public static float lerp(float first, float second, float position) {
 		// Numerically stable version. f+(s-f)*p is faster but unstable.
 		return first * (1 - position) + second * position;
 	}
 
+	/**
+	 * Linearly interpolate two values.
+	 */
 	public static double lerp(double first, double second, double position) {
 		// Numerically stable version. f+(s-f)*p is faster but unstable.
 		return first * (1 - position) + second * position;
@@ -627,6 +636,54 @@ public final class NumberUtilities {
 		return x - Math.floor(x / y) * y;
 	}
 
+	/**
+	 * Returns the floor modulus of the {@code float} arguments.
+	 * <p>
+	 * The floor modulus is {@code x - (floor(x / y) * y)},
+	 * has the same sign as the divisor {@code y}, and
+	 * is in the range of {@code -abs(y) < r < +abs(y)}.
+	 * <p>
+	 * The relationship between {@code floorDiv} and {@code floorMod} is such that:
+	 * <ul>
+	 * <li>{@code floor(x / y) * y + floorMod(x, y) == x}
+	 * </ul>
+	 * <p>
+	 * Examples:
+	 * <ul>
+	 * <li>If the signs of the arguments are the same, the results
+	 * of {@code floorMod} and the {@code %} operator are the same.  <br>
+	 * <ul>
+	 * <li>{@code floorMod(4, 3) == 1}; &nbsp; and {@code (4 % 3) == 1}</li>
+	 * </ul>
+	 * <li>If the signs of the arguments are different, the results differ from the {@code %} operator.<br>
+	 * <ul>
+	 * <li>{@code floorMod(+4, -3) == -2}; &nbsp; and {@code (+4 % -3) == +1} </li>
+	 * <li>{@code floorMod(-4, +3) == +2}; &nbsp; and {@code (-4 % +3) == -1} </li>
+	 * <li>{@code floorMod(-4, -3) == -1}; &nbsp; and {@code (-4 % -3) == -1 } </li>
+	 * </ul>
+	 * </li>
+	 * </ul>
+	 * <p>
+	 * If the signs of arguments are unknown and a positive modulus
+	 * is needed it can be computed as {@code (floorMod(x, y) + abs(y)) % abs(y)}.
+	 *
+	 * @param x the dividend
+	 * @param y the divisor
+	 * @return the floor modulus {@code x - (floor(x / y) * y)}
+	 * @throws ArithmeticException if the divisor {@code y} is zero
+	 */
+	public static float floorMod(float x, float y) {
+		return x - (float)Math.floor(x / y) * y;
+	}
+
+	public static int quantize(int value, int stepSize) {
+		return value - Math.floorMod(value, stepSize);
+	}
+
+	public static long quantize(long value, long stepSize) {
+		return value - Math.floorMod(value, stepSize);
+	}
+
 	public static boolean isDegenerate(float value) {
 		return Float.isInfinite(value) || Float.isNaN(value);
 	}
@@ -653,7 +710,21 @@ public final class NumberUtilities {
 	}
 
 	public static boolean isDegenerate(Complex2d value) {
-		return isDegenerate(value.re) || isDegenerate(value.im);
+		return isDegenerate(value.real) || isDegenerate(value.imag);
 	}
 
+	@SuppressWarnings("StringConcatenationMissingWhitespace")
+	public static String toEnglishCardinal(int i) {
+		if (i >= 11 && i <= 13) {
+			return i + "th";
+		}
+
+		int lastDigit = Math.abs(i) % 10;
+		return switch (lastDigit) {
+			case 1 -> i + "st";
+			case 2 -> i + "nd";
+			case 3 -> i + "rd";
+			default -> i + "th";
+		};
+	}
 }

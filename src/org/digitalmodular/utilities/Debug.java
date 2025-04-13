@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities;
 
 import java.awt.Color;
@@ -46,60 +39,60 @@ public class Debug {
 	public static boolean     debuggingGUI = false;
 	public static Writer      debugFile;
 
-	public synchronized static void debugCodePoint(String debugString) {
-		if (Debug.debugStream == null) {
+	public static synchronized void debugCodePoint(String debugString) {
+		if (debugStream == null) {
 			return;
 		}
 
 		try {
 			throw new Exception();
-		} catch (Exception e) {
-			Debug.debugStream.println(e.getStackTrace()[1].toString() + " - " + debugString);
+		} catch (Exception ex) {
+			debugStream.println(ex.getStackTrace()[1] + " - " + debugString);
 		}
 	}
 
-	public synchronized static void debugError(String debugString) {
+	public static synchronized void debugError(String debugString) {
 		try {
 			throw new Exception();
-		} catch (Exception e) {
-			System.err.println(e.getStackTrace()[1].toString() + " - " + debugString);
+		} catch (Exception ex) {
+			System.err.println(ex.getStackTrace()[1] + " - " + debugString);
 		}
 	}
 
 	public static void setDebugFile(String filename) {
-		Debug.setDebugFile(new File(filename), false);
+		setDebugFile(new File(filename), false);
 	}
 
 	public static void setDebugFile(String filename, boolean append) {
-		Debug.setDebugFile(new File(filename), append);
+		setDebugFile(new File(filename), append);
 	}
 
 	public static void setDebugFile(File file) {
-		Debug.setDebugFile(file, false);
+		setDebugFile(file, false);
 	}
 
 	public static void setDebugFile(File file, boolean append) {
 		try {
-			Debug.debugFile = new FileWriter(file, append);
-		} catch (IOException e) {
-			e.printStackTrace();
+			debugFile = new FileWriter(file, append);
+		} catch (IOException ex) {
+			ex.printStackTrace();
 		}
 	}
 
 	/**
 	 * Debug to screen if debuggingText, and file if opened.
 	 */
-	public synchronized static void println() {
-		if (Debug.debugStream != null) {
-			Debug.debugStream.println();
+	public static synchronized void println() {
+		if (debugStream != null) {
+			debugStream.println();
 		}
 
-		if (Debug.debugFile != null) {
+		if (debugFile != null) {
 			try {
-				Debug.debugFile.write('\n');
-				Debug.debugFile.flush();
-			} catch (IOException e) {
-				e.printStackTrace();
+				debugFile.write('\n');
+				debugFile.flush();
+			} catch (IOException ex) {
+				ex.printStackTrace();
 			}
 		}
 	}
@@ -107,17 +100,17 @@ public class Debug {
 	/**
 	 * Debug to screen if debuggingText, and file if opened.
 	 */
-	public synchronized static void print(String string) {
-		if (Debug.debugStream != null) {
-			Debug.debugStream.print(string);
+	public static synchronized void print(String string) {
+		if (debugStream != null) {
+			debugStream.print(string);
 		}
 
-		if (Debug.debugFile != null) {
+		if (debugFile != null) {
 			try {
-				Debug.debugFile.write(string);
-				Debug.debugFile.flush();
-			} catch (IOException e) {
-				e.printStackTrace();
+				debugFile.write(string);
+				debugFile.flush();
+			} catch (IOException ex) {
+				ex.printStackTrace();
 			}
 		}
 	}
@@ -125,37 +118,37 @@ public class Debug {
 	/**
 	 * Debug to screen if debugStream set, and file if debugFile set.
 	 */
-	public synchronized static void println(String string) {
-		if (Debug.debugStream != null) {
-			Debug.debugStream.println(string);
+	public static synchronized void println(String string) {
+		if (debugStream != null) {
+			debugStream.println(string);
 		}
 
-		if (Debug.debugFile != null) {
+		if (debugFile != null) {
 			try {
-				Debug.debugFile.write(string);
-				Debug.debugFile.write('\n');
-				Debug.debugFile.flush();
-			} catch (IOException e) {
-				e.printStackTrace();
+				debugFile.write(string);
+				debugFile.write('\n');
+				debugFile.flush();
+			} catch (IOException ex) {
+				ex.printStackTrace();
 			}
 		}
 	}
 
-	public synchronized static void gui(JComponent c) {
-		if (Debug.debuggingGUI) {
+	public static synchronized void gui(JComponent c) {
+		if (debuggingGUI) {
 			c.setOpaque(true);
 			c.setBackground(new Color((float)Math.random(), (float)Math.random(), (float)Math.random()));
 		}
 	}
 
 	public static void gui(JComponent c, String name) {
-		if (Debug.debuggingGUI) {
+		if (debuggingGUI) {
 			c.setBorder(BorderFactory.createTitledBorder(name));
 		}
 	}
 
 	public static void gui(JFrame c) {
-		if (Debug.debuggingGUI) {
+		if (debuggingGUI) {
 			c.setBackground(new Color((float)Math.random(), (float)Math.random(), (float)Math.random()));
 		}
 	}

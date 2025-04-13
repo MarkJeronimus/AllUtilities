@@ -1,7 +1,7 @@
 /*
  * This file is part of Utilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.digitalmodular.utilities.units;
@@ -40,13 +40,16 @@ public enum FNVLong {
 	public static final long PRIME        = 0x00000100000001B3L;
 
 	@SuppressWarnings({"MethodReturnAlwaysConstant", "SameReturnValue"})
-	public static long startFNV() { return OFFSET_BASIS; }
+	public static long startFNV() {
+		return OFFSET_BASIS;
+	}
 
 	public static long hashFNV(long hashCode, Object value) {
-		if (value == null)
+		if (value == null) {
 			return hashCode * PRIME;
-		else
+		} else {
 			return hashFNV(hashCode, value.hashCode());
+		}
 	}
 
 	public static long hashFNV(long hashCode, byte value) {

@@ -2,3 +2,8 @@ Least Squares
 Parzen
 Rife-Vincent-4
 Rife-Vincent-5
+Sine-Cosine sin(tau/4/N*sin^2(x)) https://en.wikipedia.org/wiki/Modified_discrete_cosine_transform
+Kaiser
+Kaiser-Bessel
+Modified Kaiser-Bessel MKB https://en.wikipedia.org/wiki/Modified_discrete_cosine_transform
+

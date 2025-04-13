@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.math;
 
 import java.util.Arrays;
@@ -41,7 +34,8 @@ public class LabeledGraph {
 
 	public int[][] connections;
 
-	public LabeledGraph() {}
+	public LabeledGraph() {
+	}
 
 	public LabeledGraph(int numNodes, int numConnections, Random random) {
 		this.random = random;
@@ -58,7 +52,7 @@ public class LabeledGraph {
 		this.numNodes = numNodes;
 		maxConnections = this.numNodes * (this.numNodes - 1) >> 1;
 
-		connections = new int[this.numNodes][this.numNodes];
+		connections = new int[numNodes][numNodes];
 	}
 
 	public void setNumConnections(int numConnections) {
@@ -72,7 +66,7 @@ public class LabeledGraph {
 		else if (numConnections > maxConnections) {
 			throw new IllegalArgumentException(
 					"Too much connections for a graph of this size: " + numConnections + " (size="
-					+ numNodes + ",maxConnections=" + (maxConnections - 1) + ")");
+					+ numNodes + ",maxConnections=" + (maxConnections - 1) + ')');
 		}
 
 		for (y = 0; y < numNodes; y++) {
@@ -84,7 +78,8 @@ public class LabeledGraph {
 			y = random.nextInt(numNodes);
 
 			if (!(x == y || connections[y][x] != 0)) {
-				connections[y][x] = connections[x][y] = ++i;
+				++i;
+				connections[y][x] = connections[x][y] = i;
 			}
 		}
 	}
@@ -175,6 +170,6 @@ public class LabeledGraph {
 
 	@Override
 	public String toString() {
-		return LabeledGraph.array2DToString(connections);
+		return array2DToString(connections);
 	}
 }

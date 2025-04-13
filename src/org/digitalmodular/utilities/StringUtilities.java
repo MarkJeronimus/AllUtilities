@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,29 +14,23 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.nio.charset.UnsupportedCharsetException;
+import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.digitalmodular.utilities.StaticPatterns.THREE_DASHES;
-import static org.digitalmodular.utilities.StaticPatterns.THREE_DOTS;
-import static org.digitalmodular.utilities.StaticPatterns.TWO_DASHES;
+import org.jetbrains.annotations.Nullable;
+
+import org.digitalmodular.utilities.annotation.UtilityClass;
 import static org.digitalmodular.utilities.ValidatorUtilities.requireAtLeast;
 import static org.digitalmodular.utilities.ValidatorUtilities.requireNonNull;
 import static org.digitalmodular.utilities.ValidatorUtilities.requireRange;
@@ -47,11 +41,16 @@ import static org.digitalmodular.utilities.ValidatorUtilities.requireRange;
  * @author Mark Jeronimus
  */
 // Created 2007-11-13
-public enum StringUtilities {
-	;
-
+@SuppressWarnings("CharUsedInArithmeticContext")
+@UtilityClass
+public final class StringUtilities {
 	private static final String[] REPEATING_CHARS_CACHE   = new String[126];
 	private static final char[]   ILLEGAL_FILE_NAME_CHARS = {'"', '*', '/', ':', '<', '>', '?', '\\', '|'};
+	private static final Pattern  COLON_MATCHER_1         = Pattern.compile("([0-9]):([0-9])");
+	private static final Pattern  COLON_MATCHER_2         = Pattern.compile(" : ");
+	private static final Pattern  COLON_MATCHER_3         = Pattern.compile(": ");
+	private static final Pattern  COLON_MATCHER_4         = Pattern.compile(" :");
+	private static final Pattern  COMBINING_MARK_PATTERN  = Pattern.compile("\\p{M}");
 	private static final String[] CONTROL_NAMES           = {
 			"NUL", "SOH", "STX", "ETX", "EOT", "ENQ", "ACK", "BEL",  // 0x00
 			"BS", "HT", "LF", "VT", "FF", "CR", "SO", "SI",          // 0x08
@@ -162,27 +161,12 @@ public enum StringUtilities {
 		}
 	}
 
-	/**
-	 * Not instantiable.
-	 */
-	private StringUtilities() {
-		throw new AssertionError();
-	}
-
 	public static String toWideString(byte[] data) {
-		try {
-			return new String(data, "UTF-16LE");
-		} catch (UnsupportedEncodingException ex) {
-			throw new RuntimeException(ex);
-		}
+		return new String(data, StandardCharsets.UTF_16LE);
 	}
 
 	public static byte[] toWideBytes(String wideString) {
-		try {
-			return wideString.getBytes("UTF-16LE");
-		} catch (UnsupportedEncodingException ex) {
-			throw new RuntimeException(ex);
-		}
+		return wideString.getBytes(StandardCharsets.UTF_16LE);
 	}
 
 	/**
@@ -197,11 +181,11 @@ public enum StringUtilities {
 			}
 		}
 
-		return new String(array, 0, i);
+		return new String(array, 0, i, StandardCharsets.UTF_8);
 	}
 
 	public static byte[] toCString(String string, byte[] array) {
-		byte[] bytes = string.getBytes();
+		byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
 
 		int outLen = array.length;
 		int inLen  = Math.min(bytes.length, outLen);
@@ -218,42 +202,79 @@ public enum StringUtilities {
 	 * The filename should not contain a path, as path separators are also regarded as illegal file name characters.
 	 * <p>
 	 * "Illegal filename characters" are based on the Microsoft specification, and are: {@code / \ ? * : | " < >}.
-	 * Additionally, trailing periods are not allowed in Windows, so these are removed. If after this process the
-	 * length
-	 * became 0, a {@code null} is returned because such filenames are also not allowed.
+	 * Additionally, trailing periods are not allowed in Windows, so these can be removed.
 	 *
 	 * @param c the character to substitute the illegal characters with.
-	 * @return the string, with illegal characters replaced and trailing periods removed, or {@code null} when the
-	 * length of the fixed filename became 0.
 	 */
-	public static String makeWindowsFileName(String name, char c) {
-		return replaceIllegalFilenameChars(name, ignored -> c);
+	public static String replaceIllegalFilenameChars(CharSequence name, boolean replaceTrailingPeriods, char c) {
+		return replaceIllegalFilenameChars(name, replaceTrailingPeriods, ignored -> c);
 	}
 
-	public static String replaceIllegalFilenameChars(String name, Function<Character, Character> replacer) {
+	/**
+	 * Replaces all illegal file name characters in a String using the specified replacer.
+	 * <p>
+	 * The filename should not contain a path, as path separators are also regarded as illegal file name characters.
+	 * <p>
+	 * "Illegal filename characters" are based on the Microsoft specification, and are: {@code / \ ? * : | " < >}.
+	 * Additionally, trailing periods are not allowed in Windows, so these can be removed.
+	 *
+	 * @param replacer the function that maps any of the above mentioned 9 characters to another (sequence of)
+	 *                 characters.
+	 *                 There's no explicit check whether the replacement character is in fact illegal or not.
+	 */
+	public static String replaceIllegalFilenameChars(CharSequence name,
+	                                                 boolean replaceTrailingPeriods,
+	                                                 Function<Character, Character> replacer) {
 		requireNonNull(name, "name");
 
 		StringBuilder sb = new StringBuilder(name.length());
 
 		// Replace characters
-		name.chars()
+		name.codePoints()
 		    .forEach(c -> {
 			    int i = Arrays.binarySearch(ILLEGAL_FILE_NAME_CHARS, (char)c);
-			    if (i >= 0)
-				    c = replacer.apply((char)c);
-			    sb.append((char)c);
+			    if (i < 0) {
+				    sb.append((char)c);
+			    } else {
+				    sb.append(replacer.apply((char)c));
+			    }
 		    });
 
-		// Remove trailing periods
-		while (sb.length() > 0 && sb.charAt(sb.length() - 1) == '.') {
-			sb.setLength(sb.length() - 1);
+		if (replaceTrailingPeriods) {
+			while (sb.length() > 0 && sb.charAt(sb.length() - 1) == '.') {
+				sb.setLength(sb.length() - 1);
+			}
 		}
 
-		// Test for empty string
-		if (sb.length() == 0)
-			return null;
-
 		return sb.toString();
+	}
+
+	public static String collateASCII(String text) {
+		return COMBINING_MARK_PATTERN.matcher(Normalizer.normalize(text, Normalizer.Form.NFD)).replaceAll("");
+	}
+
+	/**
+	 * Specialized instance of {#link {@link #replaceIllegalFilenameChars(CharSequence, boolean, Function)}} tailored for
+	 * filenames containing titles, which often includes colons.
+	 */
+	public static String replaceIllegalTitleFilenameChars(String name) {
+		name = COLON_MATCHER_1.matcher(name).replaceAll("\\2.\\3");
+		name = COLON_MATCHER_2.matcher(name).replaceAll(" - ");
+		name = COLON_MATCHER_3.matcher(name).replaceAll(" - ");
+		name = COLON_MATCHER_4.matcher(name).replaceAll(" - ");
+		name = collateASCII(name);
+
+		int[] codePoints = name.codePoints().map(c -> c <= 32 || c >= 127 ? '_' : c).toArray();
+		name = new String(codePoints, 0, codePoints.length);
+
+		return replaceIllegalFilenameChars(name, true, '_');
+	}
+
+	public static int utf8Length(CharSequence cs) {
+		return cs.length() + cs.codePoints()
+		                       .filter(cp -> cp >= 0x80)
+		                       .map(cp -> cp < 0x800 ? 1 : (cp < 0x10000 ? 2 : 3))
+		                       .sum();
 	}
 
 	/**
@@ -264,49 +285,53 @@ public enum StringUtilities {
 	 * @param string a phrase in valid HTML, without actual HTML tags.
 	 * @return the equivalent human-readable phrase.
 	 */
+	@Deprecated
 	public static String htmlCharsDecode(String string) {
-		int           l   = string.length();
-		StringBuilder out = new StringBuilder(l);
+		throw new UnsupportedCharsetException("Treading on dangerous waters");
+//		return URLDecoder.decode(string, StandardCharsets.UTF_8);
 
-		for (int i = 0; i < l; i++) {
-			char c = string.charAt(i);
-
-			if (c == '&') {
-				int j = string.indexOf(';', i + 1);
-				if (j > i && j <= i + 9) {
-					String replacement = string.substring(i + 1, j);
-
-					if (replacement.charAt(0) == '#') {
-						out.append((char)Integer.parseInt(replacement.substring(1)));
-						i = j;
-						continue;
-					}
-
-					replacement = HTML_CHARACTERS.get(replacement);
-					if (replacement != null) {
-						out.append(replacement);
-						i = j;
-						continue;
-					}
-				}
-			} else if (c == '%' && string.length() - i >= 3) {
-				String code = string.substring(i + 1, i + 3);
-				int    hi   = Character.digit(code.charAt(0), 16);
-				int    lo   = Character.digit(code.charAt(1), 16);
-				if (hi >= 0 && lo >= 0) {
-					int j = hi * 16 + lo;
-					if (j >= 20 && j <= 126) {
-						out.append((char)j);
-						i += 2;
-						continue;
-					}
-				}
-			}
-
-			out.append(c);
-		}
-
-		return out.toString();
+//		int           l   = string.length();
+//		StringBuilder out = new StringBuilder(l);
+//
+//		for (int i = 0; i < l; i++) {
+//			char c = string.charAt(i);
+//
+//			if (c == '&') {
+//				int j = string.indexOf(';', i + 1);
+//				if (j > i && j <= i + 9) {
+//					String replacement = string.substring(i + 1, j);
+//
+//					if (replacement.charAt(0) == '#') {
+//						out.append((char)Integer.parseInt(replacement.substring(1)));
+//						i = j;
+//						continue;
+//					}
+//
+//					replacement = HTML_CHARACTERS.get(replacement);
+//					if (replacement != null) {
+//						out.append(replacement);
+//						i = j;
+//						continue;
+//					}
+//				}
+//			} else if (c == '%' && string.length() - i >= 3) {
+//				String code = string.substring(i + 1, i + 3);
+//				int    hi   = Character.digit(code.charAt(0), 16);
+//				int    lo   = Character.digit(code.charAt(1), 16);
+//				if (hi >= 0 && lo >= 0) {
+//					int j = hi * 16 + lo;
+//					if (j >= 20 && j <= 126) {
+//						out.append((char)j);
+//						i += 2;
+//						continue;
+//					}
+//				}
+//			}
+//
+//			out.append(c);
+//		}
+//
+//		return out.toString();
 	}
 
 	public static boolean containsChar(String string, char ch) {
@@ -319,8 +344,9 @@ public enum StringUtilities {
 	}
 
 	public static String getControlName(char c) {
-		if (c <= 0x20)
+		if (c <= 0x20) {
 			return CONTROL_NAMES[c];
+		}
 
 		return null;
 	}
@@ -369,7 +395,7 @@ public enum StringUtilities {
 		return s + repeatChar(' ', Math.max(0, length - s.length()));
 	}
 
-	public static String removeQuotes(String string) {
+	public static @Nullable String removeQuotes(String string) {
 		if (string == null ||
 		    string.length() < 2 ||
 		    string.charAt(0) != '"' ||
@@ -391,7 +417,7 @@ public enum StringUtilities {
 			char ch = '\0';
 
 			// Try to translate character.
-			if (c >= 0 || c < SUPERSCRIPT_CHARACTERS.length) {
+			if (c >= 0 && c < SUPERSCRIPT_CHARACTERS.length) {
 				ch = SUPERSCRIPT_CHARACTERS[c];
 			}
 
@@ -419,7 +445,7 @@ public enum StringUtilities {
 			char ch = '\0';
 
 			// Try to translate character.
-			if (c >= 0 || c < SUBSCRIPT_CHARACTERS.length) {
+			if (c >= 0 && c < SUBSCRIPT_CHARACTERS.length) {
 				ch = SUBSCRIPT_CHARACTERS[c];
 			}
 
@@ -436,23 +462,7 @@ public enum StringUtilities {
 		return out.toString();
 	}
 
-	private static final Pattern TRAILING_PERIODS = Pattern.compile("^(.*?)\\.+$");
-
-	public static String filenameEncode(String name) {
-		name = name.replace(' ', '_');                                   // Visible space
-		name = name.replace('"', '＂');                                   // Illegal file name character
-		name = name.replace('*', '＊');                                   // Illegal file name character
-		name = name.replace('/', '／');                                   // Illegal file name character
-		name = name.replace(':', '：');                                   // Illegal file name character
-		name = name.replace('<', '＜');                                   // Illegal file name character
-		name = name.replace('>', '＞');                                   // Illegal file name character
-		name = name.replace('?', '？');                                   // Illegal file name character
-		name = name.replace('\\', '＼');                                  // Illegal file name character
-		name = name.replace('|', '｜');                                   // Illegal file name character
-		name = THREE_DOTS.matcher(name).replaceAll(Matcher.quoteReplacement("…"));   // Compress
-		name = THREE_DASHES.matcher(name).replaceAll(Matcher.quoteReplacement("—")); // Compress
-		name = TWO_DASHES.matcher(name).replaceAll(Matcher.quoteReplacement("―"));   // Compress
-		name = TRAILING_PERIODS.matcher(name).replaceAll("$1");              // Remove trailing periods
-		return name;
+	public static String capitalize(String s) {
+		return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
 	}
 }

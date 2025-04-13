@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.signal.window;
 
 import org.digitalmodular.utilities.NumberUtilities;
@@ -36,31 +29,35 @@ public enum WindowFunctionUtilities {
 	;
 
 	public static void sampleWindow(double[] window, int length, WindowSymmetryMode symmetryMode) {
-		for (int i = 0; i < length; i++)
+		for (int i = 0; i < length; i++) {
 			window[i] = symmetryMode.getValueAt(i, length);
+		}
 	}
 
 	public static void taperWindow(double[] window, int length, WindowTaperMode taperMode, double taper) {
-		for (int i = 0; i < length; i++)
+		for (int i = 0; i < length; i++) {
 			window[i] = taperMode.getValueAt(window[i], taper);
+		}
 	}
 
 	public static void makeWindow(double[] window, int length, WindowFunction windowFunction) {
-		for (int i = 0; i < length; i++)
+		for (int i = 0; i < length; i++) {
 			window[i] = windowFunction.getValueAt(window[i]);
+		}
 	}
 
 	public static void lerpedBiPower(double[] window, int length, double power, double invPower, double powerLerp) {
 		for (int i = 0; i < length; i++) {
 			double powerInvPower = 1 - Math.pow(1 - Math.pow(window[i], power), invPower);
-			double invPowerPower = Math.pow(1 - Math.pow(1 - window[i], power), invPower);
+			double invPowerPower = Math.pow(1 - Math.pow(1 - window[i], invPower), power);
 			window[i] = NumberUtilities.lerp(powerInvPower, invPowerPower, powerLerp);
 		}
 	}
 
 	public static void topScale(double[] window, int length, double topScale) {
-		for (int i = 0; i < length; i++)
+		for (int i = 0; i < length; i++) {
 			window[i] = 1 - (1 - window[i]) * topScale;
+		}
 	}
 
 	public static void normalize(double[] window, int length, WindowNormalizationMode normalization) {
@@ -70,9 +67,11 @@ public enum WindowFunctionUtilities {
 				return;
 			case PEAK:
 				double max = Double.NEGATIVE_INFINITY;
-				for (int i = 0; i < length; i++)
-					if (max < window[i])
+				for (int i = 0; i < length; i++) {
+					if (max < window[i]) {
 						max = window[i];
+					}
+				}
 
 				scale = max;
 				break;
@@ -81,8 +80,9 @@ public enum WindowFunctionUtilities {
 				break;
 			case AREA:
 				double sum = 0;
-				for (int i = 0; i < length; i++)
+				for (int i = 0; i < length; i++) {
 					sum += window[i];
+				}
 
 				scale = sum / length;
 				break;
@@ -90,7 +90,8 @@ public enum WindowFunctionUtilities {
 				throw new UnsupportedOperationException("normalizationMode: " + normalization);
 		}
 
-		for (int i = 0; i < length; i++)
+		for (int i = 0; i < length; i++) {
 			window[i] /= scale;
+		}
 	}
 }

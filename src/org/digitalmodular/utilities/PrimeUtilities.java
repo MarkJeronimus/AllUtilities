@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,28 +14,21 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities;
 
 import java.util.Arrays;
+
+import org.digitalmodular.utilities.annotation.UtilityClass;
 
 /**
  * @author Mark Jeronimus
  */
 // Created 2017-03-05
+@UtilityClass
 public final class PrimeUtilities {
-
-	private PrimeUtilities() { throw new AssertionError(); }
-
 	/**
 	 * Find primes by recording a list with some proven non-prime numbers (NPNs). If the NPNs are chosen carefully, the
 	 * gaps between the non-prime numbers will be prime numbers. <br> The NPNs are chosen by calculating rectangles
@@ -70,9 +63,10 @@ public final class PrimeUtilities {
 		} else if (guess <= 2147437599) { // Magic number? see else block.
 			// Minimum gap for <31 bits. (closest was 31.09957781 bits)
 			maxGap = 292;
-		} else
+		} else {
 			throw new IllegalArgumentException(
 					"guess+floor(sqrt(guess))-292 should be below 2^31-1, so guess should be below 2147437600");
+		}
 		int halfGap = maxGap >> 1;
 
 		// The list is compressed and reversed. (ie. index 0 is the guess, 1 is
@@ -101,8 +95,9 @@ public final class PrimeUtilities {
 
 		// Find the highest prime number in the list.
 		for (int a = 0; a < halfGap; a++) {
-			if (primes[a])
+			if (primes[a]) {
 				return guess - (a << 1);
+			}
 		}
 
 		throw new IllegalStateException("gap too small");
@@ -133,19 +128,20 @@ public final class PrimeUtilities {
 
 		// Find largest gap
 		int maxGap;
-		if (guess <= 2147437600)
+		if (guess <= 2147437600) {
 			return findPrimeNear((int)guess);
-		else if (guess <= 2300942549L) {
+		} else if (guess <= 2300942549L) {
 			// Minimum gap for <31 bits. (closest was 31.10 bits)
 			maxGap = 292;
 		} else if (guess <= 9223372033817776756L) { // Magic number? see else block.
 			// There is known gap yet for <63 bits, so I'm using the next known
 			// gap (85.90 bits)
 			maxGap = 1448;
-		} else
+		} else {
 			throw new IllegalArgumentException(
 					"guess+floor(sqrt(guess))-1448 should be below 2^63-1, so guess should be below " +
 					"9223372033817776757");
+		}
 		int halfGap = maxGap >> 1;
 
 		// The list is compressed and reversed. (ie. index 0 is the guess, 1 is
@@ -174,8 +170,9 @@ public final class PrimeUtilities {
 
 		// Find the highest prime number in the list.
 		for (int a = 0; a < halfGap; a++) {
-			if (primes[a])
+			if (primes[a]) {
 				return guess - (a << 1);
+			}
 		}
 
 		throw new IllegalStateException("gap too small");

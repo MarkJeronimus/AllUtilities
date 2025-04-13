@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities;
 
 import java.io.FileNotFoundException;
@@ -58,8 +51,9 @@ public class Configuration implements Iterable<Entry<String, String>> {
 
 		if (value == null) {
 			value = defaults.getProperty(key);
-			if (value == null)
+			if (value == null) {
 				throw new IllegalArgumentException("No default value set: " + key);
+			}
 		}
 
 		return value;
@@ -101,27 +95,32 @@ public class Configuration implements Iterable<Entry<String, String>> {
 		try {
 			String value = properties.getProperty(key);
 			valueExists = value != null;
-			if (valueExists)
+			if (valueExists) {
 				return Integer.parseInt(value);
-		} catch (NumberFormatException ignored) { }
+			}
+		} catch (NumberFormatException ignored) {
+		}
 
 		try {
 			String value = defaults.getProperty(key);
 
 			if (value == null) {
-				if (valueExists)
+				if (valueExists) {
 					throw new IllegalArgumentException("Value not an integer, and no default value set, for: " + key);
-				else
+				} else {
 					throw new IllegalArgumentException("No default value set, for: " + key);
+				}
 			}
 
 			return Integer.parseInt(value);
-		} catch (NumberFormatException ignored) { }
+		} catch (NumberFormatException ignored) {
+		}
 
-		if (valueExists)
+		if (valueExists) {
 			throw new IllegalArgumentException("Value not an integer, and default value not an integer, for: " + key);
-		else
+		} else {
 			throw new IllegalArgumentException("Default value not an integer, for: " + key);
+		}
 	}
 
 	public synchronized void restoreDefault(String key) {
@@ -135,7 +134,8 @@ public class Configuration implements Iterable<Entry<String, String>> {
 	public final synchronized void read(InputStream in) throws IOException {
 		try {
 			properties.load(in);
-		} catch (FileNotFoundException ignored) { }
+		} catch (FileNotFoundException ignored) {
+		}
 	}
 
 	public final synchronized void write(OutputStream out) throws IOException {
@@ -149,11 +149,13 @@ public class Configuration implements Iterable<Entry<String, String>> {
 	public synchronized Iterator<Entry<String, String>> iterator() {
 		Map<String, String> allProperties = new HashMap<>(defaults.size() + properties.size());
 
-		for (Entry<Object, Object> entry : defaults.entrySet())
+		for (Entry<Object, Object> entry : defaults.entrySet()) {
 			allProperties.put((String)entry.getKey(), (String)entry.getValue());
+		}
 
-		for (Entry<Object, Object> entry : properties.entrySet())
+		for (Entry<Object, Object> entry : properties.entrySet()) {
 			allProperties.put((String)entry.getKey(), (String)entry.getValue());
+		}
 
 		return allProperties.entrySet().iterator();
 	}

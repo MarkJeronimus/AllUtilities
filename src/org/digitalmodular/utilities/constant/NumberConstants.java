@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.constant;
 
 /**
@@ -31,26 +24,29 @@ package org.digitalmodular.utilities.constant;
  */
 // Created 2009-04-26
 public interface NumberConstants {
+	long MAX_UINT = 4294967296L;
+
 	/*
 	 * The notation for formula constants is in Polish notation, with some symbols replaced:
-	 * Addition: P.
-	 * Multiplication: no symbol.
-	 * Division (x/y): Q X Y.
+	 * Addition: P
 	 * Negation: N
-	 * Exponentiation: POW.
-	 * Square (2): SQR.
-	 * Decimal separator: remove, but leave leading zero.
-	 * Named constants: upper case, no spaces.
+	 * Multiplication: no symbol
+	 * Division (x/y): Q X Y
+	 * Squaring: SQR
+	 * Exponentiation: POW
+	 * Natural logarithn: LOG (not base-10 logarithm!)
+	 * Decimal separator: remove, but leave leading zero
+	 * Named constants: upper case, no spaces
 	 * EXAMPLES:
 	 *   ln(Tau*0.5) = LOGTAU05
-	 *   ln(Tau)*0.5 = QLOGTAU2
+	 *   ln(Tau)/2   = QLOGTAU2
 	 *   EULERGAMMA
 	 */
 
 	double Q1_3      = 0.3333333333333333333333333; // (1/3)
 	double Q1_6      = 0.1666666666666666666666666; // (2/3)
 	double POW2_025  = 1.1892071150027210667174999; // (2^(1/4))
-	double POW2Q1_12 = 1.0594630943592952645618252;    // (2^(1/12)) Chromatic base
+	double POW2Q1_12 = 1.0594630943592952645618252; // (2^(1/12)) Chromatic base
 
 	double SQRTQ1_12  = 0.2886751345948128822545743; // (sqrt(1/12) = 1/sqrt(12) = sqrt(12)/12 = sqrt(3)/6)
 	double SQRTQ1_10  = 0.3162277660168379331998893; // (sqrt(1/10) = 1/sqrt(10) = sqrt(10)/10)
@@ -79,7 +75,9 @@ public interface NumberConstants {
 	double Q05LOG10   = 0.2171472409516259138255644; // (1/2/ln(10))
 	double Q05LOG2    = 0.7213475204444817036799623; // (1/2/ln(2))
 	double QLOG10LOG2 = 3.3219280948873623478703194; // (ln(10)/ln(2) = 1/log(2))
+	double QLOG2LOG10 = 0.3010299956639811952137389; // (ln(2)/ln(10)) = log(2))
 	double NLOGLOG2   = 0.3665129205816643270124391; // (-ln(ln(2)))
+	double QLOG2LOG3  = 0.6309297535714574370995271; // (ln(2)/ln(3))
 
 	double TAU0125     = 0.7853981633974483096156608; // (Tau/8)
 	double TAU025      = 1.5707963267948966192313216; // (Tau/4)
@@ -91,6 +89,7 @@ public interface NumberConstants {
 	double Q1TAU       = 0.1591549430918953357688837; // (1/Tau)
 	double Q2TAU       = 0.3183098861837906715377675; // (2/Tau)
 	double Q4TAU       = 0.6366197723675813430755350; // (4/Tau)
+	double Q6TAU       = 0.9549296585513720146133026; // (6/Tau)
 	double QTAU360     = 0.0174532925199432957692369; // (Tau/360)
 	double Q360TAU     = 57.295779513082320876798154; // (360/Tau)
 	double SQRTAU05    = 9.8696044010893586188344909; // ((Tau/2)^2)
@@ -102,11 +101,12 @@ public interface NumberConstants {
 	double Q1E   = 0.3678794411714423215955237; // (1/e)
 	double E_SQR = 7.3890560989306502272304274; // (e^2)
 
-	double PHI           = 1.6180339887498948482045868; // (Phi) Golden Ratio
-	double Q1LOGPHI      = 2.0780869212350275376013226; // (1/ln(Phi))
-	double P1SQRT2       = 2.4142135623730950488016887; // (1+sqrt(2)) Silver Ratio
-	double TRIBONACCI    = 1.8392867552141611325518525; // (Root of x^−3 + x - 2 or x^3 - x^2 - x - 1 = 0)
-	double PLASTICNUMBER = 1.3247179572447460259609088; // (Root of x3 − x − 1 = 0)
+	double PHI            = 1.6180339887498948482045868; // (Phi) Golden Ratio
+	double Q1LOGPHI       = 2.0780869212350275376013226; // 1/ln(Phi)
+	double FIBONACCI_PHI1 = -0.6180339887498948482045868; // -1/Phi Used in the "Nth Fibonacci" formula
+	double P1SQRT2        = 2.4142135623730950488016887; // (1+sqrt(2)) Silver Ratio
+	double TRIBONACCI     = 1.8392867552141611325518525; // (Root of x^−3 + x - 2 or x^3 - x^2 - x - 1 = 0)
+	double PLASTICNUMBER  = 1.3247179572447460259609088; // (Root of x3 − x − 1 = 0)
 
 	double SIN1 = 0.8414709848078965066525023; // (sin(1))
 	double COS1 = 0.5403023058681397174009366; // (cos(1))

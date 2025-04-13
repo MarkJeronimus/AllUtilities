@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.math;
 
 import java.io.BufferedInputStream;
@@ -40,7 +33,7 @@ import java.util.Random;
  */
 // Created 2005-10-29
 public class ConnectedGraph {
-	private Random rnd;
+	private final Random rnd;
 
 	private static final byte[] BITS = {0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, (byte)0x80};
 
@@ -73,8 +66,8 @@ public class ConnectedGraph {
 			}
 
 			inputStream.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException ex) {
+			ex.printStackTrace();
 		}
 	}
 
@@ -93,17 +86,18 @@ public class ConnectedGraph {
 			int  n = 7;
 			for (int y = 0; y < numNodes; y++) {
 				for (int x = y + 1; x < numNodes; x++) {
-					if (++n == 8) {
+					++n;
+					if (n == 8) {
 						b = in.readByte();
 						n = 0;
 					}
-					boolean c = (b & ConnectedGraph.BITS[n]) > 0;
+					boolean c = (b & BITS[n]) > 0;
 					connections[y][x] = c;
 					connections[x][y] = c;
 				}
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException ex) {
+			ex.printStackTrace();
 		}
 	}
 
@@ -115,7 +109,7 @@ public class ConnectedGraph {
 		this.numNodes = numNodes;
 		maxConnections = this.numNodes * (this.numNodes - 1) >> 1;
 
-		connections = new boolean[this.numNodes][this.numNodes];
+		connections = new boolean[numNodes][numNodes];
 	}
 
 	public void setNumConnections(int numConnections) {
@@ -129,7 +123,7 @@ public class ConnectedGraph {
 		else if (numConnections > maxConnections) {
 			throw new IllegalArgumentException(
 					"Too much connections for a graph of this size: " + numConnections + " (size="
-					+ numNodes + ",maxConnections=" + (maxConnections - 1) + ")");
+					+ numNodes + ",maxConnections=" + (maxConnections - 1) + ')');
 		}
 
 		for (y = 0; y < numNodes; y++) {
@@ -227,8 +221,8 @@ public class ConnectedGraph {
 					outputStream.write(connections[y][x] ? 1 : 0);
 				}
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException ex) {
+			ex.printStackTrace();
 		}
 	}
 
@@ -245,6 +239,6 @@ public class ConnectedGraph {
 
 	@Override
 	public String toString() {
-		return ConnectedGraph.array2DToString(connections);
+		return array2DToString(connections);
 	}
 }

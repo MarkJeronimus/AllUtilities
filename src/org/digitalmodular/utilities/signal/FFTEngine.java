@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,23 +14,17 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.digitalmodular.utilities.signal;
 
-import java.util.Objects;
+package org.digitalmodular.utilities.signal;
 
 import org.digitalmodular.utilities.NumberUtilities;
 import org.digitalmodular.utilities.container.Complex2d;
-import static org.digitalmodular.utilities.signal.FFTNormalizationMode.NONE;
+import static org.digitalmodular.utilities.ArrayValidatorUtilities.requireArrayValuesNonNull;
+import static org.digitalmodular.utilities.ValidatorUtilities.requireAtLeast;
+import static org.digitalmodular.utilities.ValidatorUtilities.requireNonNull;
+import static org.digitalmodular.utilities.ValidatorUtilities.requireRange;
 
 /**
  * This class performs conversion between time-domain and frequency-domain signals. <br> Few performance optimizations
@@ -42,83 +36,84 @@ import static org.digitalmodular.utilities.signal.FFTNormalizationMode.NONE;
 // Updated 2014-02-10 Combined two versions and converted in preparation for IFFT, windows and filters.
 // Changed 2016-03-03 Made immutable
 public class FFTEngine {
+	private final int size;
+
+	private FrequencyTransformNormalizationMode normalizationMode = FrequencyTransformNormalizationMode.NONE;
+
 	/**
 	 * log2 of fftSize.
 	 */
-	private final int                  fftBits;
-	/**
-	 * The size of the FFTEngine. Should always be a power of 2.
-	 */
-	private final int                  fftSize;
-	private final FFTNormalizationMode normalization;
+	private final int fftBits;
 
 	/**
 	 * The butterfly constants.
 	 */
-	public final Complex2d[] omega;
+	private final Complex2d[] omega;
 
 	/**
-	 * Constructs an FFTEngine converter and sets an FFTEngine size. See {@link #setFFTSize(int)} for more information
-	 * on the FFTEngine
-	 * size conditions.
+	 * @param size The size of the FFT. Should always be a power of 2.
 	 */
-	public FFTEngine(int fftSize) {
-		this(fftSize, NONE);
-	}
+	public FFTEngine(int size) {
+		requireAtLeast(2, size, "size");
+		if (!NumberUtilities.isPowerOfTwo(size)) {
+			throw new IllegalArgumentException("'size' should be a power of two: " + size);
+		}
 
-	/**
-	 * Constructs an FFTEngine converter and sets an FFTEngine size. See {@link #setFFTSize(int)} for more information
-	 * on the FFTEngine
-	 * size conditions.
-	 */
-	public FFTEngine(int fftSize, FFTNormalizationMode normalization) {
-		Objects.requireNonNull(normalization, "normalization can't be null");
-		if (fftSize < 2)
-			throw new IllegalArgumentException("fftSize should be at least 2: " + fftSize);
-		if (!NumberUtilities.isPowerOfTwo(fftSize))
-			throw new IllegalArgumentException("fftSize should be a power of two: " + fftSize);
+		fftBits = NumberUtilities.log2(size);
 
-		fftBits = NumberUtilities.log2(fftSize);
-
-		this.fftSize = fftSize;
-		this.normalization = normalization;
+		this.size = size;
 
 		// initialize the butterfly constants.
-		omega = new Complex2d[fftSize / 2];
-		double dt = -2 * Math.PI / fftSize;
-		for (int i = fftSize / 2 - 1; i >= 0; i--) {
+		omega = new Complex2d[size / 2];
+		double dt = -2 * Math.PI / size;
+		for (int i = size / 2 - 1; i >= 0; i--) {
 			double angle = dt * i;
 			omega[i] = new Complex2d(Math.cos(angle), Math.sin(angle));
 		}
 	}
 
-	public int getFFTSize() { return fftSize; }
+	public int getSize() {
+		return size;
+	}
+
+	public FrequencyTransformNormalizationMode getNormalizationMode() {
+		return normalizationMode;
+	}
+
+	public void setNormalizationMode(FrequencyTransformNormalizationMode normalizationMode) {
+		this.normalizationMode = requireNonNull(normalizationMode, "normalizationMode");
+	}
 
 	/**
 	 * Calculates the forward FFT using the Cooley-Tukey algorithm.
 	 */
-	public void fftForward(Complex2d[] in, Complex2d[] out) {
+	public void transform(Complex2d[] in, Complex2d[] out) {
+		requireArrayValuesNonNull(in, "in");
+		requireArrayValuesNonNull(out, "out");
+		requireRange(size, size, in.length, "in.length");
+		requireRange(size, size, out.length, "out.length");
+
 		// Load the waveform, index bits reversed.
-		for (int i = fftSize - 1; i >= 0; i--) {
+		for (int i = size - 1; i >= 0; i--) {
 			int j = NumberUtilities.reverseBits(i, fftBits);
 			out[j].set(in[i]);
 
-			switch (normalization) {
+			switch (normalizationMode) {
 				case NONE:
 					break;
 				case ONE_OVER_N:
-					out[j].div(fftSize);
+					out[j].divSelf(size);
 					break;
 				case ONE_OVER_SQRT_N:
-					out[j].div(Math.sqrt(fftSize));
+					out[j].divSelf(Math.sqrt(size));
 					break;
 				default:
-					throw new AssertionError(normalization);
+					throw new AssertionError(normalizationMode);
 			}
 		}
 
 		// Initial number of group operations.
-		int numGroups = fftSize / 2;
+		int numGroups = size / 2;
 
 		// Initial number of butterflies per group.
 		int numPerGroup = 1;
@@ -137,14 +132,14 @@ public class FFTEngine {
 
 					int k = numGroups * butterflyNr;
 
-					// The intermediate operation of okega(k)*x1.
-					temp.set(omega[k]);
-					temp.mul(out[sampleOdd]);
+					// The intermediate operation of omega(k)*x1.
+					temp.set(out[sampleOdd]);
+					temp.mulSelf(omega[k]);
 
 					// Apply the butterfly.
 					out[sampleOdd].set(out[sampleEven]);
-					out[sampleOdd].sub(temp);
-					out[sampleEven].add(temp);
+					out[sampleOdd].subSelf(temp);
+					out[sampleEven].addSelf(temp);
 				}
 			}
 

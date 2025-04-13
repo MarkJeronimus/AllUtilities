@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.math.polynomial;
 
 import org.digitalmodular.utilities.container.Vector2d;
@@ -34,16 +27,16 @@ import org.digitalmodular.utilities.container.Vector2d;
 // Created 2007-12-03
 public abstract class PolynomialInterpolation {
 	protected int      degree;
-	protected double[] coef;
+	protected double[] coefficients;
 
 	public double[] makeDifferentialOf(PolynomialInterpolation poly) {
 		degree = poly.degree - 1;
-		coef = new double[poly.degree];
+		coefficients = new double[poly.degree];
 		for (int i = 0; i <= degree; i++) {
-			coef[i] = poly.coef[i + 1] * (i + 1);
+			coefficients[i] = poly.coefficients[i + 1] * (i + 1);
 		}
 
-		return coef;
+		return coefficients;
 	}
 
 	public abstract double[] makeCoefficients(Vector2d[] points);

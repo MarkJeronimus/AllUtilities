@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.net;
 
 import java.io.IOException;
@@ -36,9 +29,10 @@ import java.util.InvalidPropertiesFormatException;
 // Created 2009-03-??
 @Deprecated
 public class HttpHeader {
-	private HashMap<String, String> fields = new HashMap<>();
+	private final HashMap<String, String> fields = new HashMap<>();
 
-	private HttpHeader() {}
+	private HttpHeader() {
+	}
 
 	public static HttpHeader getHeader(TCPSocket tcpConnection) throws IOException {
 		HttpHeader out = new HttpHeader();
@@ -52,8 +46,8 @@ public class HttpHeader {
 					out.parseHeaderLine(s);
 				}
 			}
-		} catch (NullPointerException e) {
-			throw new IOException("Unexpected end of stream encountered");
+		} catch (NullPointerException ex) {
+			throw new IOException("Unexpected end of stream encountered", ex);
 		}
 		return out;
 	}
@@ -61,7 +55,7 @@ public class HttpHeader {
 	private void parseStatusLine(String s) throws InvalidPropertiesFormatException {
 		int i = s.indexOf(' ');
 		if (i == -1) {
-			throw new InvalidPropertiesFormatException("Invalid initial HTTP response: \"" + s + "\"");
+			throw new InvalidPropertiesFormatException("Invalid initial HTTP response: \"" + s + '"');
 		}
 
 		fields.put("HTTP-Version", s.substring(0, i));
@@ -76,9 +70,9 @@ public class HttpHeader {
 	}
 
 	private void parseHeaderLine(String s) throws InvalidPropertiesFormatException {
-		int i = s.indexOf(":");
+		int i = s.indexOf(':');
 		if (i == -1) {
-			throw new InvalidPropertiesFormatException("Invalid initial HTTP response: \"" + s + "\"");
+			throw new InvalidPropertiesFormatException("Invalid initial HTTP response: \"" + s + '"');
 		}
 
 		fields.put(s.substring(0, i), s.substring(i + 2).trim());
@@ -101,7 +95,7 @@ public class HttpHeader {
 
 		try {
 			return Integer.parseInt(sizeString);
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException ignored) {
 			return 0;
 		}
 	}

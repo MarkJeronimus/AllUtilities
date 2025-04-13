@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,22 +14,16 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities;
 
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
@@ -44,8 +38,6 @@ import org.digitalmodular.utilities.annotation.UtilityClass;
 // Created 2018-01-10
 @UtilityClass
 public final class ClipboardUtilities {
-	private ClipboardUtilities() { throw new AssertionError(); }
-
 	private static final @Nullable Clipboard CLIPBOARD;
 
 	static {
@@ -58,21 +50,30 @@ public final class ClipboardUtilities {
 		CLIPBOARD = clipboard;
 	}
 
-	public static @Nullable String getStringFromClipboard() {
-		if (CLIPBOARD == null)
+	public static void clear(Transferable t) {
+		if (CLIPBOARD != null) {
+			CLIPBOARD.setContents(t, null);
+		}
+	}
+
+	public static @Nullable String getAsString() {
+		if (CLIPBOARD == null) {
 			return null;
+		}
 
 		try {
-			Transferable contents = CLIPBOARD.getContents(null);
-			if (contents != null && contents.isDataFlavorSupported(DataFlavor.stringFlavor))
-				return (String)contents.getTransferData(DataFlavor.stringFlavor);
-		} catch (UnsupportedFlavorException | IOException | IllegalStateException ignored) { }
+			return (String)CLIPBOARD.getData(DataFlavor.stringFlavor);
+		} catch (UnsupportedFlavorException | IOException | IllegalStateException ignored) {
+		}
 
 		return null;
 	}
 
-	public static void clearClipboard(Transferable t) {
-		if (CLIPBOARD != null)
-			CLIPBOARD.setContents(t, null);
+	public static void setString(String text) {
+		if (CLIPBOARD == null) {
+			return;
+		}
+
+		CLIPBOARD.setContents(new StringSelection(text), null);
 	}
 }

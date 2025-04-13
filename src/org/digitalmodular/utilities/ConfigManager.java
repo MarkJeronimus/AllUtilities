@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities;
 
 import java.io.BufferedReader;
@@ -32,6 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -40,8 +34,6 @@ import java.util.TreeMap;
  */
 // Created 2008-03-06
 public final class ConfigManager {
-	private ConfigManager() { throw new AssertionError(); }
-
 	private static final String FILENAME = "config.ini";
 
 	private static final TreeMap<String, String> data = new TreeMap<>();
@@ -53,21 +45,23 @@ public final class ConfigManager {
 	public static void revert() {
 		data.clear();
 
-		try (BufferedReader in = new BufferedReader(new FileReader(FILENAME))) {
+		try (BufferedReader in = new BufferedReader(new FileReader(FILENAME, StandardCharsets.UTF_8))) {
 			String s;
 			while ((s = in.readLine()) != null) {
 				int    split = s.indexOf(' ');
-				String key   = s.substring(0, split++);
+				String key   = s.substring(0, split);
+				split++;
 				String value = s.substring(split);
 				data.put(key, value);
 			}
-		} catch (FileNotFoundException ignored) {} catch (IOException e) {
-			e.printStackTrace();
+		} catch (FileNotFoundException ignored) {
+		} catch (IOException ex) {
+			ex.printStackTrace();
 		}
 	}
 
 	public static void save() {
-		try (BufferedWriter out = new BufferedWriter(new FileWriter(FILENAME))) {
+		try (BufferedWriter out = new BufferedWriter(new FileWriter(FILENAME, StandardCharsets.UTF_8))) {
 			Set<String> keys = data.keySet();
 			for (String key : keys) {
 				out.write(key + ' ' + data.get(key) + '\n');
@@ -118,7 +112,7 @@ public final class ConfigManager {
 		}
 		try {
 			return Integer.parseInt(value);
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException ignored) {
 			return defaultValue;
 		}
 	}
@@ -131,7 +125,7 @@ public final class ConfigManager {
 		}
 		try {
 			return Long.parseLong(value);
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException ignored) {
 			return defaultValue;
 		}
 	}
@@ -144,7 +138,7 @@ public final class ConfigManager {
 		}
 		try {
 			return Float.parseFloat(value);
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException ignored) {
 			return defaultValue;
 		}
 	}
@@ -157,7 +151,7 @@ public final class ConfigManager {
 		}
 		try {
 			return Double.parseDouble(value);
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException ignored) {
 			return defaultValue;
 		}
 	}

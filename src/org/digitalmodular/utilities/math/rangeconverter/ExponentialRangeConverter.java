@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,15 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.digitalmodular.utilities.math.rangeconverter;
@@ -66,16 +58,21 @@ public class ExponentialRangeConverter implements RangeConverter {
 	}
 
 	public static ExponentialRangeConverter fromOffsetBaseExponent(double offset, double base, double exponent) {
-		if (NumberUtilities.isDegenerate(offset))
+		if (NumberUtilities.isDegenerate(offset)) {
 			throw new IllegalArgumentException("offset is degenerate:" + offset);
-		if (NumberUtilities.isDegenerate(base))
+		}
+		if (NumberUtilities.isDegenerate(base)) {
 			throw new IllegalArgumentException("base is degenerate:" + base);
-		if (NumberUtilities.isDegenerate(exponent))
+		}
+		if (NumberUtilities.isDegenerate(exponent)) {
 			throw new IllegalArgumentException("exponent is degenerate:" + exponent);
-		if (base <= 0)
+		}
+		if (base <= 0) {
 			throw new IllegalArgumentException("base must be positive: " + base);
-		if (exponent <= 0)
+		}
+		if (exponent <= 0) {
 			throw new IllegalArgumentException("exponent must be positive: " + exponent);
+		}
 
 		return new ExponentialRangeConverter(offset, base, exponent);
 	}
@@ -85,19 +82,25 @@ public class ExponentialRangeConverter implements RangeConverter {
 	}
 
 	public static ExponentialRangeConverter fromMinMidMax(double min, double mid, double max) {
-		if (NumberUtilities.isDegenerate(min))
+		if (NumberUtilities.isDegenerate(min)) {
 			throw new IllegalArgumentException("min is degenerate:" + min);
-		if (NumberUtilities.isDegenerate(mid))
+		}
+		if (NumberUtilities.isDegenerate(mid)) {
 			throw new IllegalArgumentException("mid is degenerate:" + mid);
-		if (NumberUtilities.isDegenerate(max))
+		}
+		if (NumberUtilities.isDegenerate(max)) {
 			throw new IllegalArgumentException("max is degenerate:" + max);
-		if (mid <= min)
+		}
+		if (mid <= min) {
 			throw new IllegalArgumentException("min should be less than mid: " + min + ", " + mid);
-		if (max <= mid)
+		}
+		if (max <= mid) {
 			throw new IllegalArgumentException("mid should be less than max: " + mid + ", " + max);
-		if (mid - min >= max - mid)
+		}
+		if (mid - min >= max - mid) {
 			throw new IllegalArgumentException("mid-min should be less than max-mid: " + min + ", " + mid + ", " +
 			                                   max);
+		}
 
 		// W|A: solve((b-x)/(a-x)-(c-x)/(b-x),x)
 		double offset   = (min * max - mid * mid) / (min + max - 2 * mid);
@@ -109,15 +112,17 @@ public class ExponentialRangeConverter implements RangeConverter {
 
 	@Override
 	public double toDomain(double value) {
-		if (value < 0 || value > 1)
+		if (value < 0 || value > 1) {
 			new IllegalArgumentException("value must be in the range [0, 1]: " + value);
+		}
 		return offset + base * Math.pow(exponent, value);
 	}
 
 	@Override
 	public double fromDomain(double domain) {
-		if (domain < offset || domain > max)
+		if (domain < offset || domain > max) {
 			new IllegalArgumentException("value must be in the range [" + offset + ", " + max + "]: " + domain);
+		}
 		return Math.log((domain - offset) / base) / logExponent;
 	}
 }

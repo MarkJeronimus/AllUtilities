@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.container;
 
 import static org.digitalmodular.utilities.ValidatorUtilities.requireNonNull;
@@ -38,28 +31,35 @@ public class Tuple<K extends Comparable<K>, V extends Comparable<V>> implements 
 
 	public Tuple(K first, V value) {
 		this.first = requireNonNull(first, "first");
-		this.second = requireNonNull(value, "second");
+		second = requireNonNull(value, "second");
 	}
 
-	public K first()  { return first; }
+	public K first() {
+		return first;
+	}
 
-	public V second() { return second; }
+	public V second() {
+		return second;
+	}
 
 	@Override
 	public int compareTo(Tuple<K, V> o) {
 		int i = first.compareTo(o.first);
-		if (i != 0)
+		if (i != 0) {
 			return i;
+		}
 
 		return second.compareTo(o.second);
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
+		if (this == o) {
 			return true;
-		if (!(o instanceof Tuple))
+		}
+		if (!(o instanceof Tuple)) {
 			return false;
+		}
 
 		Tuple<?, ?> other = (Tuple<?, ?>)o;
 		return first.equals(other.first) && second.equals(other.second);

@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,17 +14,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.container;
+
+import org.digitalmodular.utilities.NumberUtilities;
 
 /**
  * A mutable <u>Range</u> with <u>2</u> degrees of freedom (1 dimension) and <u>i</u>nteger precision. It defines a
@@ -33,8 +28,8 @@ package org.digitalmodular.utilities.container;
  *
  * @author Mark Jeronimus
  */
+// Created 2014-04-14
 public class Range2i {
-
 	private int begin;
 	private int end;
 
@@ -61,45 +56,6 @@ public class Range2i {
 	}
 
 	/**
-	 * Copy constructor.
-	 */
-	public Range2i(Range2i other) {
-		begin = other.begin;
-		end = other.end;
-	}
-
-	/**
-	 * Returns the begin position of the range.
-	 */
-	public int begin() {
-		return begin;
-	}
-
-	/*
-	 * Returns the end position of the range.
-	 */
-	public int end() {
-		return end;
-	}
-
-	/**
-	 * Returns the span of the range.
-	 * <p>
-	 * This does the same as: <tt>(range.end() - range.begin())</tt>.
-	 */
-	public int getSpan() {
-		return end - begin;
-	}
-
-	/**
-	 * Sets the range of this range to that of another range.
-	 */
-	public void set(Range2i other) {
-		begin = other.begin;
-		end = other.end;
-	}
-
-	/**
 	 * Sets the begin and end of the range to new positions.
 	 * <p>
 	 * If the values violate the <tt>begin &lt; end</tt> requirement, they will be swapped.
@@ -112,6 +68,36 @@ public class Range2i {
 		this.end = end;
 
 		return normalize();
+	}
+
+	/**
+	 * Sets the range of this range to that of another range.
+	 */
+	public void set(Range2i other) {
+		begin = other.begin;
+		end = other.end;
+	}
+
+	/**
+	 * Returns true if the range is zero and the range is effectively nonexistent.
+	 */
+	public boolean isEmpty() {
+		return end == begin;
+	}
+
+	/**
+	 * Copy constructor.
+	 */
+	public Range2i(Range2i other) {
+		begin = other.begin;
+		end = other.end;
+	}
+
+	/**
+	 * Returns the begin position of the range.
+	 */
+	public int getBegin() {
+		return begin;
 	}
 
 	/**
@@ -130,6 +116,13 @@ public class Range2i {
 	}
 
 	/**
+	 * Returns the end position of the range.
+	 */
+	public int getEnd() {
+		return end;
+	}
+
+	/**
 	 * Sets the current end of the range to a new position.
 	 * <p>
 	 * This does the same as: <tt>range.set(range.begin(), end)</tt>. If the value violates the <tt>begin &lt; end</tt>
@@ -145,10 +138,33 @@ public class Range2i {
 	}
 
 	/**
-	 * Returns true if the range is zero and the range is effectively nonexistent.
+	 * Add a point to the range.
+	 * <p>
+	 * This extends it to the smallest range that encompasses both the original range and the provided value.
+	 * <p>
+	 * When the range is "empty", adding a point does <strong>not</strong> make a range that only includes the
+	 * specified point. Instead, it encompasses the original 'location' (equal to both begin and end) and the
+	 * specified point.
 	 */
-	public boolean isEmpty() {
-		return end == begin;
+	public void add(int value) {
+		if (value > end) {
+			end = value;
+		} else if (value < begin) {
+			begin = value;
+		}
+	}
+
+	public boolean contains(int value) {
+		return value >= begin && value <= end;
+	}
+
+	/**
+	 * Returns the span of the range.
+	 * <p>
+	 * This does the same as: <tt>(range.end() - range.begin())</tt>.
+	 */
+	public int getSpan() {
+		return end - begin;
 	}
 
 	/**
@@ -163,11 +179,10 @@ public class Range2i {
 	public void drag(int amount) {
 		if (amount > 0 && end + amount < end) {
 			throw new IllegalArgumentException(
-					"This drag would change the span as the right side would exceed the integer-limit");
-		}
-		if (amount < 0 && begin + amount > begin) {
+					"This drag would cause end to integer-overflow");
+		} else if (amount < 0 && begin + amount > begin) {
 			throw new IllegalArgumentException(
-					"This drag would change the span as the left side would exceed the integer-limit");
+					"This drag would cause begin to integer-underflow");
 		}
 
 		begin += amount;
@@ -175,17 +190,35 @@ public class Range2i {
 	}
 
 	/**
-	 *
+	 * Returns the smallest range that contains both given ranges, even if the given ranges don't intersect.
+	 * <p>
+	 * Null-safe. If the parameter is {@code null}, it returns {@code this}.
 	 */
-	private boolean normalize() {
-		if (begin > end) {
-			int temp = begin;
-			begin = end;
-			end = temp;
-			return true;
+	public void union(Range2i other) {
+		if (equals(other)) {
+			return;
 		}
 
-		return false;
+		begin = Math.min(begin, other.begin);
+		end = Math.max(end, other.end);
+	}
+
+	/**
+	 * Returns the largest range that's within both given ranges.
+	 * <p>
+	 * If the ranges don't intersect, an empty range of {@code max(begin, other.begin)} is returned.
+	 * <p>
+	 * Null-safe. If the parameter is {@code null}, it returns {@code this}.
+	 */
+	public void intersect(Range2i other) {
+		if (equals(other)) {
+			return;
+		}
+
+		begin = Math.max(begin, other.begin);
+		end = Math.min(end, other.end);
+
+		end = Math.max(end, begin);
 	}
 
 	/**
@@ -195,6 +228,14 @@ public class Range2i {
 	 */
 	public int clamp(int value) {
 		return Math.min(end, Math.max(begin, value));
+	}
+
+	public double lerp(double position) {
+		return NumberUtilities.lerp(begin, end, position);
+	}
+
+	public double unLerp(double value) {
+		return NumberUtilities.unLerp(begin, end, value);
 	}
 
 	/**
@@ -214,5 +255,47 @@ public class Range2i {
 		if (end > max) {
 			end = max;
 		}
+	}
+
+	/**
+	 *
+	 */
+	private boolean normalize() {
+		if (begin > end) {
+			int temp = begin;
+			begin = end;
+			end = temp;
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+
+		Range2i other = (Range2i)o;
+		return getBegin() == other.getBegin() &&
+		       getEnd() == other.getEnd();
+	}
+
+	@Override
+	public int hashCode() {
+		int hashCode = 0x811C9DC5;
+		hashCode = 0x01000193 * (hashCode ^ getBegin());
+		hashCode = 0x01000193 * (hashCode ^ getEnd());
+		return hashCode;
+	}
+
+	@Override
+	public String toString() {
+		return "[" + begin + ", " + end + ']';
 	}
 }

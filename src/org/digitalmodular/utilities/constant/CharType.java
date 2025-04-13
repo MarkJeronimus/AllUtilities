@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.constant;
 
 /**
@@ -52,24 +45,24 @@ public enum CharType {
 
 		if (c < 128) {
 			if (Constants.isAlpha[c]) {
-				return CharType.LETTER;
+				return LETTER;
 			}
 			if (Constants.isNum[c]) {
-				return CharType.DIGIT;
+				return DIGIT;
 			}
 			if (Constants.isSymbol[c]) {
-				return CharType.SYMBOL;
+				return SYMBOL;
 			}
 			if (Constants.isWhitespace[c]) {
-				return CharType.WHITESPACE;
+				return WHITESPACE;
 			}
 			if (c == '\n' || c == '\r') {
-				return CharType.END_OF_LINE;
+				return END_OF_LINE;
 			}
 			if (c == 0x1A) {
-				return CharType.END_OF_FILE;
+				return END_OF_FILE;
 			}
-			return CharType.CONTROL;
+			return CONTROL;
 		}
 
 		if (Character.isDefined(c)
@@ -78,26 +71,26 @@ public enum CharType {
 			// Arrows [2190..21FF]
 			// Mathematical Operators [2200..22FF]
 			if (c >= 0x2190 && c < 0x22FF) {
-				return CharType.SYMBOL;
+				return SYMBOL;
 			}
 			// Miscellaneous Mathematical Symbols-A [27C0..27EF]
 			// Supplemental Arrows-A [27F0..27FF]
 			if (c >= 0x27C0 && c < 0x27FF) {
-				return CharType.SYMBOL;
+				return SYMBOL;
 			}
 			// Supplemental Arrows-B [2900..297F]
 			// Miscellaneous Mathematical Symbols-B [2980..29FF]
 			// Supplemental Mathematical Operators [2A00..2AFF]
 			if (c >= 0x2900 && c < 0x2AFF) {
-				return CharType.SYMBOL;
+				return SYMBOL;
 			}
 			if (c < 0xA0) {
-				return CharType.CONTROL;
+				return CONTROL;
 			}
 
-			return CharType.UNICODE;
+			return UNICODE;
 		}
 
-		return CharType.NOT_A_CHAR;
+		return NOT_A_CHAR;
 	}
 }

@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.container;
 
 import java.awt.geom.Rectangle2D;
@@ -75,10 +68,11 @@ public class Span implements Comparable<Span>, Serializable {
 	 *                                  properly.
 	 */
 	public static Span getInstance(double begin, double end) {
-		if (begin == 0 && end == 0)
+		if (begin == 0 && end == 0) {
 			return ZERO;
-		else if (begin == 0 && end == 1)
+		} else if (begin == 0 && end == 1) {
 			return UNIT;
+		}
 
 		return new Span(begin, end);
 	}
@@ -86,12 +80,16 @@ public class Span implements Comparable<Span>, Serializable {
 	/**
 	 * Returns the begin position of the span.
 	 */
-	public double getBegin() { return begin; }
+	public double getBegin() {
+		return begin;
+	}
 
 	/**
 	 * Returns the end position of the range.
 	 */
-	public double getEnd() { return end; }
+	public double getEnd() {
+		return end;
+	}
 
 	/**
 	 * Returns the size of this span.
@@ -99,7 +97,9 @@ public class Span implements Comparable<Span>, Serializable {
 	 * This returns the same as {@link #getEnd() getEnd}{@code () - }
 	 * {@link #getBegin() getBegin}{@code ()}.
 	 */
-	public double getSize() { return end - begin; }
+	public double getSize() {
+		return end - begin;
+	}
 
 	/**
 	 * Returns the midpoint of this span.
@@ -118,8 +118,9 @@ public class Span implements Comparable<Span>, Serializable {
 	}
 
 	public Span set(double newBegin, double newEnd) {
-		if (newBegin == begin && newEnd == end)
+		if (newBegin == begin && newEnd == end) {
 			return this;
+		}
 
 		return getInstance(newBegin, newEnd);
 	}
@@ -139,15 +140,17 @@ public class Span implements Comparable<Span>, Serializable {
 	@Override
 	public int compareTo(Span other) {
 		int i = Double.compare(begin, other.begin);
-		if (i != 0)
+		if (i != 0) {
 			return i;
+		}
 		return Double.compare(end, other.end);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null || getClass() != obj.getClass())
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
+		}
 
 		Span other = (Span)obj;
 		return !(Double.doubleToLongBits(begin) != Double.doubleToLongBits(other.begin) ||

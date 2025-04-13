@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.container;
 
 import java.util.Arrays;
@@ -55,7 +48,7 @@ public class DoubleDouble {
 
 	// public static final double MUL_SPLIT = 0x08000001;
 	public static final double POSITIVE_INFINITY = Double.MAX_VALUE / 0x08000001;
-	public static final double NEGATIVE_INFINITY = -DoubleDouble.POSITIVE_INFINITY;
+	public static final double NEGATIVE_INFINITY = -POSITIVE_INFINITY;
 	public static final double HALF_EPSILON      = 1.1102230246251565E-16;
 	public static final double EPSILON           = 1.232595164407831E-32;
 
@@ -106,12 +99,12 @@ public class DoubleDouble {
 	}
 
 	public static DoubleDouble random(Random r) {
-		return new DoubleDouble(r.nextDouble(), r.nextDouble() * DoubleDouble.HALF_EPSILON).normalize();
+		return new DoubleDouble(r.nextDouble(), r.nextDouble() * HALF_EPSILON).normalize();
 	}
 
 	public static DoubleDouble randomDynamic(Random r) {
 		DoubleDouble x = new DoubleDouble(r.nextDouble(), r.nextDouble() / (1L << r.nextInt(11) + 52));
-		x.mulSelf(DoubleDouble.powOf2(r.nextInt(129) - 64));
+		x.mulSelf(powOf2(r.nextInt(129) - 64));
 		x.normalizeSelf();
 		if (r.nextBoolean()) {
 			x.negSelf();
@@ -127,21 +120,21 @@ public class DoubleDouble {
 		if (hi != hi) {
 			return "NaN";
 		}
-		if (hi >= DoubleDouble.POSITIVE_INFINITY) {
+		if (hi >= POSITIVE_INFINITY) {
 			return "Infinity";
 		}
-		if (hi <= DoubleDouble.NEGATIVE_INFINITY) {
+		if (hi <= NEGATIVE_INFINITY) {
 			return "-Infinity";
 		}
-		return DoubleDouble.toString(this, 10);
+		return toString(this, 10);
 	}
 
 	/**
 	 * Format a string in an easily readable format. The number is represented as scientific form on the following
 	 * conditions: <br> <ol> <li>(for big numbers) When the first digit right of the decimal point would not be within
 	 * the first minPrecision positions of the string, <br> <li>(for small numbers) When the most significant digit
-	 * would not be within the first minPrecision positions of the string </ol> <br> Where: <code>minPrecision =
-	 * floor(105 / log2(base) + 1)</code>
+	 * would not be within the first minPrecision positions of the string </ol> <br> Where: {@code minPrecision =
+	 * floor(105 / log2(base) + 1)}
 	 */
 	public static String toString(DoubleDouble dd, int base) {
 		double digitsPerBit = Math.log(2) / Math.log(base);
@@ -157,7 +150,7 @@ public class DoubleDouble {
 
 		// Get the raw digit representation.
 		char[] chars = new char[precision + 1];
-		int    exp   = DoubleDouble.to_digits(dd, chars, precision, base) + 1;
+		int    exp   = to_digits(dd, chars, precision, base) + 1;
 
 		// Get some properties.
 		int left  = Math.max(0, -exp);
@@ -189,10 +182,10 @@ public class DoubleDouble {
 			}
 			out.append('.');
 			if (left > 0) {
-				if (DoubleDouble.ZEROES.length < left) {
+				if (ZEROES.length < left) {
 					System.err.println(left);
 				} else {
-					out.append(DoubleDouble.ZEROES, 0, left);
+					out.append(ZEROES, 0, left);
 				}
 			}
 			out.append(chars, right, precision - right);
@@ -223,7 +216,7 @@ public class DoubleDouble {
 			temp.mulSelf(p);
 		}
 
-		// Fix roundoff errors. (eg. floor(log10(1e9))=floor(8.9999~)=8)
+		// Fix round-off errors. (eg. floor(log10(1e9))=floor(8.9999~)=8)
 		if (temp.hi >= base) {
 			exp++;
 			temp.hi /= base;
@@ -253,7 +246,7 @@ public class DoubleDouble {
 			throw new RuntimeException("Negative leading digit.");
 		}
 
-		// Fix negative digits due to roundoff error in exponent.
+		// Fix negative digits due to round-off error in exponent.
 		for (int i = numDigits - 1; i > 0; i--) {
 			if (s[i] >= 32768) {
 				s[i - 1]--;
@@ -268,7 +261,8 @@ public class DoubleDouble {
 			int i = precision - 1;
 			while (i > 0 && s[i] >= base) {
 				s[i] -= base;
-				s[--i]++;
+				--i;
+				s[i]++;
 			}
 		}
 		s[precision] = 0;
@@ -277,20 +271,22 @@ public class DoubleDouble {
 		if (s[0] >= base) {
 			exp++;
 			for (int i = precision; i >= 1; ) {
-				s[i] = s[--i];
+				--i;
+				s[i] = s[i];
 			}
 		}
 
 		// Convert to ASCII.
 		for (int i = 0; i < precision; i++) {
-			s[i] = DoubleDouble.BASE_36_TABLE[s[i]];
+			s[i] = BASE_36_TABLE[s[i]];
 		}
 
 		// If first digit became zero, and exp > 0, shift left.
 		if (s[0] == '0' && exp < 32768) {
 			exp--;
 			for (int i = 0; i < precision; ) {
-				s[i] = s[++i];
+				++i;
+				s[i] = s[i];
 			}
 		}
 
@@ -308,7 +304,7 @@ public class DoubleDouble {
 	public void normalizeSelf() {
 		double a = hi;
 		hi = a + lo;
-		lo = lo + (a - hi);
+		lo += (a - hi);
 	}
 
 	public int intValue() {
@@ -653,7 +649,7 @@ public class DoubleDouble {
 		b = e + d;
 		lo = d + (e - b) + (y.lo - (f + g) + (f - lo));
 		hi = b + lo;
-		lo = lo + (b - hi);
+		lo += (b - hi);
 	}
 
 	public DoubleDouble subFast(DoubleDouble y) {
@@ -977,7 +973,7 @@ public class DoubleDouble {
 		e = 0x08000001 * g;
 		e += g - e;
 		f = g - e;
-		a = a * g;
+		a *= g;
 		e = c * e - a + (c * f + d * e) + d * f;
 		e += b * g;
 		b = a + e;
@@ -1016,7 +1012,7 @@ public class DoubleDouble {
 		e = 0x08000001 * g;
 		e += g - e;
 		f = g - e;
-		a = a * g;
+		a *= g;
 		e = c * e - a + (c * f + d * e) + d * f;
 		e += b * g;
 		b = a + e;
@@ -1041,7 +1037,7 @@ public class DoubleDouble {
 		b = a * a - c + a * b * 2 + b * b;
 		a = hi - c;
 		c = hi - a;
-		c = (a + (hi - (c + a) + (c - c) + lo - b)) * d * 0.5;
+		c = (a + (hi - (c + a) + (0.0) + lo - b)) * d * 0.5;
 		a = e + c;
 		b = e - a;
 		return new DoubleDouble(a, e - (b + a) + (b + c));
@@ -1062,7 +1058,7 @@ public class DoubleDouble {
 		b = a * a - c + a * b * 2 + b * b;
 		a = hi - c;
 		c = hi - a;
-		c = (a + (hi - (c + a) + (c - c) + lo - b)) * d * 0.5;
+		c = (a + (hi - (c + a) + (0.0) + lo - b)) * d * 0.5;
 		hi = e + c;
 		b = e - hi;
 		lo = e - (b + hi) + (b + c);
@@ -1136,7 +1132,8 @@ public class DoubleDouble {
 			f = k * m - o + (k * n + l * m) + l * n + (f * a + e * b);
 			e = o + f;
 			f += o - e;
-			n = g / ++q;
+			++q;
+			n = g / q;
 			k = 0x08000001 * n;
 			k += n - k;
 			l = n - k;
@@ -1155,7 +1152,7 @@ public class DoubleDouble {
 			j = i * j - m + (i * l + k * j) + k * l + (f * g + e * h);
 			i = m + j;
 			j += m - i;
-		} while (i > 1e-40 || i < -1e-40);
+		} while (i > 1.0e-40 || i < -1.0e-40);
 		if (s < 0) {
 			s = -s;
 			a = 0.5;
@@ -1244,7 +1241,8 @@ public class DoubleDouble {
 			f = k * m - o + (k * n + l * m) + l * n + (f * a + e * b);
 			e = o + f;
 			f += o - e;
-			n = g / ++q;
+			++q;
+			n = g / q;
 			k = 0x08000001 * n;
 			k += n - k;
 			l = n - k;
@@ -1263,7 +1261,7 @@ public class DoubleDouble {
 			j = i * j - m + (i * l + k * j) + k * l + (f * g + e * h);
 			i = m + j;
 			j += m - i;
-		} while (i > 1e-40 || i < -1e-40);
+		} while (i > 1.0e-40 || i < -1.0e-40);
 		if (s < 0) {
 			s = -s;
 			a = 0.5;
@@ -1354,7 +1352,8 @@ public class DoubleDouble {
 			f = k * m - o + (k * n + l * m) + l * n + (f * a + e * b);
 			e = o + f;
 			f += o - e;
-			n = g / ++q;
+			++q;
+			n = g / q;
 			k = 0x08000001 * n;
 			k += n - k;
 			l = n - k;
@@ -1373,7 +1372,7 @@ public class DoubleDouble {
 			j = i * j - m + (i * l + k * j) + k * l + (f * g + e * h);
 			i = m + j;
 			j += m - i;
-		} while (i > 1e-40 || i < -1e-40);
+		} while (i > 1.0e-40 || i < -1.0e-40);
 		if (t < 0) {
 			t = -t;
 			k = 0.5;
@@ -1403,7 +1402,8 @@ public class DoubleDouble {
 		d = g - b;
 		e = hi * g;
 		b = a * b - e + (a * d + c * b) + c * d + (lo * g + hi * h);
-		a = --e + b;
+		--e;
+		a = e + b;
 		b += e - a;
 		c = a + s;
 		d = a - c;
@@ -1480,7 +1480,8 @@ public class DoubleDouble {
 			f = k * m - o + (k * n + l * m) + l * n + (f * a + e * b);
 			e = o + f;
 			f += o - e;
-			n = g / ++q;
+			++q;
+			n = g / q;
 			k = 0x08000001 * n;
 			k += n - k;
 			l = n - k;
@@ -1499,7 +1500,7 @@ public class DoubleDouble {
 			j = i * j - m + (i * l + k * j) + k * l + (f * g + e * h);
 			i = m + j;
 			j += m - i;
-		} while (i > 1e-40 || i < -1e-40);
+		} while (i > 1.0e-40 || i < -1.0e-40);
 		if (t < 0) {
 			t = -t;
 			k = 0.5;
@@ -1529,7 +1530,8 @@ public class DoubleDouble {
 		d = g - b;
 		e = hi * g;
 		lo = a * b - e + (a * d + c * b) + c * d + (lo * g + hi * h);
-		a = --e + lo;
+		--e;
+		a = e + lo;
 		lo += e - a;
 		c = a + s;
 		d = a - c;
@@ -1574,7 +1576,7 @@ public class DoubleDouble {
 		lo = 0;
 		while (e > 0) {
 			if ((e & 1) > 0) {
-				this.mulSelf(temp);
+				mulSelf(temp);
 			}
 			temp.sqrSelf();
 			e >>= 1;
@@ -1590,7 +1592,7 @@ public class DoubleDouble {
 
 	public void powSelf(double y) {
 		logSelf();
-		this.mulSelf(y);
+		mulSelf(y);
 		expSelf();
 	}
 
@@ -1600,7 +1602,7 @@ public class DoubleDouble {
 
 	public void powSelf(DoubleDouble y) {
 		logSelf();
-		this.mulSelf(y);
+		mulSelf(y);
 		expSelf();
 	}
 
@@ -1640,7 +1642,7 @@ public class DoubleDouble {
 			e = 0x08000001 * g;
 			e += g - e;
 			f = g - e;
-			a = a * g;
+			a *= g;
 			e = c * e - a + (c * f + d * e) + d * f;
 			e += b * g;
 			b = a + e;
@@ -1682,7 +1684,7 @@ public class DoubleDouble {
 				h += j - g;
 			}
 			f = 0x08000001 * k;
-			f = f + (k - f);
+			f += (k - f);
 			i = k - f;
 			j = k * k;
 			i = f * f - j + f * i * 2 + i * i;
@@ -1781,7 +1783,7 @@ public class DoubleDouble {
 			e = 0x08000001 * g;
 			e += g - e;
 			f = g - e;
-			a = a * g;
+			a *= g;
 			e = c * e - a + (c * f + d * e) + d * f;
 			e += b * g;
 			b = a + e;
@@ -1824,7 +1826,7 @@ public class DoubleDouble {
 				h += j - g;
 			}
 			f = 0x08000001 * k;
-			f = f + (k - f);
+			f += (k - f);
 			i = k - f;
 			j = k * k;
 			i = f * f - j + f * i * 2 + i * i;
@@ -1893,7 +1895,7 @@ public class DoubleDouble {
 
 	public void rootSelf(double y) {
 		logSelf();
-		this.divSelf(y);
+		divSelf(y);
 		expSelf();
 	}
 
@@ -1912,7 +1914,7 @@ public class DoubleDouble {
 
 	public void rootSelf(DoubleDouble y) {
 		logSelf();
-		this.divSelf(y);
+		divSelf(y);
 		expSelf();
 	}
 }

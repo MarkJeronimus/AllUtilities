@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.encoding;
 
 import java.util.Arrays;
@@ -37,7 +30,7 @@ import java.util.TreeMap;
 public final class CodePoint {
 	// A map that maps the name of the blocks to the block instances. (Filled
 	// automatically by the constructor of each instance)
-	final static         Map<String, UnicodeBlock> blocksByName                            = new TreeMap<>();
+	static final         Map<String, UnicodeBlock> blocksByName                            = new TreeMap<>();
 	// Some variables are dependent on the next 179 constants and 2 tables.
 	// Don't shuffle/insert/delete any of these variables/values unless you are
 	// revisiting everything, as functionality WILL be lost.
@@ -653,421 +646,303 @@ public final class CodePoint {
 			0x100000, 0x110000, 65534, "2.0");
 	// Array of all unicode blocks in correct order:
 	public static final  UnicodeBlock[]            blockInstances                          = { //
-	                                                                                           CodePoint
-			                                                                                           .BASIC_LATIN, //
-	                                                                                           CodePoint
-			                                                                                           .LATIN_1_SUPPLEMENT,
-	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .LATIN_EXTENDED_A,
-	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .LATIN_EXTENDED_B,
-	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .IPA_EXTENSIONS,
-	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .SPACING_MODIFIER_LETTERS,
-	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .COMBINING_DIACRITICAL_MARKS,
-	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .GREEK_AND_COPTIC,
-	                                                                                           //
-	                                                                                           CodePoint.CYRILLIC, //
-	                                                                                           CodePoint
-			                                                                                           .CYRILLIC_SUPPLEMENT,
-	                                                                                           //
-	                                                                                           CodePoint.ARMENIAN, //
-	                                                                                           CodePoint.HEBREW, //
-	                                                                                           CodePoint.ARABIC, //
-	                                                                                           CodePoint.SYRIAC, //
-	                                                                                           CodePoint
-			                                                                                           .ARABIC_SUPPLEMENT,
-	                                                                                           //
-	                                                                                           CodePoint.THAANA, //
-	                                                                                           CodePoint.NKO, //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK01,
-	                                                                                           //
-	                                                                                           CodePoint.DEVANAGARI, //
-	                                                                                           CodePoint.BENGALI, //
-	                                                                                           CodePoint.GURMUKHI, //
-	                                                                                           CodePoint.GUJARATI, //
-	                                                                                           CodePoint.ORIYA, //
-	                                                                                           CodePoint.TAMIL, //
-	                                                                                           CodePoint.TELUGU, //
-	                                                                                           CodePoint.KANNADA, //
-	                                                                                           CodePoint.MALAYALAM, //
-	                                                                                           CodePoint.SINHALA, //
-	                                                                                           CodePoint.THAI, //
-	                                                                                           CodePoint.LAO, //
-	                                                                                           CodePoint.TIBETAN, //
-	                                                                                           CodePoint.MYANMAR, //
-	                                                                                           CodePoint.GEORGIAN, //
-	                                                                                           CodePoint
-			                                                                                           .HANGUL_JAMO, //
-	                                                                                           CodePoint.ETHIOPIC, //
-	                                                                                           CodePoint
-			                                                                                           .ETHIOPIC_SUPPLEMENT,
-	                                                                                           //
-	                                                                                           CodePoint.CHEROKEE, //
-	                                                                                           CodePoint
-			                                                                                           .UNIFIED_CANADIAN_ABORIGINAL_SYLLABICS,
-	                                                                                           //
-	                                                                                           CodePoint.OGHAM, //
-	                                                                                           CodePoint.RUNIC, //
-	                                                                                           CodePoint.TAGALOG, //
-	                                                                                           CodePoint.HANUNOO, //
-	                                                                                           CodePoint.BUHID, //
-	                                                                                           CodePoint.TAGBANWA, //
-	                                                                                           CodePoint.KHMER, //
-	                                                                                           CodePoint.MONGOLIAN, //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK02,
-	                                                                                           //
-	                                                                                           CodePoint.LIMBU, //
-	                                                                                           CodePoint.TAI_LE, //
-	                                                                                           CodePoint
-			                                                                                           .NEW_TAI_LUE, //
-	                                                                                           CodePoint.KHMER_SYMBOLS,
-	                                                                                           //
-	                                                                                           CodePoint.BUGINESE, //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK03,
-	                                                                                           //
-	                                                                                           CodePoint.BALINESE, //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK04,
+	                                                                                           BASIC_LATIN, //
+	                                                                                           LATIN_1_SUPPLEMENT,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .PHONETIC_EXTENSIONS,
+	                                                                                           LATIN_EXTENDED_A,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .PHONETIC_EXTENSIONS_SUPPLEMENT,
+	                                                                                           LATIN_EXTENDED_B,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .COMBINING_DIACRITICAL_MARKS_SUPPLEMENT,
+	                                                                                           IPA_EXTENSIONS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .LATIN_EXTENDED_ADDITIONAL,
+	                                                                                           SPACING_MODIFIER_LETTERS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .GREEK_EXTENDED,
+	                                                                                           COMBINING_DIACRITICAL_MARKS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .GENERAL_PUNCTUATION,
+	                                                                                           GREEK_AND_COPTIC,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .SUPERSCRIPTS_AND_SUBSCRIPTS,
+	                                                                                           CYRILLIC, //
+	                                                                                           CYRILLIC_SUPPLEMENT,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .CURRENCY_SYMBOLS,
+	                                                                                           ARMENIAN, //
+	                                                                                           HEBREW, //
+	                                                                                           ARABIC, //
+	                                                                                           SYRIAC, //
+	                                                                                           ARABIC_SUPPLEMENT,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .COMBINING_DIACRITICAL_MARKS_FOR_SYMBOLS,
+	                                                                                           THAANA, //
+	                                                                                           NKO, //
+	                                                                                           RESERVED_BLOCK01,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .LETTERLIKE_SYMBOLS,
+	                                                                                           DEVANAGARI, //
+	                                                                                           BENGALI, //
+	                                                                                           GURMUKHI, //
+	                                                                                           GUJARATI, //
+	                                                                                           ORIYA, //
+	                                                                                           TAMIL, //
+	                                                                                           TELUGU, //
+	                                                                                           KANNADA, //
+	                                                                                           MALAYALAM, //
+	                                                                                           SINHALA, //
+	                                                                                           THAI, //
+	                                                                                           LAO, //
+	                                                                                           TIBETAN, //
+	                                                                                           MYANMAR, //
+	                                                                                           GEORGIAN, //
+	                                                                                           HANGUL_JAMO, //
+	                                                                                           ETHIOPIC, //
+	                                                                                           ETHIOPIC_SUPPLEMENT,
 	                                                                                           //
-	                                                                                           CodePoint.NUMBER_FORMS,
+	                                                                                           CHEROKEE, //
+	                                                                                           UNIFIED_CANADIAN_ABORIGINAL_SYLLABICS,
 	                                                                                           //
-	                                                                                           CodePoint.ARROWS, //
-	                                                                                           CodePoint
-			                                                                                           .MATHEMATICAL_OPERATORS,
+	                                                                                           OGHAM, //
+	                                                                                           RUNIC, //
+	                                                                                           TAGALOG, //
+	                                                                                           HANUNOO, //
+	                                                                                           BUHID, //
+	                                                                                           TAGBANWA, //
+	                                                                                           KHMER, //
+	                                                                                           MONGOLIAN, //
+	                                                                                           RESERVED_BLOCK02,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .MISCELLANEOUS_TECHNICAL,
+	                                                                                           LIMBU, //
+	                                                                                           TAI_LE, //
+	                                                                                           NEW_TAI_LUE, //
+	                                                                                           KHMER_SYMBOLS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .CONTROL_PICTURES,
+	                                                                                           BUGINESE, //
+	                                                                                           RESERVED_BLOCK03,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .OPTICAL_CHARACTER_RECOGNITION,
+	                                                                                           BALINESE, //
+	                                                                                           RESERVED_BLOCK04,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .ENCLOSED_ALPHANUMERICS,
+	                                                                                           PHONETIC_EXTENSIONS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .BOX_DRAWING, //
-	                                                                                           CodePoint
-			                                                                                           .BLOCK_ELEMENTS,
+	                                                                                           PHONETIC_EXTENSIONS_SUPPLEMENT,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .GEOMETRIC_SHAPES,
+	                                                                                           COMBINING_DIACRITICAL_MARKS_SUPPLEMENT,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .MISCELLANEOUS_SYMBOLS,
+	                                                                                           LATIN_EXTENDED_ADDITIONAL,
 	                                                                                           //
-	                                                                                           CodePoint.DINGBATS, //
-	                                                                                           CodePoint
-			                                                                                           .MISCELLANEOUS_MATHEMATICAL_SYMBOLS_A,
+	                                                                                           GREEK_EXTENDED,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .SUPPLEMENTAL_ARROWS_A,
+	                                                                                           GENERAL_PUNCTUATION,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .BRAILLE_PATTERNS,
+	                                                                                           SUPERSCRIPTS_AND_SUBSCRIPTS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .SUPPLEMENTAL_ARROWS_B,
+	                                                                                           CURRENCY_SYMBOLS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .MISCELLANEOUS_MATHEMATICAL_SYMBOLS_B,
+	                                                                                           COMBINING_DIACRITICAL_MARKS_FOR_SYMBOLS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .SUPPLEMENTAL_MATHEMATICAL_OPERATORS,
+	                                                                                           LETTERLIKE_SYMBOLS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .MISCELLANEOUS_SYMBOLS_AND_ARROWS,
+	                                                                                           NUMBER_FORMS,
 	                                                                                           //
-	                                                                                           CodePoint.GLAGOLITIC, //
-	                                                                                           CodePoint
-			                                                                                           .LATIN_EXTENDED_C,
+	                                                                                           ARROWS, //
+	                                                                                           MATHEMATICAL_OPERATORS,
 	                                                                                           //
-	                                                                                           CodePoint.COPTIC, //
-	                                                                                           CodePoint
-			                                                                                           .GEORGIAN_SUPPLEMENT,
+	                                                                                           MISCELLANEOUS_TECHNICAL,
 	                                                                                           //
-	                                                                                           CodePoint.TIFINAGH, //
-	                                                                                           CodePoint
-			                                                                                           .ETHIOPIC_EXTENDED,
+	                                                                                           CONTROL_PICTURES,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK05,
+	                                                                                           OPTICAL_CHARACTER_RECOGNITION,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .SUPPLEMENTAL_PUNCTUATION,
+	                                                                                           ENCLOSED_ALPHANUMERICS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .CJK_RADICALS_SUPPLEMENT,
+	                                                                                           BOX_DRAWING, //
+	                                                                                           BLOCK_ELEMENTS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .KANGXI_RADICALS,
+	                                                                                           GEOMETRIC_SHAPES,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK06,
+	                                                                                           MISCELLANEOUS_SYMBOLS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .IDEOGRAPHIC_DESCRIPTION_CHARACTERS,
+	                                                                                           DINGBATS, //
+	                                                                                           MISCELLANEOUS_MATHEMATICAL_SYMBOLS_A,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .CJK_SYMBOLS_AND_PUNCTUATION,
+	                                                                                           SUPPLEMENTAL_ARROWS_A,
 	                                                                                           //
-	                                                                                           CodePoint.HIRAGANA, //
-	                                                                                           CodePoint.KATAKANA, //
-	                                                                                           CodePoint.BOPOMOFO, //
-	                                                                                           CodePoint
-			                                                                                           .HANGUL_COMPATIBILITY_JAMO,
+	                                                                                           BRAILLE_PATTERNS,
 	                                                                                           //
-	                                                                                           CodePoint.KANBUN, //
-	                                                                                           CodePoint
-			                                                                                           .BOPOMOFO_EXTENDED,
+	                                                                                           SUPPLEMENTAL_ARROWS_B,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .CJK_STROKES, //
-	                                                                                           CodePoint
-			                                                                                           .KATAKANA_PHONETIC_EXTENSIONS,
+	                                                                                           MISCELLANEOUS_MATHEMATICAL_SYMBOLS_B,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .ENCLOSED_CJK_LETTERS_AND_MONTHS,
+	                                                                                           SUPPLEMENTAL_MATHEMATICAL_OPERATORS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .CJK_COMPATIBILITY,
+	                                                                                           MISCELLANEOUS_SYMBOLS_AND_ARROWS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A,
+	                                                                                           GLAGOLITIC, //
+	                                                                                           LATIN_EXTENDED_C,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .YIJING_HEXAGRAM_SYMBOLS,
+	                                                                                           COPTIC, //
+	                                                                                           GEORGIAN_SUPPLEMENT,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .CJK_UNIFIED_IDEOGRAPHS,
+	                                                                                           TIFINAGH, //
+	                                                                                           ETHIOPIC_EXTENDED,
 	                                                                                           //
-	                                                                                           CodePoint.YI_SYLLABLES,
+	                                                                                           RESERVED_BLOCK05,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .YI_RADICALS, //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK07,
+	                                                                                           SUPPLEMENTAL_PUNCTUATION,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .MODIFIER_TONE_LETTERS,
+	                                                                                           CJK_RADICALS_SUPPLEMENT,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .LATIN_EXTENDED_D,
+	                                                                                           KANGXI_RADICALS,
 	                                                                                           //
-	                                                                                           CodePoint.SYLOTI_NAGRI,
+	                                                                                           RESERVED_BLOCK06,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK08,
+	                                                                                           IDEOGRAPHIC_DESCRIPTION_CHARACTERS,
 	                                                                                           //
-	                                                                                           CodePoint.PHAGS_PA, //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK09,
+	                                                                                           CJK_SYMBOLS_AND_PUNCTUATION,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .HANGUL_SYLLABLES,
+	                                                                                           HIRAGANA, //
+	                                                                                           KATAKANA, //
+	                                                                                           BOPOMOFO, //
+	                                                                                           HANGUL_COMPATIBILITY_JAMO,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK10,
+	                                                                                           KANBUN, //
+	                                                                                           BOPOMOFO_EXTENDED,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .HIGH_SURROGATES,
+	                                                                                           CJK_STROKES, //
+	                                                                                           KATAKANA_PHONETIC_EXTENSIONS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .HIGH_PRIVATE_USE_SURROGATES,
+	                                                                                           ENCLOSED_CJK_LETTERS_AND_MONTHS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .LOW_SURROGATES,
+	                                                                                           CJK_COMPATIBILITY,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .PRIVATE_USE_AREA,
+	                                                                                           CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .CJK_COMPATIBILITY_IDEOGRAPHS,
+	                                                                                           YIJING_HEXAGRAM_SYMBOLS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .ALPHABETIC_PRESENTATION_FORMS,
+	                                                                                           CJK_UNIFIED_IDEOGRAPHS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .ARABIC_PRESENTATION_FORMS_A,
+	                                                                                           YI_SYLLABLES,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .VARIATION_SELECTORS,
+	                                                                                           YI_RADICALS, //
+	                                                                                           RESERVED_BLOCK07,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .VERTICAL_FORMS,
+	                                                                                           MODIFIER_TONE_LETTERS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .COMBINING_HALF_MARKS,
+	                                                                                           LATIN_EXTENDED_D,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .CJK_COMPATIBILITY_FORMS,
+	                                                                                           SYLOTI_NAGRI,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .SMALL_FORM_VARIANTS,
+	                                                                                           RESERVED_BLOCK08,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .ARABIC_PRESENTATION_FORMS_B,
+	                                                                                           PHAGS_PA, //
+	                                                                                           RESERVED_BLOCK09,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .HALFWIDTH_AND_FULLWIDTH_FORMS,
+	                                                                                           HANGUL_SYLLABLES,
 	                                                                                           //
-	                                                                                           CodePoint.SPECIALS, //
-	                                                                                           CodePoint
-			                                                                                           .LINEAR_B_SYLLABARY,
+	                                                                                           RESERVED_BLOCK10,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .LINEAR_B_IDEOGRAMS,
+	                                                                                           HIGH_SURROGATES,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .AEGEAN_NUMBERS,
+	                                                                                           HIGH_PRIVATE_USE_SURROGATES,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .ANCIENT_GREEK_NUMBERS,
+	                                                                                           LOW_SURROGATES,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK11,
+	                                                                                           PRIVATE_USE_AREA,
 	                                                                                           //
-	                                                                                           CodePoint.OLD_ITALIC, //
-	                                                                                           CodePoint.GOTHIC, //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK12,
+	                                                                                           CJK_COMPATIBILITY_IDEOGRAPHS,
 	                                                                                           //
-	                                                                                           CodePoint.UGARITIC, //
-	                                                                                           CodePoint
-			                                                                                           .OLD_PERSIAN, //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK13,
+	                                                                                           ALPHABETIC_PRESENTATION_FORMS,
 	                                                                                           //
-	                                                                                           CodePoint.DESERET, //
-	                                                                                           CodePoint.SHAVIAN, //
-	                                                                                           CodePoint.OSMANYA, //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK14,
+	                                                                                           ARABIC_PRESENTATION_FORMS_A,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .CYPRIOT_SYLLABARY,
+	                                                                                           VARIATION_SELECTORS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK15,
+	                                                                                           VERTICAL_FORMS,
 	                                                                                           //
-	                                                                                           CodePoint.PHOENICIAN, //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK16,
+	                                                                                           COMBINING_HALF_MARKS,
 	                                                                                           //
-	                                                                                           CodePoint.KHAROSHTHI, //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK17,
+	                                                                                           CJK_COMPATIBILITY_FORMS,
 	                                                                                           //
-	                                                                                           CodePoint.CUNEIFORM, //
-	                                                                                           CodePoint
-			                                                                                           .CUNEIFORM_NUMBERS_AND_PUNCTUATION,
+	                                                                                           SMALL_FORM_VARIANTS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK18,
+	                                                                                           ARABIC_PRESENTATION_FORMS_B,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .BYZANTINE_MUSICAL_SYMBOLS,
+	                                                                                           HALFWIDTH_AND_FULLWIDTH_FORMS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .MUSICAL_SYMBOLS,
+	                                                                                           SPECIALS, //
+	                                                                                           LINEAR_B_SYLLABARY,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .ANCIENT_GREEK_MUSICAL_NOTATION,
+	                                                                                           LINEAR_B_IDEOGRAMS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK19,
+	                                                                                           AEGEAN_NUMBERS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .TAI_XUAN_JING_SYMBOLS,
+	                                                                                           ANCIENT_GREEK_NUMBERS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .COUNTING_ROD_NUMERALS,
+	                                                                                           RESERVED_BLOCK11,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK20,
+	                                                                                           OLD_ITALIC, //
+	                                                                                           GOTHIC, //
+	                                                                                           RESERVED_BLOCK12,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .MATHEMATICAL_ALPHANUMERIC_SYMBOLS,
+	                                                                                           UGARITIC, //
+	                                                                                           OLD_PERSIAN, //
+	                                                                                           RESERVED_BLOCK13,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK21,
+	                                                                                           DESERET, //
+	                                                                                           SHAVIAN, //
+	                                                                                           OSMANYA, //
+	                                                                                           RESERVED_BLOCK14,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .CJK_UNIFIED_IDEOGRAPHS_EXTENSION_B,
+	                                                                                           CYPRIOT_SYLLABARY,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK22,
+	                                                                                           RESERVED_BLOCK15,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .CJK_COMPATIBILITY_IDEOGRAPHS_SUPPLEMENT,
+	                                                                                           PHOENICIAN, //
+	                                                                                           RESERVED_BLOCK16,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK23,
+	                                                                                           KHAROSHTHI, //
+	                                                                                           RESERVED_BLOCK17,
 	                                                                                           //
-	                                                                                           CodePoint.TAGS, //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK24,
+	                                                                                           CUNEIFORM, //
+	                                                                                           CUNEIFORM_NUMBERS_AND_PUNCTUATION,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .VARIATION_SELECTORS_SUPPLEMENT,
+	                                                                                           RESERVED_BLOCK18,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .RESERVED_BLOCK25,
+	                                                                                           BYZANTINE_MUSICAL_SYMBOLS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .SUPPLEMENTARY_PRIVATE_USE_AREA_A,
+	                                                                                           MUSICAL_SYMBOLS,
 	                                                                                           //
-	                                                                                           CodePoint
-			                                                                                           .SUPPLEMENTARY_PRIVATE_USE_AREA_B,
+	                                                                                           ANCIENT_GREEK_MUSICAL_NOTATION,
+	                                                                                           //
+	                                                                                           RESERVED_BLOCK19,
+	                                                                                           //
+	                                                                                           TAI_XUAN_JING_SYMBOLS,
+	                                                                                           //
+	                                                                                           COUNTING_ROD_NUMERALS,
+	                                                                                           //
+	                                                                                           RESERVED_BLOCK20,
+	                                                                                           //
+	                                                                                           MATHEMATICAL_ALPHANUMERIC_SYMBOLS,
+	                                                                                           //
+	                                                                                           RESERVED_BLOCK21,
+	                                                                                           //
+	                                                                                           CJK_UNIFIED_IDEOGRAPHS_EXTENSION_B,
+	                                                                                           //
+	                                                                                           RESERVED_BLOCK22,
+	                                                                                           //
+	                                                                                           CJK_COMPATIBILITY_IDEOGRAPHS_SUPPLEMENT,
+	                                                                                           //
+	                                                                                           RESERVED_BLOCK23,
+	                                                                                           //
+	                                                                                           TAGS, //
+	                                                                                           RESERVED_BLOCK24,
+	                                                                                           //
+	                                                                                           VARIATION_SELECTORS_SUPPLEMENT,
+	                                                                                           //
+	                                                                                           RESERVED_BLOCK25,
+	                                                                                           //
+	                                                                                           SUPPLEMENTARY_PRIVATE_USE_AREA_A,
+	                                                                                           //
+	                                                                                           SUPPLEMENTARY_PRIVATE_USE_AREA_B,
 	                                                                                           //
 	};
 	// Array of starting code points for all unicode blocks, in order:
-	private static final int                       blockStartingCodePoints[]               = {//
+	private static final int[]                     blockStartingCodePoints                 = {//
 	                                                                                          0x0000, //
 	                                                                                          0x0080, //
 	                                                                                          0x0100, //
@@ -1248,42 +1123,42 @@ public final class CodePoint {
 	                                                                                          0x0F0000, //
 	                                                                                          0x100000, //
 	};
-	public final static  int                       NUM_UNICODE_BLOCKS                      = UnicodeBlock.count;
+	public static final  int                       NUM_UNICODE_BLOCKS                      = UnicodeBlock.count;
 	// The indices to unicode blocks that belong to one of the scripts:
-	private final static int[]                     CHINESE_INDICES                         = {92, 93, 95, 96, 99, 101,
+	private static final int[]                     CHINESE_INDICES                         = {92, 93, 95, 96, 99, 101,
 	                                                                                          102, 103, 105, 106,
 	                                                                                          107, 109, 125, 131, 132,
 	                                                                                          134};
-	private final static int[]                     JAPANESE_INDICES                        = {92, 93, 95, 96, 97, 98,
+	private static final int[]                     JAPANESE_INDICES                        = {92, 93, 95, 96, 97, 98,
 	                                                                                          101, 103, 104, 105,
 	                                                                                          106, 107, 109, 125, 131,
 	                                                                                          132, 134};
-	private final static int[]                     KOREAN_INDICES                          = {33, 92, 93, 95, 96, 100,
+	private static final int[]                     KOREAN_INDICES                          = {33, 92, 93, 95, 96, 100,
 	                                                                                          101, 103, 105, 106,
 	                                                                                          107, 109, 119, 125, 131,
 	                                                                                          132, 134};
 
 	public static UnicodeBlock getBlock(int codePoint) {
-		if (!CodePoint.isValid(codePoint)) {
+		if (!isValid(codePoint)) {
 			throw new IllegalArgumentException();
 		}
 
 		int left    = 0;
-		int right   = CodePoint.blockStartingCodePoints.length;
+		int right   = blockStartingCodePoints.length;
 		int current = right >>> 1;
 		while (right - left > 1) {
-			if (codePoint >= CodePoint.blockStartingCodePoints[current]) {
+			if (codePoint >= blockStartingCodePoints[current]) {
 				left = current;
 			} else {
 				right = current;
 			}
 			current = right + left >>> 1;
 		}
-		return CodePoint.blockInstances[current];
+		return blockInstances[current];
 	}
 
-	public static final UnicodeBlock getBlockByName(String blockName) {
-		return CodePoint.blocksByName.get(blockName);
+	public static UnicodeBlock getBlockByName(String blockName) {
+		return blocksByName.get(blockName);
 	}
 
 	/**
@@ -1343,15 +1218,19 @@ public final class CodePoint {
 	 * equivalent to the expression: {@code  isHighSurrogate(high) &amp;&amp; isLowSurrogate(low) }
 	 */
 	public static boolean isSurrogatePair(int high, int low) {
-		return CodePoint.isHighSurrogate(high) && CodePoint.isLowSurrogate(low);
+		return isHighSurrogate(high) && isLowSurrogate(low);
 	}
 
 	/**
 	 * Determines whether the specified pair of {@code char} values is a valid surrogate pair.
 	 */
 	public static boolean isSurrogatePair(char[] charArray, int index) {
-		return CodePoint.isHighSurrogate(charArray[index]) && ++index < charArray.length
-		       && CodePoint.isLowSurrogate(charArray[index]);
+		if (!isHighSurrogate(charArray[index])) {
+			return false;
+		}
+		++index;
+		return index < charArray.length
+		       && isLowSurrogate(charArray[index]);
 	}
 
 	/**
@@ -1398,7 +1277,7 @@ public final class CodePoint {
 			return new char[]{(char)codePoint};
 		}
 		char[] result = new char[2];
-		CodePoint.codePointToSurrogate(codePoint, result, 0);
+		codePointToSurrogate(codePoint, result, 0);
 		return result;
 	}
 
@@ -1429,7 +1308,7 @@ public final class CodePoint {
 			charArray[index] = (char)codePoint;
 			return 1;
 		}
-		CodePoint.codePointToSurrogate(codePoint, charArray, index);
+		codePointToSurrogate(codePoint, charArray, index);
 		return 2;
 	}
 
@@ -1450,11 +1329,12 @@ public final class CodePoint {
 	 */
 	public static int charsToCodePoint(char[] charArray, int index) {
 		int c1 = charArray[index];
-		if (CodePoint.isHighSurrogate(c1)) {
-			if (++index < charArray.length) {
+		if (isHighSurrogate(c1)) {
+			++index;
+			if (index < charArray.length) {
 				int c2 = charArray[index];
-				if (CodePoint.isLowSurrogate(c2)) {
-					return CodePoint.surrogateToCodePoint(c1, c2);
+				if (isLowSurrogate(c2)) {
+					return surrogateToCodePoint(c1, c2);
 				}
 			}
 		}
@@ -1462,20 +1342,20 @@ public final class CodePoint {
 	}
 
 	public static boolean isChinese(int block) {
-		return Arrays.binarySearch(CodePoint.CHINESE_INDICES, block) >= 0;
+		return Arrays.binarySearch(CHINESE_INDICES, block) >= 0;
 	}
 
 	public static boolean isJapanese(int block) {
-		return Arrays.binarySearch(CodePoint.JAPANESE_INDICES, block) >= 0;
+		return Arrays.binarySearch(JAPANESE_INDICES, block) >= 0;
 	}
 
 	public static boolean isKorean(int block) {
-		return Arrays.binarySearch(CodePoint.KOREAN_INDICES, block) >= 0;
+		return Arrays.binarySearch(KOREAN_INDICES, block) >= 0;
 	}
 
 	public static final class UnicodeBlock {
-		protected static int    count = 0;
-		public           String name;
+		private static int    count = 0;
+		public         String name;
 		public           int    start;
 		public           int    end;
 		public           int    numCodePoints;
@@ -1483,16 +1363,17 @@ public final class CodePoint {
 		public           int    index;
 
 		UnicodeBlock(String name, int start, int end, int numCodePoints, String version) {
-			CodePoint.blocksByName.put(this.name = name, this);
+			blocksByName.put(this.name = name, this);
 			this.start = start;
 			this.end = end;
 			this.numCodePoints = numCodePoints;
 			this.version = version;
-			index = UnicodeBlock.count++;
+			index = count;
+			count++;
 		}
 
 		@Override
-		public final String toString() {
+		public String toString() {
 			return name;
 		}
 	}

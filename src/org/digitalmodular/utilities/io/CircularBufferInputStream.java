@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.io;
 
 import java.io.IOException;
@@ -77,8 +70,9 @@ public class CircularBufferInputStream extends InputStream {
 	public int read() throws IOException {
 		synchronized (lock) {
 			while (size == 0) {
-				if (eof)
+				if (eof) {
 					return -1;
+				}
 
 				try {
 					lock.wait(10);
@@ -98,8 +92,9 @@ public class CircularBufferInputStream extends InputStream {
 
 	@Override
 	public int read(byte[] b, int off, int len) throws IOException {
-		if (len == 0)
+		if (len == 0) {
 			return 0;
+		}
 
 		requireNonNull(b, "b");
 		requireRange(0, b.length - 1, off, "off");
@@ -108,8 +103,9 @@ public class CircularBufferInputStream extends InputStream {
 		synchronized (lock) {
 			// Block for the first byte
 			while (size == 0) {
-				if (eof)
+				if (eof) {
 					return -1;
+				}
 
 				try {
 					lock.wait(10);
@@ -162,8 +158,9 @@ public class CircularBufferInputStream extends InputStream {
 
 	public void append(int b) {
 		synchronized (lock) {
-			if (buffer.length - size < 1)
+			if (buffer.length - size < 1) {
 				grow();
+			}
 
 			buffer[writePointer] = (byte)b;
 			writePointer = (writePointer + 1) % buffer.length;
@@ -176,8 +173,9 @@ public class CircularBufferInputStream extends InputStream {
 	public void append(byte[] bytes) {
 		synchronized (lock) {
 			int len = bytes.length;
-			if (buffer.length - size < len)
+			if (buffer.length - size < len) {
 				grow();
+			}
 
 			int lenBeforeWrap = Math.min(buffer.length - writePointer, len);
 			int lenAfterWrap  = Math.max(0, writePointer + len - buffer.length);
@@ -196,10 +194,14 @@ public class CircularBufferInputStream extends InputStream {
 			if (sink == null) {
 				sink = new OutputStream() {
 					@Override
-					public void write(int b) { append(b); }
+					public void write(int b) {
+						append(b);
+					}
 
 					@Override
-					public void write(byte b[]) { append(b); }
+					public void write(byte[] b) {
+						append(b);
+					}
 				};
 			}
 

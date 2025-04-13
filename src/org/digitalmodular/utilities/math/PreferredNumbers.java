@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,23 +14,16 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.math;
 
 import java.util.Arrays;
 
 import net.jcip.annotations.NotThreadSafe;
 
-import static org.digitalmodular.utilities.ValidatorUtilities.requireArrayLengthAtLeast;
+import static org.digitalmodular.utilities.ArrayValidatorUtilities.requireArrayLengthAtLeast;
 import static org.digitalmodular.utilities.ValidatorUtilities.requireAtLeast;
 import static org.digitalmodular.utilities.ValidatorUtilities.requireThat;
 
@@ -71,7 +64,6 @@ import static org.digitalmodular.utilities.ValidatorUtilities.requireThat;
 // Created 2015-01-19
 @NotThreadSafe
 public class PreferredNumbers {
-
 	private final int    base;
 	private final int[]  values;
 	private final double logBase;
@@ -98,10 +90,11 @@ public class PreferredNumbers {
 	 */
 	public PreferredNumbers(int base, int... values) {
 		this.base = requireAtLeast(2, base, "base");
-		this.values = (int[])requireArrayLengthAtLeast(2, values, "values");
-		requireThat(values[0] * base > values[values.length - 1],
-		            "'base' must be larger than the quotient between the last and first value: " +
-		            base + ", " + Arrays.toString(values));
+		requireArrayLengthAtLeast(2, values, "values");
+		this.values = values.clone();
+		requireThat(values[0] * base > values[values.length - 1], () ->
+				"'base' must be larger than the quotient between the last and first value: " +
+				base + ", " + Arrays.toString(values));
 
 		logBase = Math.log(base);
 	}
@@ -146,11 +139,13 @@ public class PreferredNumbers {
 		value /= Math.pow(base, exponent);
 
 		// Find the exact exponent.
-		for (int i = values.length - 1; i >= 0; i--)
-			if (value >= values[i])
-				return exponent * 3 + i;
+		for (int i = values.length - 1; i >= 0; i--) {
+			if (value >= values[i]) {
+				return exponent * values.length + i;
+			}
+		}
 
-		return exponent * 3;
+		return exponent * values.length;
 	}
 
 	public int getMantissa(int index) {

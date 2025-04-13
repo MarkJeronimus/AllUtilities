@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.io;
 
 import java.io.FilterInputStream;
@@ -33,8 +26,8 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import static java.util.Objects.requireNonNull;
 
-import org.digitalmodular.utilities.gui.swing.progress.ProgressEvent;
-import org.digitalmodular.utilities.gui.swing.progress.ProgressListener;
+import org.digitalmodular.utilities.graphics.swing.progress.ProgressEvent;
+import org.digitalmodular.utilities.graphics.swing.progress.ProgressListener;
 
 /**
  * An input stream that supports {@link ProgressListener}s.
@@ -48,9 +41,9 @@ import org.digitalmodular.utilities.gui.swing.progress.ProgressListener;
 public class ProgressInputStream extends FilterInputStream {
 	private final List<ProgressListener> listeners = new CopyOnWriteArrayList<>();
 
-	private int length;
-	private int position = 0;
-	private int mark     = 0;
+	private final int length;
+	private       int position = 0;
+	private       int mark     = 0;
 
 	public ProgressInputStream(InputStream in, int length) {
 		super(in);
@@ -120,8 +113,8 @@ public class ProgressInputStream extends FilterInputStream {
 	}
 
 	@Override
-	public synchronized void mark(int readlimit) {
-		super.mark(readlimit);
+	public synchronized void mark(int readLimit) {
+		super.mark(readLimit);
 
 		mark = position;
 	}

@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.plugin;
 
 import java.io.File;
@@ -45,11 +38,11 @@ import org.digitalmodular.utilities.Debug;
 public class PluginManager<T> {
 	private static ClassLoader classLoader = PluginManager.class.getClassLoader();
 
-	private File   rootPath;
-	private File   pluginsPath;
-	private String pluginsPackage;
+	private       File   rootPath;
+	private final File   pluginsPath;
+	private final String pluginsPackage;
 
-	private ArrayList<Plugin<T>> pluginEntries = new ArrayList<>();
+	private final ArrayList<Plugin<T>> pluginEntries = new ArrayList<>();
 
 	/**
 	 * Set up a new plugin manager. The plugins will be searched inside directories within a directory called "plugins"
@@ -73,7 +66,8 @@ public class PluginManager<T> {
 	public PluginManager(Object parent, String pluginsPackage) {
 		try {
 			rootPath = new File(parent.getClass().getResource("/").toURI());
-		} catch (URISyntaxException e) {}
+		} catch (URISyntaxException ignored) {
+		}
 
 		this.pluginsPackage = pluginsPackage;
 
@@ -110,7 +104,7 @@ public class PluginManager<T> {
 		for (File f : folder.listFiles()) {
 			String filename = f.getName();
 			if (f.isFile() && filename.equals("PluginEntry.class")) {
-				return pluginsPackage + "." + folder.getName() + "." + filename.substring(0, filename.length() - 6);
+				return pluginsPackage + '.' + folder.getName() + '.' + filename.substring(0, filename.length() - 6);
 			}
 		}
 
@@ -122,15 +116,15 @@ public class PluginManager<T> {
 			String pluginFile = pluginsPackage + findJARPluginClass(jarFile.getPath());
 
 			Debug.println("Plugin JAR was found: " + pluginFile);
-			PluginManager.addJARToClassPath(jarFile);
+			addJARToClassPath(jarFile);
 
 			return pluginFile;
-		} catch (PluginNotFoundException e) {
+		} catch (PluginNotFoundException ex) {
 			// Change error to warning.
-			Debug.println("Warning: " + e.getMessage());
-		} catch (IOException e) {
+			Debug.println("Warning: " + ex.getMessage());
+		} catch (IOException ex) {
 			// Change error to warning.
-			Debug.println("Warning: " + "Can not read JAR: " + jarFile.getPath() + ". Cause: " + e.getMessage());
+			Debug.println("Warning: " + "Can not read JAR: " + jarFile.getPath() + ". Cause: " + ex.getMessage());
 		}
 
 		return null;
@@ -159,7 +153,7 @@ public class PluginManager<T> {
 
 	private static void addJARToClassPath(File f) {
 		try {
-			URL[] oldURLs = ((URLClassLoader)PluginManager.classLoader).getURLs();
+			URL[] oldURLs = ((URLClassLoader)classLoader).getURLs();
 
 			URL[] newURLs = new URL[oldURLs.length + 1];
 
@@ -167,16 +161,17 @@ public class PluginManager<T> {
 
 			newURLs[newURLs.length - 1] = f.toURI().toURL();
 
-			PluginManager.classLoader = new URLClassLoader(newURLs, PluginManager.classLoader);
-		} catch (Exception e) {}
+			classLoader = new URLClassLoader(newURLs, classLoader);
+		} catch (Exception ex) {
+		}
 	}
 
 	private Plugin<T> loadPluginEntry(String pluginFile) {
 		try {
-			Class<T> entryClass = (Class<T>)PluginManager.classLoader.loadClass(pluginFile);
+			Class<T> entryClass = (Class<T>)classLoader.loadClass(pluginFile);
 			return (Plugin<T>)entryClass.getConstructor().newInstance();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 
 		return null;

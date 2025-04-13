@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,18 +14,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.math;
 
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Random;
 
@@ -34,7 +28,7 @@ import org.digitalmodular.utilities.StaticRandom;
 /**
  * A set of tools for working and generating random numbers and hashes.
  * <p>
- * For generating random numbers, it is discouraged, even by ORable itself, to use {@link Math#random()} or using
+ * For generating random numbers, it is discouraged, even by OR-able itself, to use {@link Math#random()} or using
  * multiple instances of {@link Random}. This class address these problems, as well as offering an alternative RNG that
  * is an order of magnitude faster than {@link Random} and a cryptographically secure RNG.
  *
@@ -182,8 +176,9 @@ public class RandomUtilities {
 			}
 			return hash;
 		}
-		if (o instanceof Byte)
+		if (o instanceof Byte) {
 			return (hash ^ ((Byte)o).byteValue() & 0xFF) * 0x1000193;
+		}
 		if (o instanceof byte[]) {
 			byte[] values = (byte[])o;
 			for (byte value : values) {
@@ -220,7 +215,7 @@ public class RandomUtilities {
 			return hash;
 		}
 		if (o instanceof String) {
-			byte[] values = ((String)o).getBytes();
+			byte[] values = ((String)o).getBytes(StandardCharsets.UTF_8);
 			for (byte value : values) {
 				hash = (hash ^ value & 0xFF) * 0x1000193;
 			}
@@ -228,7 +223,7 @@ public class RandomUtilities {
 		}
 		if (o instanceof String[]) {
 			for (String s : (String[])o) {
-				byte[] values = s.getBytes();
+				byte[] values = s.getBytes(StandardCharsets.UTF_8);
 				for (byte value : values) {
 					hash = (hash ^ value & 0xFF) * 0x1000193;
 				}

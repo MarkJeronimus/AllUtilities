@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,15 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.digitalmodular.utilities.math.rangeconverter;
@@ -60,18 +52,24 @@ public class QuadraticRangeConverter implements RangeConverter {
 	}
 
 	public static QuadraticRangeConverter fromABC(double a, double b, double c) {
-		if (NumberUtilities.isDegenerate(a))
+		if (NumberUtilities.isDegenerate(a)) {
 			throw new IllegalArgumentException("a is degenerate:" + a);
-		if (NumberUtilities.isDegenerate(b))
+		}
+		if (NumberUtilities.isDegenerate(b)) {
 			throw new IllegalArgumentException("b is degenerate:" + b);
-		if (NumberUtilities.isDegenerate(c))
+		}
+		if (NumberUtilities.isDegenerate(c)) {
 			throw new IllegalArgumentException("c is degenerate:" + c);
-		if (a <= 0)
+		}
+		if (a <= 0) {
 			throw new IllegalArgumentException("a must be positive: " + a);
-		if (b < 0)
+		}
+		if (b < 0) {
 			throw new IllegalArgumentException("b must be non-negative: " + b);
-		if (a == 0 && b == 0)
-			throw new IllegalArgumentException("One of a or b must be non-negative: " + a + ", " + b);
+		}
+		if (a == 0 && b == 0) {
+			throw new IllegalArgumentException("One of a or b must be non-negative: " + 0 + ", " + 0);
+		}
 
 		return new QuadraticRangeConverter(a, b, c);
 	}
@@ -81,40 +79,49 @@ public class QuadraticRangeConverter implements RangeConverter {
 	}
 
 	public static QuadraticRangeConverter fromMinMidMax(double min, double mid, double max) {
-		if (NumberUtilities.isDegenerate(min))
+		if (NumberUtilities.isDegenerate(min)) {
 			throw new IllegalArgumentException("min is degenerate:" + min);
-		if (NumberUtilities.isDegenerate(mid))
+		}
+		if (NumberUtilities.isDegenerate(mid)) {
 			throw new IllegalArgumentException("mid is degenerate:" + mid);
-		if (NumberUtilities.isDegenerate(max))
+		}
+		if (NumberUtilities.isDegenerate(max)) {
 			throw new IllegalArgumentException("max is degenerate:" + max);
-		if (min >= mid)
+		}
+		if (min >= mid) {
 			throw new IllegalArgumentException("min should be less than mid: " + min + ", " + mid);
-		if (mid >= max)
+		}
+		if (mid >= max) {
 			throw new IllegalArgumentException("mid should be less than max: " + mid + ", " + max);
-		if (mid - min >= max - mid)
+		}
+		if (mid - min >= max - mid) {
 			throw new IllegalArgumentException("mid-min should be less than max-mid: " + min + ", " + mid + ", " +
 			                                   max);
+		}
 
 		double a = 2 * (min + max - 2 * mid);
 		double b = 2 * (mid - min - a / 4);
 
-		if (b < 0)
+		if (b < 0) {
 			throw new IllegalArgumentException("This combination causes negative b: " + b);
+		}
 
 		return new QuadraticRangeConverter(a, b, min);
 	}
 
 	@Override
 	public double toDomain(double value) {
-		if (value < 0 || value > 1)
+		if (value < 0 || value > 1) {
 			new IllegalArgumentException("value must be in the range [0, 1]: " + value);
+		}
 		return (a * value + b) * value + c;
 	}
 
 	@Override
 	public double fromDomain(double domain) {
-		if (domain < b || domain > max)
+		if (domain < b || domain > max) {
 			new IllegalArgumentException("value must be in the range [" + c + ", " + max + "]: " + domain);
+		}
 		return (Math.sqrt(b * b + 4 * a * (domain - c)) - b) / (2 * a);
 	}
 }

@@ -1,12 +1,11 @@
 /*
  * This file is part of Utilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -14,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.digitalmodular.utilities;
@@ -48,20 +47,23 @@ public enum LogTimer {
 	}
 
 	public static void start(Level level, String message) {
-		if (Logger.getGlobal().isLoggable(level))
+		if (Logger.getGlobal().isLoggable(level)) {
 			Logger.getGlobal().log(level, message);
+		}
 
 		start();
 	}
 
 	public static void finishAndLogTime(Level level, String template) {
-		if (!Logger.getGlobal().isLoggable(level))
+		if (!Logger.getGlobal().isLoggable(level)) {
 			return;
+		}
 
 		Deque<Long> stack = THREAD_LOCAL.get();
 
-		if (stack.isEmpty())
+		if (stack.isEmpty()) {
 			throw new IllegalStateException("Not started");
+		}
 
 		long elapsed = System.nanoTime() - stack.pop();
 		Logger.getGlobal().log(level, template, Duration.of(elapsed, ChronoUnit.NANOS));

@@ -1,7 +1,7 @@
 package org.digitalmodular.utilities.function;
 
 /**
- * @param <T> the type of the object argument to the operation
+ * @param <T> the type of the first argument to the function (the second one is an {@code int})
  * @param <R> the type of the result of the function
  * @author Mark Jeronimus
  */

@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.math.polynomial;
 
 import java.util.Arrays;
@@ -38,22 +31,22 @@ public class LagrangePolynomial extends PolynomialInterpolation {
 	@Override
 	public double[] makeCoefficients(Vector2d[] points) {
 		degree = points.length - 1;
-		coef = new double[points.length];
-		Arrays.fill(super.coef, 0);
+		coefficients = new double[points.length];
+		Arrays.fill(coefficients, 0);
 
-		for (int p = 0; p <= super.degree; p++) {
+		for (int p = 0; p <= degree; p++) {
 			double   det  = 1;
 			double[] c;
 			double[] oldc = new double[2];
 			oldc[0] = 0;
 			oldc[1] = 1;
 			int whichX = 0;
-			for (int j = 1; j <= super.degree; j++) {
+			for (int j = 1; j <= degree; j++) {
 				if (whichX == p) {
 					whichX++;
 				}
 
-				det = det * (points[p].x - points[whichX].x);
+				det *= (points[p].x - points[whichX].x);
 
 				c = new double[j + 2];
 				c[0] = 0;
@@ -69,11 +62,11 @@ public class LagrangePolynomial extends PolynomialInterpolation {
 
 			int sign = 1;
 			for (int i = degree; i >= 0; i--) {
-				super.coef[i] += points[p].y * oldc[i + 1] / det * sign;
+				coefficients[i] += points[p].y * oldc[i + 1] / det * sign;
 				sign = -sign;
 			}
 		}
 
-		return super.coef;
+		return coefficients;
 	}
 }

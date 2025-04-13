@@ -28,7 +28,8 @@ public final class FastRandom {
 	}
 
 	public int nextInt() {
-		int tmp = a + b + c++;
+		int tmp = a + b + c;
+		c++;
 		a = b ^ b >>> 5;
 		b = (b << 12 | b >>> 20) + tmp;
 		return tmp;
@@ -38,7 +39,8 @@ public final class FastRandom {
 	 * Generates a uniform pseudo-random float value in the range [-0.5, 0.5).
 	 */
 	public float nextFloat() {
-		int tmp = a + b + c++;
+		int tmp = a + b + c;
+		c++;
 		a = b ^ b >>> 5;
 		b = (b << 12 | b >>> 20) + tmp;
 		return Float.intBitsToFloat(0x3F800000 | tmp >>> 9) - 1.5f;
@@ -50,13 +52,16 @@ public final class FastRandom {
 	 * 1.0. This is NOT a gaussian distribution but a very fast approximation.
 	 */
 	public float nextBell() {
-		int tmp1 = a + b + c++;
+		int tmp1 = a + b + c;
+		c++;
 		a = b ^ b >>> 5;
 		b = (b << 12 | b >>> 20) + tmp1;
-		int tmp2 = a + b + c++;
+		int tmp2 = a + b + c;
+		c++;
 		a = b ^ b >>> 5;
 		b = (b << 12 | b >>> 20) + tmp2;
-		int tmp3 = a + b + c++;
+		int tmp3 = a + b + c;
+		c++;
 		a = b ^ b >>> 5;
 		b = (b << 12 | b >>> 20) + tmp3;
 		return Float.intBitsToFloat(0x40000000 | tmp1 >>> 9) +

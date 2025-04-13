@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.container;
 
 import java.awt.BasicStroke;
@@ -66,26 +59,20 @@ public class Pool<T> {
 
 	private static final HashMap<Class<?>, Pool<?>> POOLS = new HashMap<>();
 
-	private Class<T>                 clazz;
-	private ConcurrentLinkedQueue<T> pool = new ConcurrentLinkedQueue<>();
+	private final Class<T>                 clazz;
+	private final ConcurrentLinkedQueue<T> pool = new ConcurrentLinkedQueue<>();
 
-	/**
-	 * @param clazz the type of class this {@link Pool} is going to serve. Should be equal to the generic parameter to
-	 *              prevent runtime errors. This is needed to because of type erasure (during runtime the generic
-	 *              parameter just becomes {@link Object}). In fact, the generic parameter is just a formality to take
-	 *              away the need to cast in the user code.
-	 */
 	public static <T> Pool<T> getPool(Class<T> clazz) {
 		if (clazz.isArray()) {
-			throw new IllegalAccessError("Class cannot be an array type (use the other contructor for arrays).");
+			throw new IllegalAccessError("Class cannot be an array type (use the other constructor for arrays).");
 		}
 		if (clazz.isInterface()) {
 			throw new IllegalAccessError("Class must be a concrete type.");
 		}
-		if (Pool.isImmutable(clazz)) {
+		if (isImmutable(clazz)) {
 			throw new IllegalAccessError("Class cannot be an immutable type.");
 		}
-		if (!Pool.isInstantiable(clazz)) {
+		if (!isInstantiable(clazz)) {
 			throw new IllegalAccessError("Class must be an instantiable type.");
 		}
 
@@ -138,11 +125,11 @@ public class Pool<T> {
 	protected T create() {
 		try {
 			return clazz.newInstance();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
+		} catch (InstantiationException ex) {
+			ex.printStackTrace();
 			return null;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+		} catch (IllegalAccessException ex) {
+			ex.printStackTrace();
 			return null;
 		}
 	}

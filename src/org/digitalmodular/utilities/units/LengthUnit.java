@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.units;
 
 /**
@@ -55,47 +48,47 @@ public enum LengthUnit {
 	/**
 	 * SI prefixed unit of meter (1<sup>-24</sup> m).
 	 */
-	YOCTOMETER(1e-24, "ym"),
+	YOCTOMETER(1.0e-24, "ym"),
 	/**
 	 * SI prefixed unit of meter (1<sup>-21</sup> m).
 	 */
-	ZEPTOMETER(1e-21, "zm"),
+	ZEPTOMETER(1.0e-21, "zm"),
 	/**
 	 * SI prefixed unit of meter (1<sup>-18</sup> m).
 	 */
-	ATTOMETER(1e-18, "am"),
+	ATTOMETER(1.0e-18, "am"),
 	/**
 	 * SI prefixed unit of meter (1<sup>-15</sup> m).
 	 */
-	FEMTOMETER(1e-15, "fm"),
+	FEMTOMETER(1.0e-15, "fm"),
 	/**
 	 * SI picometer (1<sup>-12</sup> m).
 	 */
-	PICOMETER(1e-12, "pm"),
+	PICOMETER(1.0e-12, "pm"),
 	/**
 	 * A deprecated(officially discouraged") use of length equal to 0.1 nm.
 	 */
-	ANGSTROM(1e-10, "\u00C5m"),
+	ANGSTROM(1.0e-10, "\u00C5m"),
 	/**
 	 * SI nanometer (1<sup>-9</sup> m).
 	 */
-	NANOMETER(1e-9, "nm"),
+	NANOMETER(1.0e-9, "nm"),
 	/**
 	 * SI micrometer (1/1000 mm).
 	 */
-	MICROMETER(1e-6, "µm"),
+	MICROMETER(1.0e-6, "µm"),
 	/**
 	 * SI millimeter (1/1000 m).
 	 */
-	MILLIMETER(1e-3, "mm"),
+	MILLIMETER(1.0e-3, "mm"),
 	/**
 	 * SI decimeter (1/100 m).
 	 */
-	DECIMETER(1e-2, "cm"),
+	DECIMETER(1.0e-2, "cm"),
 	/**
 	 * SI centimeter (1/10 m).
 	 */
-	CENTIMETER(1e-1, "dm"),
+	CENTIMETER(1.0e-1, "dm"),
 	/**
 	 * SI meter.
 	 */
@@ -103,15 +96,15 @@ public enum LengthUnit {
 	/**
 	 * SI decameter (10 m).
 	 */
-	DECAMETER(1e1, "dam"),
+	DECAMETER(1.0e1, "dam"),
 	/**
 	 * SI hectometer (100 m).
 	 */
-	HECTOMETER(1e2, "hm"),
+	HECTOMETER(1.0e2, "hm"),
 	/**
 	 * SI kilometer (1000 m).
 	 */
-	KILOMETER(1e3, "km"),
+	KILOMETER(1.0e3, "km"),
 	/**
 	 * Exactly defined as 1852 SI meters.
 	 */
@@ -119,31 +112,31 @@ public enum LengthUnit {
 	/**
 	 * SI megameter (1000 km).
 	 */
-	MEGAMETER(1e6, "Mm"),
+	MEGAMETER(1.0e6, "Mm"),
 	/**
 	 * SI prefixed unit of meter (1<sup>9</sup> m).
 	 */
-	GIGAMETER(1e9, "Gm"),
+	GIGAMETER(1.0e9, "Gm"),
 	/**
 	 * SI prefixed unit of meter (1<sup>12</sup> m).
 	 */
-	TERAMETER(1e12, "Tm"),
+	TERAMETER(1.0e12, "Tm"),
 	/**
 	 * SI prefixed unit of meter (1<sup>15</sup> m).
 	 */
-	PETAMETER(1e15, "Pm"),
+	PETAMETER(1.0e15, "Pm"),
 	/**
 	 * SI prefixed unit of meter (1<sup>18</sup> m).
 	 */
-	ETAMETER(1e18, "Em"),
+	ETAMETER(1.0e18, "Em"),
 	/**
 	 * SI prefixed unit of meter (1<sup>21</sup> m).
 	 */
-	ZETTAMETER(1e21, "Zm"),
+	ZETTAMETER(1.0e21, "Zm"),
 	/**
 	 * SI prefixed unit of meter (1<sup>24</sup> m).
 	 */
-	YOTTAMETER(1e24, "Ym"),
+	YOTTAMETER(1.0e24, "Ym"),
 	//
 	//
 	//
@@ -319,7 +312,7 @@ public enum LengthUnit {
 	private final double meters;
 	private final String unit;
 
-	private LengthUnit(double meters, String unit) {
+	LengthUnit(double meters, String unit) {
 		this.meters = meters;
 		this.unit = unit;
 	}

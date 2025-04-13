@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.signal.filter;
 
 import static org.digitalmodular.utilities.NumberUtilities.clamp;
@@ -53,7 +46,7 @@ public class StateVariableFilter implements AudioFilter {
 
 	@Override
 	public void setCutoffFrequency(double cutoffFrequency) {
-		this.cutoffFrequency = clamp(0, 0.125 / Math.PI, cutoffFrequency);
+		this.cutoffFrequency = clamp(cutoffFrequency, 0, 0.125 / Math.PI);
 
 		integratorSpeed = TAU * cutoffFrequency;
 	}
@@ -65,7 +58,7 @@ public class StateVariableFilter implements AudioFilter {
 
 	@Override
 	public void setResonance(double resonance) {
-		this.resonance = clamp(0, 1, resonance);
+		this.resonance = clamp(resonance, 0, 1);
 
 		feedback = 1 - (resonance * 2 - 1);
 	}
@@ -90,16 +83,24 @@ public class StateVariableFilter implements AudioFilter {
 	}
 
 	@Override
-	public double getLowPass() { return lowPass; }
+	public double getLowPass() {
+		return lowPass;
+	}
 
 	@Override
-	public double getBandPass() { return bandPass; }
+	public double getBandPass() {
+		return bandPass;
+	}
 
 	@Override
-	public double getHighPass() { return highPass; }
+	public double getHighPass() {
+		return highPass;
+	}
 
 	@Override
-	public double getBandReject() { return a; }
+	public double getBandReject() {
+		return a;
+	}
 
 	@Override
 	public String toString() {

@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.signal.window;
 
 import org.digitalmodular.utilities.nodes.DoubleParam;
@@ -46,7 +39,7 @@ public abstract class AbstractGeneralizedWindowFunction extends AbstractWindowFu
 	private WindowTaperMode taperMode = WindowTaperMode.TRAPEZIUM;
 
 	@DoubleParam(description = "The ratio of the time scale that's being tapered", min = 0, max = 1)
-	private double taper = 0.5;
+	private double taper = 1.0;
 
 	@DoubleParam(description = "The power used to exponentiate the window function to",
 	             min = 0, minIsInclusive = false, maxIsInclusive = false)
@@ -58,12 +51,12 @@ public abstract class AbstractGeneralizedWindowFunction extends AbstractWindowFu
 
 	@DoubleParam(description = "Linearly interpolates between the power applied before the invPower" +
 	                           " and the invPower applied before the power", min = 0, max = 1)
-	private double powerLerp = 1.0;
+	private double powerLerp = 0;
 
 	@DoubleParam(description = "Scales the window samples relative to 1.0." +
 	                           " For some values, this creates flat-top windows",
 	             min = 0, minIsInclusive = false, maxIsInclusive = false)
-	private double topScale = 0.5;
+	private double topScale = 1.0;
 
 	public WindowTaperMode getTaperMode() {
 		return taperMode;
@@ -86,7 +79,7 @@ public abstract class AbstractGeneralizedWindowFunction extends AbstractWindowFu
 	}
 
 	public void setPower(double power) {
-		this.power = requireRange(0, 1, power, "power");
+		this.power = requireRange(1, 10, power, "power");
 	}
 
 	public double getInvPower() {
@@ -94,7 +87,7 @@ public abstract class AbstractGeneralizedWindowFunction extends AbstractWindowFu
 	}
 
 	public void setInvPower(double invPower) {
-		this.invPower = requireRange(0, 1, invPower, "invPower");
+		this.invPower = requireRange(0.01, 100, invPower, "invPower");
 	}
 
 	public double getPowerLerp() {

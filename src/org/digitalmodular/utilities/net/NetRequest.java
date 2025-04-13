@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.net;
 
 import java.util.ArrayList;
@@ -89,21 +82,23 @@ public class NetRequest {
 					}
 				}
 			}
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException ignored) {
 			this.request = null;
 			return;
 		}
+
 		if (x < request.length() - 1) {
 			this.request = null;
 			return;
 		}
+
 		if (literal) {
 			this.request = null;
 			return;
 		}
+
 		if (parameter.length() > 0) {
 			this.request = null;
-			return;
 		}
 	}
 
@@ -115,15 +110,12 @@ public class NetRequest {
 		return request.size() - 1;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public String toString() {
 		StringBuffer out = new StringBuffer();
-		out.append(this.getClass().getSimpleName() + "[request=" + request.get(0));
+		out.append(getClass().getSimpleName() + "[request=" + request.get(0));
 
-		out.append("(");
+		out.append('(');
 		if (request.size() > 1) {
 			for (int i = 1; i < request.size(); i++) {
 				if (i > 1) {
@@ -133,21 +125,21 @@ public class NetRequest {
 				if (value instanceof String || value instanceof char[]) {
 					out.append(value);
 				} else if (value instanceof Byte) {
-					out.append("" + ((Byte)value).byteValue());
+					out.append(String.valueOf(((Byte)value).byteValue()));
 				} else if (value instanceof Character) {
 					out.append(((Character)value).charValue());
 				} else if (value instanceof Short) {
-					out.append("" + ((Short)value).shortValue());
+					out.append(String.valueOf(((Short)value).shortValue()));
 				} else if (value instanceof Integer) {
-					out.append("" + ((Integer)value).intValue());
+					out.append(String.valueOf(((Integer)value).intValue()));
 				} else if (value instanceof Long) {
-					out.append("" + ((Long)value).longValue());
+					out.append(String.valueOf(((Long)value).longValue()));
 				} else if (value instanceof Float) {
-					out.append("" + ((Integer)value).floatValue());
+					out.append(String.valueOf(((Integer)value).floatValue()));
 				} else if (value instanceof Double) {
-					out.append("" + ((Integer)value).doubleValue());
+					out.append(String.valueOf(((Integer)value).doubleValue()));
 				} else {
-					out.append(value.toString());
+					out.append(value);
 				}
 			}
 		}

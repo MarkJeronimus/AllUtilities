@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.net;
 
 import java.io.IOException;
@@ -31,6 +24,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.nio.charset.StandardCharsets;
 
 import org.digitalmodular.utilities.StringUtilities;
 
@@ -41,8 +35,8 @@ import org.digitalmodular.utilities.StringUtilities;
 public class UDPSocket extends DatagramSocket {
 	private byte[] receiveData = new byte[1025];
 
-	private InetAddress address;
-	private int         port;
+	private final InetAddress address;
+	private final int         port;
 
 	private int mtu = 1024;
 
@@ -52,7 +46,7 @@ public class UDPSocket extends DatagramSocket {
 		this.address = address;
 		this.port = port;
 
-		super.setSoTimeout(30000);
+		setSoTimeout(30000);
 	}
 
 	public void setMTU(int mtu) {
@@ -64,7 +58,7 @@ public class UDPSocket extends DatagramSocket {
 	}
 
 	public void send(String s) throws IOException {
-		byte[] sendData = s.getBytes();
+		byte[] sendData = s.getBytes(StandardCharsets.UTF_8);
 
 		int length = sendData.length;
 		if (length > mtu) {
@@ -72,21 +66,21 @@ public class UDPSocket extends DatagramSocket {
 		}
 
 		DatagramPacket packet = new DatagramPacket(sendData, sendData.length, address, port);
-		super.send(packet);
+		send(packet);
 	}
 
 	public String receive() throws IOException {
 		DatagramPacket packet = new DatagramPacket(receiveData, mtu);
 
-		super.receive(packet);
+		receive(packet);
 
-		return new String(receiveData, 0, packet.getLength());
+		return new String(receiveData, 0, packet.getLength(), StandardCharsets.UTF_8);
 	}
 
 	public String receiveCString() throws IOException {
 		DatagramPacket packet = new DatagramPacket(receiveData, mtu);
 
-		super.receive(packet);
+		receive(packet);
 
 		receiveData[packet.getLength()] = 0;
 		return StringUtilities.fromCString(receiveData);

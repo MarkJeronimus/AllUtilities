@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities;
 
 import java.util.Arrays;
@@ -33,9 +26,9 @@ import java.util.Arrays;
  */
 // Created 2005-10-13
 public class FPSCounter {
-	private long[] lasttime = new long[64];
-	private int    pointer;
-	private int    count;
+	private final long[] lastTime = new long[64];
+	private       int    pointer;
+	private       int    count;
 
 	private double elapsedTime;
 	private double fps = 0;
@@ -44,7 +37,7 @@ public class FPSCounter {
 		long currentTime = System.nanoTime();
 		pointer = 0;
 		count = 0;
-		Arrays.fill(lasttime, currentTime);
+		Arrays.fill(lastTime, currentTime);
 	}
 
 	public void update() {
@@ -57,10 +50,10 @@ public class FPSCounter {
 			count++;
 		}
 
-		fps = 1e9 * count / (currentTime - lasttime[pointer]);
-		elapsedTime = (currentTime - lasttime[lastPointer]) / 1e9;
+		fps = 1.0e9 * count / (currentTime - lastTime[pointer]);
+		elapsedTime = (currentTime - lastTime[lastPointer]) / 1.0e9;
 
-		lasttime[pointer] = currentTime;
+		lastTime[pointer] = currentTime;
 	}
 
 	public double getElapsedTime() {

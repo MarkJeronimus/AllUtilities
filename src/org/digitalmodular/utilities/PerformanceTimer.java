@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities;
 
 import java.util.ArrayList;
@@ -34,12 +27,12 @@ import java.util.List;
  */
 // Created 2015-09-08
 public class PerformanceTimer {
-	private String       format       = "%7.2f";
-	private List<Long>   durations    = new ArrayList<>();
-	private List<String> descriptions = new ArrayList<>();
-	private long         startTime;
-	private long         lastTime;
-	private int          longestDescription;
+	private final String       format       = "%7.2f";
+	private final List<Long>   durations    = new ArrayList<>();
+	private final List<String> descriptions = new ArrayList<>();
+	private       long         startTime;
+	private       long         lastTime;
+	private       int          longestDescription;
 
 	public void reset() {
 		durations.clear();
@@ -61,11 +54,11 @@ public class PerformanceTimer {
 	}
 
 	public void printResults() {
-		String formatString = "%-" + longestDescription + "s " + format + "\n";
+		String formatString = "%-" + longestDescription + "s " + format + '\n';
 		for (int i = 0; i < durations.size(); i++) {
 			long   duration    = durations.get(i);
 			String description = descriptions.get(i);
-			System.out.printf(formatString, description, duration / 1e6);
+			System.out.printf(formatString, description, duration / 1.0e6);
 		}
 	}
 
@@ -77,15 +70,15 @@ public class PerformanceTimer {
 		for (int i = 0; i < durations.size(); i++) {
 			long   duration    = durations.get(i);
 			String description = descriptions.get(i);
-			System.out.printf(formatString, description, duration / 1e6, workload * 1e3 / duration);
+			System.out.printf(formatString, description, duration / 1.0e6, workload * 1.0e3 / duration);
 		}
 	}
 
 	public void printTotal() {
-		String formatString = "%-" + longestDescription + "s " + format + "\n";
+		String formatString = "%-" + longestDescription + "s " + format + '\n';
 		long   duration     = lastTime - startTime;
 		String description  = "Total";
-		System.out.printf(formatString, description, duration / 1e6);
+		System.out.printf(formatString, description, duration / 1.0e6);
 	}
 
 	/**
@@ -96,7 +89,7 @@ public class PerformanceTimer {
 		for (int i = 0; i < durations.size(); i++) {
 			long   duration    = lastTime - startTime;
 			String description = "Total";
-			System.out.printf(formatString, description, duration / 1e6, workload * 1e3 / duration);
+			System.out.printf(formatString, description, duration / 1.0e6, workload * 1.0e3 / duration);
 		}
 	}
 }

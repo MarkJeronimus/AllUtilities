@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.signal.window;
 
 import org.digitalmodular.utilities.nodes.Node;
@@ -35,7 +28,7 @@ import static org.digitalmodular.utilities.constant.NumberConstants.TAU;
  * <p>
  * The Hann window consists of a complete period of the cosine.
  * <p>
- * Sometimes it's erroneously referred to as the Hanning window. Not to be confused with the Hamming window (correct
+ * Sometimes it's erroneously referred to as the Hann window. Not to be confused with the Hamming window (correct
  * spelling) which is a different window function.
  * <p>
  * Generalizations (more parameter):
@@ -50,7 +43,7 @@ import static org.digitalmodular.utilities.constant.NumberConstants.TAU;
 // Changed 2016-16-28
 // Changed 2019-08-30
 @Node(name = "Hann", description = "The Hann window consists of a complete period of the cosine.\n" +
-                                   "Sometimes it's erroneously referred to as the Hanning window.\n" +
+                                   "Sometimes it's erroneously referred to as the Hann window.\n" +
                                    "Not to be confused with the Hamming window (correct spelling) which is different.")
 public class HannWindowFunction extends AbstractWindowFunction {
 	@Override

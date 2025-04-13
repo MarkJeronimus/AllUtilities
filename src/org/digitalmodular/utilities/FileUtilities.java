@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities;
 
 import java.awt.Component;
@@ -37,12 +30,22 @@ import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.FileVisitor;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.function.BiFunction;
+import java.util.stream.Stream;
 import static java.nio.channels.FileChannel.MapMode;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.FileVisitResult.CONTINUE;
@@ -58,9 +61,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.jetbrains.annotations.Nullable;
 
 import org.digitalmodular.utilities.function.IOOperation;
-import static org.digitalmodular.utilities.ValidatorUtilities.requireArrayLengthAtLeast;
-import static org.digitalmodular.utilities.ValidatorUtilities.requireNonNullElements;
-import static org.digitalmodular.utilities.ValidatorUtilities.requireStringNotEmpty;
+import static org.digitalmodular.utilities.ArrayValidatorUtilities.requireArrayLengthAtLeast;
+import static org.digitalmodular.utilities.ArrayValidatorUtilities.requireArrayValuesNonNull;
+import static org.digitalmodular.utilities.StringValidatorUtilities.requireStringNotEmpty;
 import static org.digitalmodular.utilities.ValidatorUtilities.requireThat;
 
 /**
@@ -105,29 +108,35 @@ public enum FileUtilities {
 	@Deprecated
 	public static void renameMoveFile(File src, File dst) throws IOException {
 		// Already moved means success.
-		if (src.equals(dst))
+		if (src.equals(dst)) {
 			return;
+		}
 
-		if (!src.canRead())
+		if (!src.canRead()) {
 			throw new IOException("Move: Source file not readable.\nsrc=" + src.getPath() + "\ndst="
 			                      + dst.getPath());
+		}
 
-		if (!src.canWrite())
+		if (!src.canWrite()) {
 			throw new IOException("Move: Source file read-only.\nsrc=" + src.getPath() + "\ndst="
 			                      + dst.getPath());
+		}
 
-		if (dst.isDirectory())
+		if (dst.isDirectory()) {
 			dst = new File(dst, src.getName());
+		}
 
-		if (dst.exists())
+		if (dst.exists()) {
 			throw new IOException("Move: Destination file already exists.\nsrc=" + src.getPath() + "\ndst="
 			                      + dst.getPath());
+		}
 
-		if (!src.renameTo(dst))
+		if (!src.renameTo(dst)) {
 			throw new IOException(
 					"Move: Source or destination file might be in use by another application.\nsrc="
 					+ src.getPath()
 					+ "\ndst=" + dst.getPath());
+		}
 	}
 
 	public static void renameMoveFile(Path src, Path dst) throws IOException {
@@ -135,21 +144,27 @@ public enum FileUtilities {
 		requireNonNull(dst, "dst");
 
 		// Already moved means success.
-		if (src.equals(dst))
+		if (src.equals(dst)) {
 			return;
+		}
 
-		if (!Files.exists(src))
+		if (!Files.exists(src)) {
 			throw new IOException("Move: Source file does not exist: src=" + src + ", dst=" + dst);
-		if (!Files.isReadable(src))
+		}
+		if (!Files.isReadable(src)) {
 			throw new IOException("Move: Source file is not readable: src=" + src + ", dst=" + dst);
-		if (!Files.isWritable(src))
+		}
+		if (!Files.isWritable(src)) {
 			throw new IOException("Move: Source file is read-only: src=" + src + ", dst=" + dst);
+		}
 
-		if (Files.isDirectory(dst))
+		if (Files.isDirectory(dst)) {
 			dst = dst.resolve(src.getFileName());
+		}
 
-		if (Files.exists(dst))
+		if (Files.exists(dst)) {
 			throw new IOException("Move: Destination file already exist: src=" + src + ", dst=" + dst);
+		}
 
 		try {
 			Files.move(src, dst, ATOMIC_MOVE);
@@ -172,7 +187,7 @@ public enum FileUtilities {
 					owner,
 					new String[]{"Error moving file.",
 					             "Source file not readable: " + src.getPath(),
-					             "(Detination: " + dst.getPath() + ")", "Retry?"},
+					             "(Destination: " + dst.getPath() + ')', "Retry?"},
 					owner.getName() != null ? owner.getName()
 					                        : "Filesystem",
 					JOptionPane.YES_NO_OPTION,
@@ -186,7 +201,7 @@ public enum FileUtilities {
 					owner,
 					new String[]{"Error moving file.",
 					             "Source file is read-only: " + src.getPath(),
-					             "(Detination: " + dst.getPath() + ")", "Retry?"},
+					             "(Destination: " + dst.getPath() + ')', "Retry?"},
 					owner.getName() != null ? owner.getName()
 					                        : "Filesystem",
 					JOptionPane.YES_NO_OPTION,
@@ -198,7 +213,7 @@ public enum FileUtilities {
 		while (dst.exists() && dst.isFile()) {
 			int i = JOptionPane.showConfirmDialog(owner, new String[]{"Error moving file.",
 			                                                          "Destination file already exists: " +
-			                                                          dst.getPath(), "(Source: " + src.getPath() + ")",
+			                                                          dst.getPath(), "(Source: " + src.getPath() + ')',
 			                                                          "Remove destination? (press NO to retry)"},
 			                                      owner.getName() != null ? owner.getName() : "Filesystem",
 			                                      JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
@@ -266,42 +281,84 @@ public enum FileUtilities {
 		return true;
 	}
 
-	public static String getExtension(String path) {
+	/**
+	 * Checks if a path represented by a String is a valid file, directory or link. This differs from
+	 * {@link Files#exists(Path, LinkOption...)} in that the prerequisite call to {@link Paths#get(String, String...)}
+	 * may throw if the String doesn't represent a valid path, and this function just returns {@code false}.
+	 */
+	public static boolean fileExists(String path) {
+		try {
+			return Files.exists(Paths.get(path));
+		} catch (InvalidPathException ignored) {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns the path, filename, and extension of a file.
+	 * <p>
+	 * If the path represents a directory and doesn't end in a path separator,
+	 * that directory becomes the 'file' (as it can't unambiguously be distinguished from an actual file).
+	 *
+	 * @throws IllegalArgumentException when the path ends in a path separator
+	 */
+	public static String[] splitDirFileExt(String path) {
 		requireNonNull(path, "path");
 
 		int i = Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\'));
 
-		if (i == path.length())
-			return "";
+		if (i == path.length()) {
+			throw new IllegalArgumentException("'path' doesn't end with a filename:" + path);
+		}
 
+		String dir      = i < 0 ? "" : path.substring(0, i + 1);
 		String filename = i < 0 ? path : path.substring(i + 1);
 
 		i = filename.lastIndexOf('.');
+		String file = i <= 0 ? filename : filename.substring(0, i);
+		String ext  = i <= 0 ? "" : filename.substring(i + 1);
 
-		if (i <= 0)
-			return "";
-		else
-			return filename.substring(i + 1);
+		return new String[]{dir, file, ext};
+	}
+
+	@Deprecated
+	public static String getFilename(String path) {
+		return splitDirFileExt(path)[1];
+	}
+
+	@Deprecated
+	public static String getExtension(String path) {
+		return splitDirFileExt(path)[2];
+	}
+
+	@Deprecated
+	public static String getExtensionWithDot(String path) {
+		return '.' + splitDirFileExt(path)[2];
+	}
+
+	@Deprecated
+	public static String stripExtension(String filename) {
+		requireNonNull(filename);
+
+		int i = filename.lastIndexOf('.');
+		return i <= 0 ? filename : filename.substring(0, i);
 	}
 
 	public static File addExtensionIfMissing(File path, String extension) {
 		requireNonNull(path, "path");
 		requireStringNotEmpty(extension, "extension");
 
-		if (!getExtension(path.getName()).isEmpty())
+		String pathString = path.getName();
+
+		if (!splitDirFileExt(pathString)[2].isEmpty()) {
 			return path;
+		}
 
-		if (extension.charAt(0) != '.')
-			return new File(path.getParent(), path.getName() + '.' + extension);
-		else
-			return new File(path.getParent(), path.getName() + extension);
-	}
-
-	public static String stripExtension(String filename) {
-		requireNonNull(filename);
-
-		int i = filename.lastIndexOf('.');
-		return i <= 0 ? filename : filename.substring(0, i);
+		if (extension.charAt(0) != '.') {
+			return new File(path.getParent(), pathString + '.' + extension);
+		} else {
+			return new File(path.getParent(), pathString + extension);
+		}
 	}
 
 	public static boolean mkdir(Component owner, File file) {
@@ -338,7 +395,6 @@ public enum FileUtilities {
 
 		if (os.contains("win")) {
 			Runtime.getRuntime().exec(new String[]{"rundll32", "url.dll,FileProtocolHandler", url});
-			return;
 		} else if (os.contains("nix") || os.contains("nux")) {
 			Runtime.getRuntime().exec(new String[]{"xdg-open", url});
 		} else if (os.contains("mac")) {
@@ -350,7 +406,6 @@ public enum FileUtilities {
 			// Method openURL = fileMgr.getDeclaredMethod("openURL", new
 			// Class[]{String.class});
 			// openURL.invoke(null, new Object[]{url});
-			return;
 		}
 	}
 
@@ -365,7 +420,7 @@ public enum FileUtilities {
 	public static boolean checkPathTextField(Component owner, JTextField pathField) {
 		File path = new File(pathField.getText());
 		if (!path.isDirectory()) {
-			JOptionPane.showMessageDialog(owner, "\"" + pathField.getText() + "\" is not a valid path.",
+			JOptionPane.showMessageDialog(owner, '"' + pathField.getText() + "\" is not a valid path.",
 			                              owner.getName(),
 			                              JOptionPane.ERROR_MESSAGE);
 			return false;
@@ -391,12 +446,14 @@ public enum FileUtilities {
 
 		while (true) {
 			int returnVal = chooser.showOpenDialog(parent);
-			if (returnVal != JFileChooser.APPROVE_OPTION)
+			if (returnVal != JFileChooser.APPROVE_OPTION) {
 				return null;
+			}
 
 			File file = chooser.getSelectedFile();
-			if (file.exists())
+			if (file.exists()) {
 				return file;
+			}
 		}
 	}
 
@@ -407,19 +464,49 @@ public enum FileUtilities {
 	                                               @Nullable File startFolderOrFile,
 	                                               String fileTypeDescription,
 	                                               String... fileTypeExtensions) {
-		if (!(startFolderOrFile == null || startFolderOrFile.exists()))
+		if (!(startFolderOrFile == null || startFolderOrFile.exists())) {
 			startFolderOrFile = new File(".");
+		}
 
-		JFileChooser chooser = prepareFileChooser(parent, startFolderOrFile, fileTypeDescription, fileTypeExtensions);
+		JFileChooser chooser = prepareFileChooser(startFolderOrFile, fileTypeDescription, fileTypeExtensions);
 
 		while (true) {
 			int returnVal = chooser.showOpenDialog(parent);
-			if (returnVal != JFileChooser.APPROVE_OPTION)
+			if (returnVal != JFileChooser.APPROVE_OPTION) {
 				return null;
+			}
 
 			File file = chooser.getSelectedFile();
-			if (file.exists())
+			if (file.exists()) {
 				return file;
+			}
+		}
+	}
+
+	/**
+	 * @return the chosen file, or {@code null} if the user canceled.
+	 */
+	public static List<File> askFilesForLoading(@Nullable Component parent,
+	                                            @Nullable File startFolderOrFile,
+	                                            String fileTypeDescription,
+	                                            String... fileTypeExtensions) {
+		if (!(startFolderOrFile == null || startFolderOrFile.exists())) {
+			startFolderOrFile = new File(".");
+		}
+
+		JFileChooser chooser = prepareFileChooser(startFolderOrFile, fileTypeDescription, fileTypeExtensions);
+		chooser.setMultiSelectionEnabled(true);
+
+		while (true) {
+			int returnVal = chooser.showOpenDialog(parent);
+			if (returnVal != JFileChooser.APPROVE_OPTION) {
+				return Collections.emptyList();
+			}
+
+			List<File> files = Arrays.asList(chooser.getSelectedFiles());
+			if (files.stream().filter(file -> !file.exists()).findFirst().isEmpty()) {
+				return files;
+			}
 		}
 	}
 
@@ -430,44 +517,46 @@ public enum FileUtilities {
 	                                              @Nullable File startFolderOrFile,
 	                                              String fileTypeDescription,
 	                                              String... fileTypeExtensions) {
-		JFileChooser chooser = prepareFileChooser(parent, startFolderOrFile, fileTypeDescription, fileTypeExtensions);
+		JFileChooser chooser = prepareFileChooser(startFolderOrFile, fileTypeDescription, fileTypeExtensions);
 
 		while (true) {
 			int returnVal = chooser.showSaveDialog(parent);
-			if (returnVal != JFileChooser.APPROVE_OPTION)
+			if (returnVal != JFileChooser.APPROVE_OPTION) {
 				return null;
+			}
 
 			File file = chooser.getSelectedFile();
-			if (file.isDirectory())
+			if (file.isDirectory()) {
 				continue;
+			}
 
 			file = addExtensionIfMissing(file, fileTypeExtensions[0]);
 
 			if (file.exists()) {
 				int choice = JOptionPane.showConfirmDialog(parent, "Overwrite " + file.getName() + " ?");
-				if (choice == JOptionPane.CANCEL_OPTION)
+				if (choice == JOptionPane.CANCEL_OPTION) {
 					return null;
-				else if (choice != JOptionPane.YES_OPTION)
+				} else if (choice != JOptionPane.YES_OPTION) {
 					continue;
+				}
 			}
 
 			return file;
 		}
 	}
 
-	private static JFileChooser prepareFileChooser(Component parent,
-	                                               @Nullable File startFolderOrFile,
-	                                               String fileTypeDescription,
-	                                               String[] fileTypeExtensions) {
-		requireNonNull(parent, "parent");
+	private static JFileChooser prepareFileChooser(
+			@Nullable File startFolderOrFile, String fileTypeDescription, String[] fileTypeExtensions) {
 		requireNonNull(fileTypeDescription, "fileTypeDescription");
 		requireArrayLengthAtLeast(1, fileTypeExtensions, "fileTypeExtensions");
-		requireNonNullElements(fileTypeExtensions, "fileTypeExtensions");
+		requireArrayValuesNonNull(fileTypeExtensions, "fileTypeExtensions");
 
 		for (int i = 0; i < fileTypeExtensions.length; i++) {
-			requireThat(!fileTypeExtensions[i].isEmpty(), "fileTypeExtensions[" + i + "] is empty.");
-			if (fileTypeExtensions[i].charAt(0) == '.')
+			int index = i;
+			requireThat(!fileTypeExtensions[i].isEmpty(), () -> "fileTypeExtensions[" + index + "] is empty.");
+			if (fileTypeExtensions[i].charAt(0) == '.') {
 				fileTypeExtensions[i] = fileTypeExtensions[i].substring(1);
+			}
 		}
 
 		JFileChooser chooser = new JFileChooser(startFolderOrFile == null ?
@@ -476,8 +565,9 @@ public enum FileUtilities {
 		                                        startFolderOrFile :
 		                                        startFolderOrFile.getParentFile());
 
-		if (startFolderOrFile != null && !startFolderOrFile.isDirectory())
+		if (startFolderOrFile != null && !startFolderOrFile.isDirectory()) {
 			chooser.setSelectedFile(startFolderOrFile);
+		}
 
 		chooser.setAcceptAllFileFilterUsed(false);
 		String     description = makeFileTypeDescription(fileTypeDescription, fileTypeExtensions);
@@ -496,10 +586,11 @@ public enum FileUtilities {
 		sb.append(fileTypeDescription).append(" (");
 		for (int i = 0; i < fileTypeExtensions.length; i++) {
 			sb.append('.').append(fileTypeExtensions[i]);
-			if (i < fileTypeExtensions.length - 1)
+			if (i < fileTypeExtensions.length - 1) {
 				sb.append(", ");
-			else
+			} else {
 				sb.append(')');
+			}
 		}
 		return sb.toString();
 	}
@@ -545,15 +636,30 @@ public enum FileUtilities {
 		Files.move(file, bakFile, REPLACE_EXISTING, ATOMIC_MOVE);
 		Files.move(tmpFile, file, REPLACE_EXISTING, ATOMIC_MOVE);
 
-		if (!leaveBakFile)
+		if (!leaveBakFile) {
 			Files.delete(bakFile);
+		}
+	}
+
+	public static boolean isEmpty(Path path) throws IOException {
+		if (Files.isDirectory(path)) {
+			try (Stream<Path> entries = Files.list(path)) {
+				return entries.findFirst().isEmpty();
+			}
+		}
+
+		return false;
 	}
 
 	public static void deleteTree(Path dir) throws IOException {
+		if (!Files.exists(dir)) {
+			return;
+		}
+
 		Files.walkFileTree(dir, DELETE_TREE_VISITOR);
 	}
 
-	private static final FileVisitor<Path> DELETE_TREE_VISITOR = new SimpleFileVisitor<Path>() {
+	private static final FileVisitor<Path> DELETE_TREE_VISITOR = new SimpleFileVisitor<>() {
 		@Override
 		public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 			Files.delete(file);
@@ -570,7 +676,7 @@ public enum FileUtilities {
 	public static boolean isNotOlderThan(Path file, Duration maximumAge) {
 		try {
 			Instant  lastModifiedTime = Files.getLastModifiedTime(file).toInstant();
-			Duration age              = Duration.between(lastModifiedTime, ZonedDateTime.now());
+			Duration age              = Duration.between(lastModifiedTime, LocalDateTime.now(ZoneOffset.UTC));
 			return age.compareTo(maximumAge) <= 0;
 		} catch (IOException ignored) {
 			return false;
@@ -579,5 +685,29 @@ public enum FileUtilities {
 
 	public static String readString(Path file) throws IOException {
 		return new String(Files.readAllBytes(file), UTF_8);
+	}
+
+	public static void makeNumberedCopy(Path file, BiFunction<Path, Path, @Nullable IOException> copyFunction)
+			throws IOException {
+		int i = 1;
+		while (true) {
+			Path numberedFile = file.getParent().resolve(file.getFileName() + "." + i);
+			if (!Files.exists(numberedFile)) {
+				@Nullable IOException ex = copyFunction.apply(file, numberedFile);
+				if (ex != null) {
+					throw ex;
+				}
+
+				return;
+			}
+			i++;
+		}
+	}
+
+	public static long getCreationTime(Path file) throws IOException {
+		BasicFileAttributes attrs = Files.readAttributes(
+				file, BasicFileAttributes.class, LinkOption.NOFOLLOW_LINKS);
+		long downloadTimestamp = attrs.creationTime().to(TimeUnit.SECONDS);
+		return downloadTimestamp;
 	}
 }

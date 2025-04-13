@@ -2,8 +2,8 @@ package org.digitalmodular.utilities;
 
 import java.io.PrintStream;
 
-import org.digitalmodular.utilities.gui.swing.progress.ProgressEvent;
-import org.digitalmodular.utilities.gui.swing.progress.ProgressListener;
+import org.digitalmodular.utilities.graphics.swing.progress.ProgressEvent;
+import org.digitalmodular.utilities.graphics.swing.progress.ProgressListener;
 import static org.digitalmodular.utilities.ValidatorUtilities.requireAtLeast;
 import static org.digitalmodular.utilities.ValidatorUtilities.requireNonNull;
 
@@ -30,8 +30,9 @@ public class TextProgressListener implements ProgressListener {
 		boolean complete      = !indeterminate && progress >= evt.getTotal();
 
 		long overshotBy = progress - nextUpdateAt;
-		if (overshotBy < 0 && !complete)
+		if (overshotBy < 0 && !complete) {
 			return;
+		}
 
 		nextUpdateAt += (overshotBy / updateGranularity + 1) * updateGranularity;
 

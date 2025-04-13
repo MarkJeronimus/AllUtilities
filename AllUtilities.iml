@@ -10,19 +10,19 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$APPLICATION_HOME_DIR$/plugins/junit/lib/annotations-17.0.0.jar!/" />
+          <root url="jar://$USER_HOME$/.m2/repository/org/jetbrains/annotations/17.0.0/annotations-17.0.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$APPLICATION_HOME_DIR$/plugins/junit/lib/jcip-annotations-1.0.jar!/" />
+          <root url="jar://$USER_HOME$/.m2/repository/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

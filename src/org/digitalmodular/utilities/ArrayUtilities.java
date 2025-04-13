@@ -1,12 +1,11 @@
 /*
  * This file is part of Utilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -14,12 +13,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.digitalmodular.utilities;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -32,6 +31,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
+import java.util.StringJoiner;
 
 import org.jetbrains.annotations.Contract;
 
@@ -44,8 +44,6 @@ import static org.digitalmodular.utilities.ValidatorUtilities.requireAtLeast;
 // Created 2016-08-02
 @UtilityClass
 public final class ArrayUtilities {
-	private ArrayUtilities() { throw new AssertionError(); }
-
 	public static final byte[]    EMPTY_BYTE_ARRAY    = new byte[0];
 	public static final short[]   EMPTY_SHORT_ARRAY   = new short[0];
 	public static final int[]     EMPTY_INT_ARRAY     = new int[0];
@@ -87,17 +85,99 @@ public final class ArrayUtilities {
 	/** Converts an array of primitives to an array of boxed primitives. */
 	public static Double[] boxed(double... array) {
 		Double[] copy = new Double[array.length];
-		for (int i = 0; i < array.length; i++)
+		for (int i = 0; i < array.length; i++) {
 			copy[i] = array[i];
+		}
 		return copy;
 	}
 
 	/** Converts an array of boxed primitives to an array of primitives. */
 	public static int[] unboxed(Integer[] array) {
 		int[] copy = new int[array.length];
-		for (int i = 0; i < array.length; i++)
+		for (int i = 0; i < array.length; i++) {
 			copy[i] = array[i];
+		}
 		return copy;
+	}
+
+	public static int sum(int[] values) {
+		int sum = 0;
+
+		for (int value : values) {
+			sum += value;
+		}
+
+		return sum;
+	}
+
+	public static long sum(long[] values) {
+		long sum = 0;
+
+		for (long value : values) {
+			sum += value;
+		}
+
+		return sum;
+	}
+
+	public static float sum(float[] values) {
+		float sum = 0;
+
+		for (float value : values) {
+			sum += value;
+		}
+
+		return sum;
+	}
+
+	public static double sum(double[] values) {
+		double sum = 0;
+
+		for (double value : values) {
+			sum += value;
+		}
+
+		return sum;
+	}
+
+	public static int product(int[] values) {
+		int product = 1;
+
+		for (int value : values) {
+			product *= value;
+		}
+
+		return product;
+	}
+
+	public static long product(long[] values) {
+		long product = 1;
+
+		for (long value : values) {
+			product *= value;
+		}
+
+		return product;
+	}
+
+	public static float product(float[] values) {
+		float product = 1;
+
+		for (float value : values) {
+			product *= value;
+		}
+
+		return product;
+	}
+
+	public static double product(double[] values) {
+		double product = 1;
+
+		for (double value : values) {
+			product *= value;
+		}
+
+		return product;
 	}
 
 	public static void shuffle(byte[] array, Random random) {
@@ -109,8 +189,9 @@ public final class ArrayUtilities {
 	}
 
 	public static void swap(byte[] array, int index1, int index2) {
-		if (index1 == index2)
+		if (index1 == index2) {
 			return;
+		}
 
 		byte temp = array[index1];
 		array[index1] = array[index2];
@@ -127,10 +208,12 @@ public final class ArrayUtilities {
 		boolean null1 = array1 == null;
 		boolean null2 = array2 == null;
 
-		if (null1 && null2)
+		if (null1 && null2) {
 			return 0;
-		if (null1 != null2)
+		}
+		if (null1 != null2) {
 			return null1 ? -1 : 1;
+		}
 
 		int len1   = array1.length;
 		int len2   = array2.length;
@@ -140,13 +223,15 @@ public final class ArrayUtilities {
 			int byte1 = array1[i] & 0xFF;
 			int byte2 = array2[i] & 0xFF;
 
-			if (byte1 == byte2)
+			if (byte1 == byte2) {
 				continue;
+			}
 			return byte1 < byte2 ? -1 : 1;
 		}
 
-		if (len1 == len2)
+		if (len1 == len2) {
 			return 0;
+		}
 		return (len1 < len2) ? -1 : 1;
 	}
 
@@ -154,10 +239,12 @@ public final class ArrayUtilities {
 		boolean null1 = array1 == null;
 		boolean null2 = array2 == null;
 
-		if (null1 && null2)
+		if (null1 && null2) {
 			return 0;
-		if (null1 != null2)
+		}
+		if (null1 != null2) {
 			return null1 ? -1 : 1;
+		}
 
 		int len1   = array1.length;
 		int len2   = array2.length;
@@ -168,29 +255,28 @@ public final class ArrayUtilities {
 			int byte2 = array2[i] & 0xFF;
 
 			if (byte1 == 0 || byte2 == 0) {
-				if (byte1 == 0 && byte2 == 0)
+				if (byte1 == 0 && byte2 == 0) {
 					continue;
+				}
 				return byte1 == 0 ? -1 : 1;
 			}
 
-			if (byte1 == byte2)
+			if (byte1 == byte2) {
 				continue;
+			}
 			return byte1 < byte2 ? -1 : 1;
 		}
 
-		if (len1 == len2)
+		if (len1 == len2) {
 			return 0;
+		}
 		return (len1 < len2) ? -1 : 1;
 	}
 
 	public static byte[] stringToNullTerminatedString(String string, int arrayLength) {
 		byte[] array;
 
-		try {
-			array = string.getBytes("UTF-8");
-		} catch (UnsupportedEncodingException ex) {
-			throw new LinkageError("UTF-8 not available!", ex);
-		}
+		array = string.getBytes(StandardCharsets.UTF_8);
 
 		if (array.length > arrayLength) {
 			throw new IllegalArgumentException("String has more than " + arrayLength + " bytes: " + array.length +
@@ -236,27 +322,25 @@ public final class ArrayUtilities {
 
 		// 20 assumes at most 2**31-1 = 2147483647 more elements: "[xx, yy, (2147483647 total)]"
 		//                                                         ^        ^^^^^^^^^^^^^^^^^^^
-		StringBuilder sb = new StringBuilder(4 * maxElements + 20);
-
-		sb.append('[');
+		StringJoiner sj = new StringJoiner(", ", "[", "]");
 
 		for (int i = 0; i < array.length && i < maxElements; i++) {
-			if (sb.length() > 1)
-				sb.append(", ");
-
-			sb.append(HexUtilities.toUnsignedWordString(array[i]));
+			sj.add(HexUtilities.toUnsignedWordString(array[i]));
 		}
 
-		if (array.length > maxElements)
-			sb.append(", (").append(String.valueOf(array.length)).append(" total)");
+		if (array.length > maxElements) {
+			sj.add("(" + array.length + " total)");
+		}
 
-		return sb.append(']').toString();
+		return sj.toString();
 	}
 
 	public static int indexOf(Object[] array, Object searchFor) {
-		for (int i = 0; i < array.length; i++)
-			if (Objects.equals(array[i], searchFor))
+		for (int i = 0; i < array.length; i++) {
+			if (Objects.equals(array[i], searchFor)) {
 				return i;
+			}
+		}
 
 		return -1;
 	}
@@ -268,8 +352,10 @@ public final class ArrayUtilities {
 	public static int[] toIntArray(Collection<Integer> integers) {
 		int[] result = new int[integers.size()];
 		int   i      = 0;
-		for (Iterator<Integer> iter = integers.iterator(); iter.hasNext(); i++)
-			result[i++] = iter.next();
+		for (Iterator<Integer> iter = integers.iterator(); iter.hasNext(); i++) {
+			result[i] = iter.next();
+			i++;
+		}
 
 		return result;
 	}

@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.time;
 
 import java.util.Calendar;
@@ -33,15 +26,16 @@ import java.util.GregorianCalendar;
  * @author Mark Jeronimus
  */
 // Created 2005-06-07
+@Deprecated
 public class Time implements Comparable<Time> {
 	private static Calendar calendar;
 
 	public static long getCurrentTime() {
-		if (Time.calendar == null) {
-			Time.calendar = new GregorianCalendar();
+		if (calendar == null) {
+			calendar = new GregorianCalendar();
 		}
-		return System.currentTimeMillis() + Time.calendar.get(Calendar.ZONE_OFFSET) +
-		       Time.calendar.get(Calendar.DST_OFFSET);
+		return System.currentTimeMillis() + calendar.get(Calendar.ZONE_OFFSET) +
+		       calendar.get(Calendar.DST_OFFSET);
 	}
 
 	/**
@@ -63,7 +57,7 @@ public class Time implements Comparable<Time> {
 	private long timeMillis   = -1;
 
 	public Time() {
-		setTime(Time.getCurrentTime());
+		setTime(getCurrentTime());
 	}
 
 	public Time(long millis) {
@@ -196,7 +190,7 @@ public class Time implements Comparable<Time> {
 		int hours   = time.getHours();
 		int minutes = time.getMinutes();
 		int seconds = time.getSeconds();
-		return (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":" +
+		return (hours < 10 ? "0" : "") + hours + ':' + (minutes < 10 ? "0" : "") + minutes + ':' +
 		       (seconds < 10 ? "0" : "") + seconds;
 	}
 
@@ -268,9 +262,9 @@ public class Time implements Comparable<Time> {
 		// 63323769600000
 		// 62168515200000
 		return (367L * year //
-		        - ((month + 9) / 12 + year) * 7 / 4 //
+		        - ((month + 9) / 12 + year) * 7L / 4 //
 		        - (((month - 9) / 7 + year) / 100 + 1) * 3 / 4 //
-		        + month * 275 / 9 //
+		        + month * 275L / 9 //
 		        + date - 719559/* number of days until 1970 */) * 86400000L + hours * 3600000L + minutes * 60000L +
 		       seconds
 		       * 1000L + milliseconds; //
@@ -348,7 +342,7 @@ public class Time implements Comparable<Time> {
 	/**
 	 * Add a number of milliseconds to this time and return a new instance
 	 */
-	public Time substract(Time t) {
+	public Time subtract(Time t) {
 		return new Time(millisSinceEpoch() - t.millisSinceEpoch());
 	}
 

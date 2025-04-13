@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.container;
 
 import org.digitalmodular.utilities.NumberUtilities;
@@ -96,9 +89,7 @@ public class UnsignedLong extends Number implements Comparable<UnsignedLong> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof UnsignedLong))
-			return false;
-		return value == ((UnsignedLong)obj).value;
+		return obj instanceof UnsignedLong && value == ((UnsignedLong)obj).value;
 	}
 
 	@Override
@@ -110,8 +101,9 @@ public class UnsignedLong extends Number implements Comparable<UnsignedLong> {
 	}
 
 	public static String toBinaryString(long value, int length) {
-		if (length < 1 || length > 64)
+		if (length < 1 || length > 64) {
 			throw new IllegalArgumentException("length: " + length);
+		}
 
 		StringBuilder out = new StringBuilder(64);
 
@@ -125,8 +117,9 @@ public class UnsignedLong extends Number implements Comparable<UnsignedLong> {
 	}
 
 	public static String toHexString(long value, int length) {
-		if (length < 1 || length > 16)
+		if (length < 1 || length > 16) {
 			throw new IllegalArgumentException("length: " + length);
+		}
 
 		StringBuilder out = new StringBuilder(64);
 

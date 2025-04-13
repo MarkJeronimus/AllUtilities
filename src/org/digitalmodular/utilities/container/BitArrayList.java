@@ -3,7 +3,7 @@ package org.digitalmodular.utilities.container;
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,6 @@ package org.digitalmodular.utilities.container;
  *
  * You should have received a copy of the GNU General Public License
  * along with temp. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
  */
 
 import java.util.Arrays;
@@ -99,8 +91,9 @@ public class BitArrayList implements BitList {
 	}
 
 	public BitArrayList setBit(int index, boolean bit) {
-		if (index == bitLength)
+		if (index == bitLength) {
 			return appendBit(bit);
+		}
 
 		byte byteBit = BYTE_BITS[index & 0x7];
 		int  byteIdx = index / 8;
@@ -115,14 +108,16 @@ public class BitArrayList implements BitList {
 
 	@Override
 	public byte getByte(int index) {
-		if (index > bitLength + 7)
+		if (index > bitLength + 7) {
 			throw new ArrayIndexOutOfBoundsException("bitLength = " + bitLength + ", index=" + index);
+		}
 
 		if ((index & 7) == 0) {
-			if (index < bitLength / 8)
+			if (index < bitLength / 8) {
 				return bytes[index];
-			else
+			} else {
 				return (byte)(bytes[index] & BYTE_MASK[bitLength & 0x7]);
+			}
 		} else {
 			byte result = 0;
 			int  mask   = 1 << 7;
@@ -149,8 +144,9 @@ public class BitArrayList implements BitList {
 
 	@Override
 	public long getLong(int index) {
-		if (index > bitLength + 63)
+		if (index > bitLength + 63) {
 			throw new ArrayIndexOutOfBoundsException("bitLength = " + bitLength + ", index=" + index);
+		}
 
 		long value = 0;
 
@@ -158,10 +154,12 @@ public class BitArrayList implements BitList {
 		int shift     = 56 - bitInByte;
 
 		for (; shift >= 0; shift -= 8) {
-			value |= bytes[index++] << shift;
+			value |= (long)bytes[index] << shift;
+			index++;
 		}
 		if (shift > -8) {
-			value |= bytes[index++] >>> (8 - shift);
+			value |= bytes[index] >>> (8 - shift);
+			index++;
 		}
 
 		return value;
@@ -217,9 +215,10 @@ public class BitArrayList implements BitList {
 
 	@Override
 	public byte[] toByteArray(byte[] array) {
-		if (array.length < getByteLength())
+		if (array.length < getByteLength()) {
 			throw new ArrayIndexOutOfBoundsException(
 					"Array size = " + array.length + ", byteLength = " + getByteLength());
+		}
 
 		System.arraycopy(bytes, 0, array, 0, array.length);
 
@@ -406,14 +405,15 @@ public class BitArrayList implements BitList {
 
 	public BitArrayList appendHex(String hex) {
 		hex.chars().map(i -> {
-			if (i >= '0' && i <= '9')
+			if (i >= '0' && i <= '9') {
 				return i - '0';
-			else if (i >= 'a' && i <= 'f')
+			} else if (i >= 'a' && i <= 'f') {
 				return i - ('a' - 10);
-			else if (i >= 'A' && i <= 'F')
+			} else if (i >= 'A' && i <= 'F') {
 				return i - ('A' - 10);
-			else
+			} else {
 				return -1;
+			}
 		}).filter(i -> i >= 0).forEach(this::appendNibble);
 		return this;
 	}

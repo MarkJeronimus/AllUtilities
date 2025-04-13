@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.net;
 
 import java.io.DataInputStream;
@@ -32,6 +25,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
+import java.nio.charset.StandardCharsets;
 import java.util.Vector;
 
 /**
@@ -47,8 +41,7 @@ public class TCPConnection implements Runnable {
 
 	public boolean busy = false;
 
-	@SuppressWarnings("resource")
-	public TCPConnection(String host, int port) throws SocketException, IOException {
+	public TCPConnection(String host, int port) throws IOException {
 		this(new Socket(host, port));
 	}
 
@@ -60,14 +53,13 @@ public class TCPConnection implements Runnable {
 		try {
 			dataOutputStream = new DataOutputStream(this.socket.getOutputStream());
 			dataInputStream = new DataInputStream(this.socket.getInputStream());
-		} catch (IOException e) {
-			return;
+		} catch (IOException ignored) {
 		}
 	}
 
 	public String sendReceive(String message) throws IOException {
 		// this.dataOutputStream.writeUTF(message);
-		dataOutputStream.write(new String(message).getBytes());
+		dataOutputStream.write(message.getBytes(StandardCharsets.UTF_8));
 		// this.dataOutputStream.write(new String("GET " + path + "
 		// HTTP/1.0\n").getBytes());
 		// this.dataOutputStream.write(new String("Host: " + host +
@@ -78,8 +70,8 @@ public class TCPConnection implements Runnable {
 
 		// return this.dataInputStream.readUTF();
 
-		StringBuffer b = new StringBuffer(dataInputStream.available());
-		int          i;
+		StringBuilder b = new StringBuilder(dataInputStream.available());
+		int           i;
 		while ((i = dataInputStream.read()) >= 0) {
 			b.append((char)i);
 		}
@@ -94,8 +86,8 @@ public class TCPConnection implements Runnable {
 			message = new NetRequest(dataInputStream.readUTF());
 
 			return message;
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException ex) {
+			ex.printStackTrace();
 			disconnectRequest();
 			return null;
 		} finally {
@@ -112,7 +104,8 @@ public class TCPConnection implements Runnable {
 		try {
 			dataOutputStream.writeUTF(NetRequest.DisconnectRequest.toString());
 			close();
-		} catch (IOException except) {}
+		} catch (IOException ignored) {
+		}
 		// }
 	}
 
@@ -122,7 +115,8 @@ public class TCPConnection implements Runnable {
 		}
 		try {
 			socket.close();
-		} catch (IOException e) {}
+		} catch (IOException ignored) {
+		}
 	}
 
 	/**
@@ -154,7 +148,7 @@ public class TCPConnection implements Runnable {
 
 				dataOutputStream.writeUTF(result.toString());
 			}
-		} catch (IOException except) {
+		} catch (IOException ignored) {
 			close();
 		}
 	}
@@ -165,13 +159,13 @@ public class TCPConnection implements Runnable {
 
 	public String getIP() {
 		byte[] ip = ((InetSocketAddress)socket.getRemoteSocketAddress()).getAddress().getAddress();
-		return "" + ip[0] + "." + ip[1] + "." + ip[2] + "." + ip[3];
+		return String.valueOf(ip[0]) + '.' + ip[1] + '.' + ip[2] + '.' + ip[3];
 	}
 
 	public Vector<Object> toVector() {
 		Vector<Object> out = new Vector<>();
 		out.add(getIP());
-		out.add("" + socket.getLocalPort());
+		out.add(String.valueOf(socket.getLocalPort()));
 		out.add(getHostName());
 		return out;
 	}

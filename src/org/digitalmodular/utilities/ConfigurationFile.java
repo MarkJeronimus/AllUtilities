@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities;
 
 import java.io.FileInputStream;
@@ -37,8 +30,6 @@ import java.nio.file.Paths;
 import static java.nio.file.StandardCopyOption.ATOMIC_MOVE;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
-import net.jcip.annotations.ThreadSafe;
-
 /**
  * Contains persistable key/value pairs, as well as run-time configurable default key/value pairs which are used in case
  * keys are not present in (or deleted from) the 'active' configuration.
@@ -46,7 +37,6 @@ import net.jcip.annotations.ThreadSafe;
  * @author Mark Jeronimus
  */
 // Created 2017-02-17
-@ThreadSafe
 public class ConfigurationFile extends Configuration {
 	private final String filename;
 
@@ -57,7 +47,8 @@ public class ConfigurationFile extends Configuration {
 	public final synchronized void load() throws IOException {
 		try {
 			properties.load(new FileInputStream(filename));
-		} catch (FileNotFoundException ignored) { }
+		} catch (FileNotFoundException ignored) {
+		}
 	}
 
 	public final synchronized void save() throws IOException {
@@ -79,12 +70,14 @@ public class ConfigurationFile extends Configuration {
 		              Paths.get(filename + ".bak") :
 		              null;
 
-		if (backup != null)
+		if (backup != null) {
 			Files.move(file, backup, REPLACE_EXISTING);
+		}
 
 		Files.move(tempFile, file);
 
-		if (backup != null)
+		if (backup != null) {
 			Files.delete(backup);
+		}
 	}
 }

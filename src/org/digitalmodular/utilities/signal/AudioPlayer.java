@@ -1,7 +1,7 @@
 /*
  * This file is part of AllUtilities.
  *
- * Copyleft 2019 Mark Jeronimus. All Rights Reversed.
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,22 +14,15 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllUtilities. If not, see <http://www.gnu.org/licenses/>.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.digitalmodular.utilities.signal;
 
 import java.util.Arrays;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.DataLine;
+import javax.sound.sampled.DataLine.Info;
 import javax.sound.sampled.SourceDataLine;
 
 /**
@@ -78,6 +71,10 @@ public class AudioPlayer implements Runnable {
 		this.sampleRate = sampleRate;
 	}
 
+	public float getSampleRate() {
+		return sampleRate;
+	}
+
 	public void setBitsPerSample(int bits) {
 		if (isPlaying) {
 			throw new IllegalStateException("Cannot modify playing parameter when playing.");
@@ -122,8 +119,8 @@ public class AudioPlayer implements Runnable {
 	}
 
 	private void start() {
-		AudioFormat   audioFormat  = new AudioFormat(sampleRate, bitsPerSample, numChannels, true, true);
-		DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class, audioFormat, bufferSize);
+		AudioFormat audioFormat  = new AudioFormat(sampleRate, bitsPerSample, numChannels, true, true);
+		Info        dataLineInfo = new Info(SourceDataLine.class, audioFormat, bufferSize);
 
 		try {
 			// AudioFormat[] af = dataLineInfo.getFormats();
@@ -143,8 +140,8 @@ public class AudioPlayer implements Runnable {
 			// this.buffer.length - this.bytesWritten);
 			// this.sourceDataLine.write(this.buffer, this.bytesWritten,
 			// this.buffer.length - this.bytesWritten);
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 			System.exit(2);
 		}
 
@@ -187,8 +184,8 @@ public class AudioPlayer implements Runnable {
 
 				Thread.sleep(1);
 			}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		} catch (InterruptedException ex) {
+			ex.printStackTrace();
 		}
 	}
 
