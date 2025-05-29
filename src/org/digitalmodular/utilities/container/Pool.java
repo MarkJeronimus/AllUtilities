@@ -25,6 +25,7 @@ import java.awt.Font;
 import java.awt.Paint;
 import java.io.File;
 import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.Inet4Address;
@@ -39,8 +40,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import javax.imageio.ImageIO;
 
 /**
- * Implementation and javadoc taken from {@code com.sun.istack.internal.Pool}.
+ * Implementation and javadoc taken from {@code com.sun.istack.internal.Pool} and cleaned up a bit.
  *
+ * @param <T> the type of objects in the pool.
  * @author Mark Jeronimus
  */
 // Created 2012-05-17
@@ -64,13 +66,13 @@ public final class Pool<T> {
 
 	public static <T> Pool<T> getPool(Class<T> clazz) {
 		if (clazz.isArray()) {
-			throw new IllegalAccessError("Class cannot be an array type (use the other constructor for arrays).");
+			throw new IllegalAccessError("'clazz' cannot be an array type (use the other constructor for arrays).");
 		} else if (clazz.isInterface()) {
-			throw new IllegalAccessError("Class must be a concrete type.");
+			throw new IllegalAccessError("'clazz' must be a concrete type.");
 		} else if (isImmutable(clazz)) {
-			throw new IllegalAccessError("Class cannot be an immutable type.");
+			throw new IllegalAccessError("'clazz' cannot be an immutable type.");
 		} else if (!isInstantiable(clazz)) {
-			throw new IllegalAccessError("Class must be an instantiable type.");
+			throw new IllegalAccessError("'clazz' must be an instantiable type.");
 		}
 
 		@SuppressWarnings("unchecked")
@@ -94,8 +96,9 @@ public final class Pool<T> {
 	 * If no object is available in the pool, this method creates a new one.
 	 *
 	 * @return always non-null.
+	 * @throws Throwable if the pool was empty and the object creation fails.
 	 */
-	public T take() {
+	public T take() throws Throwable {
 		T t = pool.poll();
 		if (t == null) {
 			return create();
@@ -121,15 +124,14 @@ public final class Pool<T> {
 	 * <p>
 	 * Also note that multiple threads may call this method concurrently.
 	 */
-	private T create() {
+	@SuppressWarnings("ProhibitedExceptionThrown")
+	private T create() throws Throwable {
 		try {
-			return clazz.newInstance();
-		} catch (InstantiationException ex) {
-			ex.printStackTrace();
-			return null;
-		} catch (IllegalAccessException ex) {
-			ex.printStackTrace();
-			return null;
+			return clazz.getConstructor().newInstance();
+		} catch (NoSuchMethodException | IllegalAccessException | InstantiationException ex) {
+			throw ex.getCause() != null ? ex.getCause() : ex;
+		} catch (InvocationTargetException ex) {
+			throw ex.getTargetException();
 		}
 	}
 
