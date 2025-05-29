@@ -23,6 +23,7 @@ import java.awt.DisplayMode;
 import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -70,7 +71,6 @@ public final class GraphicsUtilities {
 	/**
 	 * Shorthand to enable a nice look and feel (Currently, Nimbus).
 	 */
-	@SuppressWarnings("SpellCheckingInspection")
 	public static void setNiceLookAndFeel() {
 		requireOnEDT();
 		try {
@@ -130,6 +130,9 @@ public final class GraphicsUtilities {
 
 	/**
 	 * Shorthand to get the default screen object.
+	 * <p>
+	 * Don't use this to obtain the resolution of the screen, this fails on Linux with multiple screens.
+	 * Use {@link #getScreenRect(int)} instead.
 	 */
 	public static GraphicsDevice getDisplayDevice() {
 		return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -137,9 +140,27 @@ public final class GraphicsUtilities {
 
 	/**
 	 * Shorthand to get the display mode of the default screen.
+	 * <p>
+	 * Don't use this to obtain the resolution of the screen, this fails on Linux with multiple screens.
+	 * Use {@link #getScreenRect(int)} instead.
 	 */
 	public static DisplayMode getDisplayMode() {
 		return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
+	}
+
+	/**
+	 * Shorthand to get the framebuffer bounds of the specified screen.
+	 * <p>
+	 * To assist iteration, an empty dimension is returned if the screen index is invalid.
+	 */
+	public static Rectangle getScreenRect(int index) {
+		GraphicsDevice[] screenDevices = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
+
+		if (index < screenDevices.length) {
+			return screenDevices[index].getDefaultConfiguration().getBounds();
+		}
+
+		return new Rectangle();
 	}
 
 	/**
@@ -176,7 +197,7 @@ public final class GraphicsUtilities {
 			    mode.getBitDepth() == bitDepth) {
 				if (refreshRate > mode.getRefreshRate()) {
 					refreshRate = mode.getRefreshRate();
-					index = i;
+					index       = i;
 				}
 			}
 		}

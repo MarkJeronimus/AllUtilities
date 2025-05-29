@@ -20,42 +20,42 @@
 package org.digitalmodular.utilities;
 
 import java.awt.AWTException;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.digitalmodular.utilities.graphics.GraphicsUtilities;
 
 /**
  * @author Mark Jeronimus
  */
 // Created 2011-06-20
 public class ScreenCapturer {
-	private final Rectangle[] screenRects;
-	private final Rectangle   allRect;
+	private final List<Rectangle> screenRects = new ArrayList<>(3); // Most screens 99.9% of the people have
+	private final Rectangle       allRect;
 
-	private Robot robot;
+	private final Robot robot;
 
 	public ScreenCapturer() {
-		GraphicsDevice[] screens = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
-		screenRects = new Rectangle[screens.length];
 		allRect = new Rectangle();
 
-		for (int i = 0; i < screens.length; i++) {
-			screenRects[i] = screens[i].getDefaultConfiguration().getBounds();
-			allRect.add(screenRects[i]);
+		for (int i = 0; i < Integer.MAX_VALUE; i++) {
+			Rectangle screenRect = GraphicsUtilities.getScreenRect(i);
+			screenRects.add(screenRect);
+			allRect.add(screenRect);
 		}
 
 		try {
 			robot = new Robot();
 		} catch (AWTException ex) {
-			ex.printStackTrace();
-			System.exit(1);
+			throw new IllegalStateException("Unable to create ScreenCapturer instance.", ex);
 		}
 	}
 
 	public int getScreenCount() {
-		return screenRects.length;
+		return screenRects.size();
 	}
 
 	public Rectangle getAllRect() {
@@ -63,7 +63,7 @@ public class ScreenCapturer {
 	}
 
 	public Rectangle getScreenRect(int screen) {
-		return screenRects[screen];
+		return screenRects.get(screen);
 	}
 
 	public BufferedImage captureAll() {
@@ -71,7 +71,7 @@ public class ScreenCapturer {
 	}
 
 	public BufferedImage captureScreen(int i) {
-		return robot.createScreenCapture(screenRects[i]);
+		return robot.createScreenCapture(screenRects.get(i));
 	}
 
 	public BufferedImage captureArea(Rectangle area) {
