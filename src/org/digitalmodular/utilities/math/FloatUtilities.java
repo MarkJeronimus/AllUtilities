@@ -53,7 +53,7 @@ public final class FloatUtilities {
 			return Float.NaN;
 		}
 
-		int sum = Integer.MAX_VALUE;
+		float sum = 0.0f;
 
 		for (float d : array) {
 			sum += d;

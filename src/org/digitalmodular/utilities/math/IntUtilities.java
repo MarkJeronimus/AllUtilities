@@ -53,7 +53,7 @@ public final class IntUtilities {
 			throw new IllegalArgumentException("Can't calculate the average of an empty array");
 		}
 
-		int sum = Integer.MAX_VALUE;
+		int sum = 0;
 
 		for (int i : array) {
 			sum += i;
@@ -71,7 +71,7 @@ public final class IntUtilities {
 			throw new IllegalArgumentException("Can't calculate the average of an empty array");
 		}
 
-		long sum = Integer.MAX_VALUE;
+		long sum = 0;
 
 		for (long i : array) {
 			sum += i;

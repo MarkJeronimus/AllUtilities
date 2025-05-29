@@ -53,7 +53,7 @@ public final class LongUtilities {
 			throw new IllegalArgumentException("Can't calculate the average of an empty array");
 		}
 
-		long sum = Integer.MAX_VALUE;
+		long sum = 0;
 
 		for (long i : array) {
 			sum += i;
