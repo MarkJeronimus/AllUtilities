@@ -99,10 +99,10 @@ public class ControlPointGradient extends Gradient {
 			Color4f after;
 			double  toFraction;
 			if (index == colors.length) {
-				after = colors[0];
+				after      = colors[0];
 				toFraction = fractions[0];
 			} else {
-				after = colors[index];
+				after      = colors[index];
 				toFraction = fractions[index];
 			}
 

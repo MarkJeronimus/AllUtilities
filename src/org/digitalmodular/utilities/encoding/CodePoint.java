@@ -1068,7 +1068,7 @@ public final class CodePoint {
 	 */
 	public static void codePointToSurrogate(int codePoint, char[] charArray, int index) {
 		int offset = codePoint - 0x00010000;
-		charArray[index] = (char)(offset >>> 10 & 0x03FF | 0xD800);
+		charArray[index]     = (char)(offset >>> 10 & 0x03FF | 0xD800);
 		charArray[index + 1] = (char)(offset & 0x03FF | 0xDC00);
 	}
 
@@ -1177,11 +1177,11 @@ public final class CodePoint {
 
 		UnicodeBlock(String name, int start, int end, int numCodePoints, String version) {
 			blocksByName.put(this.name = name, this);
-			this.start = start;
-			this.end = end;
+			this.start         = start;
+			this.end           = end;
 			this.numCodePoints = numCodePoints;
-			this.version = version;
-			index = count;
+			this.version       = version;
+			index              = count;
 			count++;
 		}
 

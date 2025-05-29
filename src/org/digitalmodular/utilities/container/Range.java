@@ -57,7 +57,7 @@ public class Range implements Comparable<Range> {
 		requireNotDegenerate(end - begin, "end - begin");
 
 		this.begin = begin;
-		this.end = end;
+		this.end   = end;
 	}
 
 	/**

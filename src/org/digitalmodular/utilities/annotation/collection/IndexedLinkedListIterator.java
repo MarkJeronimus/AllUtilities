@@ -41,12 +41,12 @@ public class IndexedLinkedListIterator implements Iterator<IndexedLinkedListElem
 	private       int                      remaining;
 
 	public IndexedLinkedListIterator(IndexedLinkedList list) {
-		this.list = list;
+		this.list    = list;
 		firstElement = list.getHead();
 
 		previousElement = null;
-		nextElement = firstElement;
-		remaining = this.list.size();
+		nextElement     = firstElement;
+		remaining       = this.list.size();
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class IndexedLinkedListIterator implements Iterator<IndexedLinkedListElem
 			throw new NoSuchElementException();
 		}
 		previousElement = nextElement;
-		nextElement = nextElement.next;
+		nextElement     = nextElement.next;
 		remaining--;
 		return previousElement;
 	}

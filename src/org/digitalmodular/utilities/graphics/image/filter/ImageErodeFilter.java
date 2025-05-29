@@ -44,22 +44,19 @@ public class ImageErodeFilter extends ImageFilter {
 
 			rowIn = in.matrix[z][in.border];
 			for (x = in.border; x < endX; x++) {
-				lineBuffer1[x] = rowIn[x - 1] < rowIn[x] ? rowIn[x - 1] < rowIn[x + 1] ? rowIn[x - 1] : rowIn[x + 1]
-				                                         : rowIn[x] < rowIn[x + 1] ? rowIn[x] : rowIn[x + 1];
+				lineBuffer1[x] = rowIn[x - 1] < rowIn[x] ? Math.min(rowIn[x - 1], rowIn[x + 1])
+				                                         : Math.min(rowIn[x], rowIn[x + 1]);
 			}
 
 			for (int y = in.border; y < in.endY; y++) {
-				rowIn = in.matrix[z][y + 1];
+				rowIn  = in.matrix[z][y + 1];
 				rowOut = out.matrix[z][y];
 
 				for (x = in.border; x < endX; x++) {
-					lineBuffer2[x] = rowIn[x - 1] < rowIn[x] ? rowIn[x - 1] < rowIn[x + 1] ? rowIn[x - 1] : rowIn[x
-					                                                                                              + 1]
-					                                         : rowIn[x] < rowIn[x + 1] ? rowIn[x] : rowIn[x + 1];
-					rowOut[x] = lineBuffer0[x] < lineBuffer1[x] ? lineBuffer0[x] < lineBuffer2[x] ? lineBuffer0[x]
-					                                                                              : lineBuffer2[x]
-					                                            : lineBuffer1[x] < lineBuffer2[x] ? lineBuffer1[x]
-					                                                                              : lineBuffer2[x];
+					lineBuffer2[x] = rowIn[x - 1] < rowIn[x] ? Math.min(rowIn[x - 1], rowIn[x + 1])
+					                                         : Math.min(rowIn[x], rowIn[x + 1]);
+					rowOut[x]      = lineBuffer0[x] < lineBuffer1[x] ? Math.min(lineBuffer0[x], lineBuffer2[x])
+					                                                 : Math.min(lineBuffer1[x], lineBuffer2[x]);
 				}
 
 				float[] temp = lineBuffer0;

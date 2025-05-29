@@ -43,7 +43,7 @@ public class ImageMatrixImageImageImageFunctions {
 
 		for (int z = 0; z < out.numComponents; z++) {
 			for (int y = out.border; y < out.endY; y++) {
-				rowOut = out.matrix[z][y];
+				rowOut  = out.matrix[z][y];
 				rowAdd1 = add1.matrix[z][y];
 				rowAdd2 = add2.matrix[z][y];
 				for (x = out.border; x < endX; x++) {
@@ -67,8 +67,8 @@ public class ImageMatrixImageImageImageFunctions {
 
 		for (int z = 0; z < out.numComponents; z++) {
 			for (int y = out.border; y < out.endY; y++) {
-				rowOut = out.matrix[z][y];
-				rowMul = mul.matrix[z][y];
+				rowOut   = out.matrix[z][y];
+				rowMul   = mul.matrix[z][y];
 				rowScale = scale.matrix[z][y];
 				for (x = out.border; x < endX; x++) {
 					rowOut[x] += rowMul[x] * rowScale[x];
@@ -91,8 +91,8 @@ public class ImageMatrixImageImageImageFunctions {
 
 		for (int z = 0; z < out.numComponents; z++) {
 			for (int y = out.border; y < out.endY; y++) {
-				rowOut = out.matrix[z][y];
-				rowMul = mul.matrix[z][y];
+				rowOut    = out.matrix[z][y];
+				rowMul    = mul.matrix[z][y];
 				rowOffset = offset.matrix[z][y];
 				for (x = out.border; x < endX; x++) {
 					rowOut[x] *= rowMul[x] + rowOffset[x];
@@ -115,7 +115,7 @@ public class ImageMatrixImageImageImageFunctions {
 
 		for (int z = 0; z < out.numComponents; z++) {
 			for (int y = out.border; y < out.endY; y++) {
-				rowOut = out.matrix[z][y];
+				rowOut  = out.matrix[z][y];
 				rowMul1 = mul1.matrix[z][y];
 				rowMul2 = mul2.matrix[z][y];
 				for (x = out.border; x < endX; x++) {

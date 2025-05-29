@@ -51,22 +51,15 @@ public class ImageMedianXFilter extends ImageFilter {
 
 		for (int z = 0; z < in.numComponents; z++) {
 			for (int y = in.border; y < in.endY; y++) {
-				rowIn = in.matrix[z][y];
+				rowIn  = in.matrix[z][y];
 				rowOut = out.matrix[z][y];
 				for (x = in.border; x < endX; x++) {
 					float c = (rowIn[x + 1] + rowIn[x - 1]) * 0.5f;
-					rowOut[x] = rowIn[x] > rowIn[x + 1] ? rowIn[x] > rowIn[x - 1] ? rowIn[x - 1] > rowIn[x + 1] ?
-					                                                                rowIn[
-							                                                                x - 1]
-					                                                                                            :
-					                                                                rowIn[
-							                                                                x + 1] : c
-					                                    : rowIn[x - 1] > rowIn[x] ? rowIn[x - 1] > rowIn[x + 1] ?
-					                                                                rowIn[
-							                                                                x + 1]
-					                                                                                            :
-					                                                                rowIn[
-							                                                                x - 1] : c;
+					if (rowIn[x] > rowIn[x + 1]) {
+						rowOut[x] = rowIn[x] > rowIn[x - 1] ? Math.max(rowIn[x - 1], rowIn[x + 1]) : c;
+					} else {
+						rowOut[x] = rowIn[x - 1] > rowIn[x] ? Math.min(rowIn[x - 1], rowIn[x + 1]) : c;
+					}
 				}
 			}
 		}

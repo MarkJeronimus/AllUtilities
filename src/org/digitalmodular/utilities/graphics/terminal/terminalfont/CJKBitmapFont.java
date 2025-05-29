@@ -43,7 +43,7 @@ public class CJKBitmapFont extends AbstractTerminalFont {
 			int numGlyphsX = width / gridSpacingX;
 			int numGlyphsY = height / gridSpacingY;
 
-			width = numGlyphsX * gridSpacingX;
+			width  = numGlyphsX * gridSpacingX;
 			height = numGlyphsY * gridSpacingY;
 
 			for (int y = 0; y < height; y += gridSpacingY) {

@@ -36,7 +36,7 @@ public class FPSCounter {
 	public void start() {
 		long currentTime = System.nanoTime();
 		pointer = 0;
-		count = 0;
+		count   = 0;
 		Arrays.fill(lastTime, currentTime);
 	}
 
@@ -50,7 +50,7 @@ public class FPSCounter {
 			count++;
 		}
 
-		fps = 1.0e9 * count / (currentTime - lastTime[pointer]);
+		fps         = 1.0e9 * count / (currentTime - lastTime[pointer]);
 		elapsedTime = (currentTime - lastTime[lastPointer]) / 1.0e9;
 
 		lastTime[pointer] = currentTime;

@@ -156,7 +156,7 @@ public class ImageRainbowConverter extends ImageConverter {
 		switch (inImage.numComponents) {
 			case 1:
 				for (int y = inImage.border; y < inImage.endY; y++) {
-					rowIn0 = inImage.matrix[0][y];
+					rowIn0  = inImage.matrix[0][y];
 					rowOut0 = outImage.matrix[0][y];
 					rowOut1 = outImage.matrix[1][y];
 					rowOut2 = outImage.matrix[2][y];
@@ -208,8 +208,8 @@ public class ImageRainbowConverter extends ImageConverter {
 				break;
 			case 2:
 				for (int y = inImage.border; y < inImage.endY; y++) {
-					rowIn0 = inImage.matrix[0][y];
-					rowIn1 = inImage.matrix[1][y];
+					rowIn0  = inImage.matrix[0][y];
+					rowIn1  = inImage.matrix[1][y];
 					rowOut0 = outImage.matrix[0][y];
 					rowOut1 = outImage.matrix[1][y];
 					rowOut2 = outImage.matrix[2][y];

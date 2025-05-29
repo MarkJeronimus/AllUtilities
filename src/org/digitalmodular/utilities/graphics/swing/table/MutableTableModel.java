@@ -44,7 +44,7 @@ public class MutableTableModel extends AbstractTableModel implements List<Object
 	@SuppressWarnings("OverridableMethodCallDuringObjectConstruction")
 	public MutableTableModel(String... tableColumnNames) {
 		this.tableColumnNames = tableColumnNames.clone();
-		editable = new boolean[tableColumnNames.length];
+		editable              = new boolean[tableColumnNames.length];
 		Arrays.fill(editable, false);
 
 		fireTableRowsInserted(0, tableData.size() - 1);
@@ -53,7 +53,7 @@ public class MutableTableModel extends AbstractTableModel implements List<Object
 	@SuppressWarnings("OverridableMethodCallDuringObjectConstruction")
 	public MutableTableModel(String[] tableColumnNames, boolean[] editable) {
 		this.tableColumnNames = tableColumnNames.clone();
-		this.editable = editable.clone();
+		this.editable         = editable.clone();
 
 		fireTableRowsInserted(0, tableData.size() - 1);
 	}
@@ -62,7 +62,7 @@ public class MutableTableModel extends AbstractTableModel implements List<Object
 	public MutableTableModel(Collection<Object[]> tableData, String[] tableColumnNames, boolean[] editable) {
 		this.tableData.addAll(tableData);
 		this.tableColumnNames = tableColumnNames.clone();
-		this.editable = editable.clone();
+		this.editable         = editable.clone();
 
 		fireTableRowsInserted(0, tableData.size() - 1);
 	}

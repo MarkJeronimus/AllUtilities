@@ -25,9 +25,9 @@ public class UFCurve {
 		private final boolean smoothOut;
 
 		private ControlPoint(double position, double value, boolean smoothIn, boolean smoothOut) {
-			this.position = requireRange(0.0, 1.0, position, "position");
-			this.value = requireRange(0.0, 1.0, value, "value");
-			this.smoothIn = smoothIn;
+			this.position  = requireRange(0.0, 1.0, position, "position");
+			this.value     = requireRange(0.0, 1.0, value, "value");
+			this.smoothIn  = smoothIn;
 			this.smoothOut = smoothOut;
 		}
 
@@ -92,13 +92,13 @@ public class UFCurve {
 			points.add(index, point);
 		}
 
-		interpolator = null;
+		interpolator  = null;
 		interpolator2 = null;
 		return index;
 	}
 
 	public ControlPoint removePoint(int index) {
-		interpolator = null;
+		interpolator  = null;
 		interpolator2 = null;
 		return points.remove(index);
 	}
@@ -138,7 +138,7 @@ public class UFCurve {
 			pointsY[i] = point.getValue();
 		}
 
-		interpolator = new MonotoneInterpolator(pointsX, pointsY, 0.0);
+		interpolator  = new MonotoneInterpolator(pointsX, pointsY, 0.0);
 		interpolator2 = new MonotoneInterpolatorReference(pointsX, pointsY, 0.0);
 	}
 }

@@ -39,7 +39,7 @@ public class ImageMatrixImageImageFunctionsComponent {
 
 		for (int y = out.border; y < out.endY; y++) {
 			rowOut = outComponent[y];
-			rowIn = inComponent[y];
+			rowIn  = inComponent[y];
 			for (x = out.border; x < endX; x++) {
 				rowOut[x] = rowIn[x];
 			}
@@ -55,7 +55,7 @@ public class ImageMatrixImageImageFunctionsComponent {
 
 		for (int y = out.border; y < out.endY; y++) {
 			rowOut = outComponent[y];
-			rowIn = inComponent[y];
+			rowIn  = inComponent[y];
 			for (x = out.border; x < endX; x++) {
 				rowOut[x] += rowIn[x];
 			}
@@ -71,7 +71,7 @@ public class ImageMatrixImageImageFunctionsComponent {
 
 		for (int y = out.border; y < out.endY; y++) {
 			rowOut = outComponent[y];
-			rowIn = inComponent[y];
+			rowIn  = inComponent[y];
 			for (x = out.border; x < endX; x++) {
 				rowOut[x] -= rowIn[x];
 			}
@@ -87,7 +87,7 @@ public class ImageMatrixImageImageFunctionsComponent {
 
 		for (int y = out.border; y < out.endY; y++) {
 			rowOut = outComponent[y];
-			rowIn = inComponent[y];
+			rowIn  = inComponent[y];
 			for (x = out.border; x < endX; x++) {
 				rowOut[x] = rowIn[x] - rowOut[x];
 			}
@@ -103,7 +103,7 @@ public class ImageMatrixImageImageFunctionsComponent {
 
 		for (int y = out.border; y < out.endY; y++) {
 			rowOut = outComponent[y];
-			rowIn = inComponent[y];
+			rowIn  = inComponent[y];
 			for (x = out.border; x < endX; x++) {
 				rowOut[x] *= rowIn[x];
 			}
@@ -119,7 +119,7 @@ public class ImageMatrixImageImageFunctionsComponent {
 
 		for (int y = out.border; y < out.endY; y++) {
 			rowOut = outComponent[y];
-			rowIn = inComponent[y];
+			rowIn  = inComponent[y];
 			for (x = out.border; x < endX; x++) {
 				rowOut[x] /= rowIn[x];
 			}
@@ -135,7 +135,7 @@ public class ImageMatrixImageImageFunctionsComponent {
 
 		for (int y = out.border; y < out.endY; y++) {
 			rowOut = outComponent[y];
-			rowIn = inComponent[y];
+			rowIn  = inComponent[y];
 			for (x = out.border; x < endX; x++) {
 				rowOut[x] = rowIn[x] / rowOut[x];
 			}
@@ -150,7 +150,7 @@ public class ImageMatrixImageImageFunctionsComponent {
 		int     endX = out.endX; // 1
 
 		for (int y = out.border; y < out.endY; y++) {
-			rowOut = outComponent[y];
+			rowOut   = outComponent[y];
 			rowPower = powerComponent[y];
 			for (x = out.border; x < endX; x++) {
 				rowOut[x] = (float)Math.pow(rowOut[x], rowPower[x]);
@@ -166,7 +166,7 @@ public class ImageMatrixImageImageFunctionsComponent {
 		int     endX = out.endX; // 1
 
 		for (int y = out.border; y < out.endY; y++) {
-			rowOut = outComponent[y];
+			rowOut  = outComponent[y];
 			rowBase = baseComponent[y];
 			for (x = out.border; x < endX; x++) {
 				rowOut[x] = (float)Math.pow(rowBase[x], rowOut[x]);
@@ -183,7 +183,7 @@ public class ImageMatrixImageImageFunctionsComponent {
 
 		for (int y = out.border; y < out.endY; y++) {
 			rowOut = outComponent[y];
-			rowIn = inComponent[y];
+			rowIn  = inComponent[y];
 			for (x = out.border; x < endX; x++) {
 				rowOut[x] = (float)Math.hypot(rowOut[x], rowIn[x]);
 			}
@@ -199,7 +199,7 @@ public class ImageMatrixImageImageFunctionsComponent {
 
 		for (int y = out.border; y < out.endY; y++) {
 			rowOut = outComponent[y];
-			rowIn = inComponent[y];
+			rowIn  = inComponent[y];
 			for (x = out.border; x < endX; x++) {
 				rowOut[x] = (float)Math.atan2(rowOut[x], rowIn[x]);
 			}
@@ -215,7 +215,7 @@ public class ImageMatrixImageImageFunctionsComponent {
 
 		for (int y = out.border; y < out.endY; y++) {
 			rowOut = outComponent[y];
-			rowIn = inComponent[y];
+			rowIn  = inComponent[y];
 			for (x = out.border; x < endX; x++) {
 				rowOut[x] = (float)Math.atan2(rowIn[x], rowOut[x]);
 			}
@@ -232,7 +232,7 @@ public class ImageMatrixImageImageFunctionsComponent {
 
 		for (int y = out.border; y < out.endY; y++) {
 			rowOut = outComponent[y];
-			rowIn = offset1Component[y];
+			rowIn  = offset1Component[y];
 			for (x = out.border; x < endX; x++) {
 				rowOut[x] += rowIn[x] + offset2;
 			}
@@ -295,7 +295,7 @@ public class ImageMatrixImageImageFunctionsComponent {
 		int     endX = out.endX; // 1
 
 		for (int y = out.border; y < out.endY; y++) {
-			rowOut = outComponent[y];
+			rowOut   = outComponent[y];
 			rowScale = mulComponent[y];
 			for (x = out.border; x < endX; x++) {
 				rowOut[x] *= (rowScale[x] + offset);
@@ -311,7 +311,7 @@ public class ImageMatrixImageImageFunctionsComponent {
 		int     endX = out.endX; // 1
 
 		for (int y = out.border; y < out.endY; y++) {
-			rowOut = outComponent[y];
+			rowOut    = outComponent[y];
 			rowOffset = addComponent[y];
 			for (x = out.border; x < endX; x++) {
 				rowOut[x] = rowOut[x] * mul + rowOffset[x];
@@ -328,7 +328,7 @@ public class ImageMatrixImageImageFunctionsComponent {
 
 		for (int y = out.border; y < out.endY; y++) {
 			rowOut = outComponent[y];
-			rowIn = inComponent[y];
+			rowIn  = inComponent[y];
 			for (x = out.border; x < endX; x++) {
 				rowOut[x] += rowIn[x] * scale;
 			}

@@ -82,14 +82,14 @@ abstract class GradientPaintContext implements PaintContext {
 		    || persistentRaster.getWidth() < w ||
 		    persistentRaster.getHeight() < h) {
 			persistentColorModel = colorModel;
-			persistentRaster = colorModel.createCompatibleWritableRaster(w, h);
+			persistentRaster     = colorModel.createCompatibleWritableRaster(w, h);
 		}
 	}
 
 	@Override
 	public final synchronized void dispose() {
 		persistentColorModel = null;
-		persistentRaster = null;
+		persistentRaster     = null;
 	}
 
 	@Override

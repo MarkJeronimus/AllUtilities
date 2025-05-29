@@ -52,7 +52,7 @@ public class TCPConnection implements Runnable {
 
 		try {
 			dataOutputStream = new DataOutputStream(this.socket.getOutputStream());
-			dataInputStream = new DataInputStream(this.socket.getInputStream());
+			dataInputStream  = new DataInputStream(this.socket.getInputStream());
 		} catch (IOException ignored) {
 		}
 	}

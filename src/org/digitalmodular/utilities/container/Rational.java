@@ -73,7 +73,7 @@ public class Rational {
 	}
 
 	public Rational(long value) {
-		numerator = value;
+		numerator   = value;
 		denominator = 1;
 	}
 
@@ -81,11 +81,11 @@ public class Rational {
 		requireAtLeast(0, denominator, "denominator");
 
 		if (denominator == 0) {
-			this.numerator = Long.signum(numerator);
+			this.numerator   = Long.signum(numerator);
 			this.denominator = 0;
 		} else {
 			long gcd = NumberUtilities.gcd(Math.abs(numerator), denominator);
-			this.numerator = numerator / gcd;
+			this.numerator   = numerator / gcd;
 			this.denominator = denominator / gcd;
 		}
 	}
@@ -109,7 +109,7 @@ public class Rational {
 
 			long numerator2   = numerator1;
 			long denominator2 = denominator1;
-			numerator1 = numerator;
+			numerator1   = numerator;
 			denominator1 = denominator;
 
 			numerator *= integerPart;
@@ -141,7 +141,7 @@ public class Rational {
 	}
 
 	public Rational(Rational o) {
-		numerator = o.numerator;
+		numerator   = o.numerator;
 		denominator = o.denominator;
 	}
 

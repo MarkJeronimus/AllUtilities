@@ -294,13 +294,13 @@ public class StandardBitmapFontCP437 extends AbstractTerminalFont {
 		int which;
 		int offset;
 		if (height == 16) {
-			which = 0;
+			which  = 0;
 			offset = 0;
 		} else if (height == 14) {
-			which = 1;
+			which  = 1;
 			offset = 32;
 		} else if (height == 8) {
-			which = 2;
+			which  = 2;
 			offset = 60;
 		} else {
 			throw new IllegalArgumentException("Only char heights of 8, 14 and 16 supported.");

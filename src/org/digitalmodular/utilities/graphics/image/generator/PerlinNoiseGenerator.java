@@ -25,7 +25,7 @@
 // /**
 // * @author Mark Jeronimus
 // */
-//// Created 2012-04-04
+// // Created 2012-04-04
 //public class PerlinNoiseGenerator extends ImageGenerator {
 //	private static final FastRandom RND = RandomUtilities.FAST_RND;
 //

@@ -46,7 +46,7 @@ public class Vector4i implements Comparable<Vector4i> {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		w = t;
+		w      = t;
 	}
 
 	public void set(Vector4i o) {
@@ -60,7 +60,7 @@ public class Vector4i implements Comparable<Vector4i> {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		w = t;
+		w      = t;
 	}
 
 	/**

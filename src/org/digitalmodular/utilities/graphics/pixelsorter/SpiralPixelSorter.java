@@ -40,7 +40,7 @@ public class SpiralPixelSorter extends PixelSorter {
 
 	public SpiralPixelSorter(double thickness, SpiralType type) {
 		this.thickness = thickness;
-		this.type = type;
+		this.type      = type;
 	}
 
 	@Override

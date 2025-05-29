@@ -55,8 +55,8 @@ public class SimpleProcessExecutor {
 
 	public SimpleProcessExecutor exec() throws IOException, InterruptedException {
 		exitCode = 0;
-		stdOut = "";
-		stdErr = "";
+		stdOut   = "";
+		stdErr   = "";
 
 		Process process = Runtime.getRuntime().exec(cmdArray);
 
@@ -67,8 +67,8 @@ public class SimpleProcessExecutor {
 
 		try {
 			exitCode = process.waitFor();
-			stdOut = stdOutFuture.get();
-			stdErr = stdErrFuture.get();
+			stdOut   = stdOutFuture.get();
+			stdErr   = stdErrFuture.get();
 		} catch (InterruptedException ignored) {
 		} catch (ExecutionException ex) {
 			Throwable th = ex.getCause();

@@ -30,18 +30,18 @@ public class Ray4f {
 	private Vector2f directionSquared = null;
 
 	public Ray4f() {
-		origin = new Vector2f();
+		origin    = new Vector2f();
 		direction = new Vector2f();
 	}
 
 	public Ray4f(Vector2f origin, Vector2f direction) {
-		this.origin = origin;
+		this.origin    = origin;
 		this.direction = direction;
 	}
 
 	public Ray4f(Ray4f other) {
-		origin = other.origin;
-		direction = other.direction;
+		origin           = other.origin;
+		direction        = other.direction;
 		directionSquared = other.directionSquared;
 	}
 

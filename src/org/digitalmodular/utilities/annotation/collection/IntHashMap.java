@@ -35,7 +35,7 @@ public class IntHashMap<V> implements Serializable {
 		Object value;
 
 		public Entry(int key, Object value) {
-			this.key = key;
+			this.key   = key;
 			this.value = value;
 		}
 	}

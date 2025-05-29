@@ -61,7 +61,7 @@ public class ColorLogger extends Handler {
 	private final @Nullable BufferedWriter logWriter;
 
 	public ColorLogger(Level logLevel, @Nullable BufferedWriter logWriter) {
-		this.logLevel = requireNonNull(logLevel, "logLevel");
+		this.logLevel  = requireNonNull(logLevel, "logLevel");
 		this.logWriter = logWriter;
 	}
 

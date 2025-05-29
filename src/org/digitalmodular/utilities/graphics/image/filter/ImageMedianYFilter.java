@@ -56,16 +56,15 @@ public class ImageMedianYFilter extends ImageFilter {
 		for (int z = 0; z < in.numComponents; z++) {
 			for (int y = in.border; y < in.endY; y++) {
 				rowIn1a = in.matrix[z][y - 1];
-				rowIn0 = in.matrix[z][y];
+				rowIn0  = in.matrix[z][y];
 				rowIn1b = in.matrix[z][y + 1];
-				rowOut = out.matrix[z][y];
+				rowOut  = out.matrix[z][y];
 				for (x = in.border; x < endX; x++) {
-					rowOut[x] = rowIn0[x] > rowIn1b[x] ? rowIn0[x] > rowIn1a[x] ? rowIn1a[x] > rowIn1b[x] ? rowIn1a[x]
-					                                                                                      : rowIn1b[x]
-					                                                            : rowIn0[x]
-					                                   : rowIn1a[x] > rowIn0[x] ? rowIn1a[x] > rowIn1b[x] ? rowIn1b[x]
-					                                                                                      : rowIn1a[x]
-					                                                            : rowIn0[x];
+					if (rowIn0[x] > rowIn1b[x]) {
+						rowOut[x] = rowIn0[x] > rowIn1a[x] ? Math.max(rowIn1a[x], rowIn1b[x]) : rowIn0[x];
+					} else {
+						rowOut[x] = rowIn1a[x] > rowIn0[x] ? Math.min(rowIn1a[x], rowIn1b[x]) : rowIn0[x];
+					}
 				}
 			}
 		}

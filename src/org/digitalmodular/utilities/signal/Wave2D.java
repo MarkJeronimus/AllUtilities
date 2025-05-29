@@ -105,7 +105,7 @@ public class Wave2D {
 		if (sourceX < 0) {
 			bounds.x = -sourceX;
 			bounds.width += sourceX;
-			sourceX = 0;
+			sourceX  = 0;
 		}
 		if (sourceY + bounds.height >= sourceHeight) {
 			bounds.height = sourceHeight - sourceY;
@@ -113,7 +113,7 @@ public class Wave2D {
 		if (sourceY < 0) {
 			bounds.y = -sourceY;
 			bounds.height += sourceY;
-			sourceY = 0;
+			sourceY  = 0;
 		}
 
 		int stopX = bounds.width + bounds.x;
@@ -182,7 +182,7 @@ public class Wave2D {
 		if (sourceX < 0) {
 			bounds.x = -sourceX;
 			bounds.width += sourceX;
-			sourceX = 0;
+			sourceX  = 0;
 		}
 		if (sourceY + bounds.height >= numSamplesY) {
 			bounds.height = numSamplesY - sourceY;
@@ -190,7 +190,7 @@ public class Wave2D {
 		if (sourceY < 0) {
 			bounds.y = -sourceY;
 			bounds.height += sourceY;
-			sourceY = 0;
+			sourceY  = 0;
 		}
 
 		int stopX = bounds.width + bounds.x;

@@ -166,12 +166,12 @@ public class AffineTransformFloat3D implements TransformFloat3D {
 		float z = z0;
 		y0 = c * y - s * z;
 		z0 = s * y + c * z;
-		y = y1;
-		z = z1;
+		y  = y1;
+		z  = z1;
 		y1 = c * y - s * z;
 		z1 = s * y + c * z;
-		y = y2;
-		z = z2;
+		y  = y2;
+		z  = z2;
 		y2 = c * y - s * z;
 		z2 = s * y + c * z;
 	}
@@ -183,12 +183,12 @@ public class AffineTransformFloat3D implements TransformFloat3D {
 		float x = x0;
 		z0 = c * z - s * x;
 		x0 = s * z + c * x;
-		z = z1;
-		x = x1;
+		z  = z1;
+		x  = x1;
 		z1 = c * z - s * x;
 		x1 = s * z + c * x;
-		z = z2;
-		x = x2;
+		z  = z2;
+		x  = x2;
 		z2 = c * z - s * x;
 		x2 = s * z + c * x;
 	}
@@ -200,12 +200,12 @@ public class AffineTransformFloat3D implements TransformFloat3D {
 		float y = y0;
 		x0 = c * x - s * y;
 		y0 = s * x + c * y;
-		x = x1;
-		y = y1;
+		x  = x1;
+		y  = y1;
 		x1 = c * x - s * y;
 		y1 = s * x + c * y;
-		x = x2;
-		y = y2;
+		x  = x2;
+		y  = y2;
 		x2 = c * x - s * y;
 		y2 = s * x + c * y;
 	}
@@ -217,8 +217,8 @@ public class AffineTransformFloat3D implements TransformFloat3D {
 		float z = x2;
 		x1 = s * z + c * y;
 		x2 = c * z - s * y;
-		y = y1;
-		z = y2;
+		y  = y1;
+		z  = y2;
 		y1 = s * z + c * y;
 		y2 = c * z - s * y;
 	}
@@ -230,8 +230,8 @@ public class AffineTransformFloat3D implements TransformFloat3D {
 		float x = x0;
 		x2 = s * x + c * z;
 		x0 = c * x - s * z;
-		z = y2;
-		x = y0;
+		z  = y2;
+		x  = y0;
 		y2 = s * x + c * z;
 		y0 = c * x - s * z;
 	}
@@ -243,8 +243,8 @@ public class AffineTransformFloat3D implements TransformFloat3D {
 		float y = x1;
 		x0 = s * y + c * x;
 		x1 = c * y - s * x;
-		x = y0;
-		y = y1;
+		x  = y0;
+		y  = y1;
 		y0 = s * y + c * x;
 		y1 = c * y - s * x;
 	}
@@ -260,16 +260,16 @@ public class AffineTransformFloat3D implements TransformFloat3D {
 		x1 = t.x1 * x + t.y1 * y + t.z1 * z;
 		x2 += t.x2 * x + t.y2 * y + t.z2 * z;
 
-		x = y0;
-		y = y1;
-		z = y2;
+		x  = y0;
+		y  = y1;
+		z  = y2;
 		y0 = t.x0 * x + t.y0 * y + t.z0 * z;
 		y1 = t.x1 * x + t.y1 * y + t.z1 * z;
 		y2 += t.x2 * x + t.y2 * y + t.z2 * z;
 
-		x = z0;
-		y = z1;
-		z = z2;
+		x  = z0;
+		y  = z1;
+		z  = z2;
 		z0 = t.x0 * x + t.y0 * y + t.z0 * z;
 		z1 = t.x1 * x + t.y1 * y + t.z1 * z;
 		z2 += t.x2 * x + t.y2 * y + t.z2 * z;
@@ -284,13 +284,13 @@ public class AffineTransformFloat3D implements TransformFloat3D {
 		x0 = x * t.x0 + y * t.x1;
 		y0 = x * t.y0 + y * t.y1;
 
-		x = x1;
-		y = y1;
+		x  = x1;
+		y  = y1;
 		x1 = x * t.x0 + y * t.x1;
 		y1 = x * t.y0 + y * t.y1;
 
-		x = x2;
-		y = y2;
+		x  = x2;
+		y  = y2;
 		x2 = x * t.x0 + y * t.x1 + t.x2;
 		y2 = x * t.y0 + y * t.y1 + t.y2;
 	}

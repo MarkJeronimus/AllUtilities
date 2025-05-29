@@ -48,7 +48,7 @@ public class ImagePanel extends JPanel {
 		super(null);
 		setOpaque(false);
 
-		this.image = image;
+		this.image   = image;
 		this.stretch = stretch;
 
 		pack();
@@ -81,7 +81,7 @@ public class ImagePanel extends JPanel {
 		Dimension size = new Dimension();
 
 		if (image != null) {
-			size.width = image.getWidth(null);
+			size.width  = image.getWidth(null);
 			size.height = image.getHeight(null);
 		}
 

@@ -21,7 +21,6 @@ package org.digitalmodular.utilities.graphics.swing.rangeSlider;
 
 import java.awt.Color;
 import javax.swing.JSlider;
-import javax.swing.SwingConstants;
 
 /**
  * @author Mark Jeronimus

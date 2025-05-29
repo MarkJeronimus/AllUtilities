@@ -99,7 +99,7 @@ public class AffineImageTransformation {
 			throw new IllegalArgumentException("Border too small for kernel: " + in.border + " < 1");
 		}
 
-		this.in = in;
+		this.in  = in;
 		this.out = out;
 
 		appliedTransform.set(transform);
@@ -165,7 +165,7 @@ public class AffineImageTransformation {
 					row1 = plane[v1];
 
 					for (int x = out.border; x < endX; x++) {
-						u = x + tx;
+						u  = x + tx;
 						u0 = (int)u;
 						u1 = u0 + 1;
 						if (u1 < beforeBorder) {
@@ -249,7 +249,7 @@ public class AffineImageTransformation {
 					row1 = plane[v1];
 
 					for (int x = out.border; x < endX; x++) {
-						u = x * sx + tx;
+						u  = x * sx + tx;
 						u0 = (int)u;
 						u1 = u0 + 1;
 						if (u1 < beforeBorder) {
@@ -317,7 +317,7 @@ public class AffineImageTransformation {
 					row = out.matrix[z][y];
 
 					for (int x = out.border; x < endX; x++) {
-						v = x * zy + y * sy + ty;
+						v  = x * zy + y * sy + ty;
 						v0 = (int)v;
 						v1 = v0 + 1;
 						vf = v - v0;
@@ -337,7 +337,7 @@ public class AffineImageTransformation {
 							}
 						}
 
-						u = x * sx + y * zx + tx;
+						u  = x * sx + y * zx + tx;
 						u0 = (int)u;
 						u1 = u0 + 1;
 						if (u1 < beforeBorder) {

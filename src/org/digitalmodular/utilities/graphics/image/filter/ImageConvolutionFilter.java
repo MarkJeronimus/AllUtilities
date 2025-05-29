@@ -55,7 +55,7 @@ public class ImageConvolutionFilter extends ImageFilter {
 			throw new IllegalArgumentException("Kernel size must be square: " + kernel[0].length + 'x' + diameter);
 		}
 
-		radius = diameter >> 1;
+		radius      = diameter >> 1;
 		this.kernel = kernel;
 
 		switch (radius) {
@@ -201,7 +201,7 @@ public class ImageConvolutionFilter extends ImageFilter {
 			throw new IllegalArgumentException("Images not compatible");
 		}
 
-		this.in = in;
+		this.in  = in;
 		this.out = out;
 		processes.convolve();
 	}
@@ -229,10 +229,10 @@ public class ImageConvolutionFilter extends ImageFilter {
 
 			for (int z = 0; z < in.numComponents; z++) {
 				for (int y = in.border; y < in.endY; y++) {
-					row0 = in.matrix[z][y - 1];
-					row1 = in.matrix[z][y];
-					row2 = in.matrix[z][y + 1];
-					rowOut = out.matrix[z][y];
+					row0    = in.matrix[z][y - 1];
+					row1    = in.matrix[z][y];
+					row2    = in.matrix[z][y + 1];
+					rowOut  = out.matrix[z][y];
 					kernel0 = kernel[0];
 					kernel1 = kernel[1];
 					kernel2 = kernel[2];
@@ -275,12 +275,12 @@ public class ImageConvolutionFilter extends ImageFilter {
 
 			for (int z = 0; z < in.numComponents; z++) {
 				for (int y = in.border; y < in.endY; y++) {
-					row = out.matrix[z][y];
-					row0 = in.matrix[z][y - 2];
-					row1 = in.matrix[z][y - 1];
-					row2 = in.matrix[z][y];
-					row3 = in.matrix[z][y + 1];
-					row4 = in.matrix[z][y + 2];
+					row     = out.matrix[z][y];
+					row0    = in.matrix[z][y - 2];
+					row1    = in.matrix[z][y - 1];
+					row2    = in.matrix[z][y];
+					row3    = in.matrix[z][y + 1];
+					row4    = in.matrix[z][y + 2];
 					kernel0 = kernel[0];
 					kernel1 = kernel[1];
 					kernel2 = kernel[2];

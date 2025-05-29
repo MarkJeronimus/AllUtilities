@@ -44,7 +44,7 @@ public class ProgressEvent extends EventObject {
 		}
 
 		this.progress = progress;
-		this.total = total;
+		this.total    = total;
 
 	}
 

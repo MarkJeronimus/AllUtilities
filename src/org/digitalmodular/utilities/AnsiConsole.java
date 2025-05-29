@@ -107,7 +107,8 @@ public final class AnsiConsole {
 
 	public static AnsiConsole setColor(int r, int g, int b) {
 		//noinspection StringConcatenationMissingWhitespace
-		System.out.print("\u001B[38;2;" + NumberUtilities.clamp(r, 0, 255) + ';' +
+		System.out.print("\u001B[38;2;" +
+		                 NumberUtilities.clamp(r, 0, 255) + ';' +
 		                 NumberUtilities.clamp(g, 0, 255) + ';' +
 		                 NumberUtilities.clamp(b, 0, 255) + 'm');
 		return null;
@@ -169,8 +170,10 @@ public final class AnsiConsole {
 
 	public static AnsiConsole setBackgroundColor(int r, int g, int b) {
 		//noinspection StringConcatenationMissingWhitespace
-		System.out.print("\u001B[48;2;" + NumberUtilities.clamp(r, 0, 255) + ';' + NumberUtilities.clamp(g, 0, 255) +
-		                 ';' + NumberUtilities.clamp(b, 0, 255) + 'm');
+		System.out.print("\u001B[48;2;" +
+		                 NumberUtilities.clamp(r, 0, 255) + ';' +
+		                 NumberUtilities.clamp(g, 0, 255) + ';' +
+		                 NumberUtilities.clamp(b, 0, 255) + 'm');
 		return null;
 	}
 

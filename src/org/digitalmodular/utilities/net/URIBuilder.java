@@ -39,11 +39,11 @@ public class URIBuilder {
 
 	public URIBuilder(String host) {
 		this.host = requireNonNull(host, "host");
-		hostURI = null;
+		hostURI   = null;
 	}
 
 	public URIBuilder(URI hostURI) {
-		host = "";
+		host         = "";
 		this.hostURI = requireNonNull(hostURI, "hostURI");
 	}
 

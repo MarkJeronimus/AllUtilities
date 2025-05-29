@@ -19,7 +19,7 @@ public class TextProgressListener implements ProgressListener {
 	private int    nextUpdateAt = 0;
 
 	public TextProgressListener(PrintStream writer, int updateGranularity) {
-		this.writer = requireNonNull(writer, "writer");
+		this.writer            = requireNonNull(writer, "writer");
 		this.updateGranularity = requireAtLeast(1, updateGranularity, "updateGranularity");
 	}
 
@@ -47,7 +47,7 @@ public class TextProgressListener implements ProgressListener {
 
 		if (complete) {
 			writer.println();
-			lastPrinted = "";
+			lastPrinted  = "";
 			nextUpdateAt = 0;
 		}
 	}

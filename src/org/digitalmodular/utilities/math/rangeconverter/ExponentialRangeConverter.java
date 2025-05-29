@@ -45,12 +45,12 @@ public class ExponentialRangeConverter implements RangeConverter {
 	private final double max;
 
 	private ExponentialRangeConverter(double offset, double base, double exponent) {
-		this.offset = offset;
-		this.base = base;
+		this.offset   = offset;
+		this.base     = base;
 		this.exponent = exponent;
 
 		logExponent = Math.log(exponent);
-		max = offset + base * exponent;
+		max         = offset + base * exponent;
 	}
 
 	public static ExponentialRangeConverter fromBaseExponent(double base, double exponent) {

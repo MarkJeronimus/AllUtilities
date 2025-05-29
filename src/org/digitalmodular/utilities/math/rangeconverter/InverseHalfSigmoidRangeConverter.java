@@ -42,7 +42,7 @@ public class InverseHalfSigmoidRangeConverter implements RangeConverter {
 	private final double offset;
 
 	private InverseHalfSigmoidRangeConverter(double scale, double offset) {
-		this.scale = scale;
+		this.scale  = scale;
 		this.offset = offset;
 	}
 
@@ -57,7 +57,7 @@ public class InverseHalfSigmoidRangeConverter implements RangeConverter {
 		double scale;
 		double offset;
 		if (sigmoid == HalfSigmoidFunction.RECIPROCAL) {
-			scale = mid - min;
+			scale  = mid - min;
 			offset = mid - 2 * min;
 		} else {
 			throw new UnsupportedOperationException("sigmoid: " + sigmoid);

@@ -36,36 +36,36 @@ public class GraphicsStyle {
 
 	public GraphicsStyle(Paint fillPaint) {
 		this.fillPaint = fillPaint;
-		strokePaint = null;
-		stroke = null;
-		strokeFirst = false;
+		strokePaint    = null;
+		stroke         = null;
+		strokeFirst    = false;
 	}
 
 	public GraphicsStyle(Paint fillPaint, Paint strokePaint) {
-		this.fillPaint = fillPaint;
+		this.fillPaint   = fillPaint;
 		this.strokePaint = strokePaint;
-		stroke = DEFAULT_ROUND_STROKE;
-		strokeFirst = false;
+		stroke           = DEFAULT_ROUND_STROKE;
+		strokeFirst      = false;
 	}
 
 	public GraphicsStyle(Paint strokePaint, Stroke stroke) {
-		fillPaint = null;
+		fillPaint        = null;
 		this.strokePaint = strokePaint;
-		this.stroke = stroke;
-		strokeFirst = false;
+		this.stroke      = stroke;
+		strokeFirst      = false;
 	}
 
 	public GraphicsStyle(Paint fillPaint, Paint strokePaint, Stroke stroke) {
-		this.fillPaint = fillPaint;
+		this.fillPaint   = fillPaint;
 		this.strokePaint = strokePaint;
-		this.stroke = stroke;
-		strokeFirst = false;
+		this.stroke      = stroke;
+		strokeFirst      = false;
 	}
 
 	public GraphicsStyle(Paint fillPaint, Paint strokePaint, Stroke stroke, boolean strokeFirst) {
-		this.fillPaint = fillPaint;
+		this.fillPaint   = fillPaint;
 		this.strokePaint = strokePaint;
-		this.stroke = stroke;
+		this.stroke      = stroke;
 		this.strokeFirst = strokeFirst;
 	}
 

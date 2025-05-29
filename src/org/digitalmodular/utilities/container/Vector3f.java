@@ -148,7 +148,7 @@ public class Vector3f implements Comparable<Vector3f> {
 	public void mul(Matrix4f matrix) {
 		float x = this.x * matrix.x0 + y * matrix.x1 + z * matrix.x2 + matrix.x3;
 		float y = this.x * matrix.y0 + this.y * matrix.y1 + z * matrix.y2 + matrix.y3;
-		z = this.x * matrix.z0 + this.y * matrix.z1 + z * matrix.z2 + matrix.z3;
+		z      = this.x * matrix.z0 + this.y * matrix.z1 + z * matrix.z2 + matrix.z3;
 		this.x = x;
 		this.y = y;
 	}
@@ -166,7 +166,7 @@ public class Vector3f implements Comparable<Vector3f> {
 	public void crossProduct(Vector3f v) {
 		float x = y * v.z - z * v.y;
 		float y = z * v.x - this.x * v.z;
-		z = this.x * v.y - this.y * v.x;
+		z      = this.x * v.y - this.y * v.x;
 		this.x = x;
 		this.y = y;
 	}
@@ -174,7 +174,7 @@ public class Vector3f implements Comparable<Vector3f> {
 	public void crossProductR(Vector3f v) {
 		float x = v.y * z - v.z * y;
 		float y = v.z * this.x - v.x * z;
-		z = v.x * this.y - v.y * this.x;
+		z      = v.x * this.y - v.y * this.x;
 		this.x = x;
 		this.y = y;
 	}
@@ -184,7 +184,7 @@ public class Vector3f implements Comparable<Vector3f> {
 		float c = (float)Math.cos(theta);
 
 		float y = this.y * c - z * s;
-		z = this.y * s + z * c;
+		z      = this.y * s + z * c;
 		this.y = y;
 	}
 
@@ -193,7 +193,7 @@ public class Vector3f implements Comparable<Vector3f> {
 		float c = (float)Math.cos(theta);
 
 		float z = this.z * c - x * s;
-		x = this.z * s + x * c;
+		x      = this.z * s + x * c;
 		this.z = z;
 	}
 
@@ -202,7 +202,7 @@ public class Vector3f implements Comparable<Vector3f> {
 		float c = (float)Math.cos(theta);
 
 		float x = this.x * c - y * s;
-		y = this.x * s + y * c;
+		y      = this.x * s + y * c;
 		this.x = x;
 	}
 
@@ -286,7 +286,7 @@ public class Vector3f implements Comparable<Vector3f> {
 	public void mulR(Matrix4f matrix) {
 		float x = matrix.x0 * this.x + matrix.x1 * y + matrix.x2 * z + matrix.x3;
 		float y = matrix.y0 * this.x + matrix.y1 * this.y + matrix.y2 * z + matrix.y3;
-		z = matrix.z0 * this.x + matrix.z1 * this.y + matrix.z2 * z + matrix.z3;
+		z      = matrix.z0 * this.x + matrix.z1 * this.y + matrix.z2 * z + matrix.z3;
 		this.x = x;
 		this.y = y;
 	}

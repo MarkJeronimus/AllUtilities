@@ -56,9 +56,9 @@ public class ImageMedianY_BW_Filter extends ImageFilter {
 		for (int z = 0; z < in.numComponents; z++) {
 			for (int y = in.border; y < in.endY; y++) {
 				rowIn1a = in.matrix[z][y - 1];
-				rowIn0 = in.matrix[z][y];
+				rowIn0  = in.matrix[z][y];
 				rowIn1b = in.matrix[z][y + 1];
-				rowOut = out.matrix[z][y];
+				rowOut  = out.matrix[z][y];
 				for (x = in.border; x < endX; x++) {
 					float l = rowIn1a[x];
 					float c = rowIn0[x];

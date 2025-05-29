@@ -56,7 +56,7 @@ public class Span implements Comparable<Span>, Serializable {
 		requireNotDegenerate(end - begin, "end - begin");
 
 		this.begin = begin;
-		this.end = end;
+		this.end   = end;
 	}
 
 	/**

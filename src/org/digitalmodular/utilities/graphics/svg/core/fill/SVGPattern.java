@@ -98,12 +98,12 @@ public final class SVGPattern extends SVGContainer implements SVGDef, SVGFill {
 	}
 
 	public void setSize(float width, float height) {
-		this.width = new SVGLength(width);
+		this.width  = new SVGLength(width);
 		this.height = new SVGLength(height);
 	}
 
 	public void setSize(SVGDistance width, SVGDistance height) {
-		this.width = requireNonNull(width, "width");
+		this.width  = requireNonNull(width, "width");
 		this.height = requireNonNull(height, "height");
 	}
 

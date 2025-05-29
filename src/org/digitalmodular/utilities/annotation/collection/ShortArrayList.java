@@ -77,7 +77,7 @@ public class ShortArrayList implements Serializable {
 			ensureCapacity(array.length);
 			addAll(array);
 		} else {
-			size = array.length;
+			size   = array.length;
 			values = array;
 		}
 	}

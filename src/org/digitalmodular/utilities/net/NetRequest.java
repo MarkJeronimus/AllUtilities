@@ -58,7 +58,7 @@ public class NetRequest {
 					if (c == '"') {
 						this.request.add(parameter.trim());
 						parameter = "";
-						literal = false;
+						literal   = false;
 					}
 				} else {
 					if (c == ',' || c == ')') {

@@ -167,7 +167,7 @@ public class ZoomPanel extends JPanel implements MouseListener,
 	public void zoomFit() {
 		offsetX = 0;
 		offsetY = 0;
-		zoom = 0;
+		zoom    = 0;
 
 		if (image == null) {
 			return;
@@ -507,7 +507,7 @@ public class ZoomPanel extends JPanel implements MouseListener,
 
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
-		this.zoom = zoom;
+		this.zoom    = zoom;
 
 		centered = false;
 		repaint();
@@ -526,7 +526,7 @@ public class ZoomPanel extends JPanel implements MouseListener,
 			} else {
 				zoomFit();
 				centered = zoom == 0;
-				zoom = 0;
+				zoom     = 0;
 			}
 
 			repaint();

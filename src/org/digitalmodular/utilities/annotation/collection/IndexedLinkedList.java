@@ -263,8 +263,8 @@ public class IndexedLinkedList implements Iterable<IndexedLinkedListElement> {
 			// Get the previous token and link it to the new token and link the
 			// new token to the next token.
 			previousElement.next = next.previous = newElement;
-			newElement.previous = previousElement;
-			newElement.next = next;
+			newElement.previous  = previousElement;
+			newElement.next      = next;
 		} else {
 			newElement.next = newElement.previous = newElement;
 		}
@@ -489,9 +489,9 @@ public class IndexedLinkedList implements Iterable<IndexedLinkedListElement> {
 
 		// Get the previous token and link it to the new token and link the
 		// new token to the next token.
-		previous.next = element.previous = newElement;
+		previous.next       = element.previous = newElement;
 		newElement.previous = previous;
-		newElement.next = element;
+		newElement.next     = element;
 
 		// Update the index, when necessary.
 		char index = newElement.getIdentifier().charAt(0);
@@ -582,7 +582,7 @@ public class IndexedLinkedList implements Iterable<IndexedLinkedListElement> {
 		IndexedLinkedListElement first       = current;
 		String                   currentName = current.getIdentifier();
 		while (name.compareTo(currentName) > 0) {
-			current = current.next;
+			current     = current.next;
 			currentName = current.getIdentifier();
 
 			// Check if we wrapped around the beginning of the list. Rare case

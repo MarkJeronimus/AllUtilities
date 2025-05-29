@@ -367,7 +367,7 @@ public final class StringUtilities {
 			if (cachedLine == null) {
 				char[] chars = new char[64];
 				Arrays.fill(chars, ch);
-				cachedLine = new String(chars);
+				cachedLine                    = new String(chars);
 				REPEATING_CHARS_CACHE[ch - 1] = cachedLine;
 			}
 

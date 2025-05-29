@@ -43,9 +43,9 @@ public class Size {
 	private final double   stretchFactor;
 
 	public Size(Size other) {
-		priority = other.priority;
-		minimum = other.minimum;
-		preferred = other.preferred;
+		priority      = other.priority;
+		minimum       = other.minimum;
+		preferred     = other.preferred;
 		stretchFactor = other.stretchFactor;
 	}
 
@@ -54,9 +54,9 @@ public class Size {
 	}
 
 	private Size(Priority priority, int minimum, double preferred, double stretchFactor) {
-		this.priority = priority;
-		this.minimum = minimum;
-		this.preferred = preferred;
+		this.priority      = priority;
+		this.minimum       = minimum;
+		this.preferred     = preferred;
 		this.stretchFactor = stretchFactor;
 	}
 

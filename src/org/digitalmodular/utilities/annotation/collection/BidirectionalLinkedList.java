@@ -41,17 +41,17 @@ public class BidirectionalLinkedList {
 		if (size == 0) {
 			head = tail = e.next = e.previous = e;
 		} else {
-			e.next = head;
+			e.next     = head;
 			e.previous = tail;
-			tail = tail.next = head.previous = e;
+			tail       = tail.next = head.previous = e;
 		}
 		size++;
 	}
 
 	public void addBefore(LinkedListElement e, Object o) {
 		LinkedListElement n = new LinkedListElement(o);
-		n.next = e;
-		n.previous = e.previous;
+		n.next          = e;
+		n.previous      = e.previous;
 		e.previous.next = e.previous = n;
 
 		size++;

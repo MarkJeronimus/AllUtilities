@@ -36,10 +36,10 @@ public abstract class SignalInterpolation {
 	protected       int      degree;
 
 	protected SignalInterpolation(int numParameters, int minDegree, int maxDegree, int degree) {
-		parameters = new double[numParameters];
+		parameters     = new double[numParameters];
 		this.minDegree = minDegree;
 		this.maxDegree = maxDegree;
-		this.degree = degree;
+		this.degree    = degree;
 	}
 
 	/**

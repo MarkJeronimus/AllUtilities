@@ -68,7 +68,7 @@ public class ImageThresholdConverter extends ImageConverter {
 		for (int z = 0; z < outImage.numComponents; z++) {
 			for (int y = outImage.border; y < outImage.endY; y++) {
 				rowOut = outImage.matrix[z][y];
-				rowIn = inImage.matrix[z][y];
+				rowIn  = inImage.matrix[z][y];
 				for (x = outImage.border; x < endX; x++) {
 					rowOut[x] = rowIn[x] < thresholdValue ? 0 : 0.99609375f;
 				}

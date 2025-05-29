@@ -45,7 +45,7 @@ public class ImageMatrixImageImageVectorFunctions {
 		for (int z = 0; z < out.numComponents; z++) {
 			addz = add2[z];
 			for (int y = out.border; y < out.endY; y++) {
-				rowOut = out.matrix[z][y];
+				rowOut  = out.matrix[z][y];
 				rowAdd1 = add1.matrix[z][y];
 				for (x = out.border; x < endX; x++) {
 					rowOut[x] += rowAdd1[x] + addz;

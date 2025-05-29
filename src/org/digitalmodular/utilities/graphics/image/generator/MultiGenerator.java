@@ -25,7 +25,7 @@
 // /**
 // * @author Mark Jeronimus
 // */
-//// Created 2012-04-05
+// // Created 2012-04-05
 //public class MultiGenerator extends ImageGenerator {
 //	private ArrayList<ImageGenerator> generators = new ArrayList<>();
 //

@@ -314,7 +314,7 @@ public class Vector2d implements Comparable<Vector2d>, Serializable {
 	public void crossProduct(Vector2d v) {
 		double x = this.x;
 		this.x = x * v.x - y * v.y;
-		y = x * v.y + y * v.x;
+		y      = x * v.y + y * v.x;
 	}
 
 	public double angleTo(Vector2d v) {
@@ -338,7 +338,7 @@ public class Vector2d implements Comparable<Vector2d>, Serializable {
 
 		double b = dx1 * dx1 + dy1 * dy1;
 		double a = dx1 / b;
-		b = dy1 / b;
+		b   = dy1 / b;
 		dx1 = dx2 * a + dy2 * b;
 		dy1 = dy2 * a - dx2 * b;
 

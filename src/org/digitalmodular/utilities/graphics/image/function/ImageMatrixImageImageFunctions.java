@@ -49,7 +49,7 @@ public class ImageMatrixImageImageFunctions {
 		for (int z = 0; z < out.numComponents; z++) {
 			for (int y = out.border; y < out.endY; y++) {
 				rowOut = out.matrix[z][y];
-				rowIn = in.matrix[z][y];
+				rowIn  = in.matrix[z][y];
 				for (x = out.border; x < endX; x++) {
 					rowOut[x] = rowIn[x];
 				}
@@ -71,7 +71,7 @@ public class ImageMatrixImageImageFunctions {
 		for (int z = 0; z < out.numComponents; z++) {
 			for (int y = out.border; y < out.endY; y++) {
 				rowOut = out.matrix[z][y];
-				rowIn = in.matrix[z][y];
+				rowIn  = in.matrix[z][y];
 				for (x = out.border; x < endX; x++) {
 					rowOut[x] += rowIn[x];
 				}
@@ -93,7 +93,7 @@ public class ImageMatrixImageImageFunctions {
 		for (int z = 0; z < out.numComponents; z++) {
 			for (int y = out.border; y < out.endY; y++) {
 				rowOut = out.matrix[z][y];
-				rowIn = in.matrix[z][y];
+				rowIn  = in.matrix[z][y];
 				for (x = out.border; x < endX; x++) {
 					rowOut[x] -= rowIn[x];
 				}
@@ -115,7 +115,7 @@ public class ImageMatrixImageImageFunctions {
 		for (int z = 0; z < out.numComponents; z++) {
 			for (int y = out.border; y < out.endY; y++) {
 				rowOut = out.matrix[z][y];
-				rowIn = in.matrix[z][y];
+				rowIn  = in.matrix[z][y];
 				for (x = out.border; x < endX; x++) {
 					rowOut[x] = rowIn[x] - rowOut[x];
 				}
@@ -137,7 +137,7 @@ public class ImageMatrixImageImageFunctions {
 		for (int z = 0; z < out.numComponents; z++) {
 			for (int y = out.border; y < out.endY; y++) {
 				rowOut = out.matrix[z][y];
-				rowIn = in.matrix[z][y];
+				rowIn  = in.matrix[z][y];
 				for (x = out.border; x < endX; x++) {
 					rowOut[x] *= rowIn[x];
 				}
@@ -159,7 +159,7 @@ public class ImageMatrixImageImageFunctions {
 		for (int z = 0; z < out.numComponents; z++) {
 			for (int y = out.border; y < out.endY; y++) {
 				rowOut = out.matrix[z][y];
-				rowIn = in.matrix[z][y];
+				rowIn  = in.matrix[z][y];
 				for (x = out.border; x < endX; x++) {
 					rowOut[x] /= rowIn[x];
 				}
@@ -181,7 +181,7 @@ public class ImageMatrixImageImageFunctions {
 		for (int z = 0; z < out.numComponents; z++) {
 			for (int y = out.border; y < out.endY; y++) {
 				rowOut = out.matrix[z][y];
-				rowIn = in.matrix[z][y];
+				rowIn  = in.matrix[z][y];
 				for (x = out.border; x < endX; x++) {
 					rowOut[x] = rowIn[x] / rowOut[x];
 				}
@@ -202,7 +202,7 @@ public class ImageMatrixImageImageFunctions {
 
 		for (int z = 0; z < out.numComponents; z++) {
 			for (int y = out.border; y < out.endY; y++) {
-				rowOut = out.matrix[z][y];
+				rowOut   = out.matrix[z][y];
 				rowPower = powerImage.matrix[z][y];
 				for (x = out.border; x < endX; x++) {
 					rowOut[x] = (float)Math.pow(rowPower[x], rowOut[x]);
@@ -224,7 +224,7 @@ public class ImageMatrixImageImageFunctions {
 
 		for (int z = 0; z < out.numComponents; z++) {
 			for (int y = out.border; y < out.endY; y++) {
-				rowOut = out.matrix[z][y];
+				rowOut  = out.matrix[z][y];
 				rowBase = baseImage.matrix[z][y];
 				for (x = out.border; x < endX; x++) {
 					rowOut[x] = (float)Math.pow(rowOut[x], rowBase[x]);
@@ -247,7 +247,7 @@ public class ImageMatrixImageImageFunctions {
 		for (int z = 0; z < out.numComponents; z++) {
 			for (int y = out.border; y < out.endY; y++) {
 				rowOut = out.matrix[z][y];
-				rowIn = in.matrix[z][y];
+				rowIn  = in.matrix[z][y];
 				for (x = out.border; x < endX; x++) {
 					rowOut[x] = rowOut[x] * rowOut[x] + rowIn[x] * rowIn[x];
 				}
@@ -269,7 +269,7 @@ public class ImageMatrixImageImageFunctions {
 		for (int z = 0; z < out.numComponents; z++) {
 			for (int y = out.border; y < out.endY; y++) {
 				rowOut = out.matrix[z][y];
-				rowIn = in.matrix[z][y];
+				rowIn  = in.matrix[z][y];
 				for (x = out.border; x < endX; x++) {
 					rowOut[x] = (float)Math.hypot(rowOut[x], rowIn[x]);
 				}
@@ -291,7 +291,7 @@ public class ImageMatrixImageImageFunctions {
 		for (int z = 0; z < out.numComponents; z++) {
 			for (int y = out.border; y < out.endY; y++) {
 				rowOut = out.matrix[z][y];
-				rowIn = in.matrix[z][y];
+				rowIn  = in.matrix[z][y];
 				for (x = out.border; x < endX; x++) {
 					rowOut[x] = (float)Math.atan2(rowIn[x], rowOut[x]);
 				}
@@ -313,7 +313,7 @@ public class ImageMatrixImageImageFunctions {
 		for (int z = 0; z < out.numComponents; z++) {
 			for (int y = out.border; y < out.endY; y++) {
 				rowOut = out.matrix[z][y];
-				rowIn = in.matrix[z][y];
+				rowIn  = in.matrix[z][y];
 				for (x = out.border; x < endX; x++) {
 					rowOut[x] = Math.min(rowIn[x], rowOut[x]);
 				}
@@ -335,7 +335,7 @@ public class ImageMatrixImageImageFunctions {
 		for (int z = 0; z < out.numComponents; z++) {
 			for (int y = out.border; y < out.endY; y++) {
 				rowOut = out.matrix[z][y];
-				rowIn = in.matrix[z][y];
+				rowIn  = in.matrix[z][y];
 				for (x = out.border; x < endX; x++) {
 					rowOut[x] = Math.max(rowIn[x], rowOut[x]);
 				}
@@ -356,7 +356,7 @@ public class ImageMatrixImageImageFunctions {
 
 		for (int z = 0; z < out.numComponents; z++) {
 			for (int y = out.border; y < out.endY; y++) {
-				rowOut = out.matrix[z][y];
+				rowOut     = out.matrix[z][y];
 				rowOffset1 = offset1.matrix[z][y];
 				for (x = out.border; x < endX; x++) {
 					rowOut[x] += rowOffset1[x] + offset2;
@@ -422,7 +422,7 @@ public class ImageMatrixImageImageFunctions {
 
 		for (int z = 0; z < out.numComponents; z++) {
 			for (int y = out.border; y < out.endY; y++) {
-				rowOut = out.matrix[z][y];
+				rowOut   = out.matrix[z][y];
 				rowScale = scale.matrix[z][y];
 				for (x = out.border; x < endX; x++) {
 					rowOut[x] = rowOut[x] * rowScale[x] + offset;
@@ -488,7 +488,7 @@ public class ImageMatrixImageImageFunctions {
 
 		for (int z = 0; z < out.numComponents; z++) {
 			for (int y = out.border; y < out.endY; y++) {
-				rowOut = out.matrix[z][y];
+				rowOut    = out.matrix[z][y];
 				rowOffset = offset.matrix[z][y];
 				for (x = out.border; x < endX; x++) {
 					rowOut[x] += rowOffset[x] * scale;

@@ -30,7 +30,7 @@ public abstract class PolynomialInterpolation {
 	protected double[] coefficients;
 
 	public double[] makeDifferentialOf(PolynomialInterpolation poly) {
-		degree = poly.degree - 1;
+		degree       = poly.degree - 1;
 		coefficients = new double[poly.degree];
 		for (int i = 0; i <= degree; i++) {
 			coefficients[i] = poly.coefficients[i + 1] * (i + 1);

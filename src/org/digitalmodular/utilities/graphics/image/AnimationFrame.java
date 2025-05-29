@@ -15,7 +15,7 @@ public class AnimationFrame {
 	private final int           durationMillis;
 
 	public AnimationFrame(BufferedImage image, int durationMillis) {
-		this.image = requireNonNull(image);
+		this.image          = requireNonNull(image);
 		this.durationMillis = durationMillis;
 
 		if (durationMillis < 1) {

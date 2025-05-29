@@ -118,8 +118,8 @@ public class ImageMatrixFloat extends AbstractImageMatrix {
 			case 11:
 				for (int y = border; y < endY; y++) {
 					row0 = matrix[0][y];
-					v = y - border;
-					u = 0;
+					v    = y - border;
+					u    = 0;
 					for (x = border; x < endX; x++) {
 						raster.setSample(u, v, 0, (int)(row0[x] * 255 + 0.499999) & 0xFF);
 						u++;
@@ -130,8 +130,8 @@ public class ImageMatrixFloat extends AbstractImageMatrix {
 			case 14:
 				for (int y = border; y < endY; y++) {
 					row0 = matrix[0][y];
-					v = y - border;
-					u = 0;
+					v    = y - border;
+					u    = 0;
 					for (x = border; x < endX; x++) {
 						c = (int)(row0[x] * 255 + 0.499999) & 0xFF;
 						image.setRGB(u, v, 0xFF000000 | (c << 8 | c) << 8 | c);
@@ -145,8 +145,8 @@ public class ImageMatrixFloat extends AbstractImageMatrix {
 					row0 = matrix[0][y];
 					row1 = matrix[1][y];
 					row2 = matrix[2][y];
-					v = y - border;
-					u = 0;
+					v    = y - border;
+					u    = 0;
 					for (x = border; x < endX; x++) {
 						image.setRGB(u, v, 0xFF000000
 						                   | (((int)(row0[x] * 255 + 0.499999) & 0xFF) << 8 |
@@ -162,8 +162,8 @@ public class ImageMatrixFloat extends AbstractImageMatrix {
 					row1 = matrix[1][y];
 					row2 = matrix[2][y];
 					row3 = matrix[3][y];
-					v = y - border;
-					u = 0;
+					v    = y - border;
+					u    = 0;
 					for (x = border; x < endX; x++) {
 						image.setRGB(
 								u,
@@ -1831,9 +1831,9 @@ public class ImageMatrixFloat extends AbstractImageMatrix {
 		switch (outImage.numComponents * 10 + numComponents) {
 			case 13:
 				for (int y = 0; y < numRows; y++) {
-					rowIn0 = matrix[0][y];
-					rowIn1 = matrix[1][y];
-					rowIn2 = matrix[2][y];
+					rowIn0  = matrix[0][y];
+					rowIn1  = matrix[1][y];
+					rowIn2  = matrix[2][y];
 					rowOut0 = outImage.matrix[0][y];
 					for (x = 0; x < numColumns; x++) {
 						r = rowIn0[x];
@@ -1846,9 +1846,9 @@ public class ImageMatrixFloat extends AbstractImageMatrix {
 				break;
 			case 33:
 				for (int y = 0; y < numRows; y++) {
-					rowIn0 = matrix[0][y];
-					rowIn1 = matrix[1][y];
-					rowIn2 = matrix[2][y];
+					rowIn0  = matrix[0][y];
+					rowIn1  = matrix[1][y];
+					rowIn2  = matrix[2][y];
 					rowOut0 = outImage.matrix[0][y];
 					rowOut1 = outImage.matrix[1][y];
 					rowOut2 = outImage.matrix[2][y];

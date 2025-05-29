@@ -24,12 +24,12 @@ public final class BitBuffer {
 
 	public BitBuffer(int bitCapacity) {
 		this.bitCapacity = requireAtLeast(1, bitCapacity, "bitCapacity");
-		buffer = ByteBuffer.allocate((bitCapacity + 7) >> 3);
+		buffer           = ByteBuffer.allocate((bitCapacity + 7) >> 3);
 	}
 
 	public BitBuffer(int bitSize, int bits) {
 		bitCapacity = requireRange(1, 32, bitSize, "bitSize");
-		buffer = ByteBuffer.allocate((bitSize + 7) >> 3);
+		buffer      = ByteBuffer.allocate((bitSize + 7) >> 3);
 
 		putBits(0, bitSize, bits);
 	}

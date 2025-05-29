@@ -56,8 +56,8 @@ public class TCPSocket {
 		socket.setSoTimeout(10000);
 
 		dataOutputStream = new DataOutputStream(socket.getOutputStream());
-		inputStream = new BufferedInputStream(socket.getInputStream());
-		inputReader = new UnbufferedReader(inputStream);
+		inputStream      = new BufferedInputStream(socket.getInputStream());
+		inputReader      = new UnbufferedReader(inputStream);
 	}
 
 	public void request(String message) throws IOException {

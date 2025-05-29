@@ -51,7 +51,7 @@ public class ImageMedianX_BW_Filter extends ImageFilter {
 
 		for (int z = 0; z < in.numComponents; z++) {
 			for (int y = in.border; y < in.endY; y++) {
-				rowIn = in.matrix[z][y];
+				rowIn  = in.matrix[z][y];
 				rowOut = out.matrix[z][y];
 				for (x = in.border; x < endX; x++) {
 					rowOut[x] = rowIn[x - 1] != rowIn[x + 1] ? rowIn[x]

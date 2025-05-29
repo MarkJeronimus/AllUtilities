@@ -21,7 +21,6 @@ package org.digitalmodular.utilities.graphics.svg.element;
 
 import java.io.IOException;
 
-import org.digitalmodular.utilities.graphics.svg.core.SVGElement;
 import static org.digitalmodular.utilities.ValidatorUtilities.requireNonNull;
 
 /**

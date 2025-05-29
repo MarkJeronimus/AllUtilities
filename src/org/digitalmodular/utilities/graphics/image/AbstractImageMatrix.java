@@ -47,16 +47,16 @@ public abstract class AbstractImageMatrix {
 	protected AbstractImageMatrix(int width, int height, int numComponents, int border) {
 		requireAtLeast(1, numComponents, "numComponents");
 
-		this.width = width;
-		this.height = height;
-		this.border = border;
+		this.width         = width;
+		this.height        = height;
+		this.border        = border;
 		this.numComponents = numComponents;
 
-		border2 = border * 2;
+		border2    = border * 2;
 		numColumns = width + border2;
-		numRows = height + border2;
-		endX = width + border;
-		endY = height + border;
+		numRows    = height + border2;
+		endX       = width + border;
+		endY       = height + border;
 	}
 
 	public int getWidth() {

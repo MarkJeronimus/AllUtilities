@@ -102,10 +102,10 @@ public class WindowCurveTest extends JPanel implements MouseMotionListener {
 		mouseX = e.getX();
 
 		if ((e.getModifiersEx() & InputEvent.BUTTON1_DOWN_MASK) != 0) {
-			power = Math.max(0, Math.min(1, e.getX() / (getWidth() - 1.0)));
+			power    = Math.max(0, Math.min(1, e.getX() / (getWidth() - 1.0)));
 			invPower = Math.max(0, Math.min(1, 1 - e.getY() / (getHeight() - 1.0)));
 
-			power = 1 / (1 - power) - 1;
+			power    = 1 / (1 - power) - 1;
 			invPower = 1 / (1 - invPower) - 1;
 		} else if ((e.getModifiersEx() & InputEvent.BUTTON3_DOWN_MASK) != 0) {
 			invPowerFirst = Math.max(0, Math.min(1, e.getX() / (getWidth() - 1.0)));

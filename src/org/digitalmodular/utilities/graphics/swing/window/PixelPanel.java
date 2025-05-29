@@ -188,7 +188,7 @@ public abstract class PixelPanel extends JComponent {
 
 	private Graphics initializeImage() {
 		image = new PixelImage(getWidth(), getHeight());
-		g = image.g;
+		g     = image.g;
 		GraphicsUtilities.setAntialiased(g, true);
 		pixels = image.pixels;
 		return g;

@@ -40,13 +40,13 @@ public final class ColorUtilities {
 	static {
 		for (int i = 0; i <= SRGB_PRECISION; i++) {
 			float f = i / (float)SRGB_PRECISION;
-			TO_SRGB_TABLE[i] = f < 0.0031308f ? f * 12.92f : (float)Math.pow(f, 1 / 2.4) * 1.055f - 0.055f;
+			TO_SRGB_TABLE[i]   = f < 0.0031308f ? f * 12.92f : (float)Math.pow(f, 1 / 2.4) * 1.055f - 0.055f;
 			FROM_SRGB_TABLE[i] = f < 0.04045f ? f / 12.92f : (float)Math.pow((f + 0.055f) / 1.055f, 2.4);
 		}
 
-		TO_SRGB_TABLE[0] = 0;
-		FROM_SRGB_TABLE[0] = 0;
-		TO_SRGB_TABLE[SRGB_PRECISION + 1] = 1;
+		TO_SRGB_TABLE[0]                    = 0;
+		FROM_SRGB_TABLE[0]                  = 0;
+		TO_SRGB_TABLE[SRGB_PRECISION + 1]   = 1;
 		FROM_SRGB_TABLE[SRGB_PRECISION + 1] = 1;
 	}
 
@@ -333,7 +333,7 @@ public final class ColorUtilities {
 		float intensity;
 
 		while (maxMul - minMul > 1.0e-7f) {
-			mul = (maxMul + minMul) / 2;
+			mul       = (maxMul + minMul) / 2;
 			intensity = getPerceptualLuminosity(r * mul, g * mul, b * mul);
 			if (intensity < targetIntensity) {
 				minMul = mul;
@@ -352,7 +352,7 @@ public final class ColorUtilities {
 		float intensity;
 
 		while (maxAdd - minAdd > 1.0e-7f) {
-			add = (maxAdd + minAdd) / 2;
+			add       = (maxAdd + minAdd) / 2;
 			intensity = getPerceptualLuminosity(Math.min(r + add, 1.0f),
 			                                    Math.min(g + add, 1.0f),
 			                                    Math.min(b + add, 1.0f));

@@ -48,14 +48,14 @@ public class PixelImage {
 
 	public PixelImage(int width, int height, boolean transparency) {
 		// Clamp to minimum values.
-		this.width = Math.max(width, 1);
+		this.width  = Math.max(width, 1);
 		this.height = Math.max(height, 1);
 
 		int imageType = transparency ? BufferedImage.TYPE_INT_ARGB : BufferedImage.TYPE_INT_RGB;
 		image = new BufferedImage(width, height, imageType);
 		image.setAccelerationPriority(0);
 		pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
-		g = image.createGraphics();
+		g      = image.createGraphics();
 	}
 
 	public PixelImage(BufferedImage imageToCopy) {

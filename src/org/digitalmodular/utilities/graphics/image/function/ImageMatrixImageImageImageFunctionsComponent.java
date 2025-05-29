@@ -77,9 +77,9 @@ public class ImageMatrixImageImageImageFunctionsComponent {
 		int     endX = out.endX; // 1
 
 		for (int y = out.border; y < out.endY; y++) {
-			rowOut = outComponent[y];
+			rowOut    = outComponent[y];
 			rowOffset = offsetComponent[y];
-			rowScale = scaleComponentOut[y];
+			rowScale  = scaleComponentOut[y];
 			for (x = out.border; x < endX; x++) {
 				rowOut[x] += rowOffset[x] * rowScale[x];
 			}

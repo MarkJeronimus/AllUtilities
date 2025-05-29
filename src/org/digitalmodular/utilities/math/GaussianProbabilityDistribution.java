@@ -14,9 +14,9 @@ public class GaussianProbabilityDistribution {
 	}
 
 	public void reset() {
-		runningSum = 0;
+		runningSum        = 0;
 		runningSumSquared = 0;
-		numSamples = 0;
+		numSamples        = 0;
 	}
 
 	public void addSample(double value, double amount) {

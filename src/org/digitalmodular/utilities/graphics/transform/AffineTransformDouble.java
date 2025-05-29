@@ -119,14 +119,14 @@ public class AffineTransformDouble implements TransformDouble {
 
 	public void concatenate(TransformDouble tr) {
 		if (tr instanceof AffineTransformDouble t) {
-			double                x = x0;
-			double                y = x1;
+			double x = x0;
+			double y = x1;
 			x2 += x * t.x2 + y * t.y2;
 			x0 = x * t.x0 + y * t.y0;
 			x1 = x * t.x1 + y * t.y1;
 
-			x = y0;
-			y = y1;
+			x  = y0;
+			y  = y1;
 			y2 += x * t.x2 + y * t.y2;
 			y0 = x * t.x0 + y * t.y0;
 			y1 = x * t.x1 + y * t.y1;
@@ -176,12 +176,12 @@ public class AffineTransformDouble implements TransformDouble {
 		double y = y0;
 		x0 = c * x - s * y;
 		y0 = s * x + c * y;
-		x = x1;
-		y = y1;
+		x  = x1;
+		y  = y1;
 		x1 = c * x - s * y;
 		y1 = s * x + c * y;
-		x = x2;
-		y = y2;
+		x  = x2;
+		y  = y2;
 		x2 = c * x - s * y;
 		y2 = s * x + c * y;
 	}
@@ -193,8 +193,8 @@ public class AffineTransformDouble implements TransformDouble {
 		double u = x1;
 		x0 = s * u + c * x;
 		x1 = c * u - s * x;
-		x = y0;
-		u = y1;
+		x  = y0;
+		u  = y1;
 		y0 = s * u + c * x;
 		y1 = c * u - s * x;
 	}
@@ -209,8 +209,8 @@ public class AffineTransformDouble implements TransformDouble {
 		x1 = t.x1 * x + t.y1 * y;
 		x2 += t.x2 * x + t.y2 * y;
 
-		x = y0;
-		y = y1;
+		x  = y0;
+		y  = y1;
 		y0 = t.x0 * x + t.y0 * y;
 		y1 = t.x2 * x + t.y1 * y;
 		y2 += t.x2 * x + t.y2 * y;
@@ -225,13 +225,13 @@ public class AffineTransformDouble implements TransformDouble {
 		x0 = x * t.x0 + y * t.x1;
 		y0 = x * t.y0 + y * t.y1;
 
-		x = x1;
-		y = y1;
+		x  = x1;
+		y  = y1;
 		x1 = x * t.x0 + y * t.x1;
 		y1 = x * t.y0 + y * t.y1;
 
-		x = x2;
-		y = y2;
+		x  = x2;
+		y  = y2;
 		x2 = x * t.x0 + y * t.x1 + t.x2;
 		y2 = x * t.y0 + y * t.y1 + t.y2;
 	}

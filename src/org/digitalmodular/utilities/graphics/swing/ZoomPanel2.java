@@ -163,8 +163,8 @@ public class ZoomPanel2 extends JPanel implements MouseListener,
 		int displayWidth  = (int)Math.rint(image.getWidth() * zoom);
 		int displayHeight = (int)Math.rint(image.getHeight() * zoom);
 
-		offsetX = viewWidth / 2 - displayWidth / 2;
-		offsetY = viewHeight / 2 - displayHeight / 2;
+		offsetX  = viewWidth / 2 - displayWidth / 2;
+		offsetY  = viewHeight / 2 - displayHeight / 2;
 		centered = true;
 
 		repaint();
@@ -189,8 +189,8 @@ public class ZoomPanel2 extends JPanel implements MouseListener,
 		int pixelX = (int)Math.rint(x * zoom);
 		int pixelY = (int)Math.rint(y * zoom);
 
-		offsetX = viewWidth / 2 - pixelX;
-		offsetY = viewHeight / 2 - pixelY;
+		offsetX  = viewWidth / 2 - pixelX;
+		offsetY  = viewHeight / 2 - pixelY;
 		centered = false;
 
 		repaint();
@@ -230,7 +230,7 @@ public class ZoomPanel2 extends JPanel implements MouseListener,
 
 		boolean reciprocal = zoom < 1.0;
 		if (reciprocal) {
-			zoom = 1.0 / zoom;
+			zoom      = 1.0 / zoom;
 			zoomSteps = -zoomSteps;
 		}
 
@@ -318,34 +318,34 @@ public class ZoomPanel2 extends JPanel implements MouseListener,
 
 			if (!leftInView) {
 				imageFromX = (int)Math.floor(-offsetX / zoom);
-				viewFromX = offsetX + (int)Math.floor(imageFromX * zoom);
+				viewFromX  = offsetX + (int)Math.floor(imageFromX * zoom);
 			} else {
 				imageFromX = 0;
-				viewFromX = offsetX;
+				viewFromX  = offsetX;
 			}
 
 			if (!topInView) {
 				imageFromY = (int)Math.floor(-offsetY / zoom);
-				viewFromY = offsetY + (int)Math.floor(imageFromY * zoom);
+				viewFromY  = offsetY + (int)Math.floor(imageFromY * zoom);
 			} else {
 				imageFromY = 0;
-				viewFromY = offsetY;
+				viewFromY  = offsetY;
 			}
 
 			if (rightInView) {
 				imageToX = imageWidth;
-				viewToX = offsetX + displayWidth;
+				viewToX  = offsetX + displayWidth;
 			} else {
 				imageToX = (int)Math.ceil((viewWidth - offsetX) / zoom);
-				viewToX = offsetX + (int)Math.round(imageToX * zoom);
+				viewToX  = offsetX + (int)Math.round(imageToX * zoom);
 			}
 
 			if (bottomInView) {
 				imageToY = imageHeight;
-				viewToY = offsetY + displayHeight;
+				viewToY  = offsetY + displayHeight;
 			} else {
 				imageToY = (int)Math.ceil((viewHeight - offsetY) / zoom);
-				viewToY = offsetY + (int)Math.round(imageToY * zoom);
+				viewToY  = offsetY + (int)Math.round(imageToY * zoom);
 			}
 
 			g.drawImage(image,

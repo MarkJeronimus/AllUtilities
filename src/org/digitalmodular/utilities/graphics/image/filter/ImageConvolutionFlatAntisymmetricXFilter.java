@@ -149,7 +149,7 @@ public class ImageConvolutionFlatAntisymmetricXFilter extends ImageFilter {
 			throw new IllegalArgumentException("Images not compatible");
 		}
 
-		this.in = in;
+		this.in  = in;
 		this.out = out;
 		processes.convolve();
 	}
@@ -176,7 +176,7 @@ public class ImageConvolutionFlatAntisymmetricXFilter extends ImageFilter {
 				kernel0 = kernel[0];
 				kernel1 = kernel[1];
 				for (int y = in.border; y < in.endY; y++) {
-					rowIn = in.matrix[z][y];
+					rowIn  = in.matrix[z][y];
 					rowOut = out.matrix[z][y];
 					for (x = in.border; x < endX; x++) {
 						rowOut[x] = rowIn[x] * kernel0 +
@@ -207,7 +207,7 @@ public class ImageConvolutionFlatAntisymmetricXFilter extends ImageFilter {
 				kernel1 = kernel[1];
 				kernel2 = kernel[2];
 				for (int y = in.border; y < in.endY; y++) {
-					rowIn = in.matrix[z][y];
+					rowIn  = in.matrix[z][y];
 					rowOut = out.matrix[z][y];
 					for (x = in.border; x < endX; x++) {
 						rowOut[x] = rowIn[x] * kernel0 +
@@ -239,7 +239,7 @@ public class ImageConvolutionFlatAntisymmetricXFilter extends ImageFilter {
 
 			for (int z = 0; z < in.numComponents; z++) {
 				for (int y = in.border; y < in.endY; y++) {
-					rowIn = in.matrix[z][y];
+					rowIn  = in.matrix[z][y];
 					rowOut = out.matrix[z][y];
 					for (x = in.border; x < endX; x++) {
 						sum = rowIn[x] * kernel[0];

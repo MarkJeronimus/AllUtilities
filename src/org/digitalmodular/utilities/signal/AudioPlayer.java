@@ -61,7 +61,7 @@ public class AudioPlayer implements Runnable {
 			throw new IllegalStateException("Cannot modify playing parameter when playing.");
 		}
 		this.bufferSize = bufferSize;
-		buffer = new byte[this.bufferSize * 4];
+		buffer          = new byte[this.bufferSize * 4];
 	}
 
 	public void setSampleRate(float sampleRate) {

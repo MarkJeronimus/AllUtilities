@@ -39,8 +39,8 @@ public class CPIFont {
 
 		public Variant(int codepage, int height, int offset) {
 			this.codepage = codepage;
-			this.height = height;
-			this.offset = offset;
+			this.height   = height;
+			this.offset   = offset;
 		}
 	}
 

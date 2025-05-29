@@ -37,11 +37,11 @@ public class URLBuilder {
 
 	public URLBuilder(String host) {
 		this.host = requireNonNull(host, "host");
-		hostURL = null;
+		hostURL   = null;
 	}
 
 	public URLBuilder(URL hostURL) {
-		host = "";
+		host         = "";
 		this.hostURL = requireNonNull(hostURL, "hostURL");
 	}
 

@@ -28,7 +28,7 @@ public class CogPixelSorter extends PixelSorter {
 	private final double toothSize;
 
 	public CogPixelSorter(int petals, double toothSize) {
-		this.petals = petals;
+		this.petals    = petals;
 		this.toothSize = 4 / toothSize + 1;
 	}
 

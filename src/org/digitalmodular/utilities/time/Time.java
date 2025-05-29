@@ -70,23 +70,23 @@ public class Time implements Comparable<Time> {
 	 * @param days   the day, 1 is the first of the month
 	 */
 	public Time(int years, int months, int days, int hours, int minutes, int seconds, int milliseconds) {
-		year = years;
-		month = months;
-		date = days;
-		this.hours = hours;
-		this.minutes = minutes;
-		this.seconds = seconds;
+		year              = years;
+		month             = months;
+		date              = days;
+		this.hours        = hours;
+		this.minutes      = minutes;
+		this.seconds      = seconds;
 		this.milliseconds = milliseconds;
 	}
 
 	public void setTime(long millis) {
-		timeMillis = millis;
-		year = -1;
-		month = -1;
-		date = -1;
-		hours = -1;
-		minutes = -1;
-		seconds = -1;
+		timeMillis   = millis;
+		year         = -1;
+		month        = -1;
+		date         = -1;
+		hours        = -1;
+		minutes      = -1;
+		seconds      = -1;
 		milliseconds = -1;
 	}
 
@@ -326,9 +326,9 @@ public class Time implements Comparable<Time> {
 		// this.timeMillis)/86400000
 		date = reDate(year, month, hi, 0, 0, 0, 0) > timeMillis ? lo : hi;
 
-		hours = (int)(timeMillis / 3600000 % 24);
-		minutes = (int)(timeMillis / 60000 % 60);
-		seconds = (int)(timeMillis / 1000 % 60);
+		hours        = (int)(timeMillis / 3600000 % 24);
+		minutes      = (int)(timeMillis / 60000 % 60);
+		seconds      = (int)(timeMillis / 1000 % 60);
 		milliseconds = (int)(timeMillis % 1000);
 	}
 

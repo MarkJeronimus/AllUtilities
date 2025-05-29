@@ -64,7 +64,7 @@ public class ColorGradient {
 	 */
 	public ColorGradient(float[]... gradient) {
 		int n = gradient.length;
-		this.gradient = Arrays.copyOf(gradient, n + 1);
+		this.gradient    = Arrays.copyOf(gradient, n + 1);
 		this.gradient[n] = this.gradient[n - 1];
 	}
 

@@ -66,8 +66,8 @@ public class AudioRecorder implements AudioProvider, PausableRunnable {
 			throw new IllegalStateException("Cannot modify recording parameter when recording.");
 		}
 		this.bufferSize = bufferSize;
-		buffer[0] = new byte[bufferSize];
-		buffer[1] = new byte[bufferSize];
+		buffer[0]       = new byte[bufferSize];
+		buffer[1]       = new byte[bufferSize];
 	}
 
 	@Override

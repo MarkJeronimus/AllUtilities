@@ -39,7 +39,7 @@ public class SpiroSin {
 		// Generate random parameter
 		for (int i = 0; i < NUM_TERMS; i++) {
 			frequency[i] = randomNumberGenerator.nextFloat();
-			phase[i] = 2 * (float)Math.PI * randomNumberGenerator.nextFloat();
+			phase[i]     = 2 * (float)Math.PI * randomNumberGenerator.nextFloat();
 			amplitude[i] = randomNumberGenerator.nextFloat();
 			sum += amplitude[i];
 		}

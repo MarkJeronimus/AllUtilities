@@ -17,8 +17,8 @@ public class GaussianDistribution implements DoubleConsumer {
 	private double runningSumSquared = 0;
 
 	public void reset() {
-		count = 0;
-		runningSum = 0;
+		count             = 0;
+		runningSum        = 0;
 		runningSumSquared = 0;
 	}
 

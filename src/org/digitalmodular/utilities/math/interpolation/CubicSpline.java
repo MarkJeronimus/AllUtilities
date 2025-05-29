@@ -15,9 +15,9 @@ public class CubicSpline implements DoubleUnaryOperator {
 	private final double[] coefficients;
 
 	public CubicSpline(double[] values, double firstPointDerivative, double lastPointDerivative) {
-		this.values = values.clone();
+		this.values               = values.clone();
 		this.firstPointDerivative = firstPointDerivative;
-		this.lastPointDerivative = lastPointDerivative;
+		this.lastPointDerivative  = lastPointDerivative;
 
 		coefficients = new double[values.length];
 
@@ -35,16 +35,16 @@ public class CubicSpline implements DoubleUnaryOperator {
 
 		if (Double.isNaN(firstPointDerivative)) {
 			coefficients[0] = 0;
-			u[0] = 0;
+			u[0]            = 0;
 		} else {
 			coefficients[0] = -0.5;
-			u[0] = 3 * ((values[1] - values[0]) - firstPointDerivative);
+			u[0]            = 3 * ((values[1] - values[0]) - firstPointDerivative);
 		}
 
 		for (int i = 1; i < n; ++i) {
 			coefficients[i] = 1 / (-4 - coefficients[i - 1]);
-			u[i] = values[i + 1] + values[i - 1] - 2 * values[i];
-			u[i] = (3 * u[i] - 0.5 * u[i - 1]) / (0.5 * coefficients[i - 1] + 2.0);
+			u[i]            = values[i + 1] + values[i - 1] - 2 * values[i];
+			u[i]            = (3 * u[i] - 0.5 * u[i - 1]) / (0.5 * coefficients[i - 1] + 2.0);
 		}
 
 		// Initialize to values for natural splines (used for lastPointDerivative equal to infinity)

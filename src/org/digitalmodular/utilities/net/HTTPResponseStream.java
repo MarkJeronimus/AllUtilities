@@ -51,7 +51,7 @@ public class HTTPResponseStream extends InputStreamWithLength {
 	                          Map<String, List<String>> responseHeaders,
 	                          int length) {
 		super(in, length);
-		this.responseCode = requireRange(100, 599, responseCode, "responseCode");
+		this.responseCode    = requireRange(100, 599, responseCode, "responseCode");
 		this.responseHeaders = requireNonNull(responseHeaders, "responseHeaders");
 	}
 

@@ -35,10 +35,10 @@ public class MonotoneInterpolator implements DoubleUnaryOperator {
 		this.cycleWidth = requireAtLeast(0.0, cycleWidth, "cycleWidth");
 
 		numPoints = pointsX.length;
-		cpx = new double[numPoints + 2];
-		cpy = new double[numPoints + 2];
-		slopesL = new double[numPoints + 1];
-		slopesR = new double[numPoints + 1];
+		cpx       = new double[numPoints + 2];
+		cpy       = new double[numPoints + 2];
+		slopesL   = new double[numPoints + 1];
+		slopesR   = new double[numPoints + 1];
 		System.arraycopy(pointsX, 0, cpx, 1, numPoints);
 		System.arraycopy(pointsY, 0, cpy, 1, numPoints);
 
@@ -63,13 +63,13 @@ public class MonotoneInterpolator implements DoubleUnaryOperator {
 
 	private void init() {
 		if (cycleWidth == 0.0) {
-			cpx[0] = 2 * cpx[1] - cpx[2];
-			cpy[0] = 2 * cpy[1] - cpy[2];
+			cpx[0]             = 2 * cpx[1] - cpx[2];
+			cpy[0]             = 2 * cpy[1] - cpy[2];
 			cpx[numPoints + 1] = 2 * cpx[numPoints] - cpx[numPoints - 1];
 			cpy[numPoints + 1] = 2 * cpy[numPoints] - cpy[numPoints - 1];
 		} else {
-			cpx[0] = cpx[numPoints] - cycleWidth;
-			cpy[0] = cpy[numPoints];
+			cpx[0]             = cpx[numPoints] - cycleWidth;
+			cpy[0]             = cpy[numPoints];
 			cpx[numPoints + 1] = cpx[1] + cycleWidth;
 			cpy[numPoints + 1] = cpy[1];
 		}

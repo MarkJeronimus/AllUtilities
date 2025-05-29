@@ -23,7 +23,6 @@ import java.awt.Paint;
 import java.awt.PaintContext;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.Transparency;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.ColorModel;
@@ -75,7 +74,7 @@ public class RadialGradientPaint extends GradientPaintContext implements Paint {
 	public void set(float cx, float cy, float r) {
 		centerX = cx;
 		centerY = cy;
-		radius = r;
+		radius  = r;
 	}
 
 	/**
@@ -93,7 +92,7 @@ public class RadialGradientPaint extends GradientPaintContext implements Paint {
 			sqrtLutFixed[i] = (int)Math.sqrt(i * sqStepFloat);
 		}
 		sqrtLutFixed[i] = sqrtLutFixed[i - 1];
-		invSqStepFloat = 1 / sqStepFloat;
+		invSqStepFloat  = 1 / sqStepFloat;
 	}
 
 	@Override

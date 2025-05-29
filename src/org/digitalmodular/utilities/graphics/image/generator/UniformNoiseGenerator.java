@@ -25,7 +25,7 @@
 // /**
 // * @author Mark Jeronimus
 // */
-//// Created 2012-04-03
+// // Created 2012-04-03
 //public class UniformNoiseGenerator extends ImageGenerator {
 //	private static final FastRandom RND = RandomUtilities.FAST_RND;
 //

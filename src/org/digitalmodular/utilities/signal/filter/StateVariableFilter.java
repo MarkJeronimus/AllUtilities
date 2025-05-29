@@ -66,17 +66,17 @@ public class StateVariableFilter implements AudioFilter {
 	@Override
 	public void reset() {
 		bandPass = 0;
-		lowPass = 0;
+		lowPass  = 0;
 	}
 
 	public void set(double y, double dy) {
-		lowPass = requireNotDegenerate(y, "y");
+		lowPass  = requireNotDegenerate(y, "y");
 		bandPass = requireNotDegenerate(dy, "dy");
 	}
 
 	@Override
 	public void step(double sample) {
-		a = sample - bandPass * feedback;
+		a        = sample - bandPass * feedback;
 		highPass = a - lowPass;
 		bandPass += highPass * integratorSpeed;
 		lowPass += bandPass * integratorSpeed;

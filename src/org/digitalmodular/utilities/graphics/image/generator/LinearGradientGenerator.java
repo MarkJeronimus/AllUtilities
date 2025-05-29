@@ -25,7 +25,7 @@
 // /**
 // * @author Mark Jeronimus
 // */
-//// Created 2012-04-03
+// // Created 2012-04-03
 //public class LinearGradientGenerator extends ImageGenerator {
 //	public float angle;
 //	public float fromColor = 0;

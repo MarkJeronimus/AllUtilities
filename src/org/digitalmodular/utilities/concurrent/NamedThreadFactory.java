@@ -35,7 +35,7 @@ public class NamedThreadFactory implements ThreadFactory {
 
 	public NamedThreadFactory(ThreadFactory factory, String prefix) {
 		this.factory = requireNonNull(factory, "factory");
-		this.prefix = requireNonNull(prefix, "prefix");
+		this.prefix  = requireNonNull(prefix, "prefix");
 	}
 
 	@Override

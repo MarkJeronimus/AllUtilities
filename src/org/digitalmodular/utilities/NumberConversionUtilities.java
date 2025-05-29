@@ -87,7 +87,7 @@ public enum NumberConversionUtilities {
 	 * destination are written to starting at the given position.
 	 */
 	public static void longToRawBytes(long src, byte[] dst, int srcPos) {
-		dst[srcPos] = (byte)src;
+		dst[srcPos]     = (byte)src;
 		dst[srcPos + 1] = (byte)(src >> 8);
 		dst[srcPos + 2] = (byte)(src >> 16);
 		dst[srcPos + 3] = (byte)(src >> 24);
@@ -170,7 +170,7 @@ public enum NumberConversionUtilities {
 	 * destination are written to starting at the given position.
 	 */
 	public static void intToRawBytes(int src, byte[] dst, int srcPos) {
-		dst[srcPos] = (byte)src;
+		dst[srcPos]     = (byte)src;
 		dst[srcPos + 1] = (byte)(src >> 8);
 		dst[srcPos + 2] = (byte)(src >> 16);
 		dst[srcPos + 3] = (byte)(src >> 24);
@@ -246,7 +246,7 @@ public enum NumberConversionUtilities {
 	 * destination are written to starting at the given position.
 	 */
 	public static void shortToRawBytes(short src, byte[] dst, int srcPos) {
-		dst[srcPos] = (byte)src;
+		dst[srcPos]     = (byte)src;
 		dst[srcPos + 1] = (byte)(src >> 8);
 	}
 

@@ -44,7 +44,7 @@ public abstract class TimeProvider {
 
 	public void setTime(long time) {
 		this.time = time;
-		live = false;
+		live      = false;
 	}
 
 	public void setLive() {
@@ -57,14 +57,14 @@ public abstract class TimeProvider {
 
 	public void setNormalized(boolean normalized) {
 		this.normalized = normalized;
-		yearsFactor = 0;
-		monthsFactor = 0;
-		weeksFactor = 0;
-		daysFactor = 0;
-		hoursFactor = 0;
-		minutesFactor = 0;
-		secondsFactor = 0;
-		millisFactor = 0;
+		yearsFactor     = 0;
+		monthsFactor    = 0;
+		weeksFactor     = 0;
+		daysFactor      = 0;
+		hoursFactor     = 0;
+		minutesFactor   = 0;
+		secondsFactor   = 0;
+		millisFactor    = 0;
 	}
 
 	public final double getYearsFactor() {

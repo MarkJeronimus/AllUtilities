@@ -20,18 +20,18 @@ public final class BitBufferOld {
 
 	public BitBufferOld(int bitCapacity) {
 		this.bitCapacity = requireAtLeast(1, bitCapacity, "bitCapacity");
-		buffer = ByteBuffer.allocate((bitCapacity + 7) >> 3);
+		buffer           = ByteBuffer.allocate((bitCapacity + 7) >> 3);
 	}
 
 	public BitBufferOld(int bitSize, int bits) {
 		bitCapacity = requireRange(1, 32, bitSize, "bitSize");
-		buffer = ByteBuffer.allocate((bitSize + 7) >> 3);
+		buffer      = ByteBuffer.allocate((bitSize + 7) >> 3);
 
 		putBits(bitSize, bits);
 	}
 
 	public BitBufferOld(ByteBuffer buffer, int bitCapacity) {
-		this.buffer = requireNonNull(buffer, "buffer");
+		this.buffer      = requireNonNull(buffer, "buffer");
 		this.bitCapacity = bitCapacity;
 	}
 

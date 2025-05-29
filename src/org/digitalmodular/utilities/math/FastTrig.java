@@ -59,14 +59,14 @@ public class FastTrig {
 		size &= ~7;
 
 		atan2_mul_p = size / 8;
-		this.size = atan2_mul_p * 8;
+		this.size   = atan2_mul_p * 8;
 		atan2_mul_n = -atan2_mul_p;
 
 		this.scale = scale;
 
 		sqrtTable = new float[sqrtSize];
-		sinTable = new float[size + 1];
-		tanTable = new float[size + 1];
+		sinTable  = new float[size + 1];
+		tanTable  = new float[size + 1];
 		atan2_ene = new float[atan2_mul_p + 1];
 		atan2_nne = new float[atan2_mul_p + 1];
 		atan2_ese = new float[atan2_mul_p + 1];

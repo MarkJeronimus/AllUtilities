@@ -55,7 +55,7 @@ public class LogarithmicScale {
 	private double logFactor;
 
 	public LogarithmicScale() {
-		min = 0.125;
+		min       = 0.125;
 		logFactor = -1 / Math.log(min);
 	}
 
@@ -65,7 +65,7 @@ public class LogarithmicScale {
 			throw new IllegalArgumentException("'min' should be in the open range (0, 1).");
 		}
 
-		this.min = min;
+		this.min  = min;
 		logFactor = -1 / Math.log(min);
 
 		return this;

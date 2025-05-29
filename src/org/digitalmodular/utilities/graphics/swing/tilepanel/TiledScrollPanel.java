@@ -96,8 +96,8 @@ public class TiledScrollPanel extends JPanel
 		super(null);
 
 		this.tileProvider = tileProvider;
-		tileSize = tileProvider.getTileSize();
-		tileShift = tileProvider.getTileShift();
+		tileSize          = tileProvider.getTileSize();
+		tileShift         = tileProvider.getTileShift();
 
 		addMouseListener(this);
 		addMouseMotionListener(this);
@@ -244,18 +244,18 @@ public class TiledScrollPanel extends JPanel
 
 	@Override
 	public void componentResized(@Nullable ComponentEvent e) {
-		width = getWidth();
+		width  = getWidth();
 		height = getHeight();
 
 		int lastVW = virtualWidth;
 		int lastVH = virtualHeight;
 
 		// Round up to the nearest tile size, then expand a tile.
-		virtualWidth = width + 2 * tileSize - 1 & -tileSize;
+		virtualWidth  = width + 2 * tileSize - 1 & -tileSize;
 		virtualHeight = height + 2 * tileSize - 1 & -tileSize;
 
 		if (lastVW != virtualWidth || lastVH != virtualHeight) {
-			tileLayer = new BufferedImage(virtualWidth, virtualHeight, BufferedImage.TYPE_INT_RGB);
+			tileLayer  = new BufferedImage(virtualWidth, virtualHeight, BufferedImage.TYPE_INT_RGB);
 			tileLayer2 = new BufferedImage(virtualWidth, virtualHeight, BufferedImage.TYPE_INT_RGB);
 		}
 
@@ -449,7 +449,7 @@ public class TiledScrollPanel extends JPanel
 
 	private void swapBuffers() {
 		BufferedImage temp = tileLayer;
-		tileLayer = tileLayer2;
+		tileLayer  = tileLayer2;
 		tileLayer2 = temp;
 
 		Graphics2D g = tileLayer2.createGraphics();

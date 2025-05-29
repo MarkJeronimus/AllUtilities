@@ -84,7 +84,7 @@ public class DoubleDouble {
 
 	public void set(double hi) {
 		this.hi = hi;
-		lo = 0;
+		lo      = 0;
 	}
 
 	public void set(double hi, double lo) {
@@ -512,8 +512,8 @@ public class DoubleDouble {
 
 	public void addSelf(double y) {
 		double a, b;
-		b = hi + y;
-		a = hi - b;
+		b  = hi + y;
+		a  = hi - b;
 		lo = hi - (b + a) + (y + a) + lo;
 		hi = b + lo;
 		lo += b - hi;
@@ -534,12 +534,12 @@ public class DoubleDouble {
 
 	public void addSelf(DoubleDouble y) {
 		double a, b, c, d, e;
-		a = hi + y.hi;
-		b = hi - a;
-		c = lo + y.lo;
-		d = lo - c;
-		b = hi - (b + a) + (b + y.hi) + c;
-		e = a + b;
+		a  = hi + y.hi;
+		b  = hi - a;
+		c  = lo + y.lo;
+		d  = lo - c;
+		b  = hi - (b + a) + (b + y.hi) + c;
+		e  = a + b;
 		lo = lo - (d + c) + (d + y.lo) + (b + (a - e));
 		hi = e + lo;
 		lo += e - hi;
@@ -556,8 +556,8 @@ public class DoubleDouble {
 
 	public void addSelfFast(DoubleDouble y) {
 		double a, b;
-		b = hi + y.hi;
-		a = hi - b;
+		b  = hi + y.hi;
+		a  = hi - b;
 		lo = hi - (a + b) + (a + y.hi) + (lo + y.lo);
 		hi = b + lo;
 		lo += b - hi;
@@ -583,8 +583,8 @@ public class DoubleDouble {
 
 	public void subSelf(double y) {
 		double a, b;
-		b = hi - y;
-		a = hi - b;
+		b  = hi - y;
+		a  = hi - b;
 		lo = hi - (a + b) + (a - y) + lo;
 		hi = b + lo;
 		lo += b - hi;
@@ -592,8 +592,8 @@ public class DoubleDouble {
 
 	public void subRSelf(double x) {
 		double a, b;
-		b = x - hi;
-		a = x - b;
+		b  = x - hi;
+		a  = x - b;
 		lo = x - (a + b) + (a - hi) - lo;
 		hi = b + lo;
 		lo += b - hi;
@@ -614,12 +614,12 @@ public class DoubleDouble {
 
 	public void subSelf(DoubleDouble y) {
 		double a, b, c, d, e;
-		c = lo - y.lo;
-		a = lo - c;
-		e = hi - y.hi;
-		d = hi - e;
-		d = hi - (d + e) + (d - y.hi) + c;
-		b = e + d;
+		c  = lo - y.lo;
+		a  = lo - c;
+		e  = hi - y.hi;
+		d  = hi - e;
+		d  = hi - (d + e) + (d - y.hi) + c;
+		b  = e + d;
 		lo = d + (e - b) + (lo - (a + c) + (a - y.lo));
 		hi = b + lo;
 		lo += b - hi;
@@ -640,12 +640,12 @@ public class DoubleDouble {
 
 	public void subRSelf(DoubleDouble y) {
 		double b, d, e, f, g;
-		g = y.lo - lo;
-		f = y.lo - g;
-		e = y.hi - hi;
-		d = y.hi - e;
-		d = y.hi - (d + e) + (d - hi) + g;
-		b = e + d;
+		g  = y.lo - lo;
+		f  = y.lo - g;
+		e  = y.hi - hi;
+		d  = y.hi - e;
+		d  = y.hi - (d + e) + (d - hi) + g;
+		b  = e + d;
 		lo = d + (e - b) + (y.lo - (f + g) + (f - lo));
 		hi = b + lo;
 		lo += (b - hi);
@@ -662,8 +662,8 @@ public class DoubleDouble {
 
 	public void subSelfFast(DoubleDouble y) {
 		double a, b;
-		b = hi - y.hi;
-		a = hi - b;
+		b  = hi - y.hi;
+		a  = hi - b;
 		lo = hi - (a + b) + (a - y.hi) + lo - y.lo;
 		hi = b + lo;
 		lo += b - hi;
@@ -694,13 +694,13 @@ public class DoubleDouble {
 
 	public void mulSelf(double y) {
 		double a, b, c, d, e;
-		a = 0x08000001 * hi;
+		a  = 0x08000001 * hi;
 		a += hi - a;
-		b = hi - a;
-		c = 0x08000001 * y;
+		b  = hi - a;
+		c  = 0x08000001 * y;
 		c += y - c;
-		d = y - c;
-		e = hi * y;
+		d  = y - c;
+		e  = hi * y;
 		lo = a * c - e + (a * d + b * c) + b * d + lo * y;
 		hi = e + lo;
 		lo += e - hi;
@@ -722,13 +722,13 @@ public class DoubleDouble {
 
 	public void mulSelf(DoubleDouble y) {
 		double a, b, c, d, e;
-		a = 0x08000001 * hi;
+		a  = 0x08000001 * hi;
 		a += hi - a;
-		b = hi - a;
-		c = 0x08000001 * y.hi;
+		b  = hi - a;
+		c  = 0x08000001 * y.hi;
 		c += y.hi - c;
-		d = y.hi - c;
-		e = hi * y.hi;
+		d  = y.hi - c;
+		e  = hi * y.hi;
 		lo = a * c - e + (a * d + b * c) + b * d + (lo * y.hi + hi * y.lo);
 		hi = e + lo;
 		lo += e - hi;
@@ -762,16 +762,16 @@ public class DoubleDouble {
 
 	public void divSelf(double y) {
 		double a, b, c, d, e, f, g, h;
-		f = hi / y;
-		a = 0x08000001 * f;
+		f  = hi / y;
+		a  = 0x08000001 * f;
 		a += f - a;
-		b = f - a;
-		c = 0x08000001 * y;
+		b  = f - a;
+		c  = 0x08000001 * y;
 		c += y - c;
-		d = y - c;
-		e = f * y;
-		g = hi - e;
-		h = hi - g;
+		d  = y - c;
+		e  = f * y;
+		g  = hi - e;
+		h  = hi - g;
 		lo = (g + (hi - (h + g) + (h - e) + lo - (a * c - e + (a * d + b * c) + b * d))) / y;
 		hi = f + lo;
 		lo += f - hi;
@@ -794,14 +794,14 @@ public class DoubleDouble {
 
 	public void divrSelf(double y) {
 		double a, b, c, d, e, f;
-		f = y / hi;
-		a = 0x08000001 * hi;
+		f  = y / hi;
+		a  = 0x08000001 * hi;
 		a += hi - a;
-		b = hi - a;
-		c = 0x08000001 * f;
+		b  = hi - a;
+		c  = 0x08000001 * f;
 		c += f - c;
-		d = f - c;
-		e = hi * f;
+		d  = f - c;
+		e  = hi * f;
 		lo = (y - e - (a * c - e + (a * d + b * c) + b * d + lo * f)) / hi;
 		hi = f + lo;
 		lo += f - hi;
@@ -833,22 +833,22 @@ public class DoubleDouble {
 
 	public void divSelf(DoubleDouble y) {
 		double a, b, c, d, e, f, g;
-		f = hi / y.hi;
-		a = 0x08000001 * y.hi;
+		f  = hi / y.hi;
+		a  = 0x08000001 * y.hi;
 		a += y.hi - a;
-		b = y.hi - a;
-		c = 0x08000001 * f;
+		b  = y.hi - a;
+		c  = 0x08000001 * f;
 		c += f - c;
-		d = f - c;
-		e = y.hi * f;
-		c = a * c - e + (a * d + b * c) + b * d + y.lo * f;
-		b = lo - c;
-		d = lo - b;
-		a = hi - e;
-		e = hi - (hi - a + a) + b;
-		g = a + e;
+		d  = f - c;
+		e  = y.hi * f;
+		c  = a * c - e + (a * d + b * c) + b * d + y.lo * f;
+		b  = lo - c;
+		d  = lo - b;
+		a  = hi - e;
+		e  = hi - (hi - a + a) + b;
+		g  = a + e;
 		e += a - g + (lo - (d + b) + (d - c));
-		a = g + e;
+		a  = g + e;
 		lo = a / y.hi;
 		f += (e + (g - a)) / y.hi;
 		hi = f + lo;
@@ -875,17 +875,17 @@ public class DoubleDouble {
 
 	public void divSelfFast(DoubleDouble y) {
 		double a, b, c, d, e, f;
-		f = hi / y.hi;
-		a = 0x08000001 * y.hi;
+		f  = hi / y.hi;
+		a  = 0x08000001 * y.hi;
 		a += y.hi - a;
-		b = y.hi - a;
-		c = 0x08000001 * f;
+		b  = y.hi - a;
+		c  = 0x08000001 * f;
 		c += f - c;
-		d = f - c;
-		e = y.hi * f;
-		b = a * c - e + (a * d + b * c) + b * d + y.lo * f;
-		a = e + b;
-		c = hi - a;
+		d  = f - c;
+		e  = y.hi * f;
+		b  = a * c - e + (a * d + b * c) + b * d + y.lo * f;
+		a  = e + b;
+		c  = hi - a;
 		lo = (c + (hi - c - a - (e - a + b) + lo)) / y.hi;
 		hi = f + lo;
 		lo += f - hi;
@@ -908,14 +908,14 @@ public class DoubleDouble {
 
 	public void recipSelf() {
 		double a, b, c, d, e, f;
-		f = 1 / hi;
-		a = 0x08000001 * hi;
+		f  = 1 / hi;
+		a  = 0x08000001 * hi;
 		a += hi - a;
-		b = hi - a;
-		c = 0x08000001 * f;
+		b  = hi - a;
+		c  = 0x08000001 * f;
 		c += f - c;
-		d = f - c;
-		e = hi * f;
+		d  = f - c;
+		e  = hi * f;
 		lo = (1 - e - (a * c - e + (a * d + b * c) + b * d + lo * f)) / hi;
 		hi = f + lo;
 		lo += f - hi;
@@ -934,10 +934,10 @@ public class DoubleDouble {
 
 	public void sqrSelf() {
 		double a, b, c;
-		a = 0x08000001 * hi;
+		a  = 0x08000001 * hi;
 		a += hi - a;
-		b = hi - a;
-		c = hi * hi;
+		b  = hi - a;
+		c  = hi * hi;
 		lo = a * a - c + a * b * 2 + b * b + hi * lo * 2 + lo * lo;
 		hi = c + lo;
 		lo += c - hi;
@@ -988,36 +988,36 @@ public class DoubleDouble {
 		}
 
 		double a, b, c, d, e, f, g, h;
-		g = 1 / Math.sqrt(hi);
-		h = hi * g;
+		g  = 1 / Math.sqrt(hi);
+		h  = hi * g;
 		g *= 0.5;
-		a = 0x08000001 * h;
+		a  = 0x08000001 * h;
 		a += h - a;
-		b = h - a;
-		c = h * h;
-		b = a * a - c + a * b * 2 + b * b;
-		a = lo - b;
-		f = lo - a;
-		e = hi - c;
-		d = hi - e;
-		d = hi - (d + e) + (d - c) + a;
-		c = e + d;
-		b = d + (e - c) + (lo - (f + a) + (f - b));
-		a = c + b;
+		b  = h - a;
+		c  = h * h;
+		b  = a * a - c + a * b * 2 + b * b;
+		a  = lo - b;
+		f  = lo - a;
+		e  = hi - c;
+		d  = hi - e;
+		d  = hi - (d + e) + (d - c) + a;
+		c  = e + d;
+		b  = d + (e - c) + (lo - (f + a) + (f - b));
+		a  = c + b;
 		b += c - a;
-		c = 0x08000001 * a;
+		c  = 0x08000001 * a;
 		c += a - c;
-		d = a - c;
-		e = 0x08000001 * g;
+		d  = a - c;
+		e  = 0x08000001 * g;
 		e += g - e;
-		f = g - e;
+		f  = g - e;
 		a *= g;
-		e = c * e - a + (c * f + d * e) + d * f;
+		e  = c * e - a + (c * f + d * e) + d * f;
 		e += b * g;
-		b = a + e;
+		b  = a + e;
 		e += a - b;
 		hi = b + h;
-		c = b - hi;
+		c  = b - hi;
 		lo = e + (b - (hi + c) + (h + c));
 	}
 
@@ -1048,18 +1048,18 @@ public class DoubleDouble {
 		}
 
 		double a, b, c, d, e;
-		d = 1 / Math.sqrt(hi);
-		e = hi * d;
-		a = 0x08000001 * e;
+		d  = 1 / Math.sqrt(hi);
+		e  = hi * d;
+		a  = 0x08000001 * e;
 		a += e - a;
-		b = e - a;
-		c = e * e;
-		b = a * a - c + a * b * 2 + b * b;
-		a = hi - c;
-		c = hi - a;
-		c = (a + (hi - (c + a) + (0.0) + lo - b)) * d * 0.5;
+		b  = e - a;
+		c  = e * e;
+		b  = a * a - c + a * b * 2 + b * b;
+		a  = hi - c;
+		c  = hi - a;
+		c  = (a + (hi - (c + a) + (0.0) + lo - b)) * d * 0.5;
 		hi = e + c;
-		b = e - hi;
+		b  = e - hi;
 		lo = e - (b + hi) + (b + c);
 	}
 
@@ -1274,11 +1274,11 @@ public class DoubleDouble {
 			a *= a;
 			s >>= 1;
 		}
-		a = d + j;
-		b = d - a;
-		e = c + i;
-		f = c - e;
-		f = c - (f + e) + (f + i) + a;
+		a  = d + j;
+		b  = d - a;
+		e  = c + i;
+		f  = c - e;
+		f  = c - (f + e) + (f + i) + a;
 		hi = e + f;
 		lo = (f + (e - hi) + (d - (b + a) + (b + j))) * r;
 		hi *= r;
@@ -1513,27 +1513,27 @@ public class DoubleDouble {
 			k *= k;
 			t >>= 1;
 		}
-		a = d + j;
-		b = d - a;
-		e = c + i;
-		f = c - e;
-		f = c - (f + e) + (f + i) + a;
-		g = e + f;
-		h = (f + (e - g) + (d - (b + a) + (b + j))) * r;
+		a  = d + j;
+		b  = d - a;
+		e  = c + i;
+		f  = c - e;
+		f  = c - (f + e) + (f + i) + a;
+		g  = e + f;
+		h  = (f + (e - g) + (d - (b + a) + (b + j))) * r;
 		g *= r;
-		a = 0x08000001 * hi;
+		a  = 0x08000001 * hi;
 		a += hi - a;
-		c = hi - a;
-		b = 0x08000001 * g;
+		c  = hi - a;
+		b  = 0x08000001 * g;
 		b += g - b;
-		d = g - b;
-		e = hi * g;
+		d  = g - b;
+		e  = hi * g;
 		lo = a * b - e + (a * d + c * b) + c * d + (lo * g + hi * h);
 		--e;
-		a = e + lo;
+		a  = e + lo;
 		lo += e - a;
-		c = a + s;
-		d = a - c;
+		c  = a + s;
+		d  = a - c;
 		lo += a - (c + d) + (s + d);
 		hi = c + lo;
 		lo += c - hi;
@@ -1571,8 +1571,8 @@ public class DoubleDouble {
 			e = -y;
 		}
 		temp = new DoubleDouble(hi, lo);
-		hi = 1;
-		lo = 0;
+		hi   = 1;
+		lo   = 0;
 		while (e > 0) {
 			if ((e & 1) > 0) {
 				mulSelf(temp);
@@ -1759,36 +1759,36 @@ public class DoubleDouble {
 		}
 		if (y == 2) {
 			double a, b, c, d, e, f, g, h;
-			g = 1 / Math.sqrt(hi);
-			h = hi * g;
+			g  = 1 / Math.sqrt(hi);
+			h  = hi * g;
 			g *= 0.5;
-			a = 0x08000001 * h;
+			a  = 0x08000001 * h;
 			a += h - a;
-			b = h - a;
-			c = h * h;
-			b = a * a - c + a * b * 2 + b * b;
-			a = lo - b;
-			f = lo - a;
-			e = hi - c;
-			d = hi - e;
-			d = hi - (d + e) + (d - c) + a;
-			c = e + d;
-			b = d + (e - c) + (lo - (f + a) + (f - b));
-			a = c + b;
+			b  = h - a;
+			c  = h * h;
+			b  = a * a - c + a * b * 2 + b * b;
+			a  = lo - b;
+			f  = lo - a;
+			e  = hi - c;
+			d  = hi - e;
+			d  = hi - (d + e) + (d - c) + a;
+			c  = e + d;
+			b  = d + (e - c) + (lo - (f + a) + (f - b));
+			a  = c + b;
 			b += c - a;
-			c = 0x08000001 * a;
+			c  = 0x08000001 * a;
 			c += a - c;
-			d = a - c;
-			e = 0x08000001 * g;
+			d  = a - c;
+			e  = 0x08000001 * g;
 			e += g - e;
-			f = g - e;
+			f  = g - e;
 			a *= g;
-			e = c * e - a + (c * f + d * e) + d * f;
+			e  = c * e - a + (c * f + d * e) + d * f;
 			e += b * g;
-			b = a + e;
+			b  = a + e;
 			e += a - b;
 			hi = b + h;
-			c = b - hi;
+			c  = b - hi;
 			lo = e + (b - (hi + c) + (h + c));
 			return;
 		}
@@ -1874,16 +1874,16 @@ public class DoubleDouble {
 			e = -e;
 			m = -m;
 		}
-		i = 1 / e;
-		l = 0x08000001 * e;
+		i  = 1 / e;
+		l  = 0x08000001 * e;
 		l += e - l;
-		d = e - l;
-		f = 0x08000001 * i;
+		d  = e - l;
+		f  = 0x08000001 * i;
 		f += i - f;
-		g = i - f;
-		h = e * i;
-		m = (1 - h - (l * f - h + (l * g + d * f) + d * g + m * i)) / e;
-		l = i + m;
+		g  = i - f;
+		h  = e * i;
+		m  = (1 - h - (l * f - h + (l * g + d * f) + d * g + m * i)) / e;
+		l  = i + m;
 		hi = l;
 		lo = m + (i - l);
 	}

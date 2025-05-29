@@ -47,9 +47,9 @@ public class IntTreeMap<V> {
 			throw new IllegalArgumentException("Empty or negative range specified: " + lowBound + ".." + highBound);
 		}
 
-		this.lowBound = lowBound;
-		this.highBound = highBound;
-		numBitsUsed = NumberUtilities.bitCount(highBound - lowBound + 1);
+		this.lowBound         = lowBound;
+		this.highBound        = highBound;
+		numBitsUsed           = NumberUtilities.bitCount(highBound - lowBound + 1);
 		this.treeWidthsInBits = treeWidthsInBits.clone();
 
 		int numBits = 0;
@@ -148,7 +148,7 @@ public class IntTreeMap<V> {
 			index = key >> shift & mask[i];
 
 			parent = node;
-			node = ((Object[])node)[index];
+			node   = ((Object[])node)[index];
 
 			// Allocate tree branches where necessary.
 			if (node == null && i < treeWidthsInBits.length - 1) {
@@ -157,7 +157,7 @@ public class IntTreeMap<V> {
 					return null;
 				}
 
-				node = new Object[mask[i + 1] + 1];
+				node                      = new Object[mask[i + 1] + 1];
 				((Object[])parent)[index] = node;
 			}
 		}

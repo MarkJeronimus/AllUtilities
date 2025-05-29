@@ -40,8 +40,8 @@ public class PerformanceTimer {
 	}
 
 	public void start() {
-		startTime = System.nanoTime();
-		lastTime = startTime;
+		startTime          = System.nanoTime();
+		lastTime           = startTime;
 		longestDescription = 0;
 	}
 
@@ -50,7 +50,7 @@ public class PerformanceTimer {
 		durations.add(time - lastTime);
 		descriptions.add(description);
 		longestDescription = Math.max(longestDescription, description.length());
-		lastTime = time;
+		lastTime           = time;
 	}
 
 	public void printResults() {

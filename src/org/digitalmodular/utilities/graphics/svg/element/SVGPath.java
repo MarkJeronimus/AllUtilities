@@ -124,12 +124,12 @@ public final class SVGPath extends SVGElement {
 			if (state.lastCommand != command) {
 				out.append(command);
 				state.lastCommand = command;
-				state.endsDigit = false;
+				state.endsDigit   = false;
 			}
 
 			if (state.lastCommandType != commandType) {
-				state.firstX = state.x;
-				state.firstY = state.y;
+				state.firstX          = state.x;
+				state.firstY          = state.y;
 				state.lastCommandType = commandType;
 			}
 		}
@@ -174,8 +174,9 @@ public final class SVGPath extends SVGElement {
 
 			state.firstX = x;
 			state.firstY = y;
-			state.x = x;
-			state.y = y;
+			state.x      = x;
+			state.y      = y;
+
 			state.lastCommandType = SVGPathLineTo.class; // Automatic switch
 		}
 	}
@@ -251,8 +252,8 @@ public final class SVGPath extends SVGElement {
 			this.c1y = requireNotDegenerate(c1y, "c1y");
 			this.c2x = requireNotDegenerate(c2x, "c2x");
 			this.x2y = requireNotDegenerate(x2y, "x2y");
-			this.x = requireNotDegenerate(x, "x");
-			this.y = requireNotDegenerate(y, "y");
+			this.x   = requireNotDegenerate(x, "x");
+			this.y   = requireNotDegenerate(y, "y");
 		}
 
 		@Override

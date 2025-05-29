@@ -31,7 +31,7 @@ public class Size2D {
 	private final int height;
 
 	public Size2D(int width, int height) {
-		this.width = width;
+		this.width  = width;
 		this.height = height;
 	}
 

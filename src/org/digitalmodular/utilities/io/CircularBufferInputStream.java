@@ -150,9 +150,9 @@ public class CircularBufferInputStream extends InputStream {
 
 	public void clear() {
 		synchronized (lock) {
-			readPointer = 0;
+			readPointer  = 0;
 			writePointer = 0;
-			size = 0;
+			size         = 0;
 		}
 	}
 
@@ -163,7 +163,7 @@ public class CircularBufferInputStream extends InputStream {
 			}
 
 			buffer[writePointer] = (byte)b;
-			writePointer = (writePointer + 1) % buffer.length;
+			writePointer         = (writePointer + 1) % buffer.length;
 			size += 1;
 
 			lock.notifyAll();
@@ -219,8 +219,8 @@ public class CircularBufferInputStream extends InputStream {
 		System.arraycopy(buffer, readPointer, newBuffer, 0, lenBeforeWrap);
 		System.arraycopy(buffer, 0, newBuffer, lenBeforeWrap, lenAfterWrap);
 
-		buffer = newBuffer;
-		readPointer = 0;
+		buffer       = newBuffer;
+		readPointer  = 0;
 		writePointer = size;
 	}
 

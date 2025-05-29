@@ -103,7 +103,7 @@ public class Vector3d implements Comparable<Vector3d> {
 	public void mulMatrix(Matrix4d matrix) {
 		double x = matrix.x0 * this.x + matrix.x1 * y + matrix.x2 * z + matrix.x3;
 		double y = matrix.y0 * this.x + matrix.y1 * this.y + matrix.y2 * z + matrix.y3;
-		z = matrix.z0 * this.x + matrix.z1 * this.y + matrix.z2 * z + matrix.z3;
+		z      = matrix.z0 * this.x + matrix.z1 * this.y + matrix.z2 * z + matrix.z3;
 		this.x = x;
 		this.y = y;
 	}

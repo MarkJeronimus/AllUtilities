@@ -28,7 +28,7 @@ public abstract class AbstractGlyph {
 	protected int height;
 
 	protected AbstractGlyph(int width, int height) {
-		this.width = width;
+		this.width  = width;
 		this.height = height;
 	}
 

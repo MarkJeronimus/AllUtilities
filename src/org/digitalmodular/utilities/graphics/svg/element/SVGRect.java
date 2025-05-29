@@ -97,12 +97,12 @@ public final class SVGRect extends SVGElement {
 	}
 
 	public void setSize(float width, float height) {
-		this.width = new SVGLength(width);
+		this.width  = new SVGLength(width);
 		this.height = new SVGLength(height);
 	}
 
 	public void setSize(SVGDistance width, SVGDistance height) {
-		this.width = requireNonNull(width, "width");
+		this.width  = requireNonNull(width, "width");
 		this.height = requireNonNull(height, "height");
 	}
 
@@ -124,12 +124,12 @@ public final class SVGRect extends SVGElement {
 
 	public void setCornerRadius(float rx) {
 		this.rx = new SVGLength(rx);
-		ry = null;
+		ry      = null;
 	}
 
 	public void setCornerRadius(SVGDistance rx) {
 		this.rx = requireNonNull(rx, "rx");
-		ry = null;
+		ry      = null;
 	}
 
 	public void setCornerRadii(float rx, float ry) {

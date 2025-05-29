@@ -49,7 +49,7 @@ public class LabeledGraph {
 			throw new IllegalArgumentException("numNodes < 2: " + numNodes);
 		}
 
-		this.numNodes = numNodes;
+		this.numNodes  = numNodes;
 		maxConnections = this.numNodes * (this.numNodes - 1) >> 1;
 
 		connections = new int[numNodes][numNodes];

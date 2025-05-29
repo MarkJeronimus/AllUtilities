@@ -48,15 +48,18 @@ public class ImageToYCbCrConverter extends ImageConverter {
 					row1 = image.matrix[1][y];
 					row2 = image.matrix[2][y];
 					for (x = image.border; x < endX; x++) {
-						r = row0[x];
-						g = row1[x];
-						b = row2[x];
-						row0[x] = +0.50000000000000000000f * r - 0.41868758915834522111f * g -
-						          0.081312410841654778888f * b;// pr
-						row1[x] = +0.29900000000000000000f * r + 0.58700000000000000000f * g +
-						          0.114000000000000000000f * b;// y
-						row2[x] = -0.16873589164785553047f * r - 0.33126410835214446952f * g +
-						          0.500000000000000000000f * b;// pb
+						r       = row0[x];
+						g       = row1[x];
+						b       = row2[x];
+						row0[x] = 0.50000000000000000000f * r -
+						          0.41868758915834522111f * g -
+						          0.081312410841654778888f * b; // pr
+						row1[x] = 0.29900000000000000000f * r +
+						          0.58700000000000000000f * g +
+						          0.114000000000000000000f * b; // y
+						row2[x] = -0.16873589164785553047f * r -
+						          0.33126410835214446952f * g +
+						          0.500000000000000000000f * b; // pb
 					}
 				}
 				break;
@@ -85,9 +88,9 @@ public class ImageToYCbCrConverter extends ImageConverter {
 					row1 = image.matrix[1][y];
 					row2 = image.matrix[2][y];
 					for (x = image.border; x < endX; x++) {
-						pr = row0[x];
-						py = row1[x];
-						pb = row2[x];
+						pr      = row0[x];
+						py      = row1[x];
+						pb      = row2[x];
 						row0[x] = py + 1.40200000000000000000f * pr;
 						row1[x] = py - 0.34413628620102214650f * pb - 0.71413628620102214645f * pr;
 						row2[x] = py + 1.77200000000000000000f * pb;

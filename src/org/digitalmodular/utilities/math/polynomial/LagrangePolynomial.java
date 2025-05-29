@@ -30,7 +30,7 @@ import org.digitalmodular.utilities.container.Vector2d;
 public class LagrangePolynomial extends PolynomialInterpolation {
 	@Override
 	public double[] makeCoefficients(Vector2d[] points) {
-		degree = points.length - 1;
+		degree       = points.length - 1;
 		coefficients = new double[points.length];
 		Arrays.fill(coefficients, 0);
 
@@ -48,14 +48,14 @@ public class LagrangePolynomial extends PolynomialInterpolation {
 
 				det *= (points[p].x - points[whichX].x);
 
-				c = new double[j + 2];
+				c    = new double[j + 2];
 				c[0] = 0;
 				for (int i = 1; i <= j; i++) {
 					c[i] = oldc[i - 1] + oldc[i] * points[whichX].x;
 				}
 				c[j + 1] = 1;
-				oldc = null;
-				oldc = c;
+				oldc     = null;
+				oldc     = c;
 
 				whichX++;
 			}

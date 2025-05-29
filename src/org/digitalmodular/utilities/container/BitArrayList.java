@@ -38,22 +38,22 @@ public class BitArrayList implements BitList {
 	private int    bitLength;
 
 	public BitArrayList() {
-		bytes = new byte[8];
+		bytes     = new byte[8];
 		bitLength = 0;
 	}
 
 	public BitArrayList(int initialCapacity) {
-		bytes = new byte[(initialCapacity + 7) / 8];
+		bytes     = new byte[(initialCapacity + 7) / 8];
 		bitLength = 0;
 	}
 
 	public BitArrayList(byte[] array) {
-		bytes = Arrays.copyOf(array, array.length);
+		bytes     = Arrays.copyOf(array, array.length);
 		bitLength = bytes.length * 8;
 	}
 
 	public BitArrayList(BitArrayList other) {
-		bytes = Arrays.copyOf(other.bytes, other.bytes.length);
+		bytes     = Arrays.copyOf(other.bytes, other.bytes.length);
 		bitLength = other.bitLength;
 	}
 

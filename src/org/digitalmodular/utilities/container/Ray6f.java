@@ -30,18 +30,18 @@ public class Ray6f {
 	private Vector3f directionSquared = null;
 
 	public Ray6f() {
-		origin = null;
+		origin    = null;
 		direction = null;
 	}
 
 	public Ray6f(Vector3f origin, Vector3f direction) {
-		this.origin = origin;
+		this.origin    = origin;
 		this.direction = direction;
 	}
 
 	public Ray6f(Ray6f other) {
-		origin = other.origin;
-		direction = other.direction;
+		origin           = other.origin;
+		direction        = other.direction;
 		directionSquared = other.directionSquared;
 	}
 
@@ -50,6 +50,7 @@ public class Ray6f {
 			directionSquared.set(direction);
 			directionSquared.sqr();
 		}
+
 		return directionSquared;
 	}
 

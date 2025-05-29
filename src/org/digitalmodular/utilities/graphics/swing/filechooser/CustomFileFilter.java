@@ -33,7 +33,7 @@ public class CustomFileFilter extends FileFilter implements java.io.FileFilter {
 
 	public CustomFileFilter(String description, String... extensions) {
 		this.description = description;
-		this.extensions = extensions.clone();
+		this.extensions  = extensions.clone();
 
 		for (int i = 0; i < extensions.length; i++) {
 			extensions[i] = extensions[i].toLowerCase();

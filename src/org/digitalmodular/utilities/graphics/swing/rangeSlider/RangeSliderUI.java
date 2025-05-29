@@ -169,8 +169,8 @@ public class RangeSliderUI extends BasicSliderUI {
 
 		horizontalLowerThumbIcon = makeIcon(header, hl);
 		horizontalUpperThumbIcon = makeIcon(header, hu);
-		verticalLowerThumbIcon = makeIcon(header, vl);
-		verticalUpperThumbIcon = makeIcon(header, vu);
+		verticalLowerThumbIcon   = makeIcon(header, vl);
+		verticalUpperThumbIcon   = makeIcon(header, vu);
 	}
 
 	private static Icon makeIcon(byte[] header, byte[] hl) {
@@ -518,7 +518,7 @@ public class RangeSliderUI extends BasicSliderUI {
 						break;
 				}
 				upperThumbSelected = false;
-				lowerDragging = true;
+				lowerDragging      = true;
 				return;
 			}
 			lowerDragging = false;
@@ -534,7 +534,7 @@ public class RangeSliderUI extends BasicSliderUI {
 						break;
 				}
 				upperThumbSelected = true;
-				upperDragging = true;
+				upperDragging      = true;
 				return;
 			}
 			upperDragging = false;

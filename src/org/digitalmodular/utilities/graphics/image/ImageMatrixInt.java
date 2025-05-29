@@ -520,7 +520,7 @@ public class ImageMatrixInt extends AbstractImageMatrix {
 		for (int z = 0; z < numComponents; z++) {
 			for (int y = border; y < endY; y++) {
 				rowImg = mask.matrix[z][y];
-				row = matrix[z][y];
+				row    = matrix[z][y];
 				for (x = border; x < endX; x++) {
 					row[x] = rowImg[x] == maskColor ? fgColor : bgColor;
 				}

@@ -59,7 +59,7 @@ public abstract class Gradient {
 	private final boolean      hasTransparency;
 
 	protected Gradient(ClampingMode clampingMode, boolean hasTransparency) {
-		this.clampingMode = requireNonNull(clampingMode, "clampingMode");
+		this.clampingMode    = requireNonNull(clampingMode, "clampingMode");
 		this.hasTransparency = hasTransparency;
 	}
 

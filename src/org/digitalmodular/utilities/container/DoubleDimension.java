@@ -38,7 +38,7 @@ public class DoubleDimension extends Dimension2D implements Serializable {
 	private double height;
 
 	public DoubleDimension(double width, double height) {
-		this.width = width;
+		this.width  = width;
 		this.height = height;
 	}
 
@@ -62,7 +62,7 @@ public class DoubleDimension extends Dimension2D implements Serializable {
 
 	@Override
 	public void setSize(double width, double height) {
-		this.width = width;
+		this.width  = width;
 		this.height = height;
 	}
 }

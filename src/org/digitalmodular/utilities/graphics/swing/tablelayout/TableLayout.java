@@ -87,7 +87,7 @@ public class TableLayout implements LayoutManager2 {
 		}
 
 		this.horizontalWeights = horizontalWeights.clone();
-		this.verticalWeights = verticalWeights == null ? DEFAULT_VERTICAL_WEIGHTS : verticalWeights.clone();
+		this.verticalWeights   = verticalWeights == null ? DEFAULT_VERTICAL_WEIGHTS : verticalWeights.clone();
 	}
 
 	@SuppressWarnings("NumberEquality")
@@ -257,10 +257,10 @@ public class TableLayout implements LayoutManager2 {
 
 	@Override
 	public void invalidateLayout(Container parent) {
-		preferredWidths = null;
+		preferredWidths  = null;
 		preferredHeights = null;
-		layoutWidths = null;
-		layoutHeights = null;
+		layoutWidths     = null;
+		layoutHeights    = null;
 	}
 
 	private void recalculatePreferredSizes(Component[] components) {
@@ -268,7 +268,7 @@ public class TableLayout implements LayoutManager2 {
 			Size[][] preferredSizes = PreferredSizeCalculator.calculatePreferredSizes(components,
 			                                                                          horizontalWeights,
 			                                                                          verticalWeights);
-			preferredWidths = preferredSizes[0];
+			preferredWidths  = preferredSizes[0];
 			preferredHeights = preferredSizes[1];
 		}
 	}
@@ -286,7 +286,7 @@ public class TableLayout implements LayoutManager2 {
 			LayoutSizeCalculator.debug = debug == GridBagConstraints.VERTICAL;
 			LayoutSizeCalculator.calculateLayoutSizes(layoutHeights, availableHeight);
 
-			lastWidth = availableWidth;
+			lastWidth  = availableWidth;
 			lastHeight = availableHeight;
 		}
 	}

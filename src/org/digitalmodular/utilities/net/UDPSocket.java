@@ -44,7 +44,7 @@ public class UDPSocket extends DatagramSocket {
 		super(localPort);
 
 		this.address = address;
-		this.port = port;
+		this.port    = port;
 
 		setSoTimeout(30000);
 	}

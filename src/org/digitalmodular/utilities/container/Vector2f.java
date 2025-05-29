@@ -194,7 +194,7 @@ public class Vector2f implements Comparable<Vector2f>, Serializable {
 	 */
 	public void mulSelf(Matrix3f matrix) {
 		float x = this.x * matrix.x0 + y * matrix.x1 + matrix.x2;
-		y = this.x * matrix.y0 + y * matrix.y1 + matrix.y2;
+		y      = this.x * matrix.y0 + y * matrix.y1 + matrix.y2;
 		this.x = x;
 	}
 
@@ -226,7 +226,7 @@ public class Vector2f implements Comparable<Vector2f>, Serializable {
 		float c = (float)Math.cos(theta);
 
 		float x = this.x * c - y * s;
-		y = this.x * s + y * c;
+		y      = this.x * s + y * c;
 		this.x = x;
 	}
 
@@ -288,7 +288,7 @@ public class Vector2f implements Comparable<Vector2f>, Serializable {
 	 */
 	public void polarToCartesianSelf() {
 		float x = this.x * (float)Math.cos(y);
-		y = this.x * (float)Math.sin(y);
+		y      = this.x * (float)Math.sin(y);
 		this.x = x;
 	}
 

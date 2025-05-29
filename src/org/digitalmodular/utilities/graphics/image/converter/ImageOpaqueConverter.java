@@ -117,7 +117,7 @@ public class ImageOpaqueConverter extends ImageConverter {
 		switch (inImage.numComponents) {
 			case 1:
 				for (int y = inImage.border; y < inImage.endY - 1; y++) {
-					rowIn0 = inImage.matrix[0][y];
+					rowIn0  = inImage.matrix[0][y];
 					rowOut0 = out.matrix[0][y];
 					for (x = inImage.border; x < endX; x++) {
 						rowOut0[x] = rowIn0[x];
@@ -126,8 +126,8 @@ public class ImageOpaqueConverter extends ImageConverter {
 				break;
 			case 2:
 				for (int y = inImage.border; y < inImage.endY - 1; y++) {
-					rowIn0 = inImage.matrix[0][y];
-					rowIn1 = inImage.matrix[1][y];
+					rowIn0  = inImage.matrix[0][y];
+					rowIn1  = inImage.matrix[1][y];
 					rowOut0 = out.matrix[0][y];
 					for (x = inImage.border; x < endX; x++) {
 						rowOut0[x] = rowIn0[x] * rowIn1[x];
@@ -136,9 +136,9 @@ public class ImageOpaqueConverter extends ImageConverter {
 				break;
 			case 3:
 				for (int y = inImage.border; y < inImage.endY - 1; y++) {
-					rowIn0 = inImage.matrix[0][y];
-					rowIn1 = inImage.matrix[1][y];
-					rowIn2 = inImage.matrix[2][y];
+					rowIn0  = inImage.matrix[0][y];
+					rowIn1  = inImage.matrix[1][y];
+					rowIn2  = inImage.matrix[2][y];
 					rowOut0 = out.matrix[0][y];
 					rowOut1 = out.matrix[1][y];
 					rowOut2 = out.matrix[2][y];
@@ -151,10 +151,10 @@ public class ImageOpaqueConverter extends ImageConverter {
 				break;
 			case 4:
 				for (int y = inImage.border; y < inImage.endY - 1; y++) {
-					rowIn0 = inImage.matrix[0][y];
-					rowIn1 = inImage.matrix[1][y];
-					rowIn2 = inImage.matrix[2][y];
-					rowIn3 = inImage.matrix[3][y];
+					rowIn0  = inImage.matrix[0][y];
+					rowIn1  = inImage.matrix[1][y];
+					rowIn2  = inImage.matrix[2][y];
+					rowIn3  = inImage.matrix[3][y];
 					rowOut0 = out.matrix[0][y];
 					rowOut1 = out.matrix[1][y];
 					rowOut2 = out.matrix[2][y];

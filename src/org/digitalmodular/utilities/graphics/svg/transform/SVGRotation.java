@@ -35,13 +35,13 @@ public final class SVGRotation implements SVGTransform {
 	private final float rotationOriginY;
 
 	public SVGRotation(float rotation) {
-		this.rotation = requireNotDegenerate(rotation, "rotation");
+		this.rotation   = requireNotDegenerate(rotation, "rotation");
 		rotationOriginX = Float.NaN;
 		rotationOriginY = Float.NaN;
 	}
 
 	public SVGRotation(float rotation, float rotationOriginX, float rotationOriginY) {
-		this.rotation = requireNotDegenerate(rotation, "rotation");
+		this.rotation        = requireNotDegenerate(rotation, "rotation");
 		this.rotationOriginX = requireNotDegenerate(rotationOriginX, "rotationOriginX");
 		this.rotationOriginY = requireNotDegenerate(rotationOriginY, "rotationOriginY");
 	}

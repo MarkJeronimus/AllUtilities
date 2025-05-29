@@ -96,7 +96,7 @@ public class TableLayout implements LayoutManager, Serializable {
 			throw new IllegalArgumentException("No columns specified");
 		}
 		this.columns = columns;
-		numColumns = this.columns.length;
+		numColumns   = this.columns.length;
 
 		int widestColumnSize = -1;
 		widestColumn = 0;
@@ -108,7 +108,7 @@ public class TableLayout implements LayoutManager, Serializable {
 
 			if (w > 0 && widestColumnSize < w) {
 				widestColumnSize = w;
-				widestColumn = i;
+				widestColumn     = i;
 			}
 		}
 

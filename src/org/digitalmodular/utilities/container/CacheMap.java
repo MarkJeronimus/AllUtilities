@@ -54,7 +54,7 @@ public class CacheMap<K, V> implements Map<K, V> {
 
 	public CacheMap(int capacity) {
 		this.capacity = requireAtLeast(1, capacity, "capacity");
-		data = new LinkedHashMap<>(capacity);
+		data          = new LinkedHashMap<>(capacity);
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class CacheMap<K, V> implements Map<K, V> {
 		ensureEmptySpace(key);
 
 		V previousValue = data.put(key, value);
-		headKey = key;
+		headKey   = key;
 		headValue = value;
 
 		fireElementUpdated(key, value);
@@ -111,10 +111,10 @@ public class CacheMap<K, V> implements Map<K, V> {
 			}
 
 			if (headEntry == null) {
-				headKey = null;
+				headKey   = null;
 				headValue = null;
 			} else {
-				headKey = headEntry.getKey();
+				headKey   = headEntry.getKey();
 				headValue = headEntry.getValue();
 			}
 		}
@@ -222,7 +222,7 @@ public class CacheMap<K, V> implements Map<K, V> {
 		iterator.remove();
 
 		if (data.isEmpty()) {
-			headKey = null;
+			headKey   = null;
 			headValue = null;
 		}
 

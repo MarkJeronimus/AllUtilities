@@ -38,7 +38,7 @@ public class Range2i {
 	 */
 	public Range2i() {
 		begin = 0;
-		end = 0;
+		end   = 0;
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class Range2i {
 	 */
 	public Range2i(int begin, int end) throws IllegalArgumentException {
 		this.begin = begin;
-		this.end = end;
+		this.end   = end;
 		if (normalize()) {
 			throw new IllegalArgumentException("Begin > End not possible in constructor.");
 		}
@@ -65,7 +65,7 @@ public class Range2i {
 	 */
 	public boolean set(int begin, int end) {
 		this.begin = begin;
-		this.end = end;
+		this.end   = end;
 
 		return normalize();
 	}
@@ -75,7 +75,7 @@ public class Range2i {
 	 */
 	public void set(Range2i other) {
 		begin = other.begin;
-		end = other.end;
+		end   = other.end;
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class Range2i {
 	 */
 	public Range2i(Range2i other) {
 		begin = other.begin;
-		end = other.end;
+		end   = other.end;
 	}
 
 	/**
@@ -200,7 +200,7 @@ public class Range2i {
 		}
 
 		begin = Math.min(begin, other.begin);
-		end = Math.max(end, other.end);
+		end   = Math.max(end, other.end);
 	}
 
 	/**
@@ -216,7 +216,7 @@ public class Range2i {
 		}
 
 		begin = Math.max(begin, other.begin);
-		end = Math.min(end, other.end);
+		end   = Math.min(end, other.end);
 
 		end = Math.max(end, begin);
 	}
@@ -264,7 +264,7 @@ public class Range2i {
 		if (begin > end) {
 			int temp = begin;
 			begin = end;
-			end = temp;
+			end   = temp;
 			return true;
 		}
 
