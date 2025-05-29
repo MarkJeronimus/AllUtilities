@@ -25,7 +25,6 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import org.digitalmodular.utilities.annotation.UtilityClass;
@@ -36,7 +35,7 @@ import static org.digitalmodular.utilities.NumberUtilities.isDegenerate;
  * @author Mark Jeronimus
  */
 // Created 2016-12-21
-@SuppressWarnings("OverloadedMethodsWithSameNumberOfParameters")
+@SuppressWarnings({"OverloadedMethodsWithSameNumberOfParameters", "OverlyComplexClass", "UnusedReturnValue"})
 @UtilityClass
 public final class ValidatorUtilities {
 	public static void assertThat(boolean condition, Supplier<String> message) {
@@ -77,7 +76,7 @@ public final class ValidatorUtilities {
 		return actual;
 	}
 
-	public static <T> @NotNull T requireNonNull(@Nullable T actual, String varName) {
+	public static <T> T requireNonNull(@Nullable T actual, String varName) {
 		if (actual == null) {
 			throw new NullPointerException('\'' + varName + "' can't be null");
 		}
