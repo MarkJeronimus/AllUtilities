@@ -1,0 +1,93 @@
+/*
+ * This file is part of AllUtilities.
+ *
+ * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package nl.airsupplies.utilities.container;
+
+/**
+ * Implements an unsigned byte, including proper comparison methods.
+ *
+ * @author Mark Jeronimus
+ */
+// Created 2013-11-27
+public class UnsignedByte extends Number implements Comparable<UnsignedByte> {
+	public static final byte MIN_VALUE = (byte)0x00;
+	public static final byte MAX_VALUE = (byte)0xFF;
+
+	private final byte value;
+
+	public UnsignedByte(byte value) {
+		this.value = value;
+	}
+
+	public static UnsignedByte valueOf(byte value) {
+		return new UnsignedByte(value);
+	}
+
+	public static UnsignedByte valueOf(int value) {
+		return new UnsignedByte((byte)value);
+	}
+
+	@Override
+	public byte byteValue() {
+		return value;
+	}
+
+	@Override
+	public short shortValue() {
+		return (short)(value & 0xFF);
+	}
+
+	@Override
+	public int intValue() {
+		return value & 0xFF;
+	}
+
+	@Override
+	public long longValue() {
+		return value & 0xFFL;
+	}
+
+	@Override
+	public float floatValue() {
+		return value & 0xFFL;
+	}
+
+	@Override
+	public double doubleValue() {
+		return value & 0xFFL;
+	}
+
+	@Override
+	public int compareTo(UnsignedByte o) {
+		return (value & 0xFF) - (o.value & 0xFF);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof UnsignedByte && value == ((UnsignedByte)obj).value;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 0x811C9DC5;
+		hash ^= Byte.hashCode(value);
+		hash *= 0x01000193;
+		return hash;
+	}
+}
