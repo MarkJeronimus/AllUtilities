@@ -44,6 +44,38 @@ public final class IntUtilities {
 		return max;
 	}
 
+	public static int sum(int[] array) {
+		if (array.length == 1) {
+			return array[0];
+		} else if (array.length == 2) {
+			return array[0] + array[1];
+		}
+
+		int sum = 0;
+
+		for (int i : array) {
+			sum += i;
+		}
+
+		return sum;
+	}
+
+	public static long longSum(int[] array) {
+		if (array.length == 1) {
+			return array[0];
+		} else if (array.length == 2) {
+			return array[0] + array[1];
+		}
+
+		long sum = 0;
+
+		for (int i : array) {
+			sum += i;
+		}
+
+		return sum;
+	}
+
 	public static int average(int[] array) {
 		if (array.length == 1) {
 			return array[0];
@@ -78,5 +110,37 @@ public final class IntUtilities {
 		}
 
 		return (int)((sum + (array.length >> 1)) / array.length);
+	}
+
+	public static int product(int[] array) {
+		if (array.length == 1) {
+			return array[0];
+		} else if (array.length == 2) {
+			return array[0] * array[1];
+		}
+
+		int product = 1;
+
+		for (int i : array) {
+			product *= i;
+		}
+
+		return product;
+	}
+
+	public static long longProduct(int[] array) {
+		if (array.length == 1) {
+			return array[0];
+		} else if (array.length == 2) {
+			return (long)array[0] * array[1];
+		}
+
+		long product = 1;
+
+		for (int i : array) {
+			product *= i;
+		}
+
+		return product;
 	}
 }

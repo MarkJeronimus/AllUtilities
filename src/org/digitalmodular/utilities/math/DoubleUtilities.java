@@ -7,8 +7,8 @@ import org.digitalmodular.utilities.annotation.UtilityClass;
  */
 // Created 2024-06-04
 @UtilityClass
-public final class LongUtilities {
-	public static long min(long[] array) {
+public final class DoubleUtilities {
+	public static double min(double[] array) {
 		if (array.length == 1) {
 			return array[0];
 		} else if (array.length == 2) {
@@ -17,16 +17,15 @@ public final class LongUtilities {
 			throw new IllegalArgumentException("Can't calculate the min of an empty array");
 		}
 
-		long min = Integer.MAX_VALUE;
-
-		for (long i : array) {
+		double min = Integer.MAX_VALUE;
+		for (double i : array) {
 			min = Math.min(min, i);
 		}
 
 		return min;
 	}
 
-	public static long max(long[] array) {
+	public static double max(double[] array) {
 		if (array.length == 1) {
 			return array[0];
 		} else if (array.length == 2) {
@@ -35,59 +34,55 @@ public final class LongUtilities {
 			throw new IllegalArgumentException("Can't calculate the max of an empty array");
 		}
 
-		long max = Integer.MIN_VALUE;
-
-		for (long i : array) {
+		double max = Integer.MIN_VALUE;
+		for (double i : array) {
 			max = Math.max(max, i);
 		}
 
 		return max;
 	}
 
-	public static long sum(long[] array) {
+	public static double sum(double[] array) {
 		if (array.length == 1) {
 			return array[0];
 		} else if (array.length == 2) {
 			return array[0] + array[1];
 		}
 
-		long sum = 0;
-
-		for (long i : array) {
+		double sum = 0.0;
+		for (double i : array) {
 			sum += i;
 		}
 
 		return sum;
 	}
 
-	public static long average(long[] array) {
+	public static double average(double[] array) {
 		if (array.length == 1) {
 			return array[0];
 		} else if (array.length == 2) {
-			return (array[0] + array[1]) >> 1;
+			return (array[0] + array[1]) / 2.0f;
 		} else if (array.length == 0) {
 			throw new IllegalArgumentException("Can't calculate the average of an empty array");
 		}
 
-		long sum = 0;
-
-		for (long i : array) {
+		double sum = 0.0;
+		for (double i : array) {
 			sum += i;
 		}
 
-		return (sum + (array.length >> 1)) / array.length;
+		return sum / array.length;
 	}
 
-	public static long product(long[] array) {
+	public static double product(double[] array) {
 		if (array.length == 1) {
 			return array[0];
 		} else if (array.length == 2) {
 			return array[0] * array[1];
 		}
 
-		long product = 1;
-
-		for (long i : array) {
+		double product = 1.0;
+		for (double i : array) {
 			product *= i;
 		}
 

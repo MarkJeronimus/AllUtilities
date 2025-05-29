@@ -44,6 +44,38 @@ public final class FloatUtilities {
 		return max;
 	}
 
+	public static float sum(float[] array) {
+		if (array.length == 1) {
+			return array[0];
+		} else if (array.length == 2) {
+			return array[0] + array[1];
+		}
+
+		float sum = 0.0f;
+
+		for (float d : array) {
+			sum += d;
+		}
+
+		return sum;
+	}
+
+	public static double doubleSum(float[] array) {
+		if (array.length == 1) {
+			return array[0];
+		} else if (array.length == 2) {
+			return array[0] + array[1];
+		}
+
+		double sum = 0.0;
+
+		for (float d : array) {
+			sum += d;
+		}
+
+		return sum;
+	}
+
 	public static float average(float[] array) {
 		if (array.length == 1) {
 			return array[0];
@@ -60,5 +92,55 @@ public final class FloatUtilities {
 		}
 
 		return sum / (float)array.length;
+	}
+
+	public static double doubleAverage(float[] array) {
+		if (array.length == 1) {
+			return array[0];
+		} else if (array.length == 2) {
+			return (array[0] + array[1]) * 0.5f;
+		} else if (array.length == 0) {
+			return Float.NaN;
+		}
+
+		double sum = 0.0;
+
+		for (float d : array) {
+			sum += d;
+		}
+
+		return sum / array.length;
+	}
+
+	public static float product(float[] array) {
+		if (array.length == 1) {
+			return array[0];
+		} else if (array.length == 2) {
+			return array[0] * array[1];
+		}
+
+		float product = 1.0f;
+
+		for (float d : array) {
+			product *= d;
+		}
+
+		return product;
+	}
+
+	public static double doubleProduct(float[] array) {
+		if (array.length == 1) {
+			return array[0];
+		} else if (array.length == 2) {
+			return array[0] * array[1];
+		}
+
+		double product = 1.0;
+
+		for (float d : array) {
+			product *= d;
+		}
+
+		return product;
 	}
 }
