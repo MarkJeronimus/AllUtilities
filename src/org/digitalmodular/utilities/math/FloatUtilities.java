@@ -1,4 +1,4 @@
-package org.digitalmodular.utilities;
+package org.digitalmodular.utilities.math;
 
 import org.digitalmodular.utilities.annotation.UtilityClass;
 
