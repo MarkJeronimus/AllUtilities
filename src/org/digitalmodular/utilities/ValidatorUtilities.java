@@ -25,13 +25,12 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import org.digitalmodular.utilities.annotation.UtilityClass;
 import static org.digitalmodular.utilities.ArrayValidatorUtilities.requireArrayLengthAtLeast;
-import static org.digitalmodular.utilities.NumberUtilities.*;
+import static org.digitalmodular.utilities.NumberUtilities.isDegenerate;
 
 /**
  * @author Mark Jeronimus
@@ -88,7 +87,7 @@ public final class ValidatorUtilities {
 
 	public static float assertNotDegenerate(float actual, String varName) {
 		if (isDegenerate(actual)) {
-			throw new AssertionError('\''+varName + "' is degenerate: " + actual);
+			throw new AssertionError('\'' + varName + "' is degenerate: " + actual);
 		}
 
 		return actual;
@@ -96,7 +95,7 @@ public final class ValidatorUtilities {
 
 	public static double assertNotDegenerate(double actual, String varName) {
 		if (isDegenerate(actual)) {
-			throw new AssertionError('\''+varName + "' is degenerate: " + actual);
+			throw new AssertionError('\'' + varName + "' is degenerate: " + actual);
 		}
 
 		return actual;
@@ -104,7 +103,7 @@ public final class ValidatorUtilities {
 
 	public static float requireNotDegenerate(float actual, String varName) {
 		if (isDegenerate(actual)) {
-			throw new IllegalArgumentException('\''+varName + "' is degenerate: " + actual);
+			throw new IllegalArgumentException('\'' + varName + "' is degenerate: " + actual);
 		}
 
 		return actual;
@@ -112,7 +111,7 @@ public final class ValidatorUtilities {
 
 	public static double requireNotDegenerate(double actual, String varName) {
 		if (isDegenerate(actual)) {
-			throw new IllegalArgumentException('\''+varName + "' is degenerate: " + actual);
+			throw new IllegalArgumentException('\'' + varName + "' is degenerate: " + actual);
 		}
 
 		return actual;
@@ -767,7 +766,7 @@ public final class ValidatorUtilities {
 		requireNonNull(actual, varName);
 
 		if (isDegenerate(actual)) {
-			throw new IllegalArgumentException('\''+varName + "' is degenerate: " + actual);
+			throw new IllegalArgumentException('\'' + varName + "' is degenerate: " + actual);
 		}
 
 		return actual;

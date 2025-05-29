@@ -118,22 +118,6 @@ public class Vector3d implements Comparable<Vector3d> {
 	}
 
 	/**
-	 * // * Returns a Vector3d multiplied by a Matrix4d // * // * @param matrix // * @return //
-	 */
-	// public Vector3d mul(Matrix4d matrix)
-	// {
-	// double w = this.x * matrix.matrix[3] + this.y * matrix.matrix[7] + this.z
-	// * matrix.matrix[11] + matrix.matrix[15];
-	// return new Vector3d( //
-	// this.x * matrix.matrix[0] + this.y * matrix.matrix[4] + this.z *
-	// matrix.matrix[8] + matrix.matrix[12], //
-	// this.x * matrix.matrix[1] + this.y * matrix.matrix[5] + this.z *
-	// matrix.matrix[9] + matrix.matrix[13], //
-	// this.x * matrix.matrix[2] + this.y * matrix.matrix[6] + this.z *
-	// matrix.matrix[10] + matrix.matrix[14]).mul(1 / w);
-	// }
-
-	/**
 	 * Returns the addition of this Vector3d and a scaled Vector3d
 	 */
 	public Vector3d addScaled(Vector3d Vector3d, double scale) {

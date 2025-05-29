@@ -131,13 +131,13 @@ public class NetRequest {
 				} else if (value instanceof Short) {
 					out.append(String.valueOf(((Short)value).shortValue()));
 				} else if (value instanceof Integer) {
-					out.append(String.valueOf(((Integer)value).intValue()));
+					out.append(((Integer)value).intValue());
 				} else if (value instanceof Long) {
-					out.append(String.valueOf(((Long)value).longValue()));
+					out.append(((Long)value).longValue());
 				} else if (value instanceof Float) {
-					out.append(String.valueOf(((Integer)value).floatValue()));
+					out.append(((Integer)value).floatValue());
 				} else if (value instanceof Double) {
-					out.append(String.valueOf(((Integer)value).doubleValue()));
+					out.append(((Integer)value).doubleValue());
 				} else {
 					out.append(value);
 				}

@@ -237,14 +237,14 @@ public class ImageConvolutionFilter extends ImageFilter {
 					kernel1 = kernel[1];
 					kernel2 = kernel[2];
 					for (x = in.border; x < endX; x++) {
-						rowOut[x] = row0[x - 1] * kernel0[0] + //
-						            row0[x] * kernel0[1] + //
-						            row0[x + 1] * kernel0[2] + //
-						            row1[x - 1] * kernel1[0] + //
-						            row1[x] * kernel1[1] + //
-						            row1[x + 1] * kernel1[2] + //
-						            row2[x - 1] * kernel2[0] + //
-						            row2[x] * kernel2[1] + //
+						rowOut[x] = row0[x - 1] * kernel0[0] +
+						            row0[x] * kernel0[1] +
+						            row0[x + 1] * kernel0[2] +
+						            row1[x - 1] * kernel1[0] +
+						            row1[x] * kernel1[1] +
+						            row1[x + 1] * kernel1[2] +
+						            row2[x - 1] * kernel2[0] +
+						            row2[x] * kernel2[1] +
 						            row2[x + 1] * kernel2[2];
 					}
 				}
@@ -287,30 +287,30 @@ public class ImageConvolutionFilter extends ImageFilter {
 					kernel3 = kernel[3];
 					kernel4 = kernel[4];
 					for (x = in.border; x < endX; x++) {
-						row[x] = row0[x - 2] * kernel0[0] + //
-						         row0[x - 1] * kernel0[1] + //
-						         row0[x] * kernel0[2] + //
-						         row0[x + 1] * kernel0[3] + //
-						         row0[x + 2] * kernel0[4] + //
-						         row1[x - 2] * kernel1[0] + //
-						         row1[x - 1] * kernel1[1] + //
-						         row1[x] * kernel1[2] + //
-						         row1[x + 1] * kernel1[3] + //
-						         row1[x + 2] * kernel1[4] + //
-						         row2[x - 2] * kernel2[0] + //
-						         row2[x - 1] * kernel2[1] + //
-						         row2[x] * kernel2[2] + //
-						         row2[x + 1] * kernel2[3] + //
-						         row2[x + 2] * kernel2[4] + //
-						         row3[x - 2] * kernel3[0] + //
-						         row3[x - 1] * kernel3[1] + //
-						         row3[x] * kernel3[2] + //
-						         row3[x + 1] * kernel3[3] + //
-						         row3[x + 2] * kernel3[4] + //
-						         row4[x - 2] * kernel4[0] + //
-						         row4[x - 1] * kernel4[1] + //
-						         row4[x] * kernel4[2] + //
-						         row4[x + 1] * kernel4[3] + //
+						row[x] = row0[x - 2] * kernel0[0] +
+						         row0[x - 1] * kernel0[1] +
+						         row0[x] * kernel0[2] +
+						         row0[x + 1] * kernel0[3] +
+						         row0[x + 2] * kernel0[4] +
+						         row1[x - 2] * kernel1[0] +
+						         row1[x - 1] * kernel1[1] +
+						         row1[x] * kernel1[2] +
+						         row1[x + 1] * kernel1[3] +
+						         row1[x + 2] * kernel1[4] +
+						         row2[x - 2] * kernel2[0] +
+						         row2[x - 1] * kernel2[1] +
+						         row2[x] * kernel2[2] +
+						         row2[x + 1] * kernel2[3] +
+						         row2[x + 2] * kernel2[4] +
+						         row3[x - 2] * kernel3[0] +
+						         row3[x - 1] * kernel3[1] +
+						         row3[x] * kernel3[2] +
+						         row3[x + 1] * kernel3[3] +
+						         row3[x + 2] * kernel3[4] +
+						         row4[x - 2] * kernel4[0] +
+						         row4[x - 1] * kernel4[1] +
+						         row4[x] * kernel4[2] +
+						         row4[x + 1] * kernel4[3] +
 						         row4[x + 2] * kernel4[4];
 					}
 				}

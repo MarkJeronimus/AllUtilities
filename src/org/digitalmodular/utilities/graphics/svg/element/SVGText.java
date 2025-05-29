@@ -20,8 +20,6 @@
 package org.digitalmodular.utilities.graphics.svg.element;
 
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 import org.digitalmodular.utilities.graphics.svg.core.SVGDistance;
 import org.digitalmodular.utilities.graphics.svg.core.SVGElement;

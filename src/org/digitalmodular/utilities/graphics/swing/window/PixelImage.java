@@ -27,8 +27,6 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.util.Arrays;
 
-import org.digitalmodular.utilities.graphics.GraphicsUtilities;
-
 /**
  * An image to draw both vector graphics and pixel graphics.
  *

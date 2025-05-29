@@ -44,8 +44,9 @@ public class Matrix3d {
 	/**
 	 * Create a defined Matrix3d
 	 */
-	public Matrix3d(double x0, double x1, double x2, double y0, double y1, double y2, double z0, double z1, double
-			z2) {
+	public Matrix3d(double x0, double x1, double x2,
+	                double y0, double y1, double y2,
+	                double z0, double z1, double z2) {
 		this.x0 = x0;
 		this.x1 = x1;
 		this.x2 = x2;
@@ -61,10 +62,10 @@ public class Matrix3d {
 	 * Returns this Matrix3d multiplied with a vector
 	 */
 	public Vector3d multiply(Vector3d vector) {
-		return new Vector3d( //
-		                     vector.x * x0 + vector.y * x1 + vector.z * x2, //
-		                     vector.x * y0 + vector.y * y1 + vector.z * y2, //
-		                     vector.x * z0 + vector.y * z1 + vector.z * z2);
+		return new Vector3d(
+				vector.x * x0 + vector.y * x1 + vector.z * x2,
+				vector.x * y0 + vector.y * y1 + vector.z * y2,
+				vector.x * z0 + vector.y * z1 + vector.z * z2);
 	}
 
 	/**
@@ -79,11 +80,9 @@ public class Matrix3d {
 
 		double d = x0 * x0d + y0 * x1d + z0 * x2d;
 
-		Matrix3d n = new Matrix3d(x0d / d, x1d / d, x2d / d, //
+		Matrix3d n = new Matrix3d(x0d / d, x1d / d, x2d / d,
 		                          (y2 * z0 - y0 * z2) / d, (z2 * x0 - z0 * x2) / d, (x2 * y0 - x0 * y2) / d,
-		                          (y0 * z1 - y1 * z0) / d, (z0 * x1 - z1
-		                                                              * x0)
-		                                                   / d, (x0 * y1 - x1 * y0) / d);
+		                          (y0 * z1 - y1 * z0) / d, (z0 * x1 - z1 * x0) / d, (x0 * y1 - x1 * y0) / d);
 
 		return n;
 	}
@@ -93,10 +92,9 @@ public class Matrix3d {
 		double s = Math.sin(rotx);
 
 		// TODO Make inline
-		Matrix3d mul = new Matrix3d( //
-		                             1, 0, 0, //
-		                             0, c, -s, //
-		                             0, s, c);
+		Matrix3d mul = new Matrix3d(1, 0, 0,
+		                            0, c, -s,
+		                            0, s, c);
 
 		return mul.multiply(this);
 	}
@@ -106,10 +104,9 @@ public class Matrix3d {
 		double s = Math.sin(roty);
 
 		// TODO Make inline
-		Matrix3d mul = new Matrix3d( //
-		                             c, 0, s, //
-		                             0, 1, 0, //
-		                             -s, 0, c);
+		Matrix3d mul = new Matrix3d(c, 0, s,
+		                            0, 1, 0,
+		                            -s, 0, c);
 
 		return mul.multiply(this);
 	}
@@ -118,58 +115,50 @@ public class Matrix3d {
 		double c = Math.cos(rotz);
 		double s = Math.sin(rotz);
 
-		Matrix3d mul = new Matrix3d( //
-		                             c, -s, 0, //
-		                             s, c, 0, //
-		                             0, 0, 1);
+		Matrix3d mul = new Matrix3d(c, -s, 0,
+		                            s, c, 0,
+		                            0, 0, 1);
 
 		return mul.multiply(this);
 	}
 
 	public Matrix3d flipX() {
-		return new Matrix3d(-x0, -x1, -x2, //
-		                    y0, y1, y2, //
+		return new Matrix3d(-x0, -x1, -x2,
+		                    y0, y1, y2,
 		                    z0, z1, z2);
 	}
 
 	public Matrix3d flipY() {
-		return new Matrix3d(x0, x1, x2, //
-		                    -y0, -y1, -y2, //
+		return new Matrix3d(x0, x1, x2,
+		                    -y0, -y1, -y2,
 		                    z0, z1, z2);
 	}
 
 	public Matrix3d flipZ() {
-		return new Matrix3d(x0, x1, x2, //
-		                    y0, y1, y2, //
+		return new Matrix3d(x0, x1, x2,
+		                    y0, y1, y2,
 		                    -z0, -z1, -z2);
 	}
 
 	private Matrix3d multiply(Matrix3d m) {
-		return new Matrix3d( //
-		                     m.x0 * x0 + m.x1 * y0 + m.x2 * z0, //
-		                     m.x0 * x1 + m.x1 * y1 + m.x2 * z1, //
-		                     m.x0 * x2 + m.x1 * y2 + m.x2 * z2, //
+		return new Matrix3d(m.x0 * x0 + m.x1 * y0 + m.x2 * z0,
+		                    m.x0 * x1 + m.x1 * y1 + m.x2 * z1,
+		                    m.x0 * x2 + m.x1 * y2 + m.x2 * z2,
 
-		                     m.y0 * x0 + m.y1 * y0 + m.y2 * z0, //
-		                     m.y0 * x1 + m.y1 * y1 + m.y2 * z1, //
-		                     m.y0 * x2 + m.y1 * y2 + m.y2 * z2, //
+		                    m.y0 * x0 + m.y1 * y0 + m.y2 * z0,
+		                    m.y0 * x1 + m.y1 * y1 + m.y2 * z1,
+		                    m.y0 * x2 + m.y1 * y2 + m.y2 * z2,
 
-		                     m.z0 * x0 + m.z1 * y0 + m.z2 * z0, //
-		                     m.z0 * x1 + m.z1 * y1 + m.z2 * z1, //
-		                     m.z0 * x2 + m.z1 * y2 + m.z2 * z2);
+		                    m.z0 * x0 + m.z1 * y0 + m.z2 * z0,
+		                    m.z0 * x1 + m.z1 * y1 + m.z2 * z1,
+		                    m.z0 * x2 + m.z1 * y2 + m.z2 * z2);
 	}
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "[\n[" + //
-		       x0 + '\t' + //
-		       x1 + '\t' + //
-		       x2 + "]\n[" + //
-		       y0 + '\t' + //
-		       y1 + '\t' + //
-		       y2 + "]\n[" + //
-		       z0 + '\t' + //
-		       z1 + '\t' + //
-		       z2 + "]]\n";
+		return getClass().getSimpleName() + "[\n[" +
+		       x0 + '\t' + x1 + '\t' + x2 + "]\n[" +
+		       y0 + '\t' + y1 + '\t' + y2 + "]\n[" +
+		       z0 + '\t' + z1 + '\t' + z2 + "]]\n";
 	}
 }

@@ -733,7 +733,7 @@ public final class ComplexMath implements Serializable {
 	}
 
 	/** fromPolar = r*cis(theta) = r*e^(theta*i) */
-	public static Complex2d fromPolar(double r,double theta) {
+	public static Complex2d fromPolar(double r, double theta) {
 		return new Complex2d(r * Math.cos(theta),
 		                     r * Math.sin(theta));
 	}

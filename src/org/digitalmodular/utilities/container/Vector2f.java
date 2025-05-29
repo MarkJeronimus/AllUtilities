@@ -185,9 +185,8 @@ public class Vector2f implements Comparable<Vector2f>, Serializable {
 	 * Returns a matrix multiplied by this vector
 	 */
 	public Vector2f mul(Matrix3f matrix) {
-		return new Vector2f( //
-		                     x * matrix.x0 + y * matrix.x1 + matrix.x2, //
-		                     x * matrix.y0 + y * matrix.y1 + matrix.y2);
+		return new Vector2f(x * matrix.x0 + y * matrix.x1 + matrix.x2,
+		                    x * matrix.y0 + y * matrix.y1 + matrix.y2);
 	}
 
 	/**
@@ -304,8 +303,7 @@ public class Vector2f implements Comparable<Vector2f>, Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Vector2f) {
-			Vector2f v = (Vector2f)obj;
+		if (obj instanceof Vector2f v) {
 			return x == v.x && y == v.y;
 		}
 		return super.equals(obj);

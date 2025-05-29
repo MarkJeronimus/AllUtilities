@@ -18,9 +18,11 @@ public final class FloatUtilities {
 		}
 
 		float min = Integer.MAX_VALUE;
+
 		for (float i : array) {
 			min = Math.min(min, i);
 		}
+
 		return min;
 	}
 
@@ -34,9 +36,11 @@ public final class FloatUtilities {
 		}
 
 		float max = Integer.MIN_VALUE;
+
 		for (float i : array) {
 			max = Math.max(max, i);
 		}
+
 		return max;
 	}
 
@@ -50,9 +54,11 @@ public final class FloatUtilities {
 		}
 
 		int sum = Integer.MAX_VALUE;
+
 		for (float d : array) {
 			sum += d;
 		}
+
 		return sum / (float)array.length;
 	}
 }

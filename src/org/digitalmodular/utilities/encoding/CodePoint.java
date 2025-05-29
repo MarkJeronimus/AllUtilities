@@ -68,34 +68,24 @@ public final class CodePoint {
 	public static final  UnicodeBlock              ARMENIAN                                = new UnicodeBlock(
 			"Armenian", 0x0530, 0x0590,
 			86, "1.0.0");
-	public static final  UnicodeBlock              HEBREW                                  = new UnicodeBlock("Hebrew",
-	                                                                                                          0x0590,
-	                                                                                                          0x0600,
-	                                                                                                          87,
-	                                                                                                          "1.0.0");
-	public static final  UnicodeBlock              ARABIC                                  = new UnicodeBlock("Arabic",
-	                                                                                                          0x0600,
-	                                                                                                          0x0700,
-	                                                                                                          235,
-	                                                                                                          "1.0.0");
-	public static final  UnicodeBlock              SYRIAC                                  = new UnicodeBlock("Syriac",
-	                                                                                                          0x0700,
-	                                                                                                          0x0750,
-	                                                                                                          77,
-	                                                                                                          "3.0");
+	public static final  UnicodeBlock              HEBREW                                  = new UnicodeBlock(
+			"Hebrew", 0x0590,
+			0x0600, 87, "1.0.0");
+	public static final  UnicodeBlock              ARABIC                                  = new UnicodeBlock(
+			"Arabic", 0x0600,
+			0x0700, 235, "1.0.0");
+	public static final  UnicodeBlock              SYRIAC                                  = new UnicodeBlock(
+			"Syriac", 0x0700,
+			0x0750, 77, "3.0");
 	public static final  UnicodeBlock              ARABIC_SUPPLEMENT                       = new UnicodeBlock(
 			"Arabic Supplement", 0x0750,
 			0x0780, 30, "4.1");
-	public static final  UnicodeBlock              THAANA                                  = new UnicodeBlock("Thaana",
-	                                                                                                          0x0780,
-	                                                                                                          0x07C0,
-	                                                                                                          50,
-	                                                                                                          "3.0");
-	public static final  UnicodeBlock              NKO                                     = new UnicodeBlock("NKo",
-	                                                                                                          0x07C0,
-	                                                                                                          0x0800,
-	                                                                                                          59,
-	                                                                                                          "5.0");
+	public static final  UnicodeBlock              THAANA                                  = new UnicodeBlock(
+			"Thaana", 0x0780,
+			0x07C0, 50, "3.0");
+	public static final  UnicodeBlock              NKO                                     = new UnicodeBlock(
+			"NKo", 0x07C0,
+			0x0800, 59, "5.0");
 	public static final  UnicodeBlock              RESERVED_BLOCK01                        = new UnicodeBlock(
 			"<reserved>", 0x0800,
 			0x0900, 0, "Future");
@@ -103,69 +93,44 @@ public final class CodePoint {
 			"Devanagari", 0x0900,
 			0x0980, 110, "1.0.0");
 	public static final  UnicodeBlock              BENGALI                                 = new UnicodeBlock
-			("Bengali",
-			 0x0980,
-			 0x0A00,
-			 91,
-			 "1.0.0");
+			("Bengali", 0x0980,
+			 0x0A00, 91, "1.0.0");
 	public static final  UnicodeBlock              GURMUKHI                                = new UnicodeBlock(
 			"Gurmukhi", 0x0A00, 0x0A80,
 			77, "1.0.0");
 	public static final  UnicodeBlock              GUJARATI                                = new UnicodeBlock(
 			"Gujarati", 0x0A80, 0x0B00,
 			83, "1.0.0");
-	public static final  UnicodeBlock              ORIYA                                   = new UnicodeBlock("Oriya",
-	                                                                                                          0x0B00,
-	                                                                                                          0x0B80,
-	                                                                                                          81,
-	                                                                                                          "1.0.0");
-	public static final  UnicodeBlock              TAMIL                                   = new UnicodeBlock("Tamil",
-	                                                                                                          0x0B80,
-	                                                                                                          0x0C00,
-	                                                                                                          71,
-	                                                                                                          "1.0.0");
-	public static final  UnicodeBlock              TELUGU                                  = new UnicodeBlock("Telugu",
-	                                                                                                          0x0C00,
-	                                                                                                          0x0C80,
-	                                                                                                          80,
-	                                                                                                          "1.0.0");
+	public static final  UnicodeBlock              ORIYA                                   = new UnicodeBlock(
+			"Oriya", 0x0B00,
+			0x0B80, 81, "1.0.0");
+	public static final  UnicodeBlock              TAMIL                                   = new UnicodeBlock(
+			"Tamil", 0x0B80,
+			0x0C00, 71, "1.0.0");
+	public static final  UnicodeBlock              TELUGU                                  = new UnicodeBlock(
+			"Telugu", 0x0C00,
+			0x0C80, 80, "1.0.0");
 	public static final  UnicodeBlock              KANNADA                                 = new UnicodeBlock
-			("Kannada",
-			 0x0C80,
-			 0x0D00,
-			 86,
-			 "1.0.0");
+			("Kannada", 0x0C80,
+			 0x0D00, 86, "1.0.0");
 	public static final  UnicodeBlock              MALAYALAM                               = new UnicodeBlock(
 			"Malayalam", 0x0D00, 0x0D80,
 			78, "1.0.0");
 	public static final  UnicodeBlock              SINHALA                                 = new UnicodeBlock
-			("Sinhala",
-			 0x0D80,
-			 0x0E00,
-			 80,
-			 "3.0");
-	public static final  UnicodeBlock              THAI                                    = new UnicodeBlock("Thai",
-	                                                                                                          0x0E00,
-	                                                                                                          0x0E80,
-	                                                                                                          87,
-	                                                                                                          "1.0.0");
-	public static final  UnicodeBlock              LAO                                     = new UnicodeBlock("Lao",
-	                                                                                                          0x0E80,
-	                                                                                                          0x0F00,
-	                                                                                                          65,
-	                                                                                                          "1.0.0");
+			("Sinhala", 0x0D80,
+			 0x0E00, 80, "3.0");
+	public static final  UnicodeBlock              THAI                                    = new UnicodeBlock(
+			"Thai", 0x0E00,
+			0x0E80, 87, "1.0.0");
+	public static final  UnicodeBlock              LAO                                     = new UnicodeBlock(
+			"Lao", 0x0E80,
+			0x0F00, 65, "1.0.0");
 	public static final  UnicodeBlock              TIBETAN                                 = new UnicodeBlock
-			("Tibetan",
-			 0x0F00,
-			 0x1000,
-			 195,
-			 "2.0");
+			("Tibetan", 0x0F00,
+			 0x1000, 195, "2.0");
 	public static final  UnicodeBlock              MYANMAR                                 = new UnicodeBlock
-			("Myanmar",
-			 0x1000,
-			 0x10A0,
-			 78,
-			 "3.0");
+			("Myanmar", 0x1000,
+			 0x10A0, 78, "3.0");
 	public static final  UnicodeBlock              GEORGIAN                                = new UnicodeBlock(
 			"Georgian", 0x10A0, 0x1100,
 			83, "1.0.0");
@@ -184,57 +149,39 @@ public final class CodePoint {
 	public static final  UnicodeBlock              UNIFIED_CANADIAN_ABORIGINAL_SYLLABICS   = new UnicodeBlock(
 			"Unified Canadian Aboriginal Syllabics",
 			0x1400, 0x1680, 630, "3.0");
-	public static final  UnicodeBlock              OGHAM                                   = new UnicodeBlock("Ogham",
-	                                                                                                          0x1680,
-	                                                                                                          0x16A0,
-	                                                                                                          29,
-	                                                                                                          "3.0");
-	public static final  UnicodeBlock              RUNIC                                   = new UnicodeBlock("Runic",
-	                                                                                                          0x16A0,
-	                                                                                                          0x1700,
-	                                                                                                          81,
-	                                                                                                          "3.0");
+	public static final  UnicodeBlock              OGHAM                                   = new UnicodeBlock(
+			"Ogham", 0x1680,
+			0x16A0, 29, "3.0");
+	public static final  UnicodeBlock              RUNIC                                   = new UnicodeBlock(
+			"Runic", 0x16A0,
+			0x1700, 81, "3.0");
 	public static final  UnicodeBlock              TAGALOG                                 = new UnicodeBlock
-			("Tagalog",
-			 0x1700,
-			 0x1720,
-			 20,
-			 "3.2");
+			("Tagalog", 0x1700,
+			 0x1720, 20, "3.2");
 	public static final  UnicodeBlock              HANUNOO                                 = new UnicodeBlock
-			("Hanunoo",
-			 0x1720,
-			 0x1740,
-			 23,
-			 "3.2");
-	public static final  UnicodeBlock              BUHID                                   = new UnicodeBlock("Buhid",
-	                                                                                                          0x1740,
-	                                                                                                          0x1760,
-	                                                                                                          20,
-	                                                                                                          "3.2");
+			("Hanunoo", 0x1720,
+			 0x1740, 23, "3.2");
+	public static final  UnicodeBlock              BUHID                                   = new UnicodeBlock(
+			"Buhid", 0x1740,
+			0x1760, 20, "3.2");
 	public static final  UnicodeBlock              TAGBANWA                                = new UnicodeBlock(
 			"Tagbanwa", 0x1760, 0x1780,
 			18, "3.2");
-	public static final  UnicodeBlock              KHMER                                   = new UnicodeBlock("Khmer",
-	                                                                                                          0x1780,
-	                                                                                                          0x1800,
-	                                                                                                          114,
-	                                                                                                          "3.0");
+	public static final  UnicodeBlock              KHMER                                   = new UnicodeBlock(
+			"Khmer", 0x1780,
+			0x1800, 114, "3.0");
 	public static final  UnicodeBlock              MONGOLIAN                               = new UnicodeBlock(
 			"Mongolian", 0x1800, 0x18B0,
 			155, "3.0");
 	public static final  UnicodeBlock              RESERVED_BLOCK02                        = new UnicodeBlock(
 			"<reserved>", 0x18B0,
 			0x1900, 0, "Future");
-	public static final  UnicodeBlock              LIMBU                                   = new UnicodeBlock("Limbu",
-	                                                                                                          0x1900,
-	                                                                                                          0x1950,
-	                                                                                                          66,
-	                                                                                                          "4.0");
-	public static final  UnicodeBlock              TAI_LE                                  = new UnicodeBlock("Tai Le",
-	                                                                                                          0x1950,
-	                                                                                                          0x1980,
-	                                                                                                          35,
-	                                                                                                          "4.0");
+	public static final  UnicodeBlock              LIMBU                                   = new UnicodeBlock(
+			"Limbu", 0x1900,
+			0x1950, 66, "4.0");
+	public static final  UnicodeBlock              TAI_LE                                  = new UnicodeBlock(
+			"Tai Le", 0x1950,
+			0x1980, 35, "4.0");
 	public static final  UnicodeBlock              NEW_TAI_LUE                             = new UnicodeBlock(
 			"New Tai Lue", 0x1980,
 			0x19E0, 80, "4.1");
@@ -286,11 +233,9 @@ public final class CodePoint {
 	public static final  UnicodeBlock              NUMBER_FORMS                            = new UnicodeBlock(
 			"Number Forms", 0x2150,
 			0x2190, 50, "1.0.0");
-	public static final  UnicodeBlock              ARROWS                                  = new UnicodeBlock("Arrows",
-	                                                                                                          0x2190,
-	                                                                                                          0x2200,
-	                                                                                                          112,
-	                                                                                                          "1.0.0");
+	public static final  UnicodeBlock              ARROWS                                  = new UnicodeBlock(
+			"Arrows", 0x2190,
+			0x2200, 112, "1.0.0");
 	public static final  UnicodeBlock              MATHEMATICAL_OPERATORS                  = new UnicodeBlock(
 			"Mathematical Operators",
 			0x2200, 0x2300, 256, "1.0.0");
@@ -348,11 +293,9 @@ public final class CodePoint {
 	public static final  UnicodeBlock              LATIN_EXTENDED_C                        = new UnicodeBlock(
 			"Latin Extended-C", 0x2C60,
 			0x2C80, 17, "5.0");
-	public static final  UnicodeBlock              COPTIC                                  = new UnicodeBlock("Coptic",
-	                                                                                                          0x2C80,
-	                                                                                                          0x2D00,
-	                                                                                                          114,
-	                                                                                                          "4.1");
+	public static final  UnicodeBlock              COPTIC                                  = new UnicodeBlock(
+			"Coptic", 0x2C80,
+			0x2D00, 114, "4.1");
 	public static final  UnicodeBlock              GEORGIAN_SUPPLEMENT                     = new UnicodeBlock(
 			"Georgian Supplement",
 			0x2D00, 0x2D30, 38, "4.1");
@@ -395,11 +338,9 @@ public final class CodePoint {
 	public static final  UnicodeBlock              HANGUL_COMPATIBILITY_JAMO               = new UnicodeBlock(
 			"Hangul Compatibility Jamo",
 			0x3130, 0x3190, 94, "1.0.0");
-	public static final  UnicodeBlock              KANBUN                                  = new UnicodeBlock("Kanbun",
-	                                                                                                          0x3190,
-	                                                                                                          0x31A0,
-	                                                                                                          16,
-	                                                                                                          "1.0.0");
+	public static final  UnicodeBlock              KANBUN                                  = new UnicodeBlock(
+			"Kanbun", 0x3190,
+			0x31A0, 16, "1.0.0");
 	public static final  UnicodeBlock              BOPOMOFO_EXTENDED                       = new UnicodeBlock(
 			"Bopomofo Extended", 0x31A0,
 			0x31C0, 24, "3.0");
@@ -520,11 +461,9 @@ public final class CodePoint {
 	public static final  UnicodeBlock              OLD_ITALIC                              = new UnicodeBlock(
 			"Old Italic", 0x010300,
 			0x010330, 35, "3.1");
-	public static final  UnicodeBlock              GOTHIC                                  = new UnicodeBlock("Gothic",
-	                                                                                                          0x010330,
-	                                                                                                          0x010350,
-	                                                                                                          27,
-	                                                                                                          "3.1");
+	public static final  UnicodeBlock              GOTHIC                                  = new UnicodeBlock(
+			"Gothic", 0x010330,
+			0x010350, 27, "3.1");
 	public static final  UnicodeBlock              RESERVED_BLOCK12                        = new UnicodeBlock(
 			"<reserved>", 0x010350,
 			0x010380, 0, "Future");
@@ -538,23 +477,14 @@ public final class CodePoint {
 			"<reserved>", 0x0103E0,
 			0x010400, 0, "Future");
 	public static final  UnicodeBlock              DESERET                                 = new UnicodeBlock
-			("Deseret",
-			 0x010400,
-			 0x010450,
-			 80,
-			 "3.1");
+			("Deseret", 0x010400,
+			 0x010450, 80, "3.1");
 	public static final  UnicodeBlock              SHAVIAN                                 = new UnicodeBlock
-			("Shavian",
-			 0x010450,
-			 0x010480,
-			 48,
-			 "4.0");
+			("Shavian", 0x010450,
+			 0x010480, 48, "4.0");
 	public static final  UnicodeBlock              OSMANYA                                 = new UnicodeBlock
-			("Osmanya",
-			 0x010480,
-			 0x0104B0,
-			 40,
-			 "4.0");
+			("Osmanya", 0x010480,
+			 0x0104B0, 40, "4.0");
 	public static final  UnicodeBlock              RESERVED_BLOCK14                        = new UnicodeBlock(
 			"<reserved>", 0x0104B0,
 			0x010800, 0, "Future");
@@ -624,11 +554,9 @@ public final class CodePoint {
 	public static final  UnicodeBlock              RESERVED_BLOCK23                        = new UnicodeBlock(
 			"<reserved>", 0x02FA20,
 			0x0E0000, 0, "Future");
-	public static final  UnicodeBlock              TAGS                                    = new UnicodeBlock("Tags",
-	                                                                                                          0x0E0000,
-	                                                                                                          0x0E0080,
-	                                                                                                          97,
-	                                                                                                          "3.1");
+	public static final  UnicodeBlock              TAGS                                    = new UnicodeBlock(
+			"Tags", 0x0E0000,
+			0x0E0080, 97, "3.1");
 	public static final  UnicodeBlock              RESERVED_BLOCK24                        = new UnicodeBlock(
 			"<reserved>", 0x0E0080,
 			0x0E0100, 0, "Future");
@@ -645,484 +573,369 @@ public final class CodePoint {
 			"Supplementary Private Use Area-B",
 			0x100000, 0x110000, 65534, "2.0");
 	// Array of all unicode blocks in correct order:
-	public static final  UnicodeBlock[]            blockInstances                          = { //
-	                                                                                           BASIC_LATIN, //
-	                                                                                           LATIN_1_SUPPLEMENT,
-	                                                                                           //
-	                                                                                           LATIN_EXTENDED_A,
-	                                                                                           //
-	                                                                                           LATIN_EXTENDED_B,
-	                                                                                           //
-	                                                                                           IPA_EXTENSIONS,
-	                                                                                           //
-	                                                                                           SPACING_MODIFIER_LETTERS,
-	                                                                                           //
-	                                                                                           COMBINING_DIACRITICAL_MARKS,
-	                                                                                           //
-	                                                                                           GREEK_AND_COPTIC,
-	                                                                                           //
-	                                                                                           CYRILLIC, //
-	                                                                                           CYRILLIC_SUPPLEMENT,
-	                                                                                           //
-	                                                                                           ARMENIAN, //
-	                                                                                           HEBREW, //
-	                                                                                           ARABIC, //
-	                                                                                           SYRIAC, //
-	                                                                                           ARABIC_SUPPLEMENT,
-	                                                                                           //
-	                                                                                           THAANA, //
-	                                                                                           NKO, //
-	                                                                                           RESERVED_BLOCK01,
-	                                                                                           //
-	                                                                                           DEVANAGARI, //
-	                                                                                           BENGALI, //
-	                                                                                           GURMUKHI, //
-	                                                                                           GUJARATI, //
-	                                                                                           ORIYA, //
-	                                                                                           TAMIL, //
-	                                                                                           TELUGU, //
-	                                                                                           KANNADA, //
-	                                                                                           MALAYALAM, //
-	                                                                                           SINHALA, //
-	                                                                                           THAI, //
-	                                                                                           LAO, //
-	                                                                                           TIBETAN, //
-	                                                                                           MYANMAR, //
-	                                                                                           GEORGIAN, //
-	                                                                                           HANGUL_JAMO, //
-	                                                                                           ETHIOPIC, //
-	                                                                                           ETHIOPIC_SUPPLEMENT,
-	                                                                                           //
-	                                                                                           CHEROKEE, //
-	                                                                                           UNIFIED_CANADIAN_ABORIGINAL_SYLLABICS,
-	                                                                                           //
-	                                                                                           OGHAM, //
-	                                                                                           RUNIC, //
-	                                                                                           TAGALOG, //
-	                                                                                           HANUNOO, //
-	                                                                                           BUHID, //
-	                                                                                           TAGBANWA, //
-	                                                                                           KHMER, //
-	                                                                                           MONGOLIAN, //
-	                                                                                           RESERVED_BLOCK02,
-	                                                                                           //
-	                                                                                           LIMBU, //
-	                                                                                           TAI_LE, //
-	                                                                                           NEW_TAI_LUE, //
-	                                                                                           KHMER_SYMBOLS,
-	                                                                                           //
-	                                                                                           BUGINESE, //
-	                                                                                           RESERVED_BLOCK03,
-	                                                                                           //
-	                                                                                           BALINESE, //
-	                                                                                           RESERVED_BLOCK04,
-	                                                                                           //
-	                                                                                           PHONETIC_EXTENSIONS,
-	                                                                                           //
-	                                                                                           PHONETIC_EXTENSIONS_SUPPLEMENT,
-	                                                                                           //
-	                                                                                           COMBINING_DIACRITICAL_MARKS_SUPPLEMENT,
-	                                                                                           //
-	                                                                                           LATIN_EXTENDED_ADDITIONAL,
-	                                                                                           //
-	                                                                                           GREEK_EXTENDED,
-	                                                                                           //
-	                                                                                           GENERAL_PUNCTUATION,
-	                                                                                           //
-	                                                                                           SUPERSCRIPTS_AND_SUBSCRIPTS,
-	                                                                                           //
-	                                                                                           CURRENCY_SYMBOLS,
-	                                                                                           //
-	                                                                                           COMBINING_DIACRITICAL_MARKS_FOR_SYMBOLS,
-	                                                                                           //
-	                                                                                           LETTERLIKE_SYMBOLS,
-	                                                                                           //
-	                                                                                           NUMBER_FORMS,
-	                                                                                           //
-	                                                                                           ARROWS, //
-	                                                                                           MATHEMATICAL_OPERATORS,
-	                                                                                           //
-	                                                                                           MISCELLANEOUS_TECHNICAL,
-	                                                                                           //
-	                                                                                           CONTROL_PICTURES,
-	                                                                                           //
-	                                                                                           OPTICAL_CHARACTER_RECOGNITION,
-	                                                                                           //
-	                                                                                           ENCLOSED_ALPHANUMERICS,
-	                                                                                           //
-	                                                                                           BOX_DRAWING, //
-	                                                                                           BLOCK_ELEMENTS,
-	                                                                                           //
-	                                                                                           GEOMETRIC_SHAPES,
-	                                                                                           //
-	                                                                                           MISCELLANEOUS_SYMBOLS,
-	                                                                                           //
-	                                                                                           DINGBATS, //
-	                                                                                           MISCELLANEOUS_MATHEMATICAL_SYMBOLS_A,
-	                                                                                           //
-	                                                                                           SUPPLEMENTAL_ARROWS_A,
-	                                                                                           //
-	                                                                                           BRAILLE_PATTERNS,
-	                                                                                           //
-	                                                                                           SUPPLEMENTAL_ARROWS_B,
-	                                                                                           //
-	                                                                                           MISCELLANEOUS_MATHEMATICAL_SYMBOLS_B,
-	                                                                                           //
-	                                                                                           SUPPLEMENTAL_MATHEMATICAL_OPERATORS,
-	                                                                                           //
-	                                                                                           MISCELLANEOUS_SYMBOLS_AND_ARROWS,
-	                                                                                           //
-	                                                                                           GLAGOLITIC, //
-	                                                                                           LATIN_EXTENDED_C,
-	                                                                                           //
-	                                                                                           COPTIC, //
-	                                                                                           GEORGIAN_SUPPLEMENT,
-	                                                                                           //
-	                                                                                           TIFINAGH, //
-	                                                                                           ETHIOPIC_EXTENDED,
-	                                                                                           //
-	                                                                                           RESERVED_BLOCK05,
-	                                                                                           //
-	                                                                                           SUPPLEMENTAL_PUNCTUATION,
-	                                                                                           //
-	                                                                                           CJK_RADICALS_SUPPLEMENT,
-	                                                                                           //
-	                                                                                           KANGXI_RADICALS,
-	                                                                                           //
-	                                                                                           RESERVED_BLOCK06,
-	                                                                                           //
-	                                                                                           IDEOGRAPHIC_DESCRIPTION_CHARACTERS,
-	                                                                                           //
-	                                                                                           CJK_SYMBOLS_AND_PUNCTUATION,
-	                                                                                           //
-	                                                                                           HIRAGANA, //
-	                                                                                           KATAKANA, //
-	                                                                                           BOPOMOFO, //
-	                                                                                           HANGUL_COMPATIBILITY_JAMO,
-	                                                                                           //
-	                                                                                           KANBUN, //
-	                                                                                           BOPOMOFO_EXTENDED,
-	                                                                                           //
-	                                                                                           CJK_STROKES, //
-	                                                                                           KATAKANA_PHONETIC_EXTENSIONS,
-	                                                                                           //
-	                                                                                           ENCLOSED_CJK_LETTERS_AND_MONTHS,
-	                                                                                           //
-	                                                                                           CJK_COMPATIBILITY,
-	                                                                                           //
-	                                                                                           CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A,
-	                                                                                           //
-	                                                                                           YIJING_HEXAGRAM_SYMBOLS,
-	                                                                                           //
-	                                                                                           CJK_UNIFIED_IDEOGRAPHS,
-	                                                                                           //
-	                                                                                           YI_SYLLABLES,
-	                                                                                           //
-	                                                                                           YI_RADICALS, //
-	                                                                                           RESERVED_BLOCK07,
-	                                                                                           //
-	                                                                                           MODIFIER_TONE_LETTERS,
-	                                                                                           //
-	                                                                                           LATIN_EXTENDED_D,
-	                                                                                           //
-	                                                                                           SYLOTI_NAGRI,
-	                                                                                           //
-	                                                                                           RESERVED_BLOCK08,
-	                                                                                           //
-	                                                                                           PHAGS_PA, //
-	                                                                                           RESERVED_BLOCK09,
-	                                                                                           //
-	                                                                                           HANGUL_SYLLABLES,
-	                                                                                           //
-	                                                                                           RESERVED_BLOCK10,
-	                                                                                           //
-	                                                                                           HIGH_SURROGATES,
-	                                                                                           //
-	                                                                                           HIGH_PRIVATE_USE_SURROGATES,
-	                                                                                           //
-	                                                                                           LOW_SURROGATES,
-	                                                                                           //
-	                                                                                           PRIVATE_USE_AREA,
-	                                                                                           //
-	                                                                                           CJK_COMPATIBILITY_IDEOGRAPHS,
-	                                                                                           //
-	                                                                                           ALPHABETIC_PRESENTATION_FORMS,
-	                                                                                           //
-	                                                                                           ARABIC_PRESENTATION_FORMS_A,
-	                                                                                           //
-	                                                                                           VARIATION_SELECTORS,
-	                                                                                           //
-	                                                                                           VERTICAL_FORMS,
-	                                                                                           //
-	                                                                                           COMBINING_HALF_MARKS,
-	                                                                                           //
-	                                                                                           CJK_COMPATIBILITY_FORMS,
-	                                                                                           //
-	                                                                                           SMALL_FORM_VARIANTS,
-	                                                                                           //
-	                                                                                           ARABIC_PRESENTATION_FORMS_B,
-	                                                                                           //
-	                                                                                           HALFWIDTH_AND_FULLWIDTH_FORMS,
-	                                                                                           //
-	                                                                                           SPECIALS, //
-	                                                                                           LINEAR_B_SYLLABARY,
-	                                                                                           //
-	                                                                                           LINEAR_B_IDEOGRAMS,
-	                                                                                           //
-	                                                                                           AEGEAN_NUMBERS,
-	                                                                                           //
-	                                                                                           ANCIENT_GREEK_NUMBERS,
-	                                                                                           //
-	                                                                                           RESERVED_BLOCK11,
-	                                                                                           //
-	                                                                                           OLD_ITALIC, //
-	                                                                                           GOTHIC, //
-	                                                                                           RESERVED_BLOCK12,
-	                                                                                           //
-	                                                                                           UGARITIC, //
-	                                                                                           OLD_PERSIAN, //
-	                                                                                           RESERVED_BLOCK13,
-	                                                                                           //
-	                                                                                           DESERET, //
-	                                                                                           SHAVIAN, //
-	                                                                                           OSMANYA, //
-	                                                                                           RESERVED_BLOCK14,
-	                                                                                           //
-	                                                                                           CYPRIOT_SYLLABARY,
-	                                                                                           //
-	                                                                                           RESERVED_BLOCK15,
-	                                                                                           //
-	                                                                                           PHOENICIAN, //
-	                                                                                           RESERVED_BLOCK16,
-	                                                                                           //
-	                                                                                           KHAROSHTHI, //
-	                                                                                           RESERVED_BLOCK17,
-	                                                                                           //
-	                                                                                           CUNEIFORM, //
-	                                                                                           CUNEIFORM_NUMBERS_AND_PUNCTUATION,
-	                                                                                           //
-	                                                                                           RESERVED_BLOCK18,
-	                                                                                           //
-	                                                                                           BYZANTINE_MUSICAL_SYMBOLS,
-	                                                                                           //
-	                                                                                           MUSICAL_SYMBOLS,
-	                                                                                           //
-	                                                                                           ANCIENT_GREEK_MUSICAL_NOTATION,
-	                                                                                           //
-	                                                                                           RESERVED_BLOCK19,
-	                                                                                           //
-	                                                                                           TAI_XUAN_JING_SYMBOLS,
-	                                                                                           //
-	                                                                                           COUNTING_ROD_NUMERALS,
-	                                                                                           //
-	                                                                                           RESERVED_BLOCK20,
-	                                                                                           //
-	                                                                                           MATHEMATICAL_ALPHANUMERIC_SYMBOLS,
-	                                                                                           //
-	                                                                                           RESERVED_BLOCK21,
-	                                                                                           //
-	                                                                                           CJK_UNIFIED_IDEOGRAPHS_EXTENSION_B,
-	                                                                                           //
-	                                                                                           RESERVED_BLOCK22,
-	                                                                                           //
-	                                                                                           CJK_COMPATIBILITY_IDEOGRAPHS_SUPPLEMENT,
-	                                                                                           //
-	                                                                                           RESERVED_BLOCK23,
-	                                                                                           //
-	                                                                                           TAGS, //
-	                                                                                           RESERVED_BLOCK24,
-	                                                                                           //
-	                                                                                           VARIATION_SELECTORS_SUPPLEMENT,
-	                                                                                           //
-	                                                                                           RESERVED_BLOCK25,
-	                                                                                           //
-	                                                                                           SUPPLEMENTARY_PRIVATE_USE_AREA_A,
-	                                                                                           //
-	                                                                                           SUPPLEMENTARY_PRIVATE_USE_AREA_B,
-	                                                                                           //
-	};
+	public static final  UnicodeBlock[]            blockInstances                          = {
+			BASIC_LATIN,
+			LATIN_1_SUPPLEMENT,
+			LATIN_EXTENDED_A,
+			LATIN_EXTENDED_B,
+			IPA_EXTENSIONS,
+			SPACING_MODIFIER_LETTERS,
+			COMBINING_DIACRITICAL_MARKS,
+			GREEK_AND_COPTIC,
+			CYRILLIC,
+			CYRILLIC_SUPPLEMENT,
+			ARMENIAN,
+			HEBREW,
+			ARABIC,
+			SYRIAC,
+			ARABIC_SUPPLEMENT,
+			THAANA,
+			NKO,
+			RESERVED_BLOCK01,
+			DEVANAGARI,
+			BENGALI,
+			GURMUKHI,
+			GUJARATI,
+			ORIYA,
+			TAMIL,
+			TELUGU,
+			KANNADA,
+			MALAYALAM,
+			SINHALA,
+			THAI,
+			LAO,
+			TIBETAN,
+			MYANMAR,
+			GEORGIAN,
+			HANGUL_JAMO,
+			ETHIOPIC,
+			ETHIOPIC_SUPPLEMENT,
+			CHEROKEE,
+			UNIFIED_CANADIAN_ABORIGINAL_SYLLABICS,
+			OGHAM,
+			RUNIC,
+			TAGALOG,
+			HANUNOO,
+			BUHID,
+			TAGBANWA,
+			KHMER,
+			MONGOLIAN,
+			RESERVED_BLOCK02,
+			LIMBU,
+			TAI_LE,
+			NEW_TAI_LUE,
+			KHMER_SYMBOLS,
+			BUGINESE,
+			RESERVED_BLOCK03,
+			BALINESE,
+			RESERVED_BLOCK04,
+			PHONETIC_EXTENSIONS,
+			PHONETIC_EXTENSIONS_SUPPLEMENT,
+			COMBINING_DIACRITICAL_MARKS_SUPPLEMENT,
+			LATIN_EXTENDED_ADDITIONAL,
+			GREEK_EXTENDED,
+			GENERAL_PUNCTUATION,
+			SUPERSCRIPTS_AND_SUBSCRIPTS,
+			CURRENCY_SYMBOLS,
+			COMBINING_DIACRITICAL_MARKS_FOR_SYMBOLS,
+			LETTERLIKE_SYMBOLS,
+			NUMBER_FORMS,
+			ARROWS,
+			MATHEMATICAL_OPERATORS,
+			MISCELLANEOUS_TECHNICAL,
+			CONTROL_PICTURES,
+			OPTICAL_CHARACTER_RECOGNITION,
+			ENCLOSED_ALPHANUMERICS,
+			BOX_DRAWING,
+			BLOCK_ELEMENTS,
+			GEOMETRIC_SHAPES,
+			MISCELLANEOUS_SYMBOLS,
+			DINGBATS,
+			MISCELLANEOUS_MATHEMATICAL_SYMBOLS_A,
+			SUPPLEMENTAL_ARROWS_A,
+			BRAILLE_PATTERNS,
+			SUPPLEMENTAL_ARROWS_B,
+			MISCELLANEOUS_MATHEMATICAL_SYMBOLS_B,
+			SUPPLEMENTAL_MATHEMATICAL_OPERATORS,
+			MISCELLANEOUS_SYMBOLS_AND_ARROWS,
+			GLAGOLITIC,
+			LATIN_EXTENDED_C,
+			COPTIC,
+			GEORGIAN_SUPPLEMENT,
+			TIFINAGH,
+			ETHIOPIC_EXTENDED,
+			RESERVED_BLOCK05,
+			SUPPLEMENTAL_PUNCTUATION,
+			CJK_RADICALS_SUPPLEMENT,
+			KANGXI_RADICALS,
+			RESERVED_BLOCK06,
+			IDEOGRAPHIC_DESCRIPTION_CHARACTERS,
+			CJK_SYMBOLS_AND_PUNCTUATION,
+			HIRAGANA,
+			KATAKANA,
+			BOPOMOFO,
+			HANGUL_COMPATIBILITY_JAMO,
+			KANBUN,
+			BOPOMOFO_EXTENDED,
+			CJK_STROKES,
+			KATAKANA_PHONETIC_EXTENSIONS,
+			ENCLOSED_CJK_LETTERS_AND_MONTHS,
+			CJK_COMPATIBILITY,
+			CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A,
+			YIJING_HEXAGRAM_SYMBOLS,
+			CJK_UNIFIED_IDEOGRAPHS,
+			YI_SYLLABLES,
+			YI_RADICALS,
+			RESERVED_BLOCK07,
+			MODIFIER_TONE_LETTERS,
+			LATIN_EXTENDED_D,
+			SYLOTI_NAGRI,
+			RESERVED_BLOCK08,
+			PHAGS_PA,
+			RESERVED_BLOCK09,
+			HANGUL_SYLLABLES,
+			RESERVED_BLOCK10,
+			HIGH_SURROGATES,
+			HIGH_PRIVATE_USE_SURROGATES,
+			LOW_SURROGATES,
+			PRIVATE_USE_AREA,
+			CJK_COMPATIBILITY_IDEOGRAPHS,
+			ALPHABETIC_PRESENTATION_FORMS,
+			ARABIC_PRESENTATION_FORMS_A,
+			VARIATION_SELECTORS,
+			VERTICAL_FORMS,
+			COMBINING_HALF_MARKS,
+			CJK_COMPATIBILITY_FORMS,
+			SMALL_FORM_VARIANTS,
+			ARABIC_PRESENTATION_FORMS_B,
+			HALFWIDTH_AND_FULLWIDTH_FORMS,
+			SPECIALS,
+			LINEAR_B_SYLLABARY,
+			LINEAR_B_IDEOGRAMS,
+			AEGEAN_NUMBERS,
+			ANCIENT_GREEK_NUMBERS,
+			RESERVED_BLOCK11,
+			OLD_ITALIC,
+			GOTHIC,
+			RESERVED_BLOCK12,
+			UGARITIC,
+			OLD_PERSIAN,
+			RESERVED_BLOCK13,
+			DESERET,
+			SHAVIAN,
+			OSMANYA,
+			RESERVED_BLOCK14,
+			CYPRIOT_SYLLABARY,
+			RESERVED_BLOCK15,
+			PHOENICIAN,
+			RESERVED_BLOCK16,
+			KHAROSHTHI,
+			RESERVED_BLOCK17,
+			CUNEIFORM,
+			CUNEIFORM_NUMBERS_AND_PUNCTUATION,
+			RESERVED_BLOCK18,
+			BYZANTINE_MUSICAL_SYMBOLS,
+			MUSICAL_SYMBOLS,
+			ANCIENT_GREEK_MUSICAL_NOTATION,
+			RESERVED_BLOCK19,
+			TAI_XUAN_JING_SYMBOLS,
+			COUNTING_ROD_NUMERALS,
+			RESERVED_BLOCK20,
+			MATHEMATICAL_ALPHANUMERIC_SYMBOLS,
+			RESERVED_BLOCK21,
+			CJK_UNIFIED_IDEOGRAPHS_EXTENSION_B,
+			RESERVED_BLOCK22,
+			CJK_COMPATIBILITY_IDEOGRAPHS_SUPPLEMENT,
+			RESERVED_BLOCK23,
+			TAGS,
+			RESERVED_BLOCK24,
+			VARIATION_SELECTORS_SUPPLEMENT,
+			RESERVED_BLOCK25,
+			SUPPLEMENTARY_PRIVATE_USE_AREA_A,
+			SUPPLEMENTARY_PRIVATE_USE_AREA_B,
+			};
 	// Array of starting code points for all unicode blocks, in order:
-	private static final int[]                     blockStartingCodePoints                 = {//
-	                                                                                          0x0000, //
-	                                                                                          0x0080, //
-	                                                                                          0x0100, //
-	                                                                                          0x0180, //
-	                                                                                          0x0250, //
-	                                                                                          0x02B0, //
-	                                                                                          0x0300, //
-	                                                                                          0x0370, //
-	                                                                                          0x0400, //
-	                                                                                          0x0500, //
-	                                                                                          0x0530, //
-	                                                                                          0x0590, //
-	                                                                                          0x0600, //
-	                                                                                          0x0700, //
-	                                                                                          0x0750, //
-	                                                                                          0x0780, //
-	                                                                                          0x07C0, //
-	                                                                                          0x0800, //
-	                                                                                          0x0900, //
-	                                                                                          0x0980, //
-	                                                                                          0x0A00, //
-	                                                                                          0x0A80, //
-	                                                                                          0x0B00, //
-	                                                                                          0x0B80, //
-	                                                                                          0x0C00, //
-	                                                                                          0x0C80, //
-	                                                                                          0x0D00, //
-	                                                                                          0x0D80, //
-	                                                                                          0x0E00, //
-	                                                                                          0x0E80, //
-	                                                                                          0x0F00, //
-	                                                                                          0x1000, //
-	                                                                                          0x10A0, //
-	                                                                                          0x1100, //
-	                                                                                          0x1200, //
-	                                                                                          0x1380, //
-	                                                                                          0x13A0, //
-	                                                                                          0x1400, //
-	                                                                                          0x1680, //
-	                                                                                          0x16A0, //
-	                                                                                          0x1700, //
-	                                                                                          0x1720, //
-	                                                                                          0x1740, //
-	                                                                                          0x1760, //
-	                                                                                          0x1780, //
-	                                                                                          0x1800, //
-	                                                                                          0x18B0, //
-	                                                                                          0x1900, //
-	                                                                                          0x1950, //
-	                                                                                          0x1980, //
-	                                                                                          0x19E0, //
-	                                                                                          0x1A00, //
-	                                                                                          0x1A20, //
-	                                                                                          0x1B00, //
-	                                                                                          0x1B80, //
-	                                                                                          0x1D00, //
-	                                                                                          0x1D80, //
-	                                                                                          0x1DC0, //
-	                                                                                          0x1E00, //
-	                                                                                          0x1F00, //
-	                                                                                          0x2000, //
-	                                                                                          0x2070, //
-	                                                                                          0x20A0, //
-	                                                                                          0x20D0, //
-	                                                                                          0x2100, //
-	                                                                                          0x2150, //
-	                                                                                          0x2190, //
-	                                                                                          0x2200, //
-	                                                                                          0x2300, //
-	                                                                                          0x2400, //
-	                                                                                          0x2440, //
-	                                                                                          0x2460, //
-	                                                                                          0x2500, //
-	                                                                                          0x2580, //
-	                                                                                          0x25A0, //
-	                                                                                          0x2600, //
-	                                                                                          0x2700, //
-	                                                                                          0x27C0, //
-	                                                                                          0x27F0, //
-	                                                                                          0x2800, //
-	                                                                                          0x2900, //
-	                                                                                          0x2980, //
-	                                                                                          0x2A00, //
-	                                                                                          0x2B00, //
-	                                                                                          0x2C00, //
-	                                                                                          0x2C60, //
-	                                                                                          0x2C80, //
-	                                                                                          0x2D00, //
-	                                                                                          0x2D30, //
-	                                                                                          0x2D80, //
-	                                                                                          0x2DE0, //
-	                                                                                          0x2E00, //
-	                                                                                          0x2E80, //
-	                                                                                          0x2F00, //
-	                                                                                          0x2FE0, //
-	                                                                                          0x2FF0, //
-	                                                                                          0x3000, //
-	                                                                                          0x3040, //
-	                                                                                          0x30A0, //
-	                                                                                          0x3100, //
-	                                                                                          0x3130, //
-	                                                                                          0x3190, //
-	                                                                                          0x31A0, //
-	                                                                                          0x31C0, //
-	                                                                                          0x31F0, //
-	                                                                                          0x3200, //
-	                                                                                          0x3300, //
-	                                                                                          0x3400, //
-	                                                                                          0x4DC0, //
-	                                                                                          0x4E00, //
-	                                                                                          0xA000, //
-	                                                                                          0xA490, //
-	                                                                                          0xA4D0, //
-	                                                                                          0xA700, //
-	                                                                                          0xA720, //
-	                                                                                          0xA800, //
-	                                                                                          0xA830, //
-	                                                                                          0xA840, //
-	                                                                                          0xA880, //
-	                                                                                          0xAC00, //
-	                                                                                          0xD7B0, //
-	                                                                                          0xD800, //
-	                                                                                          0xDB80, //
-	                                                                                          0xDC00, //
-	                                                                                          0xE000, //
-	                                                                                          0xF900, //
-	                                                                                          0xFB00, //
-	                                                                                          0xFB50, //
-	                                                                                          0xFE00, //
-	                                                                                          0xFE10, //
-	                                                                                          0xFE20, //
-	                                                                                          0xFE30, //
-	                                                                                          0xFE50, //
-	                                                                                          0xFE70, //
-	                                                                                          0xFF00, //
-	                                                                                          0xFFF0, //
-	                                                                                          0x010000, //
-	                                                                                          0x010080, //
-	                                                                                          0x010100, //
-	                                                                                          0x010140, //
-	                                                                                          0x010190, //
-	                                                                                          0x010300, //
-	                                                                                          0x010330, //
-	                                                                                          0x010350, //
-	                                                                                          0x010380, //
-	                                                                                          0x0103A0, //
-	                                                                                          0x0103E0, //
-	                                                                                          0x010400, //
-	                                                                                          0x010450, //
-	                                                                                          0x010480, //
-	                                                                                          0x0104B0, //
-	                                                                                          0x010800, //
-	                                                                                          0x010840, //
-	                                                                                          0x010900, //
-	                                                                                          0x010920, //
-	                                                                                          0x010A00, //
-	                                                                                          0x010A60, //
-	                                                                                          0x012000, //
-	                                                                                          0x012400, //
-	                                                                                          0x012480, //
-	                                                                                          0x01D000, //
-	                                                                                          0x01D100, //
-	                                                                                          0x01D200, //
-	                                                                                          0x01D250, //
-	                                                                                          0x01D300, //
-	                                                                                          0x01D360, //
-	                                                                                          0x01D380, //
-	                                                                                          0x01D400, //
-	                                                                                          0x01D800, //
-	                                                                                          0x020000, //
-	                                                                                          0x02A6E0, //
-	                                                                                          0x02F800, //
-	                                                                                          0x02FA20, //
-	                                                                                          0x0E0000, //
-	                                                                                          0x0E0080, //
-	                                                                                          0x0E0100, //
-	                                                                                          0x0E01F0, //
-	                                                                                          0x0F0000, //
-	                                                                                          0x100000, //
-	};
+	private static final int[]                     blockStartingCodePoints                 = {
+			0x0000,
+			0x0080,
+			0x0100,
+			0x0180,
+			0x0250,
+			0x02B0,
+			0x0300,
+			0x0370,
+			0x0400,
+			0x0500,
+			0x0530,
+			0x0590,
+			0x0600,
+			0x0700,
+			0x0750,
+			0x0780,
+			0x07C0,
+			0x0800,
+			0x0900,
+			0x0980,
+			0x0A00,
+			0x0A80,
+			0x0B00,
+			0x0B80,
+			0x0C00,
+			0x0C80,
+			0x0D00,
+			0x0D80,
+			0x0E00,
+			0x0E80,
+			0x0F00,
+			0x1000,
+			0x10A0,
+			0x1100,
+			0x1200,
+			0x1380,
+			0x13A0,
+			0x1400,
+			0x1680,
+			0x16A0,
+			0x1700,
+			0x1720,
+			0x1740,
+			0x1760,
+			0x1780,
+			0x1800,
+			0x18B0,
+			0x1900,
+			0x1950,
+			0x1980,
+			0x19E0,
+			0x1A00,
+			0x1A20,
+			0x1B00,
+			0x1B80,
+			0x1D00,
+			0x1D80,
+			0x1DC0,
+			0x1E00,
+			0x1F00,
+			0x2000,
+			0x2070,
+			0x20A0,
+			0x20D0,
+			0x2100,
+			0x2150,
+			0x2190,
+			0x2200,
+			0x2300,
+			0x2400,
+			0x2440,
+			0x2460,
+			0x2500,
+			0x2580,
+			0x25A0,
+			0x2600,
+			0x2700,
+			0x27C0,
+			0x27F0,
+			0x2800,
+			0x2900,
+			0x2980,
+			0x2A00,
+			0x2B00,
+			0x2C00,
+			0x2C60,
+			0x2C80,
+			0x2D00,
+			0x2D30,
+			0x2D80,
+			0x2DE0,
+			0x2E00,
+			0x2E80,
+			0x2F00,
+			0x2FE0,
+			0x2FF0,
+			0x3000,
+			0x3040,
+			0x30A0,
+			0x3100,
+			0x3130,
+			0x3190,
+			0x31A0,
+			0x31C0,
+			0x31F0,
+			0x3200,
+			0x3300,
+			0x3400,
+			0x4DC0,
+			0x4E00,
+			0xA000,
+			0xA490,
+			0xA4D0,
+			0xA700,
+			0xA720,
+			0xA800,
+			0xA830,
+			0xA840,
+			0xA880,
+			0xAC00,
+			0xD7B0,
+			0xD800,
+			0xDB80,
+			0xDC00,
+			0xE000,
+			0xF900,
+			0xFB00,
+			0xFB50,
+			0xFE00,
+			0xFE10,
+			0xFE20,
+			0xFE30,
+			0xFE50,
+			0xFE70,
+			0xFF00,
+			0xFFF0,
+			0x010000,
+			0x010080,
+			0x010100,
+			0x010140,
+			0x010190,
+			0x010300,
+			0x010330,
+			0x010350,
+			0x010380,
+			0x0103A0,
+			0x0103E0,
+			0x010400,
+			0x010450,
+			0x010480,
+			0x0104B0,
+			0x010800,
+			0x010840,
+			0x010900,
+			0x010920,
+			0x010A00,
+			0x010A60,
+			0x012000,
+			0x012400,
+			0x012480,
+			0x01D000,
+			0x01D100,
+			0x01D200,
+			0x01D250,
+			0x01D300,
+			0x01D360,
+			0x01D380,
+			0x01D400,
+			0x01D800,
+			0x020000,
+			0x02A6E0,
+			0x02F800,
+			0x02FA20,
+			0x0E0000,
+			0x0E0080,
+			0x0E0100,
+			0x0E01F0,
+			0x0F0000,
+			0x100000,
+			};
 	public static final  int                       NUM_UNICODE_BLOCKS                      = UnicodeBlock.count;
 	// The indices to unicode blocks that belong to one of the scripts:
 	private static final int[]                     CHINESE_INDICES                         = {92, 93, 95, 96, 99, 101,
@@ -1356,11 +1169,11 @@ public final class CodePoint {
 	public static final class UnicodeBlock {
 		private static int    count = 0;
 		public         String name;
-		public           int    start;
-		public           int    end;
-		public           int    numCodePoints;
-		public           String version;
-		public           int    index;
+		public         int    start;
+		public         int    end;
+		public         int    numCodePoints;
+		public         String version;
+		public         int    index;
 
 		UnicodeBlock(String name, int start, int end, int numCodePoints, String version) {
 			blocksByName.put(this.name = name, this);

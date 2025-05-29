@@ -1,8 +1,8 @@
 package org.digitalmodular.utilities;
 
-import org.digitalmodular.utilities.annotation.StaticClass;
-
 import java.awt.Color;
+
+import org.digitalmodular.utilities.annotation.StaticClass;
 
 /**
  * @author Mark Jeronimus

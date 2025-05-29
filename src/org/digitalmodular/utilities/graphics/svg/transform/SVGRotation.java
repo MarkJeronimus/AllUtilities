@@ -60,13 +60,12 @@ public final class SVGRotation implements SVGTransform {
 
 	@Override
 	public SVGTransform overwrite(SVGTransform transform) {
-		if (!(transform instanceof SVGRotation)) {
-			throw new UnsupportedOperationException("Not implemented: " + getClass().getSimpleName() +
-			                                        ".overwrite() for " + transform.getClass().getSimpleName());
+		if (transform instanceof SVGRotation other) {
+			return new SVGRotation(other.rotation - rotation, other.rotationOriginX, other.rotationOriginY);
 		}
 
-		SVGRotation other = (SVGRotation)transform;
-		return new SVGRotation(other.rotation - rotation, other.rotationOriginX, other.rotationOriginY);
+		throw new UnsupportedOperationException("Not implemented: " + getClass().getSimpleName() +
+		                                        ".overwrite() for " + transform.getClass().getSimpleName());
 	}
 
 	@Override

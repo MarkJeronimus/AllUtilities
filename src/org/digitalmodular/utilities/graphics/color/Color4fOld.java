@@ -198,12 +198,11 @@ public class Color4fOld extends Color3fOld {
 
 	@Override
 	public boolean equals(Object other) {
-		if (!(other instanceof Color4fOld)) {
-			return false;
+		if (other instanceof Color4fOld col) {
+			return col.r == r && col.g == g && col.b == b && col.a == a;
 		}
 
-		Color4fOld col = (Color4fOld)other;
-		return col.r == r && col.g == g && col.b == b && col.a == a;
+		return false;
 	}
 
 	@Override

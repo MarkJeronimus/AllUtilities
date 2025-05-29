@@ -331,12 +331,11 @@ public class Color3fOld implements Comparable<Color3fOld> {
 
 	@Override
 	public boolean equals(Object other) {
-		if (!(other instanceof Color3fOld)) {
-			return false;
+		if (other instanceof Color3fOld col) {
+			return col.r == r && col.g == g && col.b == b;
 		}
 
-		Color3fOld col = (Color3fOld)other;
-		return col.r == r && col.g == g && col.b == b;
+		return false;
 	}
 
 	@Override

@@ -75,18 +75,17 @@ public class Matrix4d {
 		double yz = v.y * v.z;
 		double zz = v.z * v.z;
 
-		return new Matrix4d(//
-		                    xx + (1 - xx) * c, //
-		                    xy * a - v.z * s, //
-		                    xz * a + v.y * s, //
-		                    0, //
-		                    xy * a + v.z * s, //
-		                    yy + (1 - yy) * c, //
-		                    yz * a - v.x * s, //
-		                    0, //
-		                    xz * a - v.y * s, //
-		                    yz * a + v.x * s, //
-		                    zz + (1 - zz) * c, //
+		return new Matrix4d(xx + (1 - xx) * c,
+		                    xy * a - v.z * s,
+		                    xz * a + v.y * s,
+		                    0,
+		                    xy * a + v.z * s,
+		                    yy + (1 - yy) * c,
+		                    yz * a - v.x * s,
+		                    0,
+		                    xz * a - v.y * s,
+		                    yz * a + v.x * s,
+		                    zz + (1 - zz) * c,
 		                    0);
 	}
 
@@ -95,9 +94,9 @@ public class Matrix4d {
 		x1 = x2 = x3 = y0 = y2 = y3 = z0 = z1 = z3 = 0;
 	}
 
-	public void set(double x0, double x1, double x2, double x3, double y0, double y1, double y2, double y3, double z0,
-	                double z1,
-	                double z2, double z3) {
+	public void set(double x0, double x1, double x2, double x3,
+	                double y0, double y1, double y2, double y3,
+	                double z0, double z1, double z2, double z3) {
 		this.x0 = x0;
 		this.x1 = x1;
 		this.x2 = x2;
@@ -173,8 +172,8 @@ public class Matrix4d {
 	}
 
 	public Matrix4d recip() {
-		double determinant = 1 /
-		                     (x0 * y1 * z2 - x0 * z1 * y2 - y0 * x1 * z2 + y0 * z1 * x2 + z0 * x1 * y2 - z0 * y1 * x2);
+		double determinant =
+				1 / (x0 * y1 * z2 - x0 * z1 * y2 - y0 * x1 * z2 + y0 * z1 * x2 + z0 * x1 * y2 - z0 * y1 * x2);
 
 		double x0b = x0;
 		double x1b = x1;
@@ -198,16 +197,15 @@ public class Matrix4d {
 		z1b = (z0b * x1b - x0b * z1b) * determinant;
 		z2b = (x0b * y1b - y0b * x1b) * determinant;
 
-		return new Matrix4d( //
-		                     x0, x1, x2, -(x0 * x3 + x1 * y3 + x2 * z3), //
-		                     y0, y1, y2b, -(y0 * x3 + y1 * y3 + y2b * z3), //
-		                     z0, z1b, z2b, -(z0 * x3 + z1b * y3 + z2b * z3));
+		return new Matrix4d(x0, x1, x2, -(x0 * x3 + x1 * y3 + x2 * z3),
+		                    y0, y1, y2b, -(y0 * x3 + y1 * y3 + y2b * z3),
+		                    z0, z1b, z2b, -(z0 * x3 + z1b * y3 + z2b * z3));
 	}
 
 	// Speed classification: Frame
 	public void recipSelf() {
-		double determinant = 1 /
-		                     (x0 * y1 * z2 - x0 * z1 * y2 - y0 * x1 * z2 + y0 * z1 * x2 + z0 * x1 * y2 - z0 * y1 * x2);
+		double determinant =
+				1 / (x0 * y1 * z2 - x0 * z1 * y2 - y0 * x1 * z2 + y0 * z1 * x2 + z0 * x1 * y2 - z0 * y1 * x2);
 
 		double x0 = this.x0;
 		double x1 = this.x1;
@@ -249,27 +247,26 @@ public class Matrix4d {
 	}
 
 	public Vector3d mul(Vector3d v) {
-		return new Vector3d(x0 * v.x + x1 * v.y + x2 * v.z + x3, //
-		                    y0 * v.x + y1 * v.y + y2 * v.z + y3, //
+		return new Vector3d(x0 * v.x + x1 * v.y + x2 * v.z + x3,
+		                    y0 * v.x + y1 * v.y + y2 * v.z + y3,
 		                    z0 * v.x + z1 * v.y + z2 * v.z + z3);
 	}
 
 	public Matrix4d mul(Matrix4d m) {
-		return new Matrix4d( //
-		                     x0 * m.x0 + x1 * m.y0 + x2 * m.z0, //
-		                     x0 * m.x1 + x1 * m.y1 + x2 * m.z1, //
-		                     x0 * m.x2 + x1 * m.y2 + x2 * m.z2, //
-		                     x0 * m.x3 + x1 * m.y3 + x2 * m.z3 + x3, //
+		return new Matrix4d(x0 * m.x0 + x1 * m.y0 + x2 * m.z0,
+		                    x0 * m.x1 + x1 * m.y1 + x2 * m.z1,
+		                    x0 * m.x2 + x1 * m.y2 + x2 * m.z2,
+		                    x0 * m.x3 + x1 * m.y3 + x2 * m.z3 + x3,
 
-		                     y0 * m.x0 + y1 * m.y0 + y2 * m.z0, //
-		                     y0 * m.x1 + y1 * m.y1 + y2 * m.z1, //
-		                     y0 * m.x2 + y1 * m.y2 + y2 * m.z2, //
-		                     y0 * m.x3 + y1 * m.y3 + y2 * m.z3 + y3, //
+		                    y0 * m.x0 + y1 * m.y0 + y2 * m.z0,
+		                    y0 * m.x1 + y1 * m.y1 + y2 * m.z1,
+		                    y0 * m.x2 + y1 * m.y2 + y2 * m.z2,
+		                    y0 * m.x3 + y1 * m.y3 + y2 * m.z3 + y3,
 
-		                     z0 * m.x0 + z1 * m.y0 + z2 * m.z0, //
-		                     z0 * m.x1 + z1 * m.y1 + z2 * m.z1, //
-		                     z0 * m.x2 + z1 * m.y2 + z2 * m.z2, //
-		                     z0 * m.x3 + z1 * m.y3 + z2 * m.z3 + z3);
+		                    z0 * m.x0 + z1 * m.y0 + z2 * m.z0,
+		                    z0 * m.x1 + z1 * m.y1 + z2 * m.z1,
+		                    z0 * m.x2 + z1 * m.y2 + z2 * m.z2,
+		                    z0 * m.x3 + z1 * m.y3 + z2 * m.z3 + z3);
 	}
 
 	public void mulSelf(Matrix4d m) {
@@ -300,18 +297,9 @@ public class Matrix4d {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "[\n[" + //
-		       x0 + '\t' + //
-		       x1 + '\t' + //
-		       x2 + '\t' + //
-		       x3 + "]\n[" + //
-		       y0 + '\t' + //
-		       y1 + '\t' + //
-		       y2 + '\t' + //
-		       y3 + "]\n[" + //
-		       z0 + '\t' + //
-		       z1 + '\t' + //
-		       z2 + '\t' + //
-		       z3 + "]\n[0.0\t0.0\t0.0\t1.0]\n]";
+		return getClass().getSimpleName() + "[\n[" +
+		       x0 + '\t' + x1 + '\t' + x2 + '\t' + x3 + "]\n[" +
+		       y0 + '\t' + y1 + '\t' + y2 + '\t' + y3 + "]\n[" +
+		       z0 + '\t' + z1 + '\t' + z2 + '\t' + z3 + "]\n[0.0\t0.0\t0.0\t1.0]\n]";
 	}
 }

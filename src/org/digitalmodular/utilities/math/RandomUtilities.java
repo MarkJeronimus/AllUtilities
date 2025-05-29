@@ -97,8 +97,7 @@ public class RandomUtilities {
 			hash = (hash ^ value >>> 8 & 0xFF) * 0x1000193;
 			return (hash ^ value & 0xFF) * 0x1000193;
 		}
-		if (o instanceof int[]) {
-			int[] values = (int[])o;
+		if (o instanceof int[] values) {
 			for (int value : values) {
 				hash = (hash ^ value >>> 24) * 0x1000193;
 				hash = (hash ^ value >>> 16 & 0xFF) * 0x1000193;
@@ -118,8 +117,7 @@ public class RandomUtilities {
 			hash = (hash ^ (int)value >>> 8 & 0xFF) * 0x1000193;
 			return (hash ^ (int)value & 0xFF) * 0x1000193;
 		}
-		if (o instanceof long[]) {
-			long[] values = (long[])o;
+		if (o instanceof long[] values) {
 			for (long value : values) {
 				hash = (hash ^ (int)(value >>> 56)) * 0x1000193;
 				hash = (hash ^ (int)(value >>> 48) & 0xFF) * 0x1000193;
@@ -139,8 +137,7 @@ public class RandomUtilities {
 			hash = (hash ^ value >>> 8 & 0xFF) * 0x1000193;
 			return (hash ^ value & 0xFF) * 0x1000193;
 		}
-		if (o instanceof float[]) {
-			float[] values = (float[])o;
+		if (o instanceof float[] values) {
 			for (float f : values) {
 				int value = Float.floatToRawIntBits(f);
 				hash = (hash ^ value >>> 24) * 0x1000193;
@@ -161,8 +158,7 @@ public class RandomUtilities {
 			hash = (hash ^ (int)value >>> 8 & 0xFF) * 0x1000193;
 			return (hash ^ (int)value & 0xFF) * 0x1000193;
 		}
-		if (o instanceof double[]) {
-			double[] values = (double[])o;
+		if (o instanceof double[] values) {
 			for (double d : values) {
 				long value = Double.doubleToRawLongBits(d);
 				hash = (hash ^ (int)(value >>> 56)) * 0x1000193;
@@ -179,8 +175,7 @@ public class RandomUtilities {
 		if (o instanceof Byte) {
 			return (hash ^ ((Byte)o).byteValue() & 0xFF) * 0x1000193;
 		}
-		if (o instanceof byte[]) {
-			byte[] values = (byte[])o;
+		if (o instanceof byte[] values) {
 			for (byte value : values) {
 				hash = (hash ^ value & 0xFF) * 0x1000193;
 			}
@@ -192,8 +187,7 @@ public class RandomUtilities {
 			hash = (hash ^ value >> 8 & 0xFF) * 0x1000193;
 			return (hash ^ value & 0xFF) * 0x1000193;
 		}
-		if (o instanceof short[]) {
-			short[] values = (short[])o;
+		if (o instanceof short[] values) {
 			for (short value : values) {
 				// short doesn't handle >>> well as it's first converted to int with sign-extend
 				hash = (hash ^ value >> 8 & 0xFF) * 0x1000193;
@@ -206,8 +200,7 @@ public class RandomUtilities {
 			hash = (hash ^ value >>> 8) * 0x1000193;
 			return (hash ^ value & 0xFF) * 0x1000193;
 		}
-		if (o instanceof char[]) {
-			char[] values = (char[])o;
+		if (o instanceof char[] values) {
 			for (char value : values) {
 				hash = (hash ^ value >>> 8) * 0x1000193;
 				hash = (hash ^ value & 0xFF) * 0x1000193;

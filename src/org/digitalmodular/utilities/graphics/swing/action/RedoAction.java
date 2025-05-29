@@ -20,7 +20,6 @@
 package org.digitalmodular.utilities.graphics.swing.action;
 
 import java.awt.event.ActionEvent;
-import javax.swing.Action;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
@@ -33,8 +32,8 @@ import org.digitalmodular.utilities.graphics.swing.ImageIconProxy;
 public class RedoAction extends UndoableAction {
 	public RedoAction(ActionManager actionManager) {
 		super(ActionManager.REDO_ACTION_NAME, actionManager);
-		putValue(Action.SMALL_ICON, ImageIconProxy.getIcon("icons/16/redo.gif"));
-		putValue(Action.LARGE_ICON_KEY, ImageIconProxy.getIcon("icons/22/redo.gif"));
+		putValue(SMALL_ICON, ImageIconProxy.getIcon("icons/16/redo.gif"));
+		putValue(LARGE_ICON_KEY, ImageIconProxy.getIcon("icons/22/redo.gif"));
 
 		checkEnable();
 	}
@@ -44,8 +43,7 @@ public class RedoAction extends UndoableAction {
 		setEnabled(actionManager.undoManager.canRedo());
 		actionManager.setActionEnabled(ActionManager.UNDO_ACTION_NAME, actionManager.undoManager.canUndo());
 
-		putValue(Action.NAME,
-		         getValue(Action.NAME) == null ? null : actionManager.undoManager.getRedoPresentationName());
+		putValue(NAME, getValue(NAME) == null ? null : actionManager.undoManager.getRedoPresentationName());
 	}
 
 	@Override

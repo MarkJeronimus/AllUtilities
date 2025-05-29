@@ -39,23 +39,23 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import javax.imageio.ImageIO;
 
 /**
- * Implementation and javadoc taken from {@link com.sun.istack.internal.Pool}.
+ * Implementation and javadoc taken from {@code com.sun.istack.internal.Pool}.
  *
  * @author Mark Jeronimus
  */
 // Created 2012-05-17
-public class Pool<T> {
-	private static final Class<?>[] IMMUTABLE_CLASSES = {Byte.class, Short.class, Character.class,
-	                                                     Integer.class, Long.class, Float.class, Double.class, //
-	                                                     Boolean.class, String.class, BigInteger.class,
-	                                                     BigDecimal.class, //
-	                                                     Locale.class, Font.class, BasicStroke.class, Paint.class,
-	                                                     Cursor.class, //
-	                                                     File.class, URL.class, UUID.class, Inet4Address.class};
+public final class Pool<T> {
+	private static final Class<?>[] IMMUTABLE_CLASSES = {
+			Byte.class, Short.class, Character.class, Integer.class, Long.class, Float.class, Double.class,
+			Boolean.class, String.class, BigInteger.class, BigDecimal.class,
+			Locale.class, Font.class, BasicStroke.class, Paint.class, Cursor.class,
+			File.class, URL.class, UUID.class, Inet4Address.class};
 
-	private static final Class<?>[] NON_INSTANTIABLE_CLASSES = {System.class, Math.class, Math.class,
-	                                                            Array.class, Collections.class, Arrays.class,
-	                                                            AccessController.class, ImageIO.class};
+	@SuppressWarnings("removal")
+	private static final Class<?>[] NON_INSTANTIABLE_CLASSES = {
+			System.class, Math.class, Math.class,
+			Array.class, Arrays.class, Collections.class,
+			AccessController.class, ImageIO.class};
 
 	private static final HashMap<Class<?>, Pool<?>> POOLS = new HashMap<>();
 
@@ -65,18 +65,17 @@ public class Pool<T> {
 	public static <T> Pool<T> getPool(Class<T> clazz) {
 		if (clazz.isArray()) {
 			throw new IllegalAccessError("Class cannot be an array type (use the other constructor for arrays).");
-		}
-		if (clazz.isInterface()) {
+		} else if (clazz.isInterface()) {
 			throw new IllegalAccessError("Class must be a concrete type.");
-		}
-		if (isImmutable(clazz)) {
+		} else if (isImmutable(clazz)) {
 			throw new IllegalAccessError("Class cannot be an immutable type.");
-		}
-		if (!isInstantiable(clazz)) {
+		} else if (!isInstantiable(clazz)) {
 			throw new IllegalAccessError("Class must be an instantiable type.");
 		}
 
+		@SuppressWarnings("unchecked")
 		Pool<T> pool = (Pool<T>)POOLS.get(clazz);
+
 		if (pool == null) {
 			pool = new Pool<>(clazz);
 			POOLS.put(clazz, pool);
@@ -122,7 +121,7 @@ public class Pool<T> {
 	 * <p>
 	 * Also note that multiple threads may call this method concurrently.
 	 */
-	protected T create() {
+	private T create() {
 		try {
 			return clazz.newInstance();
 		} catch (InstantiationException ex) {
@@ -135,20 +134,12 @@ public class Pool<T> {
 	}
 
 	private static <T> boolean isImmutable(Class<T> subClass) {
-		for (Class<?> superClass : IMMUTABLE_CLASSES) {
-			if (superClass.isAssignableFrom(subClass)) {
-				return true;
-			}
-		}
-		return false;
+		return Arrays.stream(IMMUTABLE_CLASSES)
+		             .anyMatch(superClass -> superClass.isAssignableFrom(subClass));
 	}
 
 	private static <T> boolean isInstantiable(Class<T> subClass) {
-		for (Class<?> superClass : NON_INSTANTIABLE_CLASSES) {
-			if (superClass.isAssignableFrom(subClass)) {
-				return false;
-			}
-		}
-		return true;
+		return Arrays.stream(NON_INSTANTIABLE_CLASSES)
+		             .noneMatch(superClass -> superClass.isAssignableFrom(subClass));
 	}
 }

@@ -191,7 +191,7 @@ public final class StringValidatorUtilities {
 		return actual;
 	}
 
-	public static void requireStringLengthsMatch(String string1, String string2, String varName1, String varName2){
+	public static void requireStringLengthsMatch(String string1, String string2, String varName1, String varName2) {
 		requireNonNull(string1, varName1);
 		requireNonNull(string2, varName2);
 

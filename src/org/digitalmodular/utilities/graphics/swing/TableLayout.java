@@ -193,7 +193,7 @@ public class TableLayout implements LayoutManager, Serializable {
 				for (int x = 0; x < numColumns; x++) {
 					Component comp = parent.getComponent(component);
 					component++;
-					Dimension d    = comp.getPreferredSize();
+					Dimension d = comp.getPreferredSize();
 
 					if (columns[x] == 0) {
 						if (colWidths[x] < d.width) {
@@ -248,7 +248,7 @@ public class TableLayout implements LayoutManager, Serializable {
 				for (int x = 0; x < numColumns; x++) {
 					Component comp = parent.getComponent(component);
 					component++;
-					Dimension d    = comp.getMinimumSize();
+					Dimension d = comp.getMinimumSize();
 					if (colWidths[x] < d.width) {
 						colWidths[x] = d.width;
 					}

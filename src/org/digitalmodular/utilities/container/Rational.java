@@ -102,7 +102,7 @@ public class Rational {
 		double d = value;
 		do {
 			if (Math.abs(d) > Long.MAX_VALUE) {
-				return Rational.of(numerator, denominator);
+				return of(numerator, denominator);
 			}
 
 			long integerPart = (long)Math.floor(d);
@@ -119,7 +119,7 @@ public class Rational {
 			if (integerPart > 0) {
 				if (numerator / integerPart != numerator1 ||
 				    denominator / integerPart != denominator1) {
-					return Rational.of(numerator1, denominator1);
+					return of(numerator1, denominator1);
 				}
 			}
 
@@ -129,11 +129,11 @@ public class Rational {
 			// Detect long overflow
 			if ((numerator ^ numerator2) < 0 ||
 			    (denominator ^ denominator2) < 0) {
-				return Rational.of(numerator1, denominator1);
+				return of(numerator1, denominator1);
 			}
 
 			if ((double)numerator / denominator == value) {
-				return Rational.of(numerator, denominator);
+				return of(numerator, denominator);
 			}
 
 			d = 1.0 / (d - integerPart);

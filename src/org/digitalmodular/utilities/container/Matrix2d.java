@@ -65,7 +65,7 @@ public class Matrix2d {
 	 * Returns this Matrix2d multiplied with a vector
 	 */
 	public Vector2d multiply(Vector2d vector) {
-		return new Vector2d(vector.x * x0 + vector.y * x1, //
+		return new Vector2d(vector.x * x0 + vector.y * x1,
 		                    vector.x * y0 + vector.y * y1);
 	}
 
@@ -73,7 +73,7 @@ public class Matrix2d {
 	 * Returns this Matrix2d multiplied with a vector
 	 */
 	public Vector2d multiply(Vector2i vector) {
-		return new Vector2d(vector.x * x0 + vector.y * x1, //
+		return new Vector2d(vector.x * x0 + vector.y * x1,
 		                    vector.x * y0 + vector.y * y1);
 	}
 
@@ -85,7 +85,7 @@ public class Matrix2d {
 	public Matrix2d recip() {
 		double d = x0 * y1 - y0 * x1;
 
-		return new Matrix2d(y1 / d, -x1 / d, //
+		return new Matrix2d(y1 / d, -x1 / d,
 		                    -y0 / d, x0 / d);
 	}
 
@@ -93,31 +93,31 @@ public class Matrix2d {
 		double c = Math.cos(rotz);
 		double s = Math.sin(rotz);
 
-		Matrix2d mul = new Matrix2d(c, -s, //
+		Matrix2d mul = new Matrix2d(c, -s,
 		                            s, c);
 
 		return mul.multiply(this);
 	}
 
 	public Matrix2d flipX() {
-		return new Matrix2d(-x0, -x1, //
+		return new Matrix2d(-x0, -x1,
 		                    y0, y1);
 	}
 
 	public Matrix2d flipY() {
-		return new Matrix2d(x0, x1, //
+		return new Matrix2d(x0, x1,
 		                    -y0, -y1);
 	}
 
 	private Matrix2d multiply(Matrix2d m) {
-		return new Matrix2d(m.x0 * x0 + m.x1 * y0, m.x0 * x1 + m.x1 * y1, //
+		return new Matrix2d(m.x0 * x0 + m.x1 * y0, m.x0 * x1 + m.x1 * y1,
 		                    m.y0 * x0 + m.y1 * y0, m.y0 * x1 + m.y1 * y1);
 	}
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "[\n[" //
-		       + x0 + '\t' + x1 + "]\n[" //
+		return getClass().getSimpleName() + "[\n["
+		       + x0 + '\t' + x1 + "]\n["
 		       + y0 + '\t' + y1 + "]]\n";
 	}
 }

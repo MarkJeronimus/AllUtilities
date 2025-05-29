@@ -405,9 +405,11 @@ public class RangeSliderUI extends BasicSliderUI {
 
 		upperThumbRect.setLocation(x, y);
 
-		SwingUtilities
-				.computeUnion(upperThumbRect.x, upperThumbRect.y, upperThumbRect.width, upperThumbRect.height,
-				              upperUnionRect);
+		SwingUtilities.computeUnion(upperThumbRect.x,
+		                            upperThumbRect.y,
+		                            upperThumbRect.width,
+		                            upperThumbRect.height,
+		                            upperUnionRect);
 		slider.repaint(upperUnionRect.x, upperUnionRect.y, upperUnionRect.width, upperUnionRect.height);
 	}
 
@@ -422,8 +424,7 @@ public class RangeSliderUI extends BasicSliderUI {
 			if (blockIncrement <= 0 && slider.getMaximum() > slider.getMinimum()) {
 				blockIncrement = 1;
 			}
-			int delta = blockIncrement *
-			            (direction > 0 ? BasicSliderUI.POSITIVE_SCROLL : BasicSliderUI.NEGATIVE_SCROLL);
+			int delta = blockIncrement * (direction > 0 ? POSITIVE_SCROLL : NEGATIVE_SCROLL);
 
 			if (upperThumbSelected) {
 				int oldValue = ((RangeSlider)slider).getUpperValue();
@@ -442,7 +443,7 @@ public class RangeSliderUI extends BasicSliderUI {
 	@Override
 	public void scrollByUnit(int direction) {
 		synchronized (slider) {
-			int delta = (direction > 0 ? BasicSliderUI.POSITIVE_SCROLL : BasicSliderUI.NEGATIVE_SCROLL);
+			int delta = (direction > 0 ? POSITIVE_SCROLL : NEGATIVE_SCROLL);
 
 			if (upperThumbSelected) {
 				int oldValue = ((RangeSlider)slider).getUpperValue();

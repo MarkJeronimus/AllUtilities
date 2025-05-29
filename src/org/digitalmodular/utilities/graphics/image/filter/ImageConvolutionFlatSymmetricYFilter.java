@@ -188,7 +188,7 @@ public class ImageConvolutionFlatSymmetricYFilter extends ImageFilter {
 					rowIn1b = in.matrix[z][y + 1];
 					rowOut = out.matrix[z][y];
 					for (x = in.border; x < endX; x++) {
-						rowOut[x] = rowIn0[x] * kernel0 + //
+						rowOut[x] = rowIn0[x] * kernel0 +
 						            (rowIn1a[x] + rowIn1b[x]) * kernel1;
 					}
 				}
@@ -227,8 +227,8 @@ public class ImageConvolutionFlatSymmetricYFilter extends ImageFilter {
 					rowIn2b = in.matrix[z][y + 2];
 					rowOut = out.matrix[z][y];
 					for (x = in.border; x < endX; x++) {
-						rowOut[x] = rowIn0[x] * kernel0 + //
-						            (rowIn1a[x] + rowIn1b[x]) * kernel1 + //
+						rowOut[x] = rowIn0[x] * kernel0 +
+						            (rowIn1a[x] + rowIn1b[x]) * kernel1 +
 						            (rowIn2a[x] + rowIn2b[x]) * kernel2;
 					}
 				}

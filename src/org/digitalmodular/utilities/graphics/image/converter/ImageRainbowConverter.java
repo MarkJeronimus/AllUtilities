@@ -100,7 +100,7 @@ public class ImageRainbowConverter extends ImageConverter {
 							switch ((int)hue6) {
 								case 0:
 									array[p] = (int)(row1[x] * 255 + 0.5) << 24 | 0xFF0000 |
-									             (int)(hueF * 255 + 0.5) << 8;
+									           (int)(hueF * 255 + 0.5) << 8;
 									p++;
 									break;
 								case 1:
@@ -120,12 +120,12 @@ public class ImageRainbowConverter extends ImageConverter {
 									break;
 								case 4:
 									array[p] = (int)(row1[x] * 255 + 0.5) << 24 | 0x0000FF |
-									             (int)(hueF * 255 + 0.5) << 16;
+									           (int)(hueF * 255 + 0.5) << 16;
 									p++;
 									break;
 								case 5:
 									array[p] = (int)(row1[x] * 255 + 0.5) << 24 | 0xFF0000 |
-									             (int)(hueF * 255 + 0.5) ^ 0xFF;
+									           (int)(hueF * 255 + 0.5) ^ 0xFF;
 									p++;
 							}
 						}

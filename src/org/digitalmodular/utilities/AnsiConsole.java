@@ -1,10 +1,10 @@
 package org.digitalmodular.utilities;
 
+import java.awt.Color;
+
 import org.jetbrains.annotations.Nullable;
 
 import org.digitalmodular.utilities.annotation.StaticClass;
-
-import java.awt.Color;
 
 /**
  * @author Mark Jeronimus

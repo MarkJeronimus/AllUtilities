@@ -77,8 +77,7 @@ public class Vector2l implements Comparable<Vector2l>, Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Vector2l) {
-			Vector2l v = (Vector2l)obj;
+		if (obj instanceof Vector2l v) {
 			return x == v.x && y == v.y;
 		}
 		return super.equals(obj);

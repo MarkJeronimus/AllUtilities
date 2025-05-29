@@ -85,7 +85,7 @@ public class GeneralDataInputStream extends DataInputStream {
 		if ((c0 | c1 | c2 | c3 | c4 | c5 | c6 | c7) < 0) {
 			throw new EOFException();
 		}
-		return ((((long)((long)((long)(c0 << 8 | c1) << 8 | c2) << 8 | c3) << 8 | c4) << 8 | c5) << 8 | c6) << 8 | c7;
+		return ((((((long)(c0 << 8 | c1) << 8 | c2) << 8 | c3) << 8 | c4) << 8 | c5) << 8 | c6) << 8 | c7;
 	}
 
 	public final long readLongLittleEndian() throws IOException {
@@ -100,7 +100,7 @@ public class GeneralDataInputStream extends DataInputStream {
 		if ((c0 | c1 | c2 | c3 | c4 | c5 | c6 | c7) < 0) {
 			throw new EOFException();
 		}
-		return ((((long)((long)((long)(c7 << 8 | c6) << 8 | c5) << 8 | c4) << 8 | c3) << 8 | c2) << 8 | c1) << 8 | c0;
+		return ((((((long)(c7 << 8 | c6) << 8 | c5) << 8 | c4) << 8 | c3) << 8 | c2) << 8 | c1) << 8 | c0;
 	}
 
 	public final double readFloatBigEndian() throws IOException {

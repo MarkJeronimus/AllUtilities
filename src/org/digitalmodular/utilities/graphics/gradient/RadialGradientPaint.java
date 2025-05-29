@@ -194,6 +194,6 @@ public class RadialGradientPaint extends GradientPaintContext implements Paint {
 	public int getTransparency() {
 		requireState(gradient != null, () -> "setGradient() has not been called");
 
-		return gradient.hasTransparency() ? Transparency.TRANSLUCENT : Transparency.OPAQUE;
+		return gradient.hasTransparency() ? TRANSLUCENT : OPAQUE;
 	}
 }

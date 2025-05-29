@@ -109,8 +109,7 @@ public class PausableThread extends Thread {
 	}
 
 	public void setRelativePriority(int difference) {
-		setPriority(
-				Math.min(Thread.MAX_PRIORITY, Math.max(Thread.MIN_PRIORITY, getPriority() - difference)));
+		setPriority(Math.min(MAX_PRIORITY, Math.max(MIN_PRIORITY, getPriority() - difference)));
 	}
 
 	public void start(int initialThreadStatus) {

@@ -48,7 +48,7 @@ public final class SVGLayer extends SVGGroup {
 	@Override
 	@SuppressWarnings("SpellCheckingInspection")
 	protected void encodeExtraAttributes(Appendable out) throws IOException {
-		SVGElement.encodeAttribute(out, "inkscape:groupmode", "layer");
-		SVGElement.encodeAttribute(out, "inkscape:label", name);
+		encodeAttribute(out, "inkscape:groupmode", "layer");
+		encodeAttribute(out, "inkscape:label", name);
 	}
 }

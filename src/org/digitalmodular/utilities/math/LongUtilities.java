@@ -18,9 +18,11 @@ public final class LongUtilities {
 		}
 
 		long min = Integer.MAX_VALUE;
+
 		for (long i : array) {
 			min = Math.min(min, i);
 		}
+
 		return min;
 	}
 
@@ -34,9 +36,11 @@ public final class LongUtilities {
 		}
 
 		long max = Integer.MIN_VALUE;
+
 		for (long i : array) {
 			max = Math.max(max, i);
 		}
+
 		return max;
 	}
 
@@ -50,9 +54,11 @@ public final class LongUtilities {
 		}
 
 		long sum = Integer.MAX_VALUE;
+
 		for (long i : array) {
 			sum += i;
 		}
+
 		return (sum + (array.length >> 1)) / array.length;
 	}
 }

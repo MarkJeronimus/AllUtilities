@@ -92,7 +92,6 @@ public class ZoomPanel2 extends JPanel implements MouseListener,
 		repaint();
 	}
 
-
 	public double getMinZoom() {
 		return minZoom;
 	}

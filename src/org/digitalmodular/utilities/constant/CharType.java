@@ -24,19 +24,19 @@ package org.digitalmodular.utilities.constant;
  */
 // Created 2006-03-01
 public enum CharType {
-	LETTER, //
-	DIGIT, //
-	SYMBOL, //
+	LETTER,
+	DIGIT,
+	SYMBOL,
 
-	WHITESPACE, //
+	WHITESPACE,
 
-	CONTROL, //
-	UNICODE, //
+	CONTROL,
+	UNICODE,
 
-	END_OF_LINE, //
-	END_OF_FILE, //
+	END_OF_LINE,
+	END_OF_FILE,
 
-	NOT_A_CHAR, //
+	NOT_A_CHAR,
 	;
 
 	public static CharType getCharType(int c) {

@@ -69,7 +69,7 @@ public class ImageGrayScaleConverter extends ImageConverter {
 					for (x = image.border; x < endX; x++) {
 						array[p] = 0xFF000000 | 0x10101 *
 						                        (int)((row0[x] * 0.299f + row1[x] * 0.587f + row2[x] * 0.114f) *
-						                                255 + 0.5);
+						                              255 + 0.5);
 						p++;
 					}
 					p += lineStride - image.numColumns;
@@ -84,7 +84,7 @@ public class ImageGrayScaleConverter extends ImageConverter {
 					for (x = image.border; x < endX; x++) {
 						array[p] = (int)(row3[x] * 255 + 0.5) << 24 | 0x10101
 						                                              * (int)((row0[x] * 0.299f + row1[x] * 0.587f +
-						                                                         row2[x] * 0.114f) * 255 + 0.5);
+						                                                       row2[x] * 0.114f) * 255 + 0.5);
 						p++;
 					}
 					p += lineStride - image.numColumns;

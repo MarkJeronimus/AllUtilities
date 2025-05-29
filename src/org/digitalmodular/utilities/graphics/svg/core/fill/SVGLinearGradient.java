@@ -26,8 +26,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
-
 import org.digitalmodular.utilities.graphics.svg.core.SVGDef;
 import org.digitalmodular.utilities.graphics.svg.core.SVGElement;
 import org.digitalmodular.utilities.graphics.svg.core.SVGFill;
@@ -188,7 +186,7 @@ public final class SVGLinearGradient extends SVGElement implements SVGDef, SVGFi
 
 		private SVGGradientStop(float offset, Color color) {
 			this.offset = offset;
-			this.color = color;
+			this.color  = color;
 		}
 
 		public float getOffset() {
@@ -200,7 +198,7 @@ public final class SVGLinearGradient extends SVGElement implements SVGDef, SVGFi
 		}
 
 		@Override
-		public int compareTo(@NotNull SVGGradientStop other) {
+		public int compareTo(SVGGradientStop other) {
 			return Float.compare(offset, other.offset);
 		}
 

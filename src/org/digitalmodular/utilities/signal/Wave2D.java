@@ -64,9 +64,9 @@ public class Wave2D {
 					samples[y][x] = image.getRaster().getDataBuffer().getElem(0, source);
 					source++;
 				} else {
-					samples[y][x] = 0.299 * image.getRaster().getDataBuffer().getElem(0, source) //
-					                + 0.587 * image.getRaster().getDataBuffer().getElem(0, source) //
-					                + 0.114 * image.getRaster().getDataBuffer().getElem(0, source);
+					samples[y][x] = 0.299 * image.getRaster().getDataBuffer().getElem(0, source) +
+					                0.587 * image.getRaster().getDataBuffer().getElem(0, source) +
+					                0.114 * image.getRaster().getDataBuffer().getElem(0, source);
 					source++;
 					source++;
 					source++;
@@ -127,9 +127,9 @@ public class Wave2D {
 					samples[y][x] = image.getRaster().getDataBuffer().getElem(0, source);
 					source++;
 				} else {
-					samples[y][x] = 0.299 * image.getRaster().getDataBuffer().getElem(0, source) //
-					                + 0.587 * image.getRaster().getDataBuffer().getElem(0, source) //
-					                + 0.114 * image.getRaster().getDataBuffer().getElem(0, source);
+					samples[y][x] = 0.299 * image.getRaster().getDataBuffer().getElem(0, source) +
+					                0.587 * image.getRaster().getDataBuffer().getElem(0, source) +
+					                0.114 * image.getRaster().getDataBuffer().getElem(0, source);
 					source++;
 					source++;
 					source++;
@@ -148,15 +148,15 @@ public class Wave2D {
 					// this.samples[y][x] =
 					// image.getRaster().getDataBuffer().getElem(0, source++);
 					int c = image.getRGB(x1 + x, y1 + y);
-					samples[y][x] = //
-							0.299 * (c & 0xFF) //
-							+ 0.587 * (c >> 8 & 0xFF) //
-							+ 0.114 * (c >> 16 & 0xFF);
+					samples[y][x] =
+							0.299 * (c & 0xFF) +
+							0.587 * (c >> 8 & 0xFF) +
+							0.114 * (c >> 16 & 0xFF);
 				} else {
-					samples[y][x] = //
-							0.299 * image.getRaster().getDataBuffer().getElem(0, source) //
-							+ 0.587 * image.getRaster().getDataBuffer().getElem(0, source) //
-							+ 0.114 * image.getRaster().getDataBuffer().getElem(0, source);
+					samples[y][x] =
+							0.299 * image.getRaster().getDataBuffer().getElem(0, source) +
+							0.587 * image.getRaster().getDataBuffer().getElem(0, source) +
+							0.114 * image.getRaster().getDataBuffer().getElem(0, source);
 					source++;
 					source++;
 					source++;

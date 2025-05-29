@@ -31,7 +31,7 @@ public class Tuple<K extends Comparable<K>, V extends Comparable<V>> implements 
 
 	public Tuple(K first, V value) {
 		this.first = requireNonNull(first, "first");
-		second = requireNonNull(value, "second");
+		second     = requireNonNull(value, "second");
 	}
 
 	public K first() {
@@ -56,14 +56,11 @@ public class Tuple<K extends Comparable<K>, V extends Comparable<V>> implements 
 	public boolean equals(Object o) {
 		if (this == o) {
 			return true;
-		}
-		if (!(o instanceof Tuple)) {
+		} else if (o instanceof Tuple<?, ?> other) {
+			return first.equals(other.first) && second.equals(other.second);
+		} else {
 			return false;
 		}
-
-		Tuple<?, ?> other = (Tuple<?, ?>)o;
-		return first.equals(other.first) && second.equals(other.second);
-
 	}
 
 	@Override

@@ -48,8 +48,7 @@ public abstract class UndoableAction extends AbstractAction implements UndoableE
 
 	@Override
 	public String getPresentationName() {
-		throw new UnsupportedOperationException(
-				"Not supported yet."); // To change body of generated methods, choose Tools |
+		throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose Tools |
 		// Templates.
 	}
 

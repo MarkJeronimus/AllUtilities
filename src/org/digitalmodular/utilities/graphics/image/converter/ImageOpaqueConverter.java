@@ -67,10 +67,10 @@ public class ImageOpaqueConverter extends ImageConverter {
 					row1 = image.matrix[1][y];
 					row2 = image.matrix[2][y];
 					for (x = image.border; x < endX; x++) {
-						array[p] = 0xFF000000 //
-						           | (((int)(row0[x] * 255 + 0.5) & 0xFF) << 8 //
-						                | (int)(row1[x] * 255 + 0.5) & 0xFF) << 8 //
-						           | (int)(row2[x] * 255 + 0.5) & 0xFF;
+						array[p] = 0xFF000000 |
+						           (((int)(row0[x] * 255 + 0.5) & 0xFF) << 8 |
+						            (int)(row1[x] * 255 + 0.5) & 0xFF) << 8 |
+						           (int)(row2[x] * 255 + 0.5) & 0xFF;
 						p++;
 					}
 					p += lineStride - image.width;
@@ -83,10 +83,10 @@ public class ImageOpaqueConverter extends ImageConverter {
 					row2 = image.matrix[2][y];
 					row3 = image.matrix[3][y];
 					for (x = image.border; x < endX; x++) {
-						array[p] = ((((int)(row3[x] * 255 + 0.5) & 0xFF) << 8//
-						             | (int)(row0[x] * 255 + 0.5) & 0xFF) << 8 //
-						            | (int)(row1[x] * 255 + 0.5) & 0xFF) << 8 //
-						           | (int)(row2[x] * 255 + 0.5) & 0xFF;
+						array[p] = ((((int)(row3[x] * 255 + 0.5) & 0xFF) << 8 |
+						             (int)(row0[x] * 255 + 0.5) & 0xFF) << 8 |
+						            (int)(row1[x] * 255 + 0.5) & 0xFF) << 8 |
+						           (int)(row2[x] * 255 + 0.5) & 0xFF;
 						p++;
 					}
 					p += lineStride - image.width;

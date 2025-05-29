@@ -179,7 +179,7 @@ public class ImageConvolutionFlatAntisymmetricXFilter extends ImageFilter {
 					rowIn = in.matrix[z][y];
 					rowOut = out.matrix[z][y];
 					for (x = in.border; x < endX; x++) {
-						rowOut[x] = rowIn[x] * kernel0 + //
+						rowOut[x] = rowIn[x] * kernel0 +
 						            (rowIn[x + 1] - rowIn[x - 1]) * kernel1;
 					}
 				}
@@ -210,8 +210,8 @@ public class ImageConvolutionFlatAntisymmetricXFilter extends ImageFilter {
 					rowIn = in.matrix[z][y];
 					rowOut = out.matrix[z][y];
 					for (x = in.border; x < endX; x++) {
-						rowOut[x] = rowIn[x] * kernel0 + //
-						            (rowIn[x + 1] - rowIn[x - 1]) * kernel1 + //
+						rowOut[x] = rowIn[x] * kernel0 +
+						            (rowIn[x + 1] - rowIn[x - 1]) * kernel1 +
 						            (rowIn[x + 2] - rowIn[x - 2]) * kernel2;
 					}
 				}

@@ -23,11 +23,11 @@ public class DCTEngine {
 			for (int i = 0; i < n; i++) {
 				System.out.printf("%5.2f ", out[i]);
 			}
-			System.out.print("\t");
+			System.out.print('\t');
 			for (int i = 0; i < n; i++) {
 				System.out.print("▁▂▃▄▅▆▇█".charAt((int)Math.round(3.5 + out[i] * 3.5)));
 			}
-			System.out.print("\t");
+			System.out.print('\t');
 			dctEngine.setNormalizationMode(FrequencyTransformNormalizationMode.ONE_OVER_N);
 			dctEngine.forward(out, in);
 			for (int i = 0; i < n; i++) {

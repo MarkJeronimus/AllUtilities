@@ -1,7 +1,5 @@
 package org.digitalmodular.utilities.container;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * @author Mark Jeronimus
  */

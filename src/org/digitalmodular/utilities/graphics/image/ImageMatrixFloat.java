@@ -150,7 +150,7 @@ public class ImageMatrixFloat extends AbstractImageMatrix {
 					for (x = border; x < endX; x++) {
 						image.setRGB(u, v, 0xFF000000
 						                   | (((int)(row0[x] * 255 + 0.499999) & 0xFF) << 8 |
-						                        (int)(row1[x] * 255 + 0.499999) & 0xFF) << 8
+						                      (int)(row1[x] * 255 + 0.499999) & 0xFF) << 8
 						                   | (int)(row2[x] * 255 + 0.499999) & 0xFF);
 						u++;
 					}

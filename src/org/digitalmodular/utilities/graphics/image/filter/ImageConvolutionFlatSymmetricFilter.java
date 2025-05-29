@@ -205,7 +205,7 @@ public class ImageConvolutionFlatSymmetricFilter extends ImageFilter {
 					row = in.matrix[z][y];
 					rowTemp0 = temp.matrix[z][y];
 					for (x = in.border; x < endX; x++) {
-						rowTemp0[x] = row[x] * kernel0 + //
+						rowTemp0[x] = row[x] * kernel0 +
 						              (row[x - 1] + row[x + 1]) * kernel1;
 					}
 				}
@@ -220,7 +220,7 @@ public class ImageConvolutionFlatSymmetricFilter extends ImageFilter {
 					rowTemp1b = temp.matrix[z][y + 1];
 					row = out.matrix[z][y];
 					for (x = in.border; x < endX; x++) {
-						row[x] = rowTemp0[x] * kernel0 + //
+						row[x] = rowTemp0[x] * kernel0 +
 						         (rowTemp1a[x] + rowTemp1b[x]) * kernel1;
 					}
 				}
@@ -255,8 +255,8 @@ public class ImageConvolutionFlatSymmetricFilter extends ImageFilter {
 					row = in.matrix[z][y];
 					rowTemp0 = temp.matrix[z][y];
 					for (x = in.border; x < endX; x++) {
-						rowTemp0[x] = row[x] * kernel0 + //
-						              (row[x - 1] + row[x + 1]) * kernel1 + //
+						rowTemp0[x] = row[x] * kernel0 +
+						              (row[x - 1] + row[x + 1]) * kernel1 +
 						              (row[x - 2] + row[x + 2]) * kernel2;
 					}
 				}
@@ -274,8 +274,8 @@ public class ImageConvolutionFlatSymmetricFilter extends ImageFilter {
 					rowTemp2b = temp.matrix[z][y + 2];
 					row = out.matrix[z][y];
 					for (x = in.border; x < endX; x++) {
-						row[x] = rowTemp0[x] * kernel0 + //
-						         (rowTemp1a[x] + rowTemp1b[x]) * kernel1 + //
+						row[x] = rowTemp0[x] * kernel0 +
+						         (rowTemp1a[x] + rowTemp1b[x]) * kernel1 +
 						         (rowTemp2a[x] + rowTemp2b[x]) * kernel2;
 					}
 				}

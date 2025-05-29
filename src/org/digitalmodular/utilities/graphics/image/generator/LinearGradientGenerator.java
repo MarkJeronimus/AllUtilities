@@ -22,7 +22,7 @@
 //import org.digitalmodular.utilities.NumberUtilities;
 //import org.digitalmodular.utilities.graphics.image.ImageMatrix;
 //
-///**
+// /**
 // * @author Mark Jeronimus
 // */
 //// Created 2012-04-03

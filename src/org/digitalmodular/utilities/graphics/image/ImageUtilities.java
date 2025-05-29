@@ -139,24 +139,23 @@ public final class ImageUtilities {
 
 	@SuppressWarnings("StringConcatenationMissingWhitespace")
 	public static String analyzeImage(Image img) {
-		if (!(img instanceof BufferedImage)) {
-			return img.getClass().getSimpleName();
+		if (img instanceof BufferedImage image) {
+			int     srcDataType             = image.getRaster().getDataBuffer().getDataType();
+			int     srcColorType            = getColorSpaceType(image.getColorModel().getColorSpace());
+			int     numComponents           = image.getColorModel().getColorSpace().getNumComponents();
+			boolean hasAlpha                = image.getColorModel().hasAlpha();
+			boolean srcIsAlphaPremultiplied = image.getColorModel().isAlphaPremultiplied();
+			boolean srcIsSRGB               = srcColorType != ColorSpace.CS_LINEAR_RGB;
+
+			return imageTypeName(image.getType())
+			       + " / " + dataTypeName(srcDataType)
+			       + " / " + numComponents + "ch"
+			       + " / " + (hasAlpha ? "alpha" : "opaque")
+			       + (srcIsAlphaPremultiplied ? " premultiplied" : "")
+			       + " / " + (srcIsSRGB ? "sRGB" : "linearRGB");
 		}
 
-		BufferedImage image                   = (BufferedImage)img;
-		int           srcDataType             = image.getRaster().getDataBuffer().getDataType();
-		int           srcColorType            = getColorSpaceType(image.getColorModel().getColorSpace());
-		int           numComponents           = image.getColorModel().getColorSpace().getNumComponents();
-		boolean       hasAlpha                = image.getColorModel().hasAlpha();
-		boolean       srcIsAlphaPremultiplied = image.getColorModel().isAlphaPremultiplied();
-		boolean       srcIsSRGB               = srcColorType != ColorSpace.CS_LINEAR_RGB;
-
-		return imageTypeName(image.getType())
-		       + " / " + dataTypeName(srcDataType)
-		       + " / " + numComponents + "ch"
-		       + " / " + (hasAlpha ? "alpha" : "opaque")
-		       + (srcIsAlphaPremultiplied ? " premultiplied" : "")
-		       + " / " + (srcIsSRGB ? "sRGB" : "linearRGB");
+		return img.getClass().getSimpleName();
 	}
 
 	public static String dataTypeName(int type) {
