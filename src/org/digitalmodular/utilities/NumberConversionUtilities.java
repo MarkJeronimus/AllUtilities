@@ -19,13 +19,14 @@
 
 package org.digitalmodular.utilities;
 
+import nl.airsupplies.utilities.annotation.UtilityClass;
+
 /**
  * @author Mark Jeronimus
  */
 // Created 2016-04-04
-public enum NumberConversionUtilities {
-	;
-
+@UtilityClass
+public final class NumberConversionUtilities {
 	/**
 	 * Returns the {@code long} value of the source {@code byte[]} in little endian byte order. Only the first
 	 * 8 bytes of the source are used.

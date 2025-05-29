@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 //package org.digitalmodular.utilities.graphics.image.generator;
 //
 //import org.digitalmodular.utilities.math.RandomUtilities;
@@ -23,9 +24,9 @@
 //import org.digitalmodular.utilities.graphics.image.ImageMatrix;
 //
 // /**
-// * @author Mark Jeronimus
-// */
-// // Created 2012-04-03
+//  * @author Mark Jeronimus
+//  */
+//// Created 2012-04-03
 //public class UniformNoiseGenerator extends ImageGenerator {
 //	private static final FastRandom RND = RandomUtilities.FAST_RND;
 //

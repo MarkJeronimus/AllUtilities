@@ -261,13 +261,13 @@ public class Time implements Comparable<Time> {
 		// 01155254400000
 		// 63323769600000
 		// 62168515200000
-		return (367L * year
-		        - ((month + 9) / 12 + year) * 7L / 4
-		        - (((month - 9) / 7 + year) / 100 + 1) * 3 / 4
-		        + month * 275L / 9
-		        + date - 719559/* number of days until 1970 */) * 86400000L + hours * 3600000L + minutes * 60000L +
-		       seconds
-		       * 1000L + milliseconds;
+		return (367L * year -
+		        ((month + 9) / 12 + year) * 7L / 4 -
+		        (((month - 9) / 7 + year) / 100 + 1) * 3 / 4 +
+		        month * 275L / 9 +
+		        date - 719559/* number of days until 1970 */) * 86400000L + hours * 3600000L + minutes * 60000L +
+		       seconds *
+		       1000L + milliseconds;
 
 		// [EDIT] changed constant from 719543 to 719559. 20070519 was falsely
 		// reported as 20070503

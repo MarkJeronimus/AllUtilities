@@ -32,13 +32,13 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.zip.DeflaterInputStream;
 import java.util.zip.GZIPInputStream;
 
 import org.jetbrains.annotations.Nullable;
 
 import org.digitalmodular.utilities.Debug;
+import org.digitalmodular.utilities.annotation.UtilityClass;
 import org.digitalmodular.utilities.graphics.swing.progress.ProgressEvent;
 import org.digitalmodular.utilities.graphics.swing.progress.ProgressListener;
 import org.digitalmodular.utilities.io.ProgressInputStream;
@@ -48,9 +48,8 @@ import org.digitalmodular.utilities.io.ProgressInputStream;
  * @deprecated in favor of {@link HTTPDownloader}
  */
 @Deprecated
-public enum Internet {
-	;
-
+@UtilityClass
+public final class Internet {
 	private static final String FIREFOX_17_0 = "Mozilla/5.0 (Windows NT 5.1; rv:17.0) " +
 	                                           "Gecko/20100101 Firefox/17.0";
 
@@ -59,9 +58,8 @@ public enum Internet {
 	 * <p>
 	 * Can be passed to, for example, the Tidy library, to obtain a DOM model.
 	 */
-	@SuppressWarnings("resource")
 	public static ProgressInputStream httpRequest(URL url,
-	                                              @Nullable byte[] postData,
+	                                              byte @Nullable [] postData,
 	                                              String... extraRequestProperties) throws IOException {
 		HttpURLConnection connection = null;
 		try {
@@ -95,12 +93,12 @@ public enum Internet {
 			int length = attemptGetStreamLength(connection);
 
 			return new ProgressInputStream(in, length);
-		} catch (IOException ex) {
+		} catch (IOException e) {
 			if (connection != null) {
 				connection.disconnect();
 			}
 
-			throw ex;
+			throw e;
 		}
 	}
 
@@ -119,7 +117,8 @@ public enum Internet {
 		}
 	}
 
-	private static void addPostDataHeader(byte[] postData, HttpURLConnection connection) throws ProtocolException {
+	private static void addPostDataHeader(byte @Nullable [] postData, HttpURLConnection connection)
+			throws ProtocolException {
 		if (postData != null) {
 			connection.setRequestMethod("POST");
 			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -128,7 +127,7 @@ public enum Internet {
 		}
 	}
 
-	private static void addPostData(byte[] postData, HttpURLConnection connection) throws IOException {
+	private static void addPostData(byte @Nullable [] postData, HttpURLConnection connection) throws IOException {
 		if (postData != null) {
 			connection.setDoOutput(true);
 			try (OutputStream os = connection.getOutputStream()) {
@@ -162,7 +161,7 @@ public enum Internet {
 	}
 
 	@Deprecated
-	public static String getRequest(String host, int port, String path) {
+	public static @Nullable String getRequest(String host, int port, String path) {
 		StringBuilder result = new StringBuilder(2048);
 		try (Socket sd = new Socket(host, port)) {
 			sd.setSoTimeout(10);
@@ -214,15 +213,15 @@ public enum Internet {
 	@Deprecated
 	public static String download(URL url,
 	                              ProgressListener listener,
-	                              ArrayList<String> extraRequestProperties) throws IOException {
+	                              Iterable<String> extraRequestProperties) throws IOException {
 		return download(url, listener, extraRequestProperties, null);
 	}
 
 	@Deprecated
 	public static String download(URL url,
 	                              ProgressListener listener,
-	                              ArrayList<String> extraRequestProperties,
-	                              String post) throws IOException {
+	                              @Nullable Iterable<String> extraRequestProperties,
+	                              @Nullable String post) throws IOException {
 		HttpURLConnection connection = null;
 		try {
 			connection = (HttpURLConnection)url.openConnection();
@@ -269,8 +268,7 @@ public enum Internet {
 				while ((c = ir.read()) != -1) {
 					b.append((char)c);
 
-					++i;
-					if ((i & 1023) == 0) {
+					if ((++i & 1023) == 0) {
 						if (listener != null) {
 							listener.progressUpdated(new ProgressEvent(url, i, size, ""));
 						}
@@ -285,11 +283,11 @@ public enum Internet {
 
 				return b.toString();
 			}
-		} catch (IOException ex) {
+		} catch (IOException e) {
 			if (connection != null) {
 				connection.disconnect();
 			}
-			throw ex;
+			throw e;
 		}
 	}
 
@@ -302,7 +300,7 @@ public enum Internet {
 	public static void streamTo(URL url,
 	                            OutputStream out,
 	                            ProgressListener listener,
-	                            ArrayList<String> extraRequestProperties) throws IOException {
+	                            @Nullable Iterable<String> extraRequestProperties) throws IOException {
 		HttpURLConnection connection = null;
 		try {
 			connection = (HttpURLConnection)url.openConnection();
@@ -333,8 +331,7 @@ public enum Internet {
 				while ((c = in.read()) != -1) {
 					out.write((char)c);
 
-					++i;
-					if (i % 10000 == 0) {
+					if (++i % 10000 == 0) {
 						if (listener != null) {
 							listener.progressUpdated(new ProgressEvent(url, i, size, ""));
 						}
@@ -347,18 +344,17 @@ public enum Internet {
 
 				connection.disconnect();
 			}
-		} catch (IOException ex) {
+		} catch (IOException e) {
 			if (connection != null) {
 				connection.disconnect();
 			}
-
-			throw ex;
+			throw e;
 		}
 	}
 
 	private static void makeHeader(URL url,
-	                               ArrayList<String> extraRequestProperties,
-	                               String post,
+	                               @Nullable Iterable<String> extraRequestProperties,
+	                               @Nullable String post,
 	                               HttpURLConnection connection) {
 		connection.addRequestProperty("Host", url.getHost());
 		connection.addRequestProperty("User-Agent",

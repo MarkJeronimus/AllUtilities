@@ -19,7 +19,7 @@
 
 package org.digitalmodular.utilities.graphics.terminal.terminalfont;
 
-import org.digitalmodular.utilities.annotation.collection.IntTreeMap;
+import org.digitalmodular.utilities.collection.IntTreeMap;
 
 /**
  * @author Mark Jeronimus

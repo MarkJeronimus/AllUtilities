@@ -54,8 +54,7 @@ public class ImageMedianX_BW_Filter extends ImageFilter {
 				rowIn  = in.matrix[z][y];
 				rowOut = out.matrix[z][y];
 				for (x = in.border; x < endX; x++) {
-					rowOut[x] = rowIn[x - 1] != rowIn[x + 1] ? rowIn[x]
-					                                         : rowIn[x - 1];
+					rowOut[x] = rowIn[x - 1] != rowIn[x + 1] ? rowIn[x] : rowIn[x - 1];
 				}
 			}
 		}

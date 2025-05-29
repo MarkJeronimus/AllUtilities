@@ -19,8 +19,6 @@
 
 package org.digitalmodular.utilities.container;
 
-import java.io.Serializable;
-
 import org.digitalmodular.utilities.annotation.UtilityClass;
 import static org.digitalmodular.utilities.constant.NumberConstants.FIBONACCI_PHI1;
 import static org.digitalmodular.utilities.constant.NumberConstants.PHI;
@@ -38,28 +36,28 @@ import static org.digitalmodular.utilities.container.ComplexMath.sqr;
  */
 // Created 2024-08-03 Split from Complex2d
 @UtilityClass
-public final class ComplexAdvanced implements Serializable {
-	/** normal(value, sigma) = 1/sigma * exp(value^2 / (-2 * sigma^2)) */
-	public static Complex2d normal(Complex2d value, double sigma) {
-		return exp(sqr(value).mul(sigma)).div(-0.5 / (sigma * sigma));
+public final class ComplexAdvanced {
+	/** normal(z, sigma) = 1/sigma * exp(z^2 / (-2 * sigma^2)) */
+	public static Complex2d normal(Complex2d z, double sigma) {
+		return exp(sqr(z).mul(sigma)).div(-0.5 / (sigma * sigma));
 	}
 
-	/** normal(value, sigma) = 1/sigma * exp(value^2 / (-2 * sigma^2)) */
-	public static Complex2d normal(Complex2d value, Complex2d sigma) {
-		return exp(sqr(value).mul(sigma)).div(recip(sqr(sigma).mul(-2)));
+	/** normal(z, sigma) = 1/sigma * exp(z^2 / (-2 * sigma^2)) */
+	public static Complex2d normal(Complex2d z, Complex2d sigma) {
+		return exp(sqr(z).mul(sigma)).div(recip(sqr(sigma).mul(-2)));
 	}
 
-	/** logNormal(value, mu) = 1/mu * exp((log(value) - mu)^2 / -2) */
-	public static Complex2d logNormal(Complex2d value, double mu) {
-		return exp(sqr(log(value).sub(mu)).div(-2)).div(mu);
+	/** logNormal(z, mu) = 1/mu * exp((log(z) - mu)^2 / -2) */
+	public static Complex2d logNormal(Complex2d z, double mu) {
+		return exp(sqr(log(z).sub(mu)).div(-2)).div(mu);
 	}
 
-	/** logNormal(value, mu) = 1/mu * exp((log(value) - mu)^2 / -2) */
-	public static Complex2d logNormal(Complex2d value, Complex2d mu) {
-		return exp(sqr(log(value).sub(mu)).div(-2)).div(mu);
+	/** logNormal(z, mu) = 1/mu * exp((log(z) - mu)^2 / -2) */
+	public static Complex2d logNormal(Complex2d z, Complex2d mu) {
+		return exp(sqr(log(z).sub(mu)).div(-2)).div(mu);
 	}
 
-	/** butterfly(lhs, rhs) = (lhs.re^2 - lhs.im^2) * sin(lhs.re+lhs.im)/rhs) / mod(lhs) */
+	/** butterfly(lhs, rhs) = (lhs.real^2 - lhs.imag^2) * sin(lhs.real+lhs.imag)/rhs) / mod(lhs) */
 	public static Complex2d butterfly(Complex2d lhs, Complex2d rhs) {
 		double a = lhs.real * lhs.real;
 		double b = lhs.imag * lhs.imag;
@@ -74,50 +72,50 @@ public final class ComplexAdvanced implements Serializable {
 
 // public static Complex2d normalDistribution() {
 // // normalDistribution = exp(a^2 * -0.5)
-// double re2 = Math.exp((im * im - re * re) * 0.5);
-// double im2 = -re * im;
-// re = re2 * Math.cos(im2);
-// im = re2 * Math.sin(im2);
+// double re2 = Math.exp((imag * imag - real * real) * 0.5);
+// double im2 = -real * imag;
+// real = re2 * Math.cos(im2);
+// imag = re2 * Math.sin(im2);
 // }
 //
 // public static Complex2d logNormalDistribution() {
 // // logNormalDistribution = exp(log(a)^2 * -0.5)
-// double re2 = Math.log(re * re + im * im) * 0.5;
-// double im2 = Math.atan2(im, re);
+// double re2 = Math.log(real * real + imag * imag) * 0.5;
+// double im2 = Math.atan2(imag, real);
 // double re3 = Math.exp((im2 * im2 - re2 * re2) * 0.5);
 // double im3 = re2 * -im2;
-// re = re3 * Math.cos(im3);
-// im = re3 * Math.sin(im3);
+// real = re3 * Math.cos(im3);
+// imag = re3 * Math.sin(im3);
 // }
 //
 // public static Complex2d tetr2() {
 // // tetr2(a) = a^^2 (Knuth's arrow notation) = a^a
 // // Avoid exp(log(0))=0 which uses -infinite as intermediate
-// if (re == 0 && im == 0) return;
+// if (real == 0 && imag == 0) return;
 //
-// double re2 = Math.log(re * re + im * im) * 0.5;
-// double im2 = Math.atan2(im, re);
-// double re3 = Math.exp(re2 * re - im2 * im);
-// double im3 = re2 * im + im2 * re;
-// re = re3 * Math.cos(im3);
-// im = re3 * Math.sin(im3);
+// double re2 = Math.log(real * real + imag * imag) * 0.5;
+// double im2 = Math.atan2(imag, real);
+// double re3 = Math.exp(re2 * real - im2 * imag);
+// double im3 = re2 * imag + im2 * real;
+// real = re3 * Math.cos(im3);
+// imag = re3 * Math.sin(im3);
 // }
 //
 // public static Complex2d tetr3() {
 // // tetr3(a) = a^^3 (Knuth's arrow notation) = a^(a^a)
 // // Avoid exp(log(0))=0 which uses -infinite as intermediate
-// if (re == 0 && im == 0) return;
+// if (real == 0 && imag == 0) return;
 //
-// double re2 = Math.log(re * re + im * im) * 0.5;
-// double im2 = Math.atan2(im, re);
-// double re3 = Math.exp(re2 * re - im2 * im);
-// double im3 = re2 * im + im2 * re;
+// double re2 = Math.log(real * real + imag * imag) * 0.5;
+// double im2 = Math.atan2(imag, real);
+// double re3 = Math.exp(re2 * real - im2 * imag);
+// double im3 = re2 * imag + im2 * real;
 // double re4 = re3 * Math.cos(im3);
 // double im4 = re3 * Math.sin(im3);
 // double re5 = Math.exp(re2 * re4 - im2 * im4);
 // double im5 = re2 * im4 + im2 * re4;
-// re = re5 * Math.cos(im5);
-// im = re5 * Math.sin(im5);
+// real = re5 * Math.cos(im5);
+// imag = re5 * Math.sin(im5);
 // }
 
 // /**
@@ -128,8 +126,8 @@ public final class ComplexAdvanced implements Serializable {
 // */
 // public static Complex2d complexButterfly(Complex2d value) {
 // Complex2d xx = sqr();
-// Complex2d yy = value.sqr();
-// return xx.sub(yy).mul(this.add(value).sin()).div(xx.add(yy));
+// Complex2d yy = z.sqr();
+// return xx.sub(yy).mul(this.add(z).sin()).div(xx.add(yy));
 // }
 //
 // /**
@@ -138,56 +136,56 @@ public final class ComplexAdvanced implements Serializable {
 // * @param z
 // * @return
 // */
-// public static Complex2d carotidKundalini(Complex2d value) {
-// return acos().mul(this).mul(value).cos();
+// public static Complex2d carotidKundalini(Complex2d z) {
+// return acos().mul(this).mul(z).cos();
 // }
 //
 // /**
 // * hemispherical(a, b) = sqrt(a - mod(b))
 // *
-// * @param c
+// * @param z
 // * @return
 // */
-// public static Complex2d hemispherical(Complex2d value) {
-// return value.sub(magnSquared()).sqrt();
+// public static Complex2d hemispherical(Complex2d z) {
+// return z.sub(magnSquared()).sqrt();
 // }
 //
 // /**
-// * archimedianSpiral(a, b) = a * (1, exp(|a|^b.re * b.im))
+// * archimedianSpiral(a, b) = a * (1, exp(|a|^b.real * b.imag))
 // *
-// * @param c
+// * @param z
 // * @return
 // */
-// public static Complex2d spiral(Complex2d value) {
-// Complex2d exp = new Complex2d(1, Math.pow(magn(), value.re) * valuec.im).exp();
+// public static Complex2d spiral(Complex2d z) {
+// Complex2d exp = new Complex2d(1, Math.pow(magn(), z.real) * z.imag).exp();
 // return this.mul(exp);
 // }
 //
 // /**
-// * swirl(a, b) = a * (1, cos(log(|a|)*b.re) * b.im)
+// * swirl(lhs, rhs) = lhs * (1, cos(log(|lhs|)*rhs.real) * rhs.imag)
 // *
-// * @param c
+// * @param z
 // * @return
 // */
-// public static Complex2d swirl1(Complex2d value) {
+// public static Complex2d swirl1(Complex2d z) {
 // // Complex polar = this.toPolar();
-// // polar.im += Math.cos(Math.log(polar.re) * value.re) * value.im;
+// // polar.imag += Math.cos(Math.log(polar.real) * z.real) * z.imag;
 // // return polar.toCartesian();
-// Complex2d exp = new Complex2d(1, Math.cos(Math.log(magn()) * value.re) * value.im).exp();
+// Complex2d exp = new Complex2d(1, Math.cos(Math.log(magn()) * z.real) * z.imag).exp();
 // return this.mul(exp);
 // }
 //
 // /**
-// * swirl(a, b) = a * (1, cos(|a|*b.re) * b.im)
+// * swirl(lhs, rhs) = lhs * (1, cos(|lhs|*rhs.real) * rhs.imag)
 // *
-// * @param c
+// * @param z
 // * @return
 // */
-// public static Complex2d swirl2(Complex2d value) {
+// public static Complex2d swirl2(Complex2d z) {
 // // Complex polar = this.toPolar();
-// // polar.im += Math.cos(polar.re * value.re) * value.im;
+// // polar.imag += Math.cos(polar.real * z.real) * z.imag;
 // // return polar.toCartesian();
-// Complex2d exp = new Complex2d(1, Math.cos(magn() * value.re) * value.im).exp();
+// Complex2d exp = new Complex2d(1, Math.cos(magn() * z.real) * z.imag).exp();
 // return this.mul(exp);
 // }
 
@@ -210,8 +208,8 @@ public final class ComplexAdvanced implements Serializable {
 	 *
 	 * @see <a href="https://youtu.be/cCXRUHUgvLI?si=DlN7ItL6JfU8g3Dg&t=1912">https://youtu.be/cCXRUHUgvLI?si=DlN7ItL6JfU8g3Dg&t=1912</a>
 	 */
-	public static Complex2d nthFibonacci(Complex2d value) {
-		return pow(PHI, value).sub(pow(FIBONACCI_PHI1, value)).mul(SQRT02);
+	public static Complex2d nthFibonacci(Complex2d z) {
+		return pow(PHI, z).sub(pow(FIBONACCI_PHI1, z)).mul(SQRT02);
 	}
 
 // /**

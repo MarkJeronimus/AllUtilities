@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.digitalmodular.utilities.annotation.collection;
+package org.digitalmodular.utilities.collection;
 
 import java.lang.reflect.Method;
 import java.util.Iterator;
@@ -27,6 +27,7 @@ import org.digitalmodular.utilities.NumberUtilities;
 /**
  * A mapping between an integer bitmask and an enum (of up to 64 elements).
  *
+ * @param <E> the type of enum.
  * @author Mark Jeronimus
  */
 // Created 2014-09-04
@@ -37,6 +38,7 @@ public class EnumBitMask<E extends Enum<E>> implements Iterable<E> {
 	private EnumBitMask(Class<E> elementType) {
 		try {
 			Method valuesMethod = elementType.getMethod("values");
+			//noinspection unchecked
 			values = (E[])valuesMethod.invoke(null, new Object[]{});
 		} catch (ReflectiveOperationException | IllegalArgumentException ex) {
 			throw new RuntimeException("elementType is not an Enum");
@@ -157,13 +159,15 @@ public class EnumBitMask<E extends Enum<E>> implements Iterable<E> {
 	@Override
 	public String toString() {
 		StringBuilder out = new StringBuilder(getClass().getSimpleName()).append('[');
-		int           i   = 0;
+
+		int i = 0;
 		for (E element : this) {
 			if (i > 0) {
 				out.append(", ");
 			}
-			i++;
 			out.append(element);
+
+			i++;
 		}
 		return out.append(']').toString();
 	}

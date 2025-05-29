@@ -60,10 +60,7 @@ public class ImageMedianY_BW_Filter extends ImageFilter {
 				rowIn1b = in.matrix[z][y + 1];
 				rowOut  = out.matrix[z][y];
 				for (x = in.border; x < endX; x++) {
-					float l = rowIn1a[x];
-					float c = rowIn0[x];
-					float r = rowIn1b[x];
-					rowOut[x] = l != r ? c : l;
+					rowOut[x] = rowIn1a[x] != rowIn1b[x] ? rowIn0[x] : rowIn1a[x];
 				}
 			}
 		}

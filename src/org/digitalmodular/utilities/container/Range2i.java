@@ -96,7 +96,7 @@ public class Range2i {
 	/**
 	 * Returns the begin position of the range.
 	 */
-	public int getBegin() {
+	public int begin() {
 		return begin;
 	}
 
@@ -118,7 +118,7 @@ public class Range2i {
 	/**
 	 * Returns the end position of the range.
 	 */
-	public int getEnd() {
+	public int end() {
 		return end;
 	}
 

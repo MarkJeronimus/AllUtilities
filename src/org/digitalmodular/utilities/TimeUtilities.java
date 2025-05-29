@@ -31,9 +31,8 @@ import org.digitalmodular.utilities.container.UnsignedInteger;
  */
 // Created 2013-11-23
 @Deprecated
-public enum TimeUtilities {
-	;
-
+@UtilityClass
+public final class TimeUtilities {
 	@Deprecated
 	public static int getCurrentDay() {
 		GregorianCalendar cal = new GregorianCalendar();

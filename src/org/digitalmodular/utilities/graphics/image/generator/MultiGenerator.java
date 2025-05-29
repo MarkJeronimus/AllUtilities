@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 //package org.digitalmodular.utilities.graphics.image.generator;
 //
 //import java.util.ArrayList;
@@ -23,9 +24,9 @@
 //import org.digitalmodular.utilities.graphics.image.ImageMatrix;
 //
 // /**
-// * @author Mark Jeronimus
-// */
-// // Created 2012-04-05
+//  * @author Mark Jeronimus
+//  */
+//// Created 2012-04-05
 //public class MultiGenerator extends ImageGenerator {
 //	private ArrayList<ImageGenerator> generators = new ArrayList<>();
 //

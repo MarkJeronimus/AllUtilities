@@ -272,6 +272,7 @@ public final class ArrayUtilities {
 
 	public static int[] toIntArray(Collection<Integer> integers) {
 		int[] result = new int[integers.size()];
+
 		int   i      = 0;
 		for (Iterator<Integer> iter = integers.iterator(); iter.hasNext(); i++) {
 			result[i] = iter.next();

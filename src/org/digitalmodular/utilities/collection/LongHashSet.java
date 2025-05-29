@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.digitalmodular.utilities.annotation.collection;
+package org.digitalmodular.utilities.collection;
 
 /**
  * Hash set for just longs. Can contain longs and can check if it contains an long in O(1) time.
@@ -92,7 +92,7 @@ public class LongHashSet {
 		}
 
 		// Grow if necessary.
-		++list[0];
+		list[0]++;
 		if (list[0] == list.length) {
 			// Grow only when the enlarged lists together make the table 1/16th
 			// larger.
@@ -156,7 +156,7 @@ public class LongHashSet {
 		long[] list = table[hash];
 
 		// Grow if necessary.
-		++list[0];
+		list[0]++;
 		if (list[0] == list.length) {
 			int newLen = list.length << 1;
 			table[hash] = new long[newLen];

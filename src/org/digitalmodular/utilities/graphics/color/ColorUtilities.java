@@ -26,7 +26,6 @@ import org.digitalmodular.utilities.annotation.UtilityClass;
 
 /**
  * Functions for easily manipulating RGB or ARGB int colors.
- * <p>
  *
  * @author Mark Jeronimus
  */
@@ -211,16 +210,16 @@ public final class ColorUtilities {
 		float min = Math.min(Math.min(color.r, color.g), color.b);
 		float max = Math.max(Math.max(color.r, color.g), color.b);
 
-		float lum       = (min + max) / 2.0f;
-		float maxChroma = 1 - Math.abs(min + max - 1.0f);
-		float chroma    = max - min;
+		float lum    = (min + max) / 2.0f;
+		float chroma = max - min;
 
 		if (chroma < 1.0e-7f) {
 			return new Color3f(0.0f, 0.0f, lum);
 		}
 
-		float hue = rgb2hueInternal(color.r, color.g, color.b, min, max, chroma);
-		float sat = chroma / maxChroma;
+		float maxChroma = 1 - Math.abs(min + max - 1.0f);
+		float hue       = rgb2hueInternal(color.r, color.g, color.b, min, max, chroma);
+		float sat       = chroma / maxChroma;
 
 		return new Color3f(hue, sat, lum);
 	}

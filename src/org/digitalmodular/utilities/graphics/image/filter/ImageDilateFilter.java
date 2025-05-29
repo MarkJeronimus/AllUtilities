@@ -44,8 +44,9 @@ public class ImageDilateFilter extends ImageFilter {
 
 			rowIn = in.matrix[z][in.border];
 			for (x = in.border; x < endX; x++) {
-				lineBuffer1[x] = rowIn[x - 1] > rowIn[x] ? Math.max(rowIn[x - 1], rowIn[x + 1])
-				                                         : Math.max(rowIn[x], rowIn[x + 1]);
+				lineBuffer1[x] = rowIn[x - 1] > rowIn[x] ?
+				                 Math.max(rowIn[x - 1], rowIn[x + 1]) :
+				                 Math.max(rowIn[x], rowIn[x + 1]);
 			}
 
 			for (int y = in.border; y < in.endY; y++) {
@@ -53,10 +54,12 @@ public class ImageDilateFilter extends ImageFilter {
 				rowOut = out.matrix[z][y];
 
 				for (x = in.border; x < endX; x++) {
-					lineBuffer2[x] = rowIn[x - 1] > rowIn[x] ? Math.max(rowIn[x - 1], rowIn[x + 1])
-					                                         : Math.max(rowIn[x], rowIn[x + 1]);
-					rowOut[x]      = lineBuffer0[x] > lineBuffer1[x] ? Math.max(lineBuffer0[x], lineBuffer2[x])
-					                                                 : Math.max(lineBuffer1[x], lineBuffer2[x]);
+					lineBuffer2[x] = rowIn[x - 1] > rowIn[x] ?
+					                 Math.max(rowIn[x - 1], rowIn[x + 1]) :
+					                 Math.max(rowIn[x], rowIn[x + 1]);
+					rowOut[x]      = lineBuffer0[x] > lineBuffer1[x] ?
+					                 Math.max(lineBuffer0[x], lineBuffer2[x]) :
+					                 Math.max(lineBuffer1[x], lineBuffer2[x]);
 				}
 
 				float[] temp = lineBuffer0;

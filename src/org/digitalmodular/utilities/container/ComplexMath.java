@@ -19,8 +19,6 @@
 
 package org.digitalmodular.utilities.container;
 
-import java.io.Serializable;
-
 import org.digitalmodular.utilities.annotation.UtilityClass;
 import static org.digitalmodular.utilities.constant.NumberConstants.LOG10;
 import static org.digitalmodular.utilities.constant.NumberConstants.LOG2;
@@ -43,13 +41,13 @@ import static org.digitalmodular.utilities.constant.NumberConstants.TAU05;
 // BiPredicate<Complex2d, Complex2d>
 // ToDoubleFunction<Complex2D>
 // ToDoubleBiFunction<Complex2d, Complex2d>, ToIntBiFunction<Complex2d, Complex2d>
-// Function<Complex2d, Complex2d>
+// Function<Complex2d, Complex2d> (linear)
 // Function<Complex2d, Complex2d> (exponential)
 // BiFunction<Complex2d, Complex2d, Complex2d>
 // TriFunction<Complex2d, Complex2d, Double, Complex2d>
-@SuppressWarnings("OverlyComplexClass")
+@SuppressWarnings({"NonAsciiCharacters", "OverlyComplexClass"})
 @UtilityClass
-public final class ComplexMath implements Serializable {
+public final class ComplexMath {
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Predicate<Complex2d>
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -212,8 +210,8 @@ public final class ComplexMath implements Serializable {
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	/** sumComponent = real+imag */
-	public static double sumComponent(Complex2d value) {
-		return value.real + value.imag;
+	public static double sumComponent(Complex2d z) {
+		return z.real + z.imag;
 	}
 
 	/** absSumComponent = |real+imag| */
@@ -286,7 +284,7 @@ public final class ComplexMath implements Serializable {
 		return dx * dy / (dx + dy);
 	}
 
-	/** geometricNorm = L[0](real, imag) = sqrt(|real*imag|) */
+	/** geometricNorm = multiplicativeNorm = L[0](real, imag) = sqrt(|real*imag|) */
 	public static double geometricNorm(Complex2d value) {
 		return Math.sqrt(Math.abs(value.real * value.imag));
 	}
@@ -317,8 +315,25 @@ public final class ComplexMath implements Serializable {
 		return Math.max(Math.abs(value.real), Math.abs(value.imag));
 	}
 
+	public static double magnSquared(Complex2d z) {
+		// = |z|^2 = z*conjugate(z)
+		// (and sometimes called cabs(z), the 'complex absolute' function)
+		return z.real * z.real + z.imag * z.imag;
+	}
+
 	/**
-	 * Returns the turn number from the positive real axis in counterclockwise direction, in the range [0, 1).
+	 * Returns the angle from the positive real axis in counterclockwise direction, in the range of [-pi, pi].
+	 * <p>
+	 * The reason why both -pi and pi are possible results is because of positive and negative zero imag values.
+	 */
+	public static double arg(Complex2d value) {
+		return value.arg();
+	}
+
+	/**
+	 * Returns the turn number from the positive real axis in counterclockwise direction, in the range [0, 1].
+	 * <p>
+	 * The reason why both 0 and 1 are possible results is because of positive and negative zero imag values.
 	 */
 	public static double turnNumber(Complex2d value) {
 		return (value.arg() + TAU) / TAU % 1;
@@ -364,7 +379,7 @@ public final class ComplexMath implements Serializable {
 		return dx * dy / (dx + dy);
 	}
 
-	/** geometricDistance = L[0](lhs, rhs) = sqrt(|dx*dy|) */
+	/** geometricDistance = multiplicativeDistance = L[0](lhs, rhs) = sqrt(|dx*dy|) */
 	public static double geometricDistance(Complex2d lhs, Complex2d rhs) {
 		return Math.sqrt(Math.abs((lhs.real - rhs.real) * (lhs.imag - rhs.imag)));
 	}
@@ -693,6 +708,13 @@ public final class ComplexMath implements Serializable {
 		                     Math.atan2(value.imag, tempReal));
 	}
 
+	public static Complex2d logLog(Complex2d z) {
+		double re2 = Math.log(z.magnSquared()) * 0.5;
+		double im2 = Math.atan2(z.imag, z.real);
+		return new Complex2d(Math.log(re2 * re2 + im2 * im2) * 0.5,
+		                     Math.atan2(im2, re2));
+	}
+
 	/**
 	 * exp = e^value
 	 */
@@ -723,6 +745,15 @@ public final class ComplexMath implements Serializable {
 		double re2 = Math.exp(value.real);
 		return new Complex2d(re2 * Math.cos(value.imag) - 1,
 		                     re2 * Math.sin(value.imag));
+	}
+
+	public static Complex2d expExp(Complex2d z) {
+		double re2 = Math.exp(z.real);
+		double re3 = re2 * Math.cos(z.imag);
+		double im3 = re2 * Math.sin(z.imag);
+		double re4 = Math.exp(re3);
+		return new Complex2d(re4 * Math.cos(im3),
+		                     re4 * Math.sin(im3));
 	}
 
 	/** expRamp = 1 - e^value */
@@ -795,6 +826,40 @@ public final class ComplexMath implements Serializable {
 	public static Complex2d remainderComponent(Complex2d lhs, Complex2d rhs) {
 		return new Complex2d(lhs.real - (int)(lhs.real / rhs.real) * rhs.real,
 		                     lhs.imag - (int)(lhs.imag / rhs.imag) * rhs.imag);
+	}
+
+	/** modulo(a, b) = a - floor(a/b)*b */
+	public static Complex2d modulo(Complex2d lhs, Complex2d rhs) {
+		double magnSquared = rhs.real * rhs.real + rhs.imag * rhs.imag;
+		double re2         = Math.floor((lhs.real * rhs.real + lhs.imag * rhs.imag) / magnSquared);
+		double im2         = Math.floor((lhs.imag * rhs.real - lhs.real * rhs.imag) / magnSquared);
+		return new Complex2d(lhs.real - re2 * rhs.real - im2 * rhs.imag,
+		                     lhs.imag - im2 * rhs.real + re2 * rhs.imag);
+	}
+
+	/** moduloCentered(a, b) = a - round(a/b)*b */
+	public static Complex2d moduloCentered(Complex2d lhs, Complex2d rhs) {
+		double magnSquared = rhs.real * rhs.real + rhs.imag * rhs.imag;
+		double c           = Math.rint((lhs.real * rhs.real + lhs.imag * rhs.imag) / magnSquared);
+		double d           = Math.rint((lhs.imag * rhs.real - lhs.real * rhs.imag) / magnSquared);
+		return new Complex2d(lhs.real - c * rhs.real - d * rhs.imag,
+		                     lhs.imag - d * rhs.real + c * rhs.imag);
+	}
+
+	/** sqrAdd(a, b) = a^2 + b */
+	public static Complex2d sqrAdd(Complex2d lhs, double rhsReal, double rhsImag) {
+		double re2 = lhs.real * lhs.real - lhs.imag * lhs.imag;
+		double im2 = 2 * lhs.real * lhs.imag;
+		return new Complex2d(re2 + rhsReal,
+		                     im2 + rhsImag);
+	}
+
+	/** sqrAdd(a, b) = a^2 + b */
+	public static Complex2d sqrAdd(Complex2d lhs, Complex2d rhs) {
+		double re2 = lhs.real * lhs.real - lhs.imag * lhs.imag;
+		double im2 = 2 * lhs.real * lhs.imag;
+		return new Complex2d(re2 + rhs.real,
+		                     im2 + rhs.imag);
 	}
 
 	/** floorMod = lhs - floor(lhs/rhs)*rhs */
@@ -977,6 +1042,11 @@ public final class ComplexMath implements Serializable {
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// TriFunction<Complex2d, Complex2d, Double, Complex2d>
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public static Complex2d addScaled(Complex2d lhs, Complex2d rhs, Complex2d scale) {
+		return new Complex2d(lhs.real + rhs.real * scale.real - rhs.imag * scale.imag,
+		                     lhs.imag + rhs.imag * scale.real + rhs.real * scale.imag);
+	}
 
 	/** lerp = linear interpolation */
 	public static Complex2d lerp(Complex2d lhs, Complex2d rhs, double position) {

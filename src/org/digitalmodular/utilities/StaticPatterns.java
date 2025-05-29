@@ -28,9 +28,8 @@ import org.digitalmodular.utilities.annotation.ConstClass;
  */
 // Created 2017-06-08
 @ConstClass
-public enum StaticPatterns {
-	;
-
+@Deprecated
+public final class StaticPatterns {
 	public static final Pattern TAB_PATTERN  = Pattern.compile("\t");
 	public static final Pattern THREE_DOTS   = Pattern.compile("...", Pattern.LITERAL);
 	public static final Pattern THREE_DASHES = Pattern.compile("---", Pattern.LITERAL);

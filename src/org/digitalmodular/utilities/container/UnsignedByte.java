@@ -26,7 +26,7 @@ package org.digitalmodular.utilities.container;
  */
 // Created 2013-11-27
 public class UnsignedByte extends Number implements Comparable<UnsignedByte> {
-	public static final byte MIN_VALUE = 0x00;
+	public static final byte MIN_VALUE = (byte)0x00;
 	public static final byte MAX_VALUE = (byte)0xFF;
 
 	private final byte value;

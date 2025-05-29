@@ -56,20 +56,21 @@ public class Wave2D {
 	public Wave2D(BufferedImage image) {
 		this(image.getWidth(), image.getHeight());
 
-		int b      = image.getColorModel().getNumColorComponents();
+		int bands  = image.getColorModel().getNumColorComponents();
 		int source = 0;
 		for (int y = 0; y < numSamplesY; y++) {
 			for (int x = 0; x < numSamplesX; x++) {
-				if (b == 1) {
+				if (bands == 1) {
 					samples[y][x] = image.getRaster().getDataBuffer().getElem(0, source);
 					source++;
 				} else {
-					samples[y][x] = 0.299 * image.getRaster().getDataBuffer().getElem(0, source) +
-					                0.587 * image.getRaster().getDataBuffer().getElem(0, source) +
-					                0.114 * image.getRaster().getDataBuffer().getElem(0, source);
+					int r = image.getRaster().getDataBuffer().getElem(0, source);
 					source++;
+					int g = image.getRaster().getDataBuffer().getElem(0, source);
 					source++;
+					int b = image.getRaster().getDataBuffer().getElem(0, source);
 					source++;
+					samples[y][x] = 0.299 * r + 0.587 * g + 0.114 * b;
 				}
 			}
 		}
@@ -119,47 +120,43 @@ public class Wave2D {
 		int stopX = bounds.width + bounds.x;
 		int stopY = bounds.height + bounds.y;
 
-		int b      = image.getColorModel().getNumColorComponents();
-		int source = b * (sourceX + sourceY * sourceWidth);
+		int bands  = image.getColorModel().getNumColorComponents();
+		int source = bands * (sourceX + sourceY * sourceWidth);
 		for (int y = bounds.y; y < stopY; y++) {
 			for (int x = bounds.x; x < stopX; x++) {
-				if (b == 1) {
+				if (bands == 1) {
 					samples[y][x] = image.getRaster().getDataBuffer().getElem(0, source);
 					source++;
 				} else {
-					samples[y][x] = 0.299 * image.getRaster().getDataBuffer().getElem(0, source) +
-					                0.587 * image.getRaster().getDataBuffer().getElem(0, source) +
-					                0.114 * image.getRaster().getDataBuffer().getElem(0, source);
+					int r = image.getRaster().getDataBuffer().getElem(0, source);
 					source++;
+					int g = image.getRaster().getDataBuffer().getElem(0, source);
 					source++;
+					int b = image.getRaster().getDataBuffer().getElem(0, source);
 					source++;
+					samples[y][x] = 0.299 * r + 0.587 * g + 0.114 * b;
 				}
 			}
-			source += b * (sourceWidth - bounds.width);
+			source += bands * (sourceWidth - bounds.width);
 		}
 	}
 
 	public void setImage(BufferedImage image, int x1, int y1) {
-		int b = image.getRaster().getNumBands();
+		int bands = image.getRaster().getNumBands();
 		for (int y = 0; y < numSamplesY; y++) {
 			int source = 3 * (x1 + (y1 + y) * image.getWidth());
 			for (int x = 0; x < numSamplesX; x++) {
-				if (b == 1) {
-					// this.samples[y][x] =
-					// image.getRaster().getDataBuffer().getElem(0, source++);
-					int c = image.getRGB(x1 + x, y1 + y);
-					samples[y][x] =
-							0.299 * (c & 0xFF) +
-							0.587 * (c >> 8 & 0xFF) +
-							0.114 * (c >> 16 & 0xFF);
+				if (bands == 1) {
+					samples[y][x] = image.getRaster().getDataBuffer().getElem(0, source);
+					source++;
 				} else {
-					samples[y][x] =
-							0.299 * image.getRaster().getDataBuffer().getElem(0, source) +
-							0.587 * image.getRaster().getDataBuffer().getElem(0, source) +
-							0.114 * image.getRaster().getDataBuffer().getElem(0, source);
+					int r = image.getRaster().getDataBuffer().getElem(0, source);
 					source++;
+					int g = image.getRaster().getDataBuffer().getElem(0, source);
 					source++;
+					int b = image.getRaster().getDataBuffer().getElem(0, source);
 					source++;
+					samples[y][x] = 0.299 * r + 0.587 * g + 0.114 * b;
 				}
 			}
 		}

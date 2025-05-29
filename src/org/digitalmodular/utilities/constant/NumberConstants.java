@@ -26,22 +26,20 @@ package org.digitalmodular.utilities.constant;
 public interface NumberConstants {
 	long MAX_UINT = 4294967296L;
 
-	/*
-	 * The notation for formula constants is in Polish notation, with some symbols replaced:
-	 * Addition: P
-	 * Negation: N
-	 * Multiplication: no symbol
-	 * Division (x/y): Q X Y
-	 * Squaring: SQR
-	 * Exponentiation: POW
-	 * Natural logarithn: LOG (not base-10 logarithm!)
-	 * Decimal separator: remove, but leave leading zero
-	 * Named constants: upper case, no spaces
-	 * EXAMPLES:
-	 *   ln(Tau*0.5) = LOGTAU05
-	 *   ln(Tau)/2   = QLOGTAU2
-	 *   EULERGAMMA
-	 */
+	// The notation for formula constants is in Polish notation, with some symbols replaced:
+	// Addition: P
+	// Negation: N
+	// Multiplication: no symbol
+	// Division (x/y): Q X Y
+	// Squaring: SQR
+	// Exponentiation: POW
+	// Natural logarithn: LOG (not base-10 logarithm!)
+	// Decimal separator: remove, but leave leading zero
+	// Named constants: upper case, no spaces
+	// EXAMPLES:
+	//   ln(Tau*0.5) = LOGTAU05
+	//   ln(Tau)/2   = QLOGTAU2
+	//   EULERGAMMA
 
 	double Q1_3      = 0.3333333333333333333333333; // (1/3)
 	double Q1_6      = 0.1666666666666666666666666; // (2/3)
@@ -101,12 +99,12 @@ public interface NumberConstants {
 	double Q1E   = 0.3678794411714423215955237; // (1/e)
 	double E_SQR = 7.3890560989306502272304274; // (e^2)
 
-	double PHI            = 1.6180339887498948482045868; // (Phi) Golden Ratio
-	double Q1LOGPHI       = 2.0780869212350275376013226; // 1/ln(Phi)
-	double FIBONACCI_PHI1 = -0.6180339887498948482045868; // -1/Phi Used in the "Nth Fibonacci" formula
-	double P1SQRT2        = 2.4142135623730950488016887; // (1+sqrt(2)) Silver Ratio
-	double TRIBONACCI     = 1.8392867552141611325518525; // (Root of x^−3 + x - 2 or x^3 - x^2 - x - 1 = 0)
-	double PLASTICNUMBER  = 1.3247179572447460259609088; // (Root of x3 − x − 1 = 0)
+	double PHI            = 1.6180339887498948482045868;  // (Phi) Golden Ratio
+	double Q1LOGPHI       = 2.0780869212350275376013226;  // (1/ln(Phi))
+	double FIBONACCI_PHI1 = -0.6180339887498948482045868; // (-1/Phi) Used in the "Nth Fibonacci" formula
+	double P1SQRT2        = 2.4142135623730950488016887;  // (1+sqrt(2)) Silver Ratio
+	double TRIBONACCI     = 1.8392867552141611325518525;  // (Root of x^−3 + x - 2 or x^3 - x^2 - x - 1 = 0)
+	double PLASTICNUMBER  = 1.3247179572447460259609088;  // (Root of x3 − x − 1 = 0)
 
 	double SIN1 = 0.8414709848078965066525023; // (sin(1))
 	double COS1 = 0.5403023058681397174009366; // (cos(1))

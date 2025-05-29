@@ -1041,6 +1041,7 @@ public final class CodePoint {
 		if (!isHighSurrogate(charArray[index])) {
 			return false;
 		}
+
 		++index;
 		return index < charArray.length
 		       && isLowSurrogate(charArray[index]);

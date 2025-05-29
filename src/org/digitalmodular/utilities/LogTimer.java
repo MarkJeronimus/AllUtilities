@@ -31,9 +31,8 @@ import java.util.logging.Logger;
  */
 // Created 2016-08-03
 @Deprecated
-public enum LogTimer {
-	;
-
+@UtilityClass
+public final class LogTimer {
 	private static final ThreadLocal<Deque<Long>> THREAD_LOCAL = new ThreadLocal<Deque<Long>>() {
 		@Override
 		protected Deque<Long> initialValue() {

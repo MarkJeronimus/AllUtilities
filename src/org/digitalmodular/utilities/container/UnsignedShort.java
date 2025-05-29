@@ -27,7 +27,7 @@ package org.digitalmodular.utilities.container;
  */
 // Created 2013-11-27
 public class UnsignedShort extends Number implements Comparable<UnsignedShort> {
-	public static final short MIN_VALUE = 0x0000;
+	public static final short MIN_VALUE = (short)0x0000;
 	public static final short MAX_VALUE = (short)0xFFFF;
 
 	private final short value;

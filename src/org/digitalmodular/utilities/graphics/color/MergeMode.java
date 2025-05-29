@@ -114,36 +114,36 @@ public enum MergeMode {
 	SOFT_LIGHT_PS {
 		@Override
 		public void apply(Color4fOld bot, Color4fOld top) {
-			bot.r = top.r <= 0.5f
-			        ? 2 * bot.r * top.r + bot.r * bot.r * (1 - 2 * top.r)
-			        : 2 * bot.r * (1 - top.r) + (float)StrictMath.sqrt(bot.r) * (2 * top.r - 1);
-			bot.g = top.g <= 0.5f
-			        ? 2 * bot.g * top.g + bot.g * bot.g * (1 - 2 * top.g)
-			        : 2 * bot.g * (1 - top.g) + (float)StrictMath.sqrt(bot.g) * (2 * top.g - 1);
-			bot.b = top.b <= 0.5f
-			        ? 2 * bot.b * top.b + bot.b * bot.b * (1 - 2 * top.b)
-			        : 2 * bot.b * (1 - top.b) + (float)StrictMath.sqrt(bot.b) * (2 * top.b - 1);
+			bot.r = top.r <= 0.5f ?
+			        2 * bot.r * top.r + bot.r * bot.r * (1 - 2 * top.r) :
+			        2 * bot.r * (1 - top.r) + (float)StrictMath.sqrt(bot.r) * (2 * top.r - 1);
+			bot.g = top.g <= 0.5f ?
+			        2 * bot.g * top.g + bot.g * bot.g * (1 - 2 * top.g) :
+			        2 * bot.g * (1 - top.g) + (float)StrictMath.sqrt(bot.g) * (2 * top.g - 1);
+			bot.b = top.b <= 0.5f ?
+			        2 * bot.b * top.b + bot.b * bot.b * (1 - 2 * top.b) :
+			        2 * bot.b * (1 - top.b) + (float)StrictMath.sqrt(bot.b) * (2 * top.b - 1);
 			bot.a = top.a;
 		}
 	},
 	SOFT_LIGHT_W3C {
 		@Override
 		public void apply(Color4fOld bot, Color4fOld top) {
-			bot.r = top.r <= 0.5f
-			        ? bot.r - (1 - 2 * top.r) * bot.r * (1 - bot.r)
-			        : bot.r + (2 * top.r - 1) * ((bot.r <= 0.25
-			                                      ? ((16 * bot.r - 12) * bot.r + 4) * bot.r
-			                                      : (float)Math.sqrt(bot.r)) - bot.r);
-			bot.g = top.g <= 0.5f
-			        ? bot.g - (1 - 2 * top.g) * bot.g * (1 - bot.g)
-			        : bot.g + (2 * top.g - 1) * ((bot.g <= 0.25
-			                                      ? ((16 * bot.g - 12) * bot.g + 4) * bot.g
-			                                      : (float)Math.sqrt(bot.g)) - bot.g);
-			bot.b = top.b <= 0.5f
-			        ? bot.b - (1 - 2 * top.b) * bot.b * (1 - bot.b)
-			        : bot.b + (2 * top.b - 1) * ((bot.b <= 0.25
-			                                      ? ((16 * bot.b - 12) * bot.b + 4) * bot.b
-			                                      : (float)Math.sqrt(bot.b)) - bot.b);
+			bot.r = top.r <= 0.5f ?
+			        bot.r - (1 - 2 * top.r) * bot.r * (1 - bot.r) :
+			        bot.r + (2 * top.r - 1) * ((bot.r <= 0.25 ?
+			                                    ((16 * bot.r - 12) * bot.r + 4) * bot.r :
+			                                    (float)Math.sqrt(bot.r)) - bot.r);
+			bot.g = top.g <= 0.5f ?
+			        bot.g - (1 - 2 * top.g) * bot.g * (1 - bot.g) :
+			        bot.g + (2 * top.g - 1) * ((bot.g <= 0.25 ?
+			                                    ((16 * bot.g - 12) * bot.g + 4) * bot.g :
+			                                    (float)Math.sqrt(bot.g)) - bot.g);
+			bot.b = top.b <= 0.5f ?
+			        bot.b - (1 - 2 * top.b) * bot.b * (1 - bot.b) :
+			        bot.b + (2 * top.b - 1) * ((bot.b <= 0.25 ?
+			                                    ((16 * bot.b - 12) * bot.b + 4) * bot.b :
+			                                    (float)Math.sqrt(bot.b)) - bot.b);
 			bot.a = top.a;
 		}
 	},
@@ -160,15 +160,15 @@ public enum MergeMode {
 	VIVID_LIGHT {
 		@Override
 		public void apply(Color4fOld bot, Color4fOld top) {
-			bot.r = top.r < 0.5f
-			        ? top.r == 0 ? -1.0e10f : 1 - (1 - bot.r) / 2 / top.r
-			        : top.r == 1 ? 1.0e10f : bot.r / 2 / (1 - top.r);
-			bot.g = top.g < 0.5f
-			        ? top.r == 0 ? -1.0e10f : 1 - (1 - bot.g) / 2 / top.g
-			        : top.r == 1 ? 1.0e10f : bot.g / 2 / (1 - top.g);
-			bot.b = top.b < 0.5f
-			        ? top.r == 0 ? -1.0e10f : 1 - (1 - bot.b) / 2 / top.b
-			        : top.r == 1 ? 1.0e10f : bot.b / 2 / (1 - top.b);
+			bot.r = top.r < 0.5f ?
+			        top.r == 0 ? -1e10f : 1 - (1 - bot.r) / 2 / top.r :
+			        top.r == 1 ? 1e10f : bot.r / 2 / (1 - top.r);
+			bot.g = top.g < 0.5f ?
+			        top.r == 0 ? -1e10f : 1 - (1 - bot.g) / 2 / top.g :
+			        top.r == 1 ? 1e10f : bot.g / 2 / (1 - top.g);
+			bot.b = top.b < 0.5f ?
+			        top.r == 0 ? -1e10f : 1 - (1 - bot.b) / 2 / top.b :
+			        top.r == 1 ? 1e10f : bot.b / 2 / (1 - top.b);
 			bot.a = top.a;
 		}
 	},
@@ -268,42 +268,42 @@ public enum MergeMode {
 	DIVIDE {
 		@Override
 		public void apply(Color4fOld bot, Color4fOld top) {
-			bot.r = top.r == 0 ? 1.0e10f : bot.r / top.r;
-			bot.g = top.g == 0 ? 1.0e10f : bot.g / top.g;
-			bot.b = top.b == 0 ? 1.0e10f : bot.b / top.b;
+			bot.r = top.r == 0 ? 1e10f : bot.r / top.r;
+			bot.g = top.g == 0 ? 1e10f : bot.g / top.g;
+			bot.b = top.b == 0 ? 1e10f : bot.b / top.b;
 			bot.a = top.a;
 		}
 	},
 	COLOR_DODGE {
 		@Override
 		public void apply(Color4fOld bot, Color4fOld top) {
-			bot.r = top.r == 1 ? 1.0e10f : bot.r / (1 - top.r);
-			bot.g = top.r == 1 ? 1.0e10f : bot.g / (1 - top.g);
-			bot.b = top.r == 1 ? 1.0e10f : bot.b / (1 - top.b);
+			bot.r = top.r == 1 ? 1e10f : bot.r / (1 - top.r);
+			bot.g = top.r == 1 ? 1e10f : bot.g / (1 - top.g);
+			bot.b = top.r == 1 ? 1e10f : bot.b / (1 - top.b);
 			bot.a = top.a;
 		}
 	},
 	REVERSE_DODGE {
 		@Override
 		public void apply(Color4fOld bot, Color4fOld top) {
-			bot.r = bot.r == 1 ? 1.0e10f : top.r / (1 - bot.r);
-			bot.g = bot.g == 1 ? 1.0e10f : top.g / (1 - bot.g);
-			bot.b = bot.b == 1 ? 1.0e10f : top.b / (1 - bot.b);
+			bot.r = bot.r == 1 ? 1e10f : top.r / (1 - bot.r);
+			bot.g = bot.g == 1 ? 1e10f : top.g / (1 - bot.g);
+			bot.b = bot.b == 1 ? 1e10f : top.b / (1 - bot.b);
 			bot.a = top.a;
 		}
 	},
 	SMOOTH_DODGE {
 		@Override
 		public void apply(Color4fOld bot, Color4fOld top) {
-			bot.r = bot.r + top.r > 1
-			        ? 1 - 0.5f * (1 - top.r) / bot.r
-			        : top.r == 1 ? 1 : 0.5f * bot.r / (1 - top.r);
-			bot.g = bot.g + top.g > 1
-			        ? 1 - 0.5f * (1 - top.g) / bot.g
-			        : top.g == 1 ? 0 : 0.5f * bot.g / (1 - top.g);
-			bot.b = bot.b + top.b > 1
-			        ? 1 - 0.5f * (1 - top.b) / bot.b
-			        : top.b == 1 ? 0 : 0.5f * bot.b / (1 - top.b);
+			bot.r = bot.r + top.r > 1 ?
+			        1 - 0.5f * (1 - top.r) / bot.r :
+			        top.r == 1 ? 1 : 0.5f * bot.r / (1 - top.r);
+			bot.g = bot.g + top.g > 1 ?
+			        1 - 0.5f * (1 - top.g) / bot.g :
+			        top.g == 1 ? 0 : 0.5f * bot.g / (1 - top.g);
+			bot.b = bot.b + top.b > 1 ?
+			        1 - 0.5f * (1 - top.b) / bot.b :
+			        top.b == 1 ? 0 : 0.5f * bot.b / (1 - top.b);
 			bot.a = top.a;
 		}
 	},
@@ -319,33 +319,33 @@ public enum MergeMode {
 	COLOR_BURN {
 		@Override
 		public void apply(Color4fOld bot, Color4fOld top) {
-			bot.r = top.r == 0 ? -1.0e10f : 1 - (1 - bot.r) / top.r;
-			bot.g = top.g == 0 ? -1.0e10f : 1 - (1 - bot.g) / top.g;
-			bot.b = top.b == 0 ? -1.0e10f : 1 - (1 - bot.b) / top.b;
+			bot.r = top.r == 0 ? -1e10f : 1 - (1 - bot.r) / top.r;
+			bot.g = top.g == 0 ? -1e10f : 1 - (1 - bot.g) / top.g;
+			bot.b = top.b == 0 ? -1e10f : 1 - (1 - bot.b) / top.b;
 			bot.a = top.a;
 		}
 	},
 	REVERSE_BURN {
 		@Override
 		public void apply(Color4fOld bot, Color4fOld top) {
-			bot.r = bot.r == 0 ? -1.0e10f : 1 - (1 - top.r) / bot.r;
-			bot.g = bot.g == 0 ? -1.0e10f : 1 - (1 - top.g) / bot.g;
-			bot.b = bot.b == 0 ? -1.0e10f : 1 - (1 - top.b) / bot.b;
+			bot.r = bot.r == 0 ? -1e10f : 1 - (1 - top.r) / bot.r;
+			bot.g = bot.g == 0 ? -1e10f : 1 - (1 - top.g) / bot.g;
+			bot.b = bot.b == 0 ? -1e10f : 1 - (1 - top.b) / bot.b;
 			bot.a = top.a;
 		}
 	},
 	SMOOTH_BURN {
 		@Override
 		public void apply(Color4fOld bot, Color4fOld top) {
-			bot.r = bot.r + top.r > 1
-			        ? 1 - 0.5f * (1 - bot.r) / top.r
-			        : bot.r == 1 ? 0 : 0.5f * top.r / (1 - bot.r);
-			bot.g = bot.g + top.g > 1
-			        ? 1 - 0.5f * (1 - bot.g) / top.g
-			        : bot.g == 1 ? 0 : 0.5f * top.g / (1 - bot.b);
-			bot.b = bot.b + top.b > 1
-			        ? 1 - 0.5f * (1 - bot.b) / top.b
-			        : bot.b == 1 ? 0 : 0.5f * top.b / (1 - bot.b);
+			bot.r = bot.r + top.r > 1 ?
+			        1 - 0.5f * (1 - bot.r) / top.r :
+			        bot.r == 1 ? 0 : 0.5f * top.r / (1 - bot.r);
+			bot.g = bot.g + top.g > 1 ?
+			        1 - 0.5f * (1 - bot.g) / top.g :
+			        bot.g == 1 ? 0 : 0.5f * top.g / (1 - bot.b);
+			bot.b = bot.b + top.b > 1 ?
+			        1 - 0.5f * (1 - bot.b) / top.b :
+			        bot.b == 1 ? 0 : 0.5f * top.b / (1 - bot.b);
 			bot.a = top.a;
 		}
 	},
@@ -362,36 +362,36 @@ public enum MergeMode {
 	REFLECT {
 		@Override
 		public void apply(Color4fOld bot, Color4fOld top) {
-			bot.r = top.r == 1 ? 1.0e10f : bot.r * bot.r / (1 - top.r);
-			bot.g = top.g == 1 ? 1.0e10f : bot.g * bot.g / (1 - top.g);
-			bot.b = top.b == 1 ? 1.0e10f : bot.b * bot.b / (1 - top.b);
+			bot.r = top.r == 1 ? 1e10f : bot.r * bot.r / (1 - top.r);
+			bot.g = top.g == 1 ? 1e10f : bot.g * bot.g / (1 - top.g);
+			bot.b = top.b == 1 ? 1e10f : bot.b * bot.b / (1 - top.b);
 			bot.a = top.a;
 		}
 	},
 	GLOW {
 		@Override
 		public void apply(Color4fOld bot, Color4fOld top) {
-			bot.r = bot.r == 1 ? 1.0e10f : top.r * top.r / (1 - bot.r);
-			bot.g = bot.g == 1 ? 1.0e10f : top.g * top.g / (1 - bot.g);
-			bot.b = bot.b == 1 ? 1.0e10f : top.b * top.b / (1 - bot.b);
+			bot.r = bot.r == 1 ? 1e10f : top.r * top.r / (1 - bot.r);
+			bot.g = bot.g == 1 ? 1e10f : top.g * top.g / (1 - bot.g);
+			bot.b = bot.b == 1 ? 1e10f : top.b * top.b / (1 - bot.b);
 			bot.a = top.a;
 		}
 	},
 	FREEZE {
 		@Override
 		public void apply(Color4fOld bot, Color4fOld top) {
-			bot.r = top.r == 0 ? -1.0e10f : 1 - (1 - bot.r) * (1 - bot.r) / top.r;
-			bot.g = top.g == 0 ? -1.0e10f : 1 - (1 - bot.g) * (1 - bot.g) / top.g;
-			bot.b = top.b == 0 ? -1.0e10f : 1 - (1 - bot.b) * (1 - bot.b) / top.b;
+			bot.r = top.r == 0 ? -1e10f : 1 - (1 - bot.r) * (1 - bot.r) / top.r;
+			bot.g = top.g == 0 ? -1e10f : 1 - (1 - bot.g) * (1 - bot.g) / top.g;
+			bot.b = top.b == 0 ? -1e10f : 1 - (1 - bot.b) * (1 - bot.b) / top.b;
 			bot.a = top.a;
 		}
 	},
 	HEAT {
 		@Override
 		public void apply(Color4fOld bot, Color4fOld top) {
-			bot.r = bot.r == 0 ? -1.0e10f : 1 - (1 - top.r) * (1 - top.r) / bot.r;
-			bot.g = bot.g == 0 ? -1.0e10f : 1 - (1 - top.g) * (1 - top.g) / bot.g;
-			bot.b = bot.b == 0 ? -1.0e10f : 1 - (1 - top.b) * (1 - top.b) / bot.b;
+			bot.r = bot.r == 0 ? -1e10f : 1 - (1 - top.r) * (1 - top.r) / bot.r;
+			bot.g = bot.g == 0 ? -1e10f : 1 - (1 - top.g) * (1 - top.g) / bot.g;
+			bot.b = bot.b == 0 ? -1e10f : 1 - (1 - top.b) * (1 - top.b) / bot.b;
 			bot.a = top.a;
 		}
 	},

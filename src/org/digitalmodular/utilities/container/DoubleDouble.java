@@ -84,7 +84,7 @@ public class DoubleDouble {
 
 	public void set(double hi) {
 		this.hi = hi;
-		lo      = 0;
+		lo = 0;
 	}
 
 	public void set(double hi, double lo) {

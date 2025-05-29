@@ -17,18 +17,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.digitalmodular.utilities.annotation.collection;
+package org.digitalmodular.utilities.collection;
+
+import java.util.ArrayList;
 
 /**
  * @author Mark Jeronimus
  */
-public class LinkedListElement {
-	public Object value;
+// Created 2008-01-31
+public class GrowingArrayList<E> extends ArrayList<E> {
+	@Override
+	public E set(int index, E element) {
+		for (int i = size(); i <= index; i++) {
+			add(null);
+		}
+		return super.set(index, element);
+	}
 
-	public LinkedListElement next;
-	public LinkedListElement previous;
+	@Override
+	public void add(int index, E element) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-	public LinkedListElement(Object value) {
-		this.value = value;
+	@Override
+	public E get(int i) {
+		return i >= size() ? null : super.get(i);
 	}
 }

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.digitalmodular.utilities.annotation.collection;
+package org.digitalmodular.utilities.collection;
 
 /**
  * Classes that extend this class can be stored in a IndexedLinkedList collection. The IndexedLinkedList class uses an

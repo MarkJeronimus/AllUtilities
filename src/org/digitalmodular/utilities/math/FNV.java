@@ -19,6 +19,8 @@
 
 package org.digitalmodular.utilities.math;
 
+import org.digitalmodular.utilities.annotation.UtilityClass;
+
 /**
  * Implementation of the Fowler-Noll-Vo hash function for fast hash table use.
  * <p>
@@ -33,9 +35,8 @@ package org.digitalmodular.utilities.math;
  */
 // Created 2016-08-01
 @SuppressWarnings("OverloadedMethodsWithSameNumberOfParameters")
-public enum FNV {
-	;
-
+@UtilityClass
+public final class FNV {
 	public static final int OFFSET_BASIS = 0x811C9DC5;
 	public static final int PRIME        = 0x01000193;
 
@@ -91,6 +92,7 @@ public enum FNV {
 		return hashFNV(hashCode, Double.doubleToLongBits(value));
 	}
 
+	@SuppressWarnings("CharUsedInArithmeticContext")
 	public static int hashFNV(int hashCode, char value) {
 		hashCode = (hashCode ^ ((value >> 8) & 0xFF)) * PRIME;
 		hashCode = (hashCode ^ (value & 0xFF)) * PRIME;

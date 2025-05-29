@@ -20,14 +20,14 @@
 package org.digitalmodular.utilities.signal.window;
 
 import org.digitalmodular.utilities.NumberUtilities;
+import org.digitalmodular.utilities.annotation.UtilityClass;
 
 /**
  * @author Mark Jeronimus
  */
 // Created 2016-03-27
-public enum WindowFunctionUtilities {
-	;
-
+@UtilityClass
+public final class WindowFunctionUtilities {
 	public static void sampleWindow(double[] window, int length, WindowSymmetryMode symmetryMode) {
 		for (int i = 0; i < length; i++) {
 			window[i] = symmetryMode.getValueAt(i, length);

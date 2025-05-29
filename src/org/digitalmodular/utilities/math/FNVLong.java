@@ -1,5 +1,5 @@
 /*
- * This file is part of AllUtilities.
+ * This file is part of Utilities.
  *
  * Copyleft 2024 Mark Jeronimus. All Rights Reversed.
  *

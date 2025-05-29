@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.jetbrains.annotations.Nullable;
 
-import org.digitalmodular.utilities.math.interpolation.MonotoneInterpolator;
-import org.digitalmodular.utilities.math.interpolation.MonotoneInterpolatorReference;
+import org.digitalmodular.utilities.signal.interpolation.MonotoneInterpolator;
+import org.digitalmodular.utilities.signal.interpolation.MonotoneInterpolatorReference;
 import static org.digitalmodular.utilities.ValidatorUtilities.requireRange;
 
 /**

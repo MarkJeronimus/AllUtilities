@@ -28,8 +28,6 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 
-import org.jetbrains.annotations.Nullable;
-
 import org.digitalmodular.utilities.annotation.UtilityClass;
 import static org.digitalmodular.utilities.ValidatorUtilities.requireAtLeast;
 import static org.digitalmodular.utilities.ValidatorUtilities.requireNonNull;
@@ -395,7 +393,7 @@ public final class StringUtilities {
 		return s + repeatChar(' ', Math.max(0, length - s.length()));
 	}
 
-	public static @Nullable String removeQuotes(String string) {
+	public static String removeQuotes(String string) {
 		if (string == null ||
 		    string.length() < 2 ||
 		    string.charAt(0) != '"' ||

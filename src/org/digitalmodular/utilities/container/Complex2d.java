@@ -38,11 +38,11 @@ import java.io.Serializable;
 // Created 2005-05-07
 // Updated 2009-05-08 Added lots of extra complex functions
 // Setter Functions
-// ToDoubleFunction<Complex2D>
-// BiPredicate<Complex2d, Complex2d>
-// Unary Linear Functions
-// Binary Linear Functions
-// Ternary Linear Functions
+// Query Functions
+// Unary Functions
+// Binary Functions
+// Ternary Functions
+// Testing Functions
 public class Complex2d implements Serializable {
 	public double real;
 	public double imag;
@@ -57,28 +57,33 @@ public class Complex2d implements Serializable {
 		imag = 0;
 	}
 
-	public Complex2d(double re, double im) {
-		this.real = re;
-		this.imag = im;
+	public Complex2d(double real, double imag) {
+		this.real = real;
+		this.imag = imag;
 	}
 
-	public Complex2d(Complex2d value) {
-		real = value.real;
-		imag = value.imag;
+	public Complex2d(Complex2d z) {
+		real = z.real;
+		imag = z.imag;
 	}
 
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Setter Functions
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	public void set(double zre) {
+		real = zre;
+		imag = 0;
+	}
+
 	public void set(double real, double imag) {
 		this.real = real;
 		this.imag = imag;
 	}
 
-	public void set(Complex2d value) {
-		real = value.real;
-		imag = value.imag;
+	public void set(Complex2d z) {
+		real = z.real;
+		imag = z.imag;
 	}
 
 	public void cis(double theta) {
@@ -100,7 +105,7 @@ public class Complex2d implements Serializable {
 	}
 
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// ToDoubleFunction<Complex2D>
+	// Query Functions
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public double real() {
@@ -119,20 +124,20 @@ public class Complex2d implements Serializable {
 
 	public double magn() {
 		// = |z| = modulus(z) = sqrt(z*conjugate(z))
-		return Math.sqrt(real * real + imag * imag);
+		return Math.sqrt(magnSquared());
 	}
 
 	/**
 	 * Returns the angle from the positive real axis in counterclockwise direction, in the range of [-pi, pi].
 	 * <p>
-	 * The reason why both -pi and pi are possible results is because of positive and negative zero im values.
+	 * The reason why both -pi and pi are possible results is because of positive and negative zero imag values.
 	 */
 	public double arg() {
 		return Math.atan2(imag, real);
 	}
 
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Unary Linear Functions
+	// Unary Functions
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public Complex2d negate() {
@@ -142,6 +147,10 @@ public class Complex2d implements Serializable {
 	public void negateSelf() {
 		real = -real;
 		imag = -imag;
+	}
+
+	public Complex2d conjugate() {
+		return new Complex2d(real, -imag);
 	}
 
 	public void conjugateSelf() {
@@ -176,8 +185,15 @@ public class Complex2d implements Serializable {
 		imag /= magn;
 	}
 
+	public void sqrSelf() {
+		double newReal = real * real - imag * imag;
+		double newImag = 2 * real * imag;
+		this.real = newReal;
+		this.imag = newImag;
+	}
+
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Binary Linear Functions
+	// Binary Functions
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public Complex2d add(double d) {
@@ -426,13 +442,6 @@ public class Complex2d implements Serializable {
 		imag = value.imag / imag;
 	}
 
-	public void sqrSelf() {
-		double newReal = real * real - imag * imag;
-		double newImag = 2 * real * imag;
-		this.real = newReal;
-		this.imag = newImag;
-	}
-
 	public Complex2d sqrAdd(double real, double imag) {
 		// sqrAdd(a, b) = sqr(a)+b
 		return new Complex2d(this.real * this.real - this.imag * this.imag + real,
@@ -460,8 +469,13 @@ public class Complex2d implements Serializable {
 		imag = newImag;
 	}
 
+	public void distanceCartesian(Complex2d z) {
+		real = Math.abs(real - z.real);
+		imag = Math.abs(imag - z.imag);
+	}
+
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Ternary Linear Functions
+	// Ternary Functions
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public Complex2d addScaled(Complex2d value, double scale) {
@@ -474,14 +488,26 @@ public class Complex2d implements Serializable {
 		imag += value.imag * scale;
 	}
 
-	@SuppressWarnings("NonFinalFieldReferenceInEquals")
+	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Testing Functions
+	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public boolean magnEquals(Complex2d z) {
+		return magnSquared() == z.magnSquared();
+	}
+
+	public boolean magnDiffers(Complex2d z) {
+		return magnSquared() != z.magnSquared();
+	}
+
 	@Override
+	@SuppressWarnings("NonFinalFieldReferenceInEquals")
 	public boolean equals(Object other) {
 		return other instanceof Complex2d c && real == c.real && imag == c.imag;
 	}
 
-	@SuppressWarnings("NonFinalFieldReferencedInHashCode")
 	@Override
+	@SuppressWarnings("NonFinalFieldReferencedInHashCode")
 	public int hashCode() {
 		int hash = 0x811C9DC5;
 		hash ^= Double.hashCode(real);

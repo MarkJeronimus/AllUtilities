@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.digitalmodular.utilities.annotation.collection;
+package org.digitalmodular.utilities.collection;
 
 import java.util.ArrayList;
 import java.util.Iterator;

@@ -33,14 +33,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Base64;
 
+import org.digitalmodular.utilities.annotation.UtilityClass;
+
 /**
  * @author Mark Jeronimus
  */
 // Created 2016-04-23
-@Deprecated
-public enum SerializationUtilities {
-	;
-
+@Deprecated // Don't use Java serialization framework. Do it manually.
+@UtilityClass
+public final class SerializationUtilities {
 	public static void serialize(Serializable obj, Path file) throws IOException {
 		try (ObjectOutput os = new ObjectOutputStream(new BufferedOutputStream(Files.newOutputStream(file)))) {
 			os.writeObject(obj);

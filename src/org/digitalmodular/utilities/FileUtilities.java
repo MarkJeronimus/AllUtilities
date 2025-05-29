@@ -60,6 +60,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.jetbrains.annotations.Nullable;
 
+import org.digitalmodular.utilities.annotation.UtilityClass;
 import org.digitalmodular.utilities.function.IOOperation;
 import static org.digitalmodular.utilities.ArrayValidatorUtilities.requireArrayLengthAtLeast;
 import static org.digitalmodular.utilities.ArrayValidatorUtilities.requireArrayValuesNonNull;
@@ -70,9 +71,8 @@ import static org.digitalmodular.utilities.ValidatorUtilities.requireThat;
  * @author Mark Jeronimus
  */
 // Created 2006-09-02
-public enum FileUtilities {
-	;
-
+@UtilityClass
+public final class FileUtilities {
 	public static final int MAX_BUFFER_SIZE = 65536;
 
 	public static void makeFileEmpty(String filename) throws IOException {

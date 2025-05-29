@@ -26,7 +26,6 @@ package org.digitalmodular.utilities.container;
  */
 // Created 2005-10-21
 public class Matrix4d {
-
 	public double x0;
 	public double x1;
 	public double x2;

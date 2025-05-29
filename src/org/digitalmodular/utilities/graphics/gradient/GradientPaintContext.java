@@ -42,6 +42,7 @@ abstract class GradientPaintContext implements PaintContext {
 	private @Nullable ColorModel     persistentColorModel = null;
 	private @Nullable WritableRaster persistentRaster     = null;
 
+	@SuppressWarnings("FieldHasSetterButNoGetter")
 	protected @Nullable Gradient gradient = null;
 
 	private @Nullable ColorModel colorModel = null;
@@ -78,9 +79,9 @@ abstract class GradientPaintContext implements PaintContext {
 		requireState(colorModel != null, () -> "setGradient() has not been called");
 
 		//noinspection ObjectEquality
-		if (colorModel != persistentColorModel || persistentRaster == null
-		    || persistentRaster.getWidth() < w ||
-		    persistentRaster.getHeight() < h) {
+		if (colorModel != persistentColorModel || persistentRaster == null ||
+		    persistentRaster.getWidth() < w || persistentRaster.getHeight() < h) {
+
 			persistentColorModel = colorModel;
 			persistentRaster     = colorModel.createCompatibleWritableRaster(w, h);
 		}

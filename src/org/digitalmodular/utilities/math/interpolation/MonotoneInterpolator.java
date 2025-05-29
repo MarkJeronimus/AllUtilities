@@ -76,18 +76,18 @@ public class MonotoneInterpolator implements DoubleUnaryOperator {
 
 		for (int i = numPoints - 2; i >= 0; i--) {
 			System.out.println(i);
-			slopesL[i + 1] = calcSlope(i + 1, false);
+			slopesL[i + 1] = calcSlope(i + 1);
 		}
 		System.out.println();
 		for (int i = 0; i < numPoints - 1; i++) {
 			System.out.println(i);
-			slopesR[i + 1] = calcSlope(i + 2, true);
+			slopesR[i + 1] = calcSlope(i + 2);
 		}
 		System.out.println();
 		Thread.yield();
 	}
 
-	private double calcSlope(int i, boolean leftSide) {
+	private double calcSlope(int i) {
 		double dxl = cpx[i] - cpx[i - 1];
 		double dxr = cpx[i + 1] - cpx[i];
 		double dyl = cpy[i] - cpy[i - 1];

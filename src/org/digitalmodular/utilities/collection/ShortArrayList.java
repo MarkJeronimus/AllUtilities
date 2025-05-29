@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.digitalmodular.utilities.annotation.collection;
+package org.digitalmodular.utilities.collection;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Resizable-array implementation for {@code byte[]}, similar to {@link ArrayList} for Object[]. It contains all
+ * Resizable-array implementation for {@code short[]}, similar to {@link ArrayList} for Object[]. It contains all
  * the functions of the {@link List} interface except the iterator (TODO).
  * <p>
  * Most of this is copied from the source code of {@code ArrayList.java} of Java 1.6.
@@ -34,17 +34,20 @@ import java.util.List;
  * @author Mark Jeronimus
  */
 // Created 2013-12-03
-public class ByteArrayList implements Serializable {
+// This is a direct copy of ByteArrayList, with
+// - search&replace ByteArrayList -> ShortArrayList
+// - search&replace byte -> short
+public class ShortArrayList implements Serializable {
 
 	/**
-	 * The array buffer into which the elements of the {@link ByteArrayList} are stored. The capacity of the {@link
-	 * ByteArrayList} is the length of this array buffer.
+	 * The array buffer into which the elements of the {@link ShortArrayList} are stored. The capacity of the {@link
+	 * ShortArrayList} is the length of this array buffer.
 	 */
-	public    byte[] values = new byte[256];
+	public    short[] values = new short[256];
 	/**
-	 * The size of the {@link ByteArrayList} (the number of elements it contains).
+	 * The size of the {@link ShortArrayList} (the number of elements it contains).
 	 */
-	protected int    size   = 0;
+	protected int     size   = 0;
 
 	/**
 	 * Constructs an empty list with the specified initial capacity.
@@ -52,14 +55,14 @@ public class ByteArrayList implements Serializable {
 	 * @param initialCapacity the initial capacity of the list
 	 * @throws IllegalArgumentException if the specified initial capacity is negative
 	 */
-	public ByteArrayList(int initialCapacity) {
+	public ShortArrayList(int initialCapacity) {
 		ensureCapacity(initialCapacity);
 	}
 
 	/**
 	 * Constructs an empty list with an initial capacity of 16.
 	 */
-	public ByteArrayList() {
+	public ShortArrayList() {
 		this(32);
 	}
 
@@ -69,7 +72,7 @@ public class ByteArrayList implements Serializable {
 	 * @param array the array whose elements are to be placed into this list
 	 * @throws NullPointerException if the specified array is null
 	 */
-	public ByteArrayList(byte[] array, boolean copy) {
+	public ShortArrayList(short[] array, boolean copy) {
 		if (copy) {
 			ensureCapacity(array.length);
 			addAll(array);
@@ -85,7 +88,7 @@ public class ByteArrayList implements Serializable {
 	 * @param array the array whose elements are to be placed into this list
 	 * @throws NullPointerException if the specified array is null
 	 */
-	public ByteArrayList(byte[] array) {
+	public ShortArrayList(short[] array) {
 		this(array, false);
 	}
 
@@ -94,7 +97,7 @@ public class ByteArrayList implements Serializable {
 	 *
 	 * @param list the array whose elements are to be placed into this list
 	 */
-	public ByteArrayList(ByteArrayList list) {
+	public ShortArrayList(ShortArrayList list) {
 		ensureCapacity(list.size);
 		addAll(list);
 	}
@@ -111,7 +114,8 @@ public class ByteArrayList implements Serializable {
 	}
 
 	/**
-	 * Increases the capacity of this  instance, if necessary, to ensure that it can hold at least
+	 * Increases the capacity of this  instance, if necessary, to ensure that it can hold at
+	 * least
 	 * the number of elements specified by the minimum capacity argument.
 	 *
 	 * @param minCapacity the desired minimum capacity. The actual resulting capacity may be larger.
@@ -159,7 +163,7 @@ public class ByteArrayList implements Serializable {
 	 * @param value the value to be appended to this list
 	 * @return {@code true} (as specified by {@link Collection#add})
 	 */
-	public boolean add(byte value) {
+	public boolean add(short value) {
 		ensureCapacity(size + 1);
 		values[size] = value;
 		size++;
@@ -174,7 +178,7 @@ public class ByteArrayList implements Serializable {
 	 * @param value the value to be inserted
 	 * @throws IndexOutOfBoundsException if index is out of range ( {@code index &lt; 0 || index &gt;= size()}).
 	 */
-	public void add(int index, byte value) {
+	public void add(int index, short value) {
 		rangeCheck(index);
 
 		ensureCapacity(size + 1);
@@ -192,7 +196,7 @@ public class ByteArrayList implements Serializable {
 	 * @return {@code true} if this list changed as a result of the call
 	 * @throws NullPointerException if the specified array is null
 	 */
-	public boolean addAll(byte[] array) {
+	public boolean addAll(short[] array) {
 		int numNew = array.length;
 		ensureCapacity(size + numNew);
 		System.arraycopy(array, 0, values, size, numNew);
@@ -209,7 +213,7 @@ public class ByteArrayList implements Serializable {
 	 * @return {@code true} if this list changed as a result of the call
 	 * @throws NullPointerException if the specified list is null
 	 */
-	public boolean addAll(ByteArrayList list) {
+	public boolean addAll(ShortArrayList list) {
 		int numNew = list.values.length;
 		ensureCapacity(size + numNew);
 		System.arraycopy(list.values, 0, values, size, numNew);
@@ -227,7 +231,7 @@ public class ByteArrayList implements Serializable {
 	 * @throws IndexOutOfBoundsException if index is out of range ( {@code index &lt; 0 || index &gt;= size()}).
 	 * @throws NullPointerException      if the specified array is null
 	 */
-	public boolean addAll(int index, byte[] array) {
+	public boolean addAll(int index, short[] array) {
 		rangeCheck(index, index + array.length);
 
 		int numNew = array.length;
@@ -253,7 +257,7 @@ public class ByteArrayList implements Serializable {
 	 *                                   size()} ).
 	 * @throws NullPointerException      if the specified array is null
 	 */
-	public boolean addAll(int index, byte[] array, int offset, int length) {
+	public boolean addAll(int index, short[] array, int offset, int length) {
 		rangeCheck(index + length);
 
 		ensureCapacity(size + length);
@@ -276,10 +280,10 @@ public class ByteArrayList implements Serializable {
 	 * @return the value that was removed from the list
 	 * @throws IndexOutOfBoundsException if index is out of range ( {@code index &lt; 0 || index &gt;= size()}).
 	 */
-	public byte remove(int index) {
+	public short remove(int index) {
 		rangeCheck(index);
 
-		byte oldValue = values[index];
+		short oldValue = values[index];
 
 		int numMoved = size - index - 1;
 		if (numMoved > 0) {
@@ -319,7 +323,7 @@ public class ByteArrayList implements Serializable {
 	 * @return the element at the specified position in this list
 	 * @throws IndexOutOfBoundsException if index is out of range ( {@code index &lt; 0 || index &gt;= size()}).
 	 */
-	public byte get(int index) {
+	public short get(int index) {
 		rangeCheck(index);
 
 		return values[index];
@@ -333,10 +337,10 @@ public class ByteArrayList implements Serializable {
 	 * @return the element previously at the specified position
 	 * @throws IndexOutOfBoundsException if index is out of range ( {@code index &lt; 0 || index &gt;= size()}).
 	 */
-	public byte set(int index, byte value) {
+	public short set(int index, short value) {
 		rangeCheck(index);
 
-		byte oldValue = values[index];
+		short oldValue = values[index];
 		values[index] = value;
 		return oldValue;
 	}
@@ -350,7 +354,7 @@ public class ByteArrayList implements Serializable {
 	 *                                   size())} .
 	 * @throws NullPointerException      if the specified array is null
 	 */
-	public void setAll(int fromIndex, byte[] array) {
+	public void setAll(int fromIndex, short[] array) {
 		rangeCheck(fromIndex, fromIndex + array.length);
 
 		System.arraycopy(array, 0, values, fromIndex, array.length);
@@ -367,7 +371,7 @@ public class ByteArrayList implements Serializable {
 	 *                                   length >= size())} .
 	 * @throws NullPointerException      if the specified array is null
 	 */
-	public void setAll(int fromIndex, byte[] array, int offset, int length) {
+	public void setAll(int fromIndex, short[] array, int offset, int length) {
 		rangeCheck(fromIndex, fromIndex + length);
 
 		System.arraycopy(array, offset, values, fromIndex, length);
@@ -383,7 +387,7 @@ public class ByteArrayList implements Serializable {
 	 * @throws IndexOutOfBoundsException if fromIndex or toIndex out of range ( {@code fromIndex < 0 || fromIndex >
 	 *                                   toIndex || toIndex >= size()} ).
 	 */
-	public void setRange(int fromIndex, int toIndex, byte value) {
+	public void setRange(int fromIndex, int toIndex, short value) {
 		rangeCheck(fromIndex, toIndex);
 
 		for (int index = fromIndex; index < toIndex; index++) {
@@ -399,7 +403,7 @@ public class ByteArrayList implements Serializable {
 	 * @param value the value whose presence in this list is to be tested
 	 * @return {@code true} if this list contains the specified value
 	 */
-	public boolean contains(byte value) {
+	public boolean contains(short value) {
 		for (int i = 0; i < size; i++) {
 			if (value == values[i]) {
 				return true;
@@ -412,11 +416,8 @@ public class ByteArrayList implements Serializable {
 	 * Returns the index of the first occurrence of the specified value in this list, or -1 if this list does not
 	 * contain the value. More formally, returns the lowest index {@code i} such that
 	 * {@code (o==null&nbsp;?&nbsp;get(i)==null&nbsp;:&nbsp;o.equals(get(i)))} , or -1 if there is no such index.
-	 *
-	 * @param value the search pattern.
-	 * @return the index, or -1.
 	 */
-	public int indexOf(byte value) {
+	public int indexOf(short value) {
 		for (int i = 0; i < size; i++) {
 			if (value == values[i]) {
 				return i;
@@ -426,56 +427,12 @@ public class ByteArrayList implements Serializable {
 	}
 
 	/**
-	 * Returns the index of the first occurrence of the specified array in this list, or -1 if this list does not
-	 * contain the value. More formally, returns the lowest index {@code i} such that
-	 * {@code Arrays.equals(toArray(i, i+array.length, new byte[0]), array)} returns true , or -1 if there is no
-	 * such index.
-	 *
-	 * @param array the search pattern.
-	 * @return the index, or -1.
-	 */
-	public int indexOf(byte[] array) {
-		if (size == 0) {
-			return array.length == 0 ? 0 : -1;
-		} else if (array.length == 0) {
-			return 0;
-		}
-
-		byte first = array[0];
-		int  max   = size - array.length;
-		for (int i = 0; i <= max; i++) {
-			// Look for first byte.
-			if (values[i] != first) {
-				++i;
-				while (i <= max && values[i] != first) {
-					++i;
-				}
-			}
-
-			if (i <= max) {
-				// Found first byte, now look at the rest of v2.
-				int j   = i + 1;
-				int end = j + array.length - 1;
-				for (int k = 1; j < end && values[j] == array[k]; j++, k++) {
-				}
-
-				if (j == end) {
-					// Found whole array.
-					return i;
-				}
-			}
-		}
-
-		return -1;
-	}
-
-	/**
 	 * Returns the index of the last occurrence of the specified value in this list, or -1 if this list does not
 	 * contain
 	 * the value. More formally, returns the highest index {@code i} such that
 	 * {@code (o==null&nbsp;?&nbsp;get(i)==null&nbsp;:&nbsp;o.equals(get(i)))} , or -1 if there is no such index.
 	 */
-	public int lastIndexOf(byte value) {
+	public int lastIndexOf(short value) {
 		for (int i = size - 1; i >= 0; i--) {
 			if (value == values[i]) {
 				return i;
@@ -487,13 +444,12 @@ public class ByteArrayList implements Serializable {
 	/**
 	 * Returns an array containing all of the elements in this list in proper sequence (from first to last element).
 	 * <p>
-	 * <p>
 	 * The returned array will be "safe" in that no references to it are maintained by this list. (In other words, this
 	 * method must allocate a new array). The caller is thus free to modify the returned array.
 	 *
 	 * @return an array containing all of the elements in this list in proper sequence
 	 */
-	public byte[] toArray() {
+	public short[] toArray() {
 		return Arrays.copyOf(values, size);
 	}
 
@@ -502,50 +458,23 @@ public class ByteArrayList implements Serializable {
 	 * the list fits in the specified array, it is returned therein. Otherwise, a new array is allocated with the size
 	 * of this list.
 	 * <p>
-	 * <p>
 	 * If the list fits in the specified array with room to spare (i.e., the array has more elements than the list),
 	 * then the only way to know the length of the data is by calling the {@link #size()} method.
 	 *
 	 * @param array the array into which the elements of the list are to be stored, if it is big enough; otherwise, a
 	 *              new array of the same runtime type is allocated for this purpose.
 	 * @return an array containing the elements of the list
+	 * @throws ArrayStoreException  if the runtime type of the specified array is not a supertype of the runtime
+	 *                              type of
+	 *                              every element in this list
 	 * @throws NullPointerException if the specified array is null
 	 */
-	public byte[] toArray(byte[] array) {
-		if (array.length < size) {
-			// Make a new array:
+	public short[] toArray(short[] array) {
+		if (array.length < size) // Make a new array:
+		{
 			return Arrays.copyOf(values, size);
 		}
 		System.arraycopy(values, 0, array, 0, size);
-		return array;
-	}
-
-	/**
-	 * Returns an array containing a subset of the elements in this list in proper sequence (from first to last
-	 * element). If the list fits in the specified array, it is returned therein. Otherwise, a new array is allocated
-	 * with the size of this list.
-	 * <p>
-	 * <p>
-	 * If the list fits in the specified array with room to spare (i.e., the array has more elements than the list),
-	 * then the amount of elements returned equals {@code toIndex - fromIndex - 1}.
-	 *
-	 * @param fromIndex the beginning index, inclusive.
-	 * @param toIndex   the ending index, exclusive.
-	 * @param array     the array into which the elements of the list are to be stored, if it is big enough; otherwise,
-	 *                  a new array of the same runtime type is allocated for this purpose.
-	 * @return an array containing the elements of the list
-	 * @throws NullPointerException if the specified array is null
-	 */
-	public byte[] toArray(int fromIndex, int toIndex, byte[] array) {
-		rangeCheck(fromIndex);
-		rangeCheck(toIndex - 1);
-
-		int length = toIndex - fromIndex;
-		if (array.length < length) {
-			// Make a new array:
-			array = new byte[length];
-		}
-		System.arraycopy(values, fromIndex, array, 0, length);
 		return array;
 	}
 
