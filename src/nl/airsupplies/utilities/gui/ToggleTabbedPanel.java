@@ -33,8 +33,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
 
-import nl.airsupplies.utilities.Debug;
-
 /**
  * @author Mark Jeronimus
  */
@@ -50,21 +48,21 @@ public class ToggleTabbedPanel extends JComponent implements ActionListener {
 	private final Vector<JComponent>    contents = new Vector<>();
 
 	public ToggleTabbedPanel(int buttonsDirection) {
-		Debug.debuggingGUI = false;
+		GUIDebugging.setEnabled(false);
 		setLayout(new BorderLayout());
 
-		Debug.gui(this, "this");
+		GUIDebugging.gui(this, "this");
 		{
 			JScrollPane c = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
 			                                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-			Debug.gui(c, "JScrollPane");
+			GUIDebugging.gui(c, "JScrollPane");
 			{
 				JComponent c2 = new JPanel();
 				c2.setLayout(new BorderLayout());
-				Debug.gui(c2, "c2 BorderLayout");
+				GUIDebugging.gui(c2, "c2 BorderLayout");
 				{
 					contentsPanel.setLayout(new BoxLayout(contentsPanel, BoxLayout.Y_AXIS));
-					Debug.gui(contentsPanel, "contentsPanel BoxLayout");
+					GUIDebugging.gui(contentsPanel, "contentsPanel BoxLayout");
 					c2.add(contentsPanel, BorderLayout.NORTH);
 				}
 				c.setViewportView(c2);
@@ -75,24 +73,24 @@ public class ToggleTabbedPanel extends JComponent implements ActionListener {
 		{
 			JComponent c = new JPanel();
 			c.setLayout(new BorderLayout());
-			Debug.gui(c, "c BorderLayout");
+			GUIDebugging.gui(c, "c BorderLayout");
 			{
 				JComponent c2 = new JPanel();
 				c2.setLayout(new BorderLayout());
 				c2.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
-				Debug.gui(c2, "c2 BorderLayout");
+				GUIDebugging.gui(c2, "c2 BorderLayout");
 				{
 					tabsPanel.setLayout(new BoxLayout(tabsPanel,
 					                                  buttonsDirection == HORIZONTAL
 					                                  ? BoxLayout.X_AXIS : BoxLayout.Y_AXIS));
-					Debug.gui(tabsPanel, "tabsPanel BoxLayout");
+					GUIDebugging.gui(tabsPanel, "tabsPanel BoxLayout");
 					c2.add(tabsPanel,
 					       buttonsDirection == HORIZONTAL ? BorderLayout.WEST : BorderLayout.NORTH);
 				}
 				{
 					JComponent c3 = new JPanel();
 					c3.setLayout(new BorderLayout());
-					Debug.gui(c3, "c3 BorderLayout");
+					GUIDebugging.gui(c3, "c3 BorderLayout");
 					c3.add(new Separator(), buttonsDirection == HORIZONTAL ? BorderLayout.WEST
 					                                                       : BorderLayout.NORTH);
 					c2.add(c3, BorderLayout.CENTER);
@@ -116,7 +114,7 @@ public class ToggleTabbedPanel extends JComponent implements ActionListener {
 		{
 			JComponent c = new JPanel();
 			c.setLayout(new BorderLayout());
-			Debug.gui(c, "tab_c BorderLayout");
+			GUIDebugging.gui(c, "tab_c BorderLayout");
 			c.add(b, BorderLayout.CENTER);
 			tabsPanel.add(c);
 		}
@@ -125,13 +123,13 @@ public class ToggleTabbedPanel extends JComponent implements ActionListener {
 		if (contents.size() > 0) {
 			contentsPanel.add(new Separator());
 		}
-		Debug.gui(content, "content");
+		GUIDebugging.gui(content, "content");
 		content.setVisible(b.isSelected());
 		{
 			JComponent c = new JPanel();
 			c.setLayout(new BorderLayout());
 			c.setBorder(BorderFactory.createTitledBorder(content.getName()));
-			Debug.gui(c, "content_c BorderLayout");
+			GUIDebugging.gui(c, "content_c BorderLayout");
 			c.add(content, BorderLayout.CENTER);
 			contentsPanel.add(c);
 		}

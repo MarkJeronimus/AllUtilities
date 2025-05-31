@@ -26,8 +26,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import nl.airsupplies.utilities.Debug;
-
 /**
  * @author Mark Jeronimus
  */
@@ -38,12 +36,12 @@ public class StatusBar extends JPanel {
 	public StatusBar() {
 		super(new BorderLayout());
 
-		Debug.gui(this, "this");
+		GUIDebugging.gui(this, "this");
 
 		setPreferredSize(new Dimension(0, 18));
 
 		bodyPanel.setLayout(new BoxLayout(bodyPanel, BoxLayout.X_AXIS));
-		Debug.gui(bodyPanel, "bodyPanel");
+		GUIDebugging.gui(bodyPanel, "bodyPanel");
 		add(bodyPanel, BorderLayout.CENTER);
 	}
 
@@ -53,7 +51,7 @@ public class StatusBar extends JPanel {
 		}
 		{
 			JPanel p5 = new JPanel(new BorderLayout());
-			Debug.gui(p5, "p5");
+			GUIDebugging.gui(p5, "p5");
 			p5.add(c, BorderLayout.CENTER);
 			bodyPanel.add(p5);
 		}

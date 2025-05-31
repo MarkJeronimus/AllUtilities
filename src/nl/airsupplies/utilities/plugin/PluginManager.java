@@ -28,8 +28,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-
-import nl.airsupplies.utilities.Debug;
+import java.util.logging.Logger;
 
 /**
  * @author Mark Jeronimus
@@ -76,7 +75,7 @@ public class PluginManager<T> {
 			return;
 		}
 
-		Debug.println("Scanning for plugins in: " + pluginsPath.getPath());
+		Logger.getGlobal().config("Scanning for plugins in: " + pluginsPath.getPath());
 
 		for (File plugin : pluginsPath.listFiles()) {
 			String pluginFile = null;
@@ -91,7 +90,7 @@ public class PluginManager<T> {
 				continue;
 			}
 
-			Debug.println("Plugin found: " + pluginFile);
+			Logger.getGlobal().config("Plugin found: " + pluginFile);
 
 			Plugin<T> entry = loadPluginEntry(pluginFile);
 			if (entry != null) {
@@ -115,16 +114,17 @@ public class PluginManager<T> {
 		try {
 			String pluginFile = pluginsPackage + findJARPluginClass(jarFile.getPath());
 
-			Debug.println("Plugin JAR was found: " + pluginFile);
+			Logger.getGlobal().config("Plugin JAR was found: " + pluginFile);
 			addJARToClassPath(jarFile);
 
 			return pluginFile;
 		} catch (PluginNotFoundException ex) {
 			// Change error to warning.
-			Debug.println("Warning: " + ex.getMessage());
+			Logger.getGlobal().config("Warning: " + ex.getMessage());
 		} catch (IOException ex) {
 			// Change error to warning.
-			Debug.println("Warning: " + "Can not read JAR: " + jarFile.getPath() + ". Cause: " + ex.getMessage());
+			Logger.getGlobal()
+			      .config("Warning: " + "Can not read JAR: " + jarFile.getPath() + ". Cause: " + ex.getMessage());
 		}
 
 		return null;
