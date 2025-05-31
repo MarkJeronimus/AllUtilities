@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.airsupplies.utilities.gui;
+package nl.airsupplies.utilities.broken;
 
 import java.awt.BorderLayout;
 import java.awt.Dialog;
@@ -35,6 +35,8 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+
+import nl.airsupplies.utilities.gui.tablelayout.TableLayout;
 
 /**
  * @author Mark Jeronimus
@@ -61,7 +63,7 @@ public class PasswordDialog extends JDialog implements ActionListener {
 		setLayout(new BorderLayout());
 
 		{
-			JPanel p = new JPanel(new TableLayout(2, 2, 0, 300));
+			JPanel p = new JPanel(new TableLayout(2, new Double[]{0.0, 300.0}, new Double[0]));
 
 			p.add(new JLabel("Password"));
 			{

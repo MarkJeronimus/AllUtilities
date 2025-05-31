@@ -17,23 +17,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.airsupplies.utilities.signal;
+package nl.airsupplies.utilities.broken;
 
-import java.util.EventListener;
-import javax.sound.sampled.DataLine;
+import java.util.ArrayList;
+import java.util.List;
+
+import nl.airsupplies.utilities.graphics.image.ImageMatrixFloat;
+import nl.airsupplies.utilities.graphics.image.generator.ImageGenerator;
 
 /**
  * @author Mark Jeronimus
  */
-// Created 2006-01-19
-public interface AudioProviderListener extends EventListener {
-	/**
-	 * Invoked when the supplied amount of buffer have been recorded.
-	 */
-	void audioRecorded(AudioProvider audioProvider, int numBytes, byte[] buffer);
+// Created 2012-04-05
+public class MultiGenerator extends ImageGenerator {
+	private List<ImageGenerator> generators = new ArrayList<>();
 
-	/**
-	 * Notifies that the {@link DataLine} is closed and the provider is correctly terminated.
-	 */
-	void dataLineClosed(AudioProvider audioProvider);
+	public void add(ImageGenerator generator) {
+		generators.add(generator);
+	}
+
+	@Override
+	public ImageMatrixFloat generate() {
+		image.set(0);
+
+		for (ImageGenerator generator : generators) {
+			image.add(generator.generate());
+		}
+
+		return image;
+	}
 }

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.airsupplies.utilities.signal;
+package nl.airsupplies.utilities.broken;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
@@ -26,26 +26,23 @@ import javax.sound.sampled.Line;
 import javax.sound.sampled.Mixer;
 import javax.sound.sampled.TargetDataLine;
 
-import nl.airsupplies.utilities.PausableRunnable;
-import nl.airsupplies.utilities.PausableThread;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Mark Jeronimus
  */
 // Created 2007-04-09
-public class AudioRecorder implements AudioProvider, PausableRunnable {
-	private final PausableThread thread;
-
+public class AudioRecorder implements AudioProvider, Runnable {
 	private int   bufferSize;
 	private float sampleRate;
 	private int   bitsPerSample;
 	private int   numChannels;
 
-	private       TargetDataLine targetDataLine = null;
-	private final byte[][]       buffer         = new byte[2][];
-	private       int            currentBuffer  = 0;
+	private @Nullable TargetDataLine targetDataLine = null;
+	private final     byte[][]       buffer         = new byte[2][];
+	private           int            currentBuffer  = 0;
 
-	private boolean isProviding = false;
+	private volatile boolean providing = false;
 
 	private AudioProviderListener audioListener = null;
 
@@ -55,14 +52,12 @@ public class AudioRecorder implements AudioProvider, PausableRunnable {
 		setNumChannels(numChannels);
 		setBufferSize(bufferSize);
 
-		thread = new PausableThread(1000, 100, this);
-		thread.start(PausableThread.THREAD_STATUS_PAUSED);
-		thread.setPriority(5);
+		new Thread(this).start();
 	}
 
 	@Override
 	public void setBufferSize(int bufferSize) {
-		if (isProviding) {
+		if (providing) {
 			throw new IllegalStateException("Cannot modify recording parameter when recording.");
 		}
 		this.bufferSize = bufferSize;
@@ -72,7 +67,7 @@ public class AudioRecorder implements AudioProvider, PausableRunnable {
 
 	@Override
 	public void setSampleRate(float sampleRate) {
-		if (isProviding) {
+		if (providing) {
 			throw new IllegalStateException("Cannot modify recording parameter when recording.");
 		}
 		this.sampleRate = sampleRate;
@@ -80,7 +75,7 @@ public class AudioRecorder implements AudioProvider, PausableRunnable {
 
 	@Override
 	public void setBitsPerSample(int bits) {
-		if (isProviding) {
+		if (providing) {
 			throw new IllegalStateException("Cannot modify recording parameter when recording.");
 		}
 		bitsPerSample = bits;
@@ -88,7 +83,7 @@ public class AudioRecorder implements AudioProvider, PausableRunnable {
 
 	@Override
 	public void setNumChannels(int numChannels) {
-		if (isProviding) {
+		if (providing) {
 			throw new IllegalStateException("Cannot modify recording parameter when recording.");
 		}
 		this.numChannels = numChannels;
@@ -101,20 +96,15 @@ public class AudioRecorder implements AudioProvider, PausableRunnable {
 
 	@Override
 	public void setProviding(boolean providing) {
-		thread.setThreadStatus(providing ? PausableThread.THREAD_STATUS_RUNNING : PausableThread.THREAD_STATUS_PAUSED);
+		this.providing = providing;
 	}
 
 	@Override
 	public boolean isProviding() {
-		return isProviding;
+		return providing;
 	}
 
-	@Override
-	public void doInitialize() {
-	}
-
-	@Override
-	public void doStarting() {
+	public void init() {
 		AudioFormat audioFormat = new AudioFormat(sampleRate, bitsPerSample, numChannels, true, true);
 
 		try {
@@ -155,43 +145,41 @@ public class AudioRecorder implements AudioProvider, PausableRunnable {
 			System.exit(2);
 		}
 
-		isProviding = true;
+		providing = true;
 	}
 
 	@Override
-	public void doRunning() {
-		// Wait until there are enough samples in the buffer.
-		if (targetDataLine.available() >= bufferSize) {
-			// Read data from the DataLine to the buffer.
-			int n = 0;
-			try {
-				n = targetDataLine.read(buffer[currentBuffer], 0, bufferSize);
-			} catch (Exception ex) {
-				System.out.println(ex);
-				System.exit(1);
-			}
+	public void run() {
+		while (providing) {
+			// Wait until there are enough samples in the buffer.
+			if (targetDataLine.available() >= bufferSize) {
+				// Read data from the DataLine to the buffer.
+				int n = 0;
+				try {
+					n = targetDataLine.read(buffer[currentBuffer], 0, bufferSize);
+				} catch (Exception ex) {
+					System.out.println(ex);
+					System.exit(1);
+				}
 
-			// Generate events.
-			if (audioListener != null) {
-				audioListener.audioRecorded(this, n, buffer[currentBuffer]);
-			}
+				// Generate events.
+				if (audioListener != null) {
+					audioListener.audioRecorded(this, n, buffer[currentBuffer]);
+				}
 
-			currentBuffer ^= 0x01;
+				currentBuffer ^= 0x01;
+			}
 		}
 	}
 
-	@Override
-	public void doStopping() {
-		isProviding = false;
+	public void close() {
+		providing = false;
 
 		if (targetDataLine != null) {
 			targetDataLine.stop();
 			targetDataLine.close();
 		}
-		targetDataLine = null;
-	}
 
-	@Override
-	public void doPause() {
+		targetDataLine = null;
 	}
 }
