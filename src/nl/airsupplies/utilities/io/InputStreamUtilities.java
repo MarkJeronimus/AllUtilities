@@ -5,10 +5,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.GZIPInputStream;
 
+import nl.airsupplies.utilities.annotation.UtilityClass;
+
 /**
  * @author Mark Jeronimus
  */
 // Created 2017-03-05
+@UtilityClass
 public final class InputStreamUtilities {
 	public static boolean isGzipped(BufferedInputStream in) throws IOException {
 		in.mark(2);

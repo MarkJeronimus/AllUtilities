@@ -7,11 +7,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import nl.airsupplies.utilities.annotation.UtilityClass;
+
 /**
  * @author Mark Jeronimus
  */
 // Created 2025-02-28
-public class MapUtilities {
+@UtilityClass
+public final class MapUtilities {
 	public static <K, V> Map<V, List<K>> transpose(Map<K, V> templateOccurrences) {
 		Map<V, List<K>> transposed = new HashMap<>(templateOccurrences.size());
 

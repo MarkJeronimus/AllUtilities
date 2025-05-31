@@ -3,10 +3,13 @@ package nl.airsupplies.utilities;
 import java.util.HashMap;
 import java.util.Map;
 
+import nl.airsupplies.utilities.annotation.UtilityClass;
+
 /**
  * @author Mark Jeronimus
  */
 // Created 2017-05-23
+@UtilityClass
 public final class ClassUtilities {
 	private static final Map<Class<?>, Class<?>> BOXED_TO_PRIMITIVE = new HashMap<>();
 
