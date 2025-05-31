@@ -16,8 +16,8 @@ import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange
 @NotThreadSafe
 @SuppressWarnings("ValueOfIncrementOrDecrementUsed")
 public final class BitBuffer {
-	private final ByteBuffer buffer;
 	private final int        bitCapacity;
+	private final ByteBuffer buffer;
 
 	private int bitSize     = 0;
 	private int bitPosition = 0;
@@ -64,13 +64,16 @@ public final class BitBuffer {
 	}
 
 	public void setBitPosition(int bitPosition) {
-		this.bitPosition = requireRange(0, bitSize, bitPosition, "bitPosition");
+		this.bitPosition = requireRange(0, bitCapacity, bitPosition, "bitPosition");
 	}
 
 	public int bitsRemaining() {
 		return bitSize - bitPosition;
 	}
 
+	/**
+	 * Note that {@code getBit(bitPosition) ? 1 : 0} is still more efficient than {@code getBits(bitPosition, 1)}.
+	 */
 	public boolean getBit(int bitPosition) {
 		requireRange(0, bitSize, bitPosition, "bitPosition");
 
@@ -80,6 +83,9 @@ public final class BitBuffer {
 		return (buffer.get(position) & mask) != 0;
 	}
 
+	/**
+	 * Note that {@code getBit() ? 1 : 0} is still more efficient than {@code getBits(1)}.
+	 */
 	public boolean getBit() {
 		return getBit(bitPosition++);
 	}
@@ -282,9 +288,9 @@ public final class BitBuffer {
 //		}
 //	}
 
-	private int extractBits(int position, int firstBit, int numBits) {
+	private int extractBits(int position, int fromBit, int numBits) {
 		int mask = (1 << numBits) - 1;
-		return buffer.get(position) >> (8 - numBits - firstBit) & mask;
+		return buffer.get(position) >> (8 - numBits - fromBit) & mask;
 	}
 
 	@SuppressWarnings("lossy-conversions")

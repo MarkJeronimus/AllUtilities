@@ -1,6 +1,11 @@
 package nl.airsupplies.utilities.math;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import nl.airsupplies.utilities.annotation.UtilityClass;
+import static nl.airsupplies.utilities.validator.ArrayValidatorUtilities.requireArrayLengthsMatch;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
 
 /**
  * @author Mark Jeronimus
@@ -142,5 +147,73 @@ public final class IntUtilities {
 		}
 
 		return product;
+	}
+
+	public static int[] sumByElements(int[] lhs, int[] rhs) {
+		requireNonNull(lhs, "lhs");
+		requireNonNull(rhs, "rhs");
+		requireArrayLengthsMatch(lhs, rhs, "lhs", "rhs");
+
+		int[] result = new int[lhs.length];
+
+		for (int i = 0; i < lhs.length; i++) {
+			result[i] = lhs[i] + rhs[i];
+		}
+
+		return result;
+	}
+
+	public static long[] longSumByElements(int[] lhs, int[] rhs) {
+		requireNonNull(lhs, "lhs");
+		requireNonNull(rhs, "rhs");
+		requireArrayLengthsMatch(lhs, rhs, "lhs", "rhs");
+
+		long[] result = new long[lhs.length];
+
+		for (int i = 0; i < lhs.length; i++) {
+			result[i] = (long)lhs[i] + rhs[i];
+		}
+
+		return result;
+	}
+
+	public static int[] multiplyByElements(int[] lhs, int[] rhs) {
+		requireNonNull(lhs, "lhs");
+		requireNonNull(rhs, "rhs");
+		requireArrayLengthsMatch(lhs, rhs, "lhs", "rhs");
+
+		int[] result = new int[lhs.length];
+
+		for (int i = 0; i < lhs.length; i++) {
+			result[i] = lhs[i] * rhs[i];
+		}
+
+		return result;
+	}
+
+	public static long[] longMultiplyByElements(int[] lhs, int[] rhs) {
+		requireNonNull(lhs, "lhs");
+		requireNonNull(rhs, "rhs");
+		requireArrayLengthsMatch(lhs, rhs, "lhs", "rhs");
+
+		long[] result = new long[lhs.length];
+
+		for (int i = 0; i < lhs.length; i++) {
+			result[i] = (long)lhs[i] * rhs[i];
+		}
+
+		return result;
+	}
+
+	public static int[] toIntArray(Collection<Integer> integers) {
+		int[] result = new int[integers.size()];
+
+		int i = 0;
+		for (Iterator<Integer> iter = integers.iterator(); iter.hasNext(); i++) {
+			result[i] = iter.next();
+			i++;
+		}
+
+		return result;
 	}
 }

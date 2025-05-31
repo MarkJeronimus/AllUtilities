@@ -127,12 +127,12 @@ public class Color4f {
 
 	@Override
 	public boolean equals(Object other) {
-		return other instanceof Color4f col &&
-		       col.r == r &&
-		       col.g == g &&
-		       col.b == b &&
-		       col.a == a;
+		if (other instanceof Color4f) {
+			Color4f col = (Color4f)other;
+			return col.r == r && col.g == g && col.b == b && col.a == a;
+		}
 
+		return false;
 	}
 
 	@Override

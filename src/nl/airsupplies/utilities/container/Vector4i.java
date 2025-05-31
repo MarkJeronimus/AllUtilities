@@ -182,7 +182,8 @@ public class Vector4i implements Comparable<Vector4i> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Vector4i v) {
+		if (obj instanceof Vector4i) {
+			Vector4i v = (Vector4i)obj;
 			return x == v.x && y == v.y && z == v.z && w == v.w;
 		}
 		return super.equals(obj);

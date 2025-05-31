@@ -241,7 +241,8 @@ public class Vector3f implements Comparable<Vector3f> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Vector3f v) {
+		if (obj instanceof Vector3f) {
+			Vector3f v = (Vector3f)obj;
 			return x == v.x && y == v.y && z == v.z;
 		}
 		return super.equals(obj);

@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * Signifies that a configuration or property is hardcoded in the source, while it should ideally either be in a
- * configuration file or configurable in runtime. Only use this for debugging and not for production software.
+ * configuration file or configurable at runtime. Only use this for debugging and not for production software.
  * <p>
  * Tip: If possible, make the IDE generate warnings where this annotation is used.
  *

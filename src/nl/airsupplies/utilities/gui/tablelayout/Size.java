@@ -11,6 +11,10 @@ import static nl.airsupplies.utilities.gui.tablelayout.Size.Priority.RELATIVE;
  */
 // Created 2017-02-10
 public class Size {
+	/**
+	 * @author Mark Jeronimus
+	 */
+	// Created 2017-02-10
 	public enum Priority {
 		EXACT,
 		MINIMUM,
@@ -115,13 +119,18 @@ public class Size {
 
 	@Override
 	public String toString() {
-		return switch (priority) {
-			case EXACT -> "ExactSize    {priority=" + priority + ", " + preferred + " (minimum=" + minimum + ")}";
-			case MINIMUM -> "MinimumSize  {priority=" + priority + ", " + preferred + " (minimum=" + minimum + ")}";
-			case PREFERRED -> "PreferredSize{priority=" + priority + ", " + preferred + " (minimum=" + minimum + ")}";
-			case RELATIVE -> "RelativeSize {priority=" + priority + ", " + preferred + " (minimum=" + minimum + ")}" +
+		switch (priority) {
+			case EXACT:
+				return "ExactSize    {priority=" + priority + ", " + preferred + " (minimum=" + minimum + ")}";
+			case MINIMUM:
+				return "MinimumSize  {priority=" + priority + ", " + preferred + " (minimum=" + minimum + ")}";
+			case PREFERRED:
+				return "PreferredSize{priority=" + priority + ", " + preferred + " (minimum=" + minimum + ")}";
+			case RELATIVE:
+				return "RelativeSize {priority=" + priority + ", " + preferred + " (minimum=" + minimum + ")}" +
 			                 ", stretchFactor=" + stretchFactor + '}';
-			default -> throw new AssertionError("Unknown value: " + this);
-		};
+			default:
+				throw new AssertionError("Unknown value: " + this);
+		}
 	}
 }

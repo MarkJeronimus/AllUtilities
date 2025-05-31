@@ -17,9 +17,9 @@ import nl.airsupplies.utilities.annotation.ConstClass;
 // Created 2017-01-31
 @ConstClass
 public final class StaticStrokes {
-	public static final Stroke DEFAULT_SQUARE_STROKE     = new BasicStroke(1, CAP_BUTT, JOIN_MITER);
+	public static final Stroke DEFAULT_SQUARE_STROKE     = new BasicStroke(1, CAP_BUTT, JOIN_MITER, 10);
 	public static final Stroke DEFAULT_ROUND_STROKE      = new BasicStroke(1, CAP_ROUND, JOIN_ROUND);
-	public static final Stroke DEFAULT_FAT_SQUARE_STROKE = new BasicStroke(3, CAP_BUTT, JOIN_MITER);
+	public static final Stroke DEFAULT_FAT_SQUARE_STROKE = new BasicStroke(3, CAP_BUTT, JOIN_MITER, 10);
 	public static final Stroke DEFAULT_FAT_ROUND_STROKE  = new BasicStroke(3, CAP_ROUND, JOIN_ROUND);
 
 	/**

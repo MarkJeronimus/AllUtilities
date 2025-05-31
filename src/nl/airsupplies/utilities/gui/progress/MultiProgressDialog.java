@@ -18,6 +18,7 @@ import javax.swing.SwingConstants;
 
 import org.jetbrains.annotations.Nullable;
 
+import nl.airsupplies.utilities.gui.broken.MultiProgressListener;
 import static nl.airsupplies.utilities.validator.StringValidatorUtilities.requireStringNotEmpty;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireAtLeast;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;

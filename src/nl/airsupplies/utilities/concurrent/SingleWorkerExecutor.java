@@ -16,6 +16,13 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static nl.airsupplies.utilities.validator.StringValidatorUtilities.requireStringNotEmpty;
 
 /**
+ * Wrapper for easy access to scheduled executors.
+ * <p>
+ * Please note that the threads used for the runners <strong>don't</strong> have an <em>uncaught exception handler</em>,
+ * because this is intrinsically incompatible with repeatable tasks, each of which could throw. Therefore, the tasks
+ * handed to this <strong>must</strong> catch {@link Throwable}. Catching {@link Exception} is not enough as any
+ * uncaught exception will be silently swallowed.
+ *
  * @author Mark Jeronimus
  */
 // Created 2017-01-05
@@ -129,6 +136,7 @@ public class SingleWorkerExecutor {
 	 * @throws NullPointerException       if command is null
 	 * @throws IllegalArgumentException   if period less than or equal to zero
 	 */
+	@SuppressWarnings("UnusedReturnValue")
 	public ScheduledFuture<?> scheduleAtFixedRate(Runnable command, long initialDelayMillis, long periodMillis) {
 		try {
 			return service.scheduleAtFixedRate(command, initialDelayMillis, periodMillis, MILLISECONDS);
@@ -161,6 +169,7 @@ public class SingleWorkerExecutor {
 	 *
 	 * @return list of tasks that never commenced execution
 	 */
+	@SuppressWarnings("UnusedReturnValue")
 	public List<Runnable> shutdownNow() {
 		return service.shutdownNow();
 	}
@@ -184,8 +193,9 @@ public class SingleWorkerExecutor {
 	}
 
 	/**
-	 *
+	 * @author Mark Jeronimus
 	 */
+	// Created 2017-01-05
 	private static final class SingleNameThreadFactory implements ThreadFactory {
 		private final String name;
 

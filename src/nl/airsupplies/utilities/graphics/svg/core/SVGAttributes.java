@@ -2,7 +2,6 @@ package nl.airsupplies.utilities.graphics.svg.core;
 
 import java.awt.Color;
 import java.io.IOException;
-import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -23,23 +22,26 @@ import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange
 public class SVGAttributes {
 	//@formatter:off
 	// When attributs would get this value, hide them.
-	private static final Map<String, Object> DEFAULT_ATTRIBUTES = Map.ofEntries(
-			new AbstractMap.SimpleImmutableEntry<>("display",           ""),
-			new AbstractMap.SimpleImmutableEntry<>("fill",              SVGSolidColor.BLACK),
-			new AbstractMap.SimpleImmutableEntry<>("fill-opacity",      1.0f),
-			new AbstractMap.SimpleImmutableEntry<>("fill-rule",         SVGFillRule.EVEN_ODD),
-			new AbstractMap.SimpleImmutableEntry<>("id",                ""),
-			new AbstractMap.SimpleImmutableEntry<>("image-rendering",   SVGImageRendering.AUTO),
-			new AbstractMap.SimpleImmutableEntry<>("opacity",           1.0f),
-			new AbstractMap.SimpleImmutableEntry<>("paint-order",       SVGPaintOrder.FILL_STROKE_MARKER),
-			new AbstractMap.SimpleImmutableEntry<>("stroke",            SVGNoFill.INSTANCE),
-			new AbstractMap.SimpleImmutableEntry<>("stroke-dasharray",  ""),
-			new AbstractMap.SimpleImmutableEntry<>("stroke-dashoffset", 0.0f),
-			new AbstractMap.SimpleImmutableEntry<>("stroke-linecap",    SVGLineCap.BUTT),
-			new AbstractMap.SimpleImmutableEntry<>("stroke-linejoin",   SVGLineJoin.MITER),
-			new AbstractMap.SimpleImmutableEntry<>("stroke-opacity",    1.0f),
-			new AbstractMap.SimpleImmutableEntry<>("stroke-width",      1.0f)
-	);
+	private static final Map<String, Object> DEFAULT_ATTRIBUTES;
+
+	static {
+		DEFAULT_ATTRIBUTES = new HashMap<>();
+		DEFAULT_ATTRIBUTES.put("display"          , "");
+		DEFAULT_ATTRIBUTES.put("fill"             , SVGSolidColor.BLACK);
+		DEFAULT_ATTRIBUTES.put("fill-opacity"     , 1.0f);
+		DEFAULT_ATTRIBUTES.put("fill-rule"        , SVGFillRule.EVEN_ODD);
+		DEFAULT_ATTRIBUTES.put("id"               , "");
+		DEFAULT_ATTRIBUTES.put("image-rendering"  , SVGImageRendering.AUTO);
+		DEFAULT_ATTRIBUTES.put("opacity"          , 1.0f);
+		DEFAULT_ATTRIBUTES.put("paint-order"      , SVGPaintOrder.FILL_STROKE_MARKER);
+		DEFAULT_ATTRIBUTES.put("stroke"           , SVGNoFill.INSTANCE);
+		DEFAULT_ATTRIBUTES.put("stroke-dasharray" , "");
+		DEFAULT_ATTRIBUTES.put("stroke-dashoffset", 0.0f);
+		DEFAULT_ATTRIBUTES.put("stroke-linecap"   , SVGLineCap.BUTT);
+		DEFAULT_ATTRIBUTES.put("stroke-linejoin"  , SVGLineJoin.MITER);
+		DEFAULT_ATTRIBUTES.put("stroke-opacity"   , 1.0f);
+		DEFAULT_ATTRIBUTES.put("stroke-width"     , 1.0f);
+	}
 	//@formatter:on
 
 	private final Map<String, Object> attributes = new HashMap<>(16);

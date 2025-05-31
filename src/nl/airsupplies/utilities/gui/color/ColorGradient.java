@@ -140,6 +140,32 @@ public class ColorGradient {
 		return ((int)(r * 255 + 0.49999) << 8 | (int)(g * 255 + 0.49999)) << 8 | (int)(b * 255 + 0.49999);
 	}
 
+	/**
+	 * Calculate a color from the gradient. The interval [0, 1] is mapped to indices 0..length-1 of the control point
+	 * array before interpolating between two control points.
+	 */
+	public float getRed(float value) {
+		// Handle out-of-bounds.
+		if (value > 1) {
+			value = 1;
+		} else if (!(value >= 0)) {
+			value = 0;
+		}
+
+		// Calculate interpolation parameter.
+		value *= gradient.length - 2; // Remember the control point array a duplicate node at the end.
+		int   index    = (int)Math.floor(value);
+		float fraction = value - index;
+
+		// Get colors to interpolate. The +1 is the reason why the last two indices should be the same for the last
+		// control point.
+		float[] left  = gradient[index];
+		float[] right = gradient[index + 1];
+
+		// Linear interpolation
+		return left[0] + (right[0] - left[0]) * fraction;
+	}
+
 	private void fromImage(BufferedImage img) {
 		img.setAccelerationPriority(0);
 		byte[] rgb = ((DataBufferByte)img.getRaster().getDataBuffer()).getData();

@@ -6,7 +6,7 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import nl.airsupplies.utilities.gui.progress.ProgressEvent;
 import nl.airsupplies.utilities.gui.progress.ProgressListener;
@@ -19,7 +19,7 @@ import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange
  */
 // Created 2015-10-17
 public class HTTPResponseStream extends InputStreamWithLength {
-	private final Collection<ProgressListener> listeners = new CopyOnWriteArrayList<>();
+	private final Collection<ProgressListener> listeners = new CopyOnWriteArraySet<>();
 
 	private final int                       responseCode;
 	private final Map<String, List<String>> responseHeaders;
@@ -43,18 +43,6 @@ public class HTTPResponseStream extends InputStreamWithLength {
 	@SuppressWarnings("AssignmentOrReturnOfFieldWithMutableType")
 	public Map<String, List<String>> getResponseHeaders() {
 		return responseHeaders;
-	}
-
-	public synchronized void addProgressListener(ProgressListener listener) {
-		requireNonNull(listener, "listener");
-
-		listeners.add(listener);
-	}
-
-	public synchronized void removeProgressListener(ProgressListener listener) {
-		requireNonNull(listener, "listener");
-
-		listeners.remove(listener);
 	}
 
 	@Override
@@ -110,24 +98,30 @@ public class HTTPResponseStream extends InputStreamWithLength {
 		throw new IOException("mark/reset not supported");
 	}
 
+	public synchronized void addProgressListener(ProgressListener listener) {
+		requireNonNull(listener, "listener");
+
+		listeners.add(listener);
+	}
+
+	public synchronized void removeProgressListener(ProgressListener listener) {
+		requireNonNull(listener, "listener");
+
+		listeners.remove(listener);
+	}
+
 	private void fireUpdated() {
 		String message = "Downloading... " + (int)(100.0f * position / getLength() + 0.5f) + '%';
 
 		ProgressEvent event = new ProgressEvent(this, position, getLength(), message);
-		fireProgressUpdated(event);
+		listeners.forEach(listener -> listener.progressUpdated(event));
 	}
 
 	private void fireCompleted() {
-		int    length  = getLength() >= 0 ? getLength() : position;
-		String message = position == length ? "Download Complete" : "Download Aborted";
+		ProgressEvent dummyEvent = new ProgressEvent(this, position, getLength(), "");
+		String        message    = dummyEvent.isComplete() ? "Download Complete" : "Download Aborted";
 
-		ProgressEvent event = new ProgressEvent(this, position, length, message);
-		fireProgressUpdated(event);
-	}
-
-	private void fireProgressUpdated(ProgressEvent event) {
-		for (ProgressListener listener : listeners) {
-			listener.progressUpdated(event);
-		}
+		ProgressEvent event = new ProgressEvent(this, position, getLength(), message);
+		listeners.forEach(listener -> listener.progressCompleted(event));
 	}
 }

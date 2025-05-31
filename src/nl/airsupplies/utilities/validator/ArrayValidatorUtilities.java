@@ -365,7 +365,7 @@ public final class ArrayValidatorUtilities {
 
 		for (int i = 0; i < actual.length; i++) {
 			if (actual[i] == null) {
-				throw new IllegalArgumentException('\'' + varName + '[' + i + "]' can't be null");
+				throw new NullPointerException('\'' + varName + '[' + i + "]' can't be null");
 			}
 		}
 
@@ -379,7 +379,7 @@ public final class ArrayValidatorUtilities {
 
 		for (int i = 0; i < actual.length; i++) {
 			if (actual[i] == null) {
-				throw new IllegalArgumentException('\'' + varName + '[' + i + "]' can't be null");
+				throw new NullPointerException('\'' + varName + '[' + i + "]' can't be null");
 			}
 		}
 

@@ -129,7 +129,7 @@ public class UnsignedInteger extends Number implements Comparable<UnsignedIntege
 		StringBuilder out = new StringBuilder(32);
 
 		for (int i = (length - 1) * 4; i >= 0; i -= 4) {
-			out.append(NumberUtilities.DIGITS[value >>> i & 0xF]);
+			out.append(NumberUtilities.RADIX_DIGITS.charAt(value >>> i & 0xF));
 		}
 
 		return out.toString();

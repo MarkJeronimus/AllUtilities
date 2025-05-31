@@ -1,5 +1,6 @@
 package nl.airsupplies.utilities;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import nl.airsupplies.utilities.annotation.UtilityClass;
@@ -12,23 +13,25 @@ import nl.airsupplies.utilities.annotation.UtilityClass;
 @UtilityClass
 public final class EnglishUtilities {
 	// AI-generated, so there are probably cases missing
-	private static final Map<String, String> IRREGULAR_PLURALS = Map.ofEntries(
-			Map.entry("people", "person"),
-			Map.entry("children", "child"),
-			Map.entry("teeth", "tooth"),
-			Map.entry("feet", "foot"),
-			Map.entry("geese", "goose"),
-			Map.entry("phenomena", "phenomenon"),
-			Map.entry("criteria", "criterion"),
-			Map.entry("mice", "mouse"),
-			Map.entry("lives", "life"),
-			Map.entry("vertices", "vertex"),
-			Map.entry("matrices", "matrix"),
-			Map.entry("indices", "index"),
-			Map.entry("appendices", "appendix"),
-			Map.entry("vortices", "vortex")
+	private static final Map<String, String> IRREGULAR_PLURALS;
 
-	);
+	static {
+		IRREGULAR_PLURALS = new HashMap<>();
+		IRREGULAR_PLURALS.put("people", "person");
+		IRREGULAR_PLURALS.put("children", "child");
+		IRREGULAR_PLURALS.put("teeth", "tooth");
+		IRREGULAR_PLURALS.put("feet", "foot");
+		IRREGULAR_PLURALS.put("geese", "goose");
+		IRREGULAR_PLURALS.put("phenomena", "phenomenon");
+		IRREGULAR_PLURALS.put("criteria", "criterion");
+		IRREGULAR_PLURALS.put("mice", "mouse");
+		IRREGULAR_PLURALS.put("lives", "life");
+		IRREGULAR_PLURALS.put("vertices", "vertex");
+		IRREGULAR_PLURALS.put("matrices", "matrix");
+		IRREGULAR_PLURALS.put("indices", "index");
+		IRREGULAR_PLURALS.put("appendices", "appendix");
+		IRREGULAR_PLURALS.put("vortices", "vortex");
+	}
 
 	public static String makeSingular(String phrase) {
 		int i = phrase.lastIndexOf(' ');

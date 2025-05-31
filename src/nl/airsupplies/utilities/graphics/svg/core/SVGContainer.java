@@ -58,7 +58,8 @@ public abstract class SVGContainer extends SVGElement implements Iterable<SVGEle
 		for (Iterator<SVGElement> iterator = elements.iterator(); iterator.hasNext(); ) {
 			SVGElement element = iterator.next();
 
-			if (element instanceof SVGContainer container) {
+			if (element instanceof SVGContainer) {
+				SVGContainer container = (SVGContainer)element;
 				container.removeEmptyElements();
 
 				if (container.isEmpty()) {

@@ -3,11 +3,10 @@ package nl.airsupplies.utilities;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Set;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 /**
@@ -26,7 +25,7 @@ public final class ConfigManager {
 	public static void revert() {
 		data.clear();
 
-		try (BufferedReader in = new BufferedReader(new FileReader(FILENAME, StandardCharsets.UTF_8))) {
+		try (BufferedReader in = Files.newBufferedReader(Paths.get(FILENAME))) {
 			String s;
 			while ((s = in.readLine()) != null) {
 				int    split = s.indexOf(' ');
@@ -42,10 +41,9 @@ public final class ConfigManager {
 	}
 
 	public static void save() {
-		try (BufferedWriter out = new BufferedWriter(new FileWriter(FILENAME, StandardCharsets.UTF_8))) {
-			Set<String> keys = data.keySet();
-			for (String key : keys) {
-				out.write(key + ' ' + data.get(key) + '\n');
+		try (BufferedWriter out = Files.newBufferedWriter(Paths.get(FILENAME))) {
+			for (Entry<String, String> entry : data.entrySet()) {
+				out.write(entry.getKey() + ' ' + entry.getValue() + '\n');
 			}
 		} catch (IOException ex) {
 			ex.printStackTrace();

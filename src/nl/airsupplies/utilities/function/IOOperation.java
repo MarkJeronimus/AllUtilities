@@ -3,11 +3,10 @@ package nl.airsupplies.utilities.function;
 import java.io.IOException;
 
 /**
- * @param <T> Result of the operation
  * @author Mark Jeronimus
  */
-// Created 2017-06-08
+// Created 2018-02-26
 @FunctionalInterface
-public interface IOOperation<T> {
-	void operateOn(T t) throws IOException;
+public interface IOOperation {
+	void call() throws IOException;
 }

@@ -8,8 +8,6 @@ import nl.airsupplies.utilities.annotation.StaticClass;
  * @author Mark Jeronimus
  */
 // Created 2021-06-19
-@SuppressWarnings({"ConstantConditions", "OverloadedMethodsWithSameNumberOfParameters", "ReturnOfNull",
-                   "UseOfSystemOutOrSystemErr"})
 @StaticClass
 public final class AnsiCodes {
 	public static String resetAll() {
@@ -77,8 +75,8 @@ public final class AnsiCodes {
 	}
 
 	public static String setColor(int r, int g, int b) {
-		//noinspection StringConcatenationMissingWhitespace
-		return "\u001B[38;2;" + NumberUtilities.clamp(r, 0, 255) + ';' +
+		return "\u001B[38;2;" +
+		       NumberUtilities.clamp(r, 0, 255) + ';' +
 		       NumberUtilities.clamp(g, 0, 255) + ';' +
 		       NumberUtilities.clamp(b, 0, 255) + 'm';
 	}
@@ -128,8 +126,9 @@ public final class AnsiCodes {
 	}
 
 	public static String setBackgroundColor(int r, int g, int b) {
-		//noinspection StringConcatenationMissingWhitespace
-		return "\u001B[48;2;" + NumberUtilities.clamp(r, 0, 255) + ';' + NumberUtilities.clamp(g, 0, 255) +
-		       ';' + NumberUtilities.clamp(b, 0, 255) + 'm';
+		return "\u001B[48;2;" +
+		       NumberUtilities.clamp(r, 0, 255) + ';' +
+		       NumberUtilities.clamp(g, 0, 255) + ';' +
+		       NumberUtilities.clamp(b, 0, 255) + 'm';
 	}
 }

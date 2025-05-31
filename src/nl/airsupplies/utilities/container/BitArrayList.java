@@ -452,14 +452,17 @@ public class BitArrayList implements BitList {
 	public String toStringGrouped(int groupSize) {
 		int           l  = (getBitLength() + 7) / 8;
 		StringBuilder sb = new StringBuilder(l * 2 + Math.max(0, l - 1) / groupSize);
+
 		for (int i = 0; i < l; i++) {
 			if (i > 0 && i % groupSize == 0) {
 				sb.append(' ');
 			}
+
 			byte b = getByte(i);
-			sb.append(NumberUtilities.DIGITS[b >> 4 & 0xF]);
-			sb.append(NumberUtilities.DIGITS[b & 0xF]);
+			sb.append(NumberUtilities.RADIX_DIGITS.charAt(b >> 4 & 0xF));
+			sb.append(NumberUtilities.RADIX_DIGITS.charAt(b & 0xF));
 		}
+
 		return sb.toString();
 	}
 

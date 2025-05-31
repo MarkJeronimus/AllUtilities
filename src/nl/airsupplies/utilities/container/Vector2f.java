@@ -284,9 +284,11 @@ public class Vector2f implements Comparable<Vector2f>, Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Vector2f v) {
+		if (obj instanceof Vector2f) {
+			Vector2f v = (Vector2f)obj;
 			return x == v.x && y == v.y;
 		}
+
 		return super.equals(obj);
 	}
 

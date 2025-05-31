@@ -70,6 +70,7 @@ public final class PreferredSizeCalculator {
 				scale = Math.max(scale, size.getPreferred() / size.getStretchFactor());
 			}
 		}
+
 		for (Size size : layoutSizes) {
 			if (size.getPriority() == RELATIVE) {
 				size.setPreferred(Math.max(1, size.getStretchFactor() * scale));

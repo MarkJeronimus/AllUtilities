@@ -24,7 +24,7 @@ public abstract class PixelSorter {
 
 		Arrays.parallelSort(pixels);
 
-		return List.of(pixels);
+		return Arrays.asList(pixels);
 	}
 
 	public List<Point> getSortedPixels(int width, int height) {

@@ -16,7 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.logging.Logger;
 import java.util.zip.DeflaterInputStream;
 import java.util.zip.GZIPInputStream;
@@ -25,11 +25,13 @@ import static java.util.logging.Level.WARNING;
 
 import org.jetbrains.annotations.Nullable;
 
+import nl.airsupplies.utilities.FileUtilities;
 import nl.airsupplies.utilities.gui.progress.ProgressListener;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
 
 /**
  * Wrapper for non-persistent http connections.
+ *
  * <ul><li>Protocols: http, https</li>
  * <li>Methods: GET, POST</li>
  * <li>Cookies</li>
@@ -39,17 +41,21 @@ import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNu
  * <li>Additional header fields: yes (but not removal of existing header fields)</li>
  * <li>Timeout (default 30s)</li>
  * <li>Progress listeners</li>
- * <li>Immutable header fields include {@code Accept} and {@code Accept-Language}</li></ul>
+ * <li>Hard-coded header fields include {@code Accept} and {@code Accept-Language}</li></ul>
  *
  * @author Mark Jeronimus
  */
 // Created 2015-10-17
 public class HTTPDownloader {
-	/** Equals to: {@code "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:87.0) Gecko/20100101 Firefox/87.0"}. */
+	/**
+	 * Equals to: {@code "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:93.0) Gecko/20100101 Firefox/93.0"}.
+	 */
 	public static final String USER_AGENT_FIREFOX_UBUNTU =
 			"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:93.0) Gecko/20100101 Firefox/93.0";
 
-	/** Similar to: {@code "Mozilla/5.0 (compatible; Java/1.8.0_144)"}. */
+	/**
+	 * Similar to: {@code "Mozilla/5.0 (compatible; Java/1.8.0_144)"}.
+	 */
 	public static final String USER_AGENT_JAVA =
 			"Mozilla/5.0 (compatible; Java/" + System.getProperty("java.version") + ')';
 
@@ -59,8 +65,7 @@ public class HTTPDownloader {
 	private final Map<String, String>          cookies           = new LinkedHashMap<>(16);
 	private       boolean                      doReferer         = true;
 	private       int                          timeout           = DEFAULT_TIMEOUT;
-	private final Collection<ProgressListener> progressListeners = new CopyOnWriteArrayList<>();
-//	private final IndirectProgressListener     indirectListener  = new IndirectProgressListener();
+	private final Collection<ProgressListener> progressListeners = new CopyOnWriteArraySet<>();
 
 	public String getUserAgent() {
 		return userAgent;
@@ -101,10 +106,14 @@ public class HTTPDownloader {
 	}
 
 	public void addProgressListener(ProgressListener progressListener) {
+		requireNonNull(progressListener, "progressListener");
+
 		progressListeners.add(progressListener);
 	}
 
 	public void removeProgressListener(ProgressListener progressListener) {
+		requireNonNull(progressListener, "progressListener");
+
 		progressListeners.remove(progressListener);
 	}
 
@@ -122,24 +131,28 @@ public class HTTPDownloader {
 	 * Requests a URL and if successful (response 200), returns the open stream. Closing this stream closes the
 	 * connection.
 	 */
-	public HTTPResponseStream openConnection(URL url,
-	                                         byte @Nullable [] postData,
-	                                         String... extraRequestProperties) throws IOException {
+	public HTTPResponseStream openConnection(URL url, byte @Nullable [] postData, String... extraRequestProperties)
+			throws IOException {
 		HttpURLConnection connection = null;
 		try {
 			connection = (HttpURLConnection)url.openConnection();
+			connection.addRequestProperty("Host", url.getHost());
 			connection.addRequestProperty("User-Agent", userAgent);
-			connection.addRequestProperty("Accept", "*.*");
+			connection.addRequestProperty("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
 			connection.addRequestProperty("Accept-Language", "en-US,en;q=0.5");
 			connection.addRequestProperty("Accept-Encoding", "gzip, deflate");
 			addExtraRequestProperty(connection, getCookieString(cookies));
-			addExtraRequestProperties(connection, extraRequestProperties);
+			boolean containsConnectionHeader = addExtraRequestProperties(connection, extraRequestProperties);
 			connection.addRequestProperty("Connection", "keep-alive");
 			connection.addRequestProperty("DNT", "1");
 			addPostDataHeader(postData, connection);
 
 			if (doReferer) {
 				connection.addRequestProperty("Referer", url.toString() + '/');
+			}
+
+			if (!containsConnectionHeader) {
+				connection.addRequestProperty("Connection", "keep-alive");
 			}
 
 			connection.setInstanceFollowRedirects(false);
@@ -157,8 +170,6 @@ public class HTTPDownloader {
 //			}
 
 			int responseCode = connection.getResponseCode();
-//			if (responseCode >= 400)
-//				throw new EOFException("HTTP response code " + connection.getResponseCode());
 
 			InputStream in;
 			try {
@@ -188,15 +199,19 @@ public class HTTPDownloader {
 		}
 	}
 
-	private static void addExtraRequestProperties(URLConnection connection, String[] extraRequestProperties) {
+	private static boolean addExtraRequestProperties(URLConnection connection, String[] extraRequestProperties) {
+		boolean containsConnectionHeader = false;
+
 		for (String extraRequestProperty : extraRequestProperties) {
-			addExtraRequestProperty(connection, extraRequestProperty);
+			containsConnectionHeader |= addExtraRequestProperty(connection, extraRequestProperty);
 		}
+
+		return containsConnectionHeader;
 	}
 
-	private static void addExtraRequestProperty(URLConnection connection, @Nullable String s) {
+	private static boolean addExtraRequestProperty(URLConnection connection, @Nullable String s) {
 		if (s == null) {
-			return;
+			return false;
 		}
 
 		int i = s.indexOf(": ");
@@ -204,7 +219,12 @@ public class HTTPDownloader {
 			throw new IllegalArgumentException("Not a request property (must contain a \": \"): " + s);
 		}
 
-		connection.addRequestProperty(s.substring(0, i), s.substring(i + 2));
+		String header = s.substring(0, i);
+		String value  = s.substring(i + 2);
+
+		connection.addRequestProperty(header, value);
+
+		return header.equalsIgnoreCase("connection");
 	}
 
 	private static @Nullable String getCookieString(Map<String, String> cookies) {
@@ -232,13 +252,12 @@ public class HTTPDownloader {
 			throws ProtocolException {
 		if (postData != null) {
 			connection.setRequestMethod("POST");
-			connection.setRequestProperty("Content-Type", "application/json");
+//			connection.setRequestProperty("Content-Type", "application/json");
 			connection.addRequestProperty("Content-length", Integer.toString(postData.length));
 //			connection.setRequestProperty("Content-Language", "en-US");
 		}
 	}
 
-	@SuppressWarnings("TypeMayBeWeakened")
 	private static void addPostData(byte @Nullable [] postData, HttpURLConnection connection) throws IOException {
 		if (postData != null) {
 			connection.setDoOutput(true);
@@ -248,7 +267,6 @@ public class HTTPDownloader {
 		}
 	}
 
-	@SuppressWarnings("IOResourceOpenedButNotSafelyClosed")
 	private static InputStream getDecompressedStream(URLConnection connection, InputStream in) throws IOException {
 		if ("gzip".equals(connection.getHeaderField("Content-Encoding"))) {
 			in = new GZIPInputStream(in);
@@ -299,12 +317,12 @@ public class HTTPDownloader {
 	}
 
 	public void downloadToFile(URI uri, byte @Nullable [] postData, Path file, String... extraRequestProperties)
-			throws IOException {
-		downloadToFile(uri.toURL(), postData, file);
+			throws IOException, InterruptedException {
+		downloadToFile(uri.toURL(), postData, file, extraRequestProperties);
 	}
 
 	public void downloadToFile(URL url, byte @Nullable [] postData, Path file, String... extraRequestProperties)
-			throws IOException {
+			throws IOException, InterruptedException {
 		try (HTTPResponseStream stream = openConnection(url, postData, extraRequestProperties);
 		     OutputStream out = Files.newOutputStream(file)) {
 			int responseCode = stream.getResponseCode();
@@ -322,7 +340,7 @@ public class HTTPDownloader {
 					Logger.getGlobal().log(FINER, "Redirecting to: " + redirect);
 				}
 
-				downloadToFile(redirect, null, file, extraRequestProperties);
+				downloadToFile(redirect, postData, file, extraRequestProperties);
 				return;
 			}
 
@@ -330,7 +348,7 @@ public class HTTPDownloader {
 				throw new IOException("Received " + stream.getResponseHeaders().get(null) + " for " + url);
 			}
 
-			stream.transferTo(out);
+			FileUtilities.streamToStream(stream, out);
 		} catch (IOException ex) {
 			if (Files.exists(file)) {
 				Logger.getGlobal().log(WARNING, "Removing partially downloaded file because of exception");
@@ -339,28 +357,5 @@ public class HTTPDownloader {
 
 			throw ex;
 		}
-
-//		indirectListener.delayedFireCompletedEvent();
 	}
-//
-//	private final class IndirectProgressListener implements ProgressListener {
-//		private @Nullable ProgressEvent completedEvent = null;
-//
-//		@Override
-//		public void progressUpdated(ProgressEvent e) {
-//			progressListeners.forEach(listener -> listener.progressUpdated(e));
-//		}
-//
-//		@Override
-//		public void progressCompleted(ProgressEvent e) {
-//			completedEvent = e;
-//		}
-//
-//		public void delayedFireCompletedEvent() {
-//			if (completedEvent == null)
-//				throw new IllegalStateException("progressCompleted not called yet");
-//
-//			progressListeners.forEach(listener -> listener.progressCompleted(completedEvent));
-//		}
-//	}
 }

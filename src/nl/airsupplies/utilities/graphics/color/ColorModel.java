@@ -28,12 +28,12 @@ public enum ColorModel {
 	HSV {
 		@Override
 		public Color3f fromRGB(Color3f color) {
-			return ColorUtilities.rgb2hsv(color);
+			return Color3fUtilities.rgb2hsv(color);
 		}
 
 		@Override
 		public Color3f toRGB(Color3f color) {
-			return ColorUtilities.hsv2rgb(color);
+			return Color3fUtilities.hsv2rgb(color);
 		}
 	},
 	/**
@@ -43,12 +43,12 @@ public enum ColorModel {
 	HSL {
 		@Override
 		public Color3f fromRGB(Color3f color) {
-			return ColorUtilities.rgb2hsl(color);
+			return Color3fUtilities.rgb2hsl(color);
 		}
 
 		@Override
 		public Color3f toRGB(Color3f color) {
-			return ColorUtilities.hsl2rgb(color);
+			return Color3fUtilities.hsl2rgb(color);
 		}
 	},
 	/**
@@ -62,12 +62,12 @@ public enum ColorModel {
 	HCL {
 		@Override
 		public Color3f fromRGB(Color3f color) {
-			return ColorUtilities.rgb2hcl(color);
+			return Color3fUtilities.rgb2hcl(color);
 		}
 
 		@Override
 		public Color3f toRGB(Color3f color) {
-			return ColorUtilities.hcl2rgb(color);
+			return Color3fUtilities.hcl2rgb(color);
 		}
 	},
 	/**
@@ -82,48 +82,48 @@ public enum ColorModel {
 	HCI {
 		@Override
 		public Color3f fromRGB(Color3f color) {
-			return ColorUtilities.rgb2hci(color);
+			return Color3fUtilities.rgb2hci(color);
 		}
 
 		@Override
 		public Color3f toRGB(Color3f color) {
-			return ColorUtilities.hci2rgb(color);
+			return Color3fUtilities.hci2rgb(color);
 		}
 	},
 	/** Parallelepiped color model with components: Luminosity, chroma, chroma. */
 	YUV {
 		@Override
 		public Color3f fromRGB(Color3f color) {
-			return ColorUtilities.rgb2yuv(color);
+			return Color3fUtilities.rgb2yuv(color);
 		}
 
 		@Override
 		public Color3f toRGB(Color3f color) {
-			return ColorUtilities.yuv2rgb(color);
+			return Color3fUtilities.yuv2rgb(color);
 		}
 	},
 	/** Parallelepiped color model with components: Luminosity, chroma, chroma. */
 	YIQ {
 		@Override
 		public Color3f fromRGB(Color3f color) {
-			return ColorUtilities.rgb2yiq(color);
+			return Color3fUtilities.rgb2yiq(color);
 		}
 
 		@Override
 		public Color3f toRGB(Color3f color) {
-			return ColorUtilities.yiq2rgb(color);
+			return Color3fUtilities.yiq2rgb(color);
 		}
 	},
 	/** Parallelepiped color model with components: Luminosity, chroma, chroma. */
 	YPbPr {
 		@Override
 		public Color3f fromRGB(Color3f color) {
-			return ColorUtilities.rgb2ypbpr(color);
+			return Color3fUtilities.rgb2ypbpr(color);
 		}
 
 		@Override
 		public Color3f toRGB(Color3f color) {
-			return ColorUtilities.ypbpr2rgb(color);
+			return Color3fUtilities.ypbpr2rgb(color);
 		}
 	},
 	/**
@@ -132,12 +132,12 @@ public enum ColorModel {
 	CIEXYZ {
 		@Override
 		public Color3f fromRGB(Color3f color) {
-			return ColorUtilities.rgb2xyz(color);
+			return Color3fUtilities.rgb2xyz(color);
 		}
 
 		@Override
 		public Color3f toRGB(Color3f color) {
-			return ColorUtilities.xyz2rgb(color);
+			return Color3fUtilities.xyz2rgb(color);
 		}
 	},
 	/**

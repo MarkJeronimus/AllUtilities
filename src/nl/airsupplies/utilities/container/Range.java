@@ -3,6 +3,7 @@ package nl.airsupplies.utilities.container;
 import java.awt.geom.Rectangle2D;
 import java.util.concurrent.ThreadLocalRandom;
 
+import net.jcip.annotations.Immutable;
 import org.jetbrains.annotations.Nullable;
 
 import nl.airsupplies.utilities.NumberUtilities;
@@ -16,6 +17,7 @@ import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNotDe
  * @author Mark Jeronimus
  */
 // Created 2014-04-14
+@Immutable
 public class Range implements Comparable<Range> {
 	public static final Range ZERO = new Range(0.0, 0.0);
 	public static final Range UNIT = new Range(0.0, 1.0);
@@ -27,9 +29,8 @@ public class Range implements Comparable<Range> {
 	 * Creates a new range with specified endpoints. It's recommended to use the factory method
 	 * {@link #of(double, double)} instead.
 	 *
-	 * @throws IllegalArgumentException when begin &gt; end. If thrown, split it
-	 *                                  up in empty constructor and <tt>set</tt> method and handle swapping
-	 *                                  properly.
+	 * @throws IllegalArgumentException when begin &gt; end. If thrown, split it up in empty constructor
+	 *                                  and {@code set} method and handle swapping properly.
 	 */
 	public Range(double begin, double end) {
 		requireNotDegenerate(begin, "begin");
@@ -45,9 +46,8 @@ public class Range implements Comparable<Range> {
 	 * Creates a new range with specified endpoints. For some special values, a
 	 * pre-made instance will be returned.
 	 *
-	 * @throws IllegalArgumentException when begin &gt; end. If thrown, split it
-	 *                                  up in empty constructor and <tt>set</tt> method and handle swapping
-	 *                                  properly.
+	 * @throws IllegalArgumentException when begin &gt; end. If thrown, split it up in empty constructor
+	 *                                  and {@code set} method and handle swapping properly.
 	 */
 	public static Range of(double begin, double end) {
 		if (begin == 0.0) {
@@ -80,7 +80,7 @@ public class Range implements Comparable<Range> {
 	/**
 	 * Returns the begin position of the range.
 	 */
-	public double getBegin() {
+	public double begin() {
 		return begin;
 	}
 
@@ -93,7 +93,7 @@ public class Range implements Comparable<Range> {
 	/**
 	 * Returns the end position of the range.
 	 */
-	public double getEnd() {
+	public double end() {
 		return end;
 	}
 
@@ -106,9 +106,9 @@ public class Range implements Comparable<Range> {
 	/**
 	 * Returns the span of this range.
 	 * <p><!-- Watch out with the no-break-spaces inside the next @code block -->
-	 * This returns the same as {@link #getEnd()}{@code  ﻿- }{@link #getBegin()}.
+	 * This returns the same as {@link #getEnd()}{@code -}{@link #getBegin()}.
 	 */
-	public double getSpan() {
+	public double span() {
 		return end - begin;
 	}
 
@@ -116,7 +116,7 @@ public class Range implements Comparable<Range> {
 	 * Returns the midpoint of this range.
 	 */
 	public double getCenter() {
-		return NumberUtilities.lerp(begin, end, 0.5f);
+		return NumberUtilities.lerp(begin, end, 0.5);
 	}
 
 	/**

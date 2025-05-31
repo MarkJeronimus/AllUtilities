@@ -1,18 +1,16 @@
 package nl.airsupplies.utilities;
 
 import java.nio.charset.StandardCharsets;
-import java.nio.charset.UnsupportedCharsetException;
 import java.text.Normalizer;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.jetbrains.annotations.Nullable;
 
 import nl.airsupplies.utilities.annotation.UtilityClass;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireAtLeast;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
 
 /**
  * This Utility class contains static helper methods for working with {@link String}s.
@@ -23,20 +21,16 @@ import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange
 @SuppressWarnings("CharUsedInArithmeticContext")
 @UtilityClass
 public final class StringUtilities {
-	private static final String[] REPEATING_CHARS_CACHE   = new String[126];
-	private static final char[]   ILLEGAL_FILE_NAME_CHARS = {'"', '*', '/', ':', '<', '>', '?', '\\', '|'};
-	private static final Pattern  COLON_MATCHER_1         = Pattern.compile("([0-9]):([0-9])");
-	private static final Pattern  COLON_MATCHER_2         = Pattern.compile(" : ");
-	private static final Pattern  COLON_MATCHER_3         = Pattern.compile(": ");
-	private static final Pattern  COLON_MATCHER_4         = Pattern.compile(" :");
-	private static final Pattern  COMBINING_MARK_PATTERN  = Pattern.compile("\\p{M}");
-	private static final String[] CONTROL_NAMES           = {
+	private static final Pattern COMBINING_MARK_PATTERN = Pattern.compile("\\p{M}");
+
+	private static final String[] CONTROL_NAMES          = {
 			"NUL", "SOH", "STX", "ETX", "EOT", "ENQ", "ACK", "BEL",  // 0x00
 			"BS", "HT", "LF", "VT", "FF", "CR", "SO", "SI",          // 0x08
 			"DLE", "DC1", "DC2", "DC3", "DC4", "NAK", "SYN", "ETE",  // 0x10
 			"CAN", "EM", "SUB", "ESC", "FS", "GS", "RS", "US", "SP", // 0x18
 	};
-	private static final char[]   SUPERSCRIPT_CHARACTERS  = {
+	@SuppressWarnings("UnnecessaryUnicodeEscape") // Escapes needed for alignment
+	private static final char[]   SUPERSCRIPT_CHARACTERS = {
 			'\u2006', '\uA71D', '\u0000', '\u0000', '\u0000', '\u0000', '\u0000', '\u0000', // 0x20
 			'\u207D', '\u207E', '\u0000', '\u207A', '\u0000', '\u207B', '\u0000', '\u0000', // 0x28
 			'\u2070', '\u00B9', '\u00B2', '\u00B3', '\u2074', '\u2075', '\u2076', '\u2077', // 0x30
@@ -50,7 +44,8 @@ public final class StringUtilities {
 			'\u1D56', '\u0000', '\u02B3', '\u02E2', '\u1D57', '\u1D58', '\u1D5B', '\u02B7', // 0x70
 			'\u02E3', '\u02B8', '\u1DBB', '\u0000', '\u0000', '\u0000', '\u0000', '\u0000', // 0x78
 	};
-	private static final char[]   SUBSCRIPT_CHARACTERS    = {
+	@SuppressWarnings("UnnecessaryUnicodeEscape") // Escapes needed for alignment
+	private static final char[]   SUBSCRIPT_CHARACTERS   = {
 			'\u2006', '\u0000', '\u0000', '\u0000', '\u0000', '\u0000', '\u0000', '\u0000', // 0x20
 			'\u208D', '\u208E', '\u0000', '\u208A', '\u0000', '\u208B', '\u0000', '\u0000', // 0x28
 			'\u2080', '\u2081', '\u2082', '\u2083', '\u2084', '\u2085', '\u2086', '\u2087', // 0x30
@@ -65,190 +60,6 @@ public final class StringUtilities {
 			'\u2093', '\u0000', '\u0000', '\u0000', '\u0000', '\u0000', '\u0000', '\u0000', // 0x78
 	};
 
-	// Map for HTML code -> unicode character.
-	private static final Map<String, String> HTML_CHARACTERS = new HashMap<>(251);
-	// // Map for unicode character -> HTML code.
-	// private static final Map<String, String> htmlCodes = new HashMap<String, String>();
-
-	static {
-		for (String[] code : new String[][]{
-				{"quot", "\""}, {"amp", "&"}, {"lt", "<"}, {"gt", ">"},
-				{"nbsp", "\u00A0"}, {"iexcl", "\u00A1"}, {"cent", "\u00A2"}, {"pound", "\u00A3"},
-				{"curren", "\u00A4"}, {"yen", "\u00A5"}, {"brvbar", "\u00A6"}, {"sect", "\u00A7"},
-				{"uml", "\u00A8"}, {"copy", "\u00A9"}, {"ordf", "\u00AA"}, {"laquo", "\u00AB"},
-				{"not", "\u00AC"}, {"shy", "\u00AD"}, {"reg", "\u00AE"}, {"macr", "\u00AF"},
-				{"deg", "\u00B0"}, {"plusmn", "\u00B1"}, {"sup2", "\u00B2"}, {"sup3", "\u00B3"},
-				{"acute", "\u00B4"}, {"micro", "\u00B5"}, {"para", "\u00B6"}, {"middot", "\u00B7"},
-				{"cedil", "\u00B8"}, {"sup1", "\u00B9"}, {"ordm", "\u00BA"}, {"raquo", "\u00BB"},
-				{"frac14", "\u00BC"}, {"frac12", "\u00BD"}, {"frac34", "\u00BE"}, {"iquest", "\u00BF"},
-				{"Agrave", "\u00C0"}, {"Aacute", "\u00C1"}, {"Acirc", "\u00C2"}, {"Atilde", "\u00C3"},
-				{"Auml", "\u00C4"}, {"Aring", "\u00C5"}, {"AElig", "\u00C6"}, {"Ccedil", "\u00C7"},
-				{"Egrave", "\u00C8"}, {"Eacute", "\u00C9"}, {"Ecirc", "\u00CA"}, {"Euml", "\u00CB"},
-				{"Igrave", "\u00CC"}, {"Iacute", "\u00CD"}, {"Icirc", "\u00CE"}, {"Iuml", "\u00CF"},
-				{"ETH", "\u00D0"}, {"Ntilde", "\u00D1"}, {"Ograve", "\u00D2"}, {"Oacute", "\u00D3"},
-				{"Ocirc", "\u00D4"}, {"Otilde", "\u00D5"}, {"Ouml", "\u00D6"}, {"times", "\u00D7"},
-				{"Oslash", "\u00D8"}, {"Ugrave", "\u00D9"}, {"Uacute", "\u00DA"}, {"Ucirc", "\u00DB"},
-				{"Uuml", "\u00DC"}, {"Yacute", "\u00DD"}, {"THORN", "\u00DE"}, {"szlig", "\u00DF"},
-				{"agrave", "\u00E0"}, {"aacute", "\u00E1"}, {"acirc", "\u00E2"}, {"atilde", "\u00E3"},
-				{"auml", "\u00E4"}, {"aring", "\u00E5"}, {"aelig", "\u00E6"}, {"ccedil", "\u00E7"},
-				{"egrave", "\u00E8"}, {"eacute", "\u00E9"}, {"ecirc", "\u00EA"}, {"euml", "\u00EB"},
-				{"igrave", "\u00EC"}, {"iacute", "\u00ED"}, {"icirc", "\u00EE"}, {"iuml", "\u00EF"},
-				{"eth", "\u00F0"}, {"ntilde", "\u00F1"}, {"ograve", "\u00F2"}, {"oacute", "\u00F3"},
-				{"ocirc", "\u00F4"}, {"otilde", "\u00F5"}, {"ouml", "\u00F6"}, {"divide", "\u00F7"},
-				{"oslash", "\u00F8"}, {"ugrave", "\u00F9"}, {"uacute", "\u00FA"}, {"ucirc", "\u00FB"},
-				{"uuml", "\u00FC"}, {"yacute", "\u00FD"}, {"thorn", "\u00FE"}, {"yuml", "\u00FF"},
-				{"OElig", "\u0152"}, {"oelig", "\u0153"}, {"Scaron", "\u0160"}, {"Yuml", "\u0178"},
-				{"fnof", "\u0192"}, {"circ", "\u02C6"}, {"tilde", "\u02DC"}, {"Alpha", "\u0391"},
-				{"Beta", "\u0392"}, {"Gamma", "\u0393"}, {"Delta", "\u0394"}, {"Epsilon", "\u0395"},
-				{"Zeta", "\u0396"}, {"Eta", "\u0397"}, {"Theta", "\u0398"}, {"Iota", "\u0399"},
-				{"Kappa", "\u039A"}, {"Lambda", "\u039B"}, {"Mu", "\u039C"}, {"Nu", "\u039D"},
-				{"Xi", "\u039E"}, {"Omicron", "\u039F"}, {"Pi", "\u03A0"}, {"Rho", "\u03A1"},
-				{"Sigma", "\u03A3"}, {"Tau", "\u03A4"}, {"Upsilon", "\u03A5"}, {"Phi", "\u03A6"},
-				{"Chi", "\u03A7"}, {"Psi", "\u03A8"}, {"Omega", "\u03A9"}, {"alpha", "\u03B1"},
-				{"beta", "\u03B2"}, {"gamma", "\u03B3"}, {"delta", "\u03B4"}, {"epsilon", "\u03B5"},
-				{"zeta", "\u03B6"}, {"eta", "\u03B7"}, {"theta", "\u03B8"}, {"iota", "\u03B9"},
-				{"kappa", "\u03BA"}, {"lambda", "\u03BB"}, {"mu", "\u03BC"}, {"nu", "\u03BD"},
-				{"xi", "\u03BE"}, {"omicron", "\u03BF"}, {"pi", "\u03C0"}, {"rho", "\u03C1"},
-				{"sigmaf", "\u03C2"}, {"sigma", "\u03C3"}, {"tau", "\u03C4"}, {"upsilon", "\u03C5"},
-				{"phi", "\u03C6"}, {"chi", "\u03C7"}, {"psi", "\u03C8"}, {"omega", "\u03C9"},
-				{"thetasym", "\u03D1"}, {"upsih", "\u03D2"}, {"piv", "\u03D6"}, {"ensp", "\u2002"},
-				{"emsp", "\u2003"}, {"thinsp", "\u2009"}, {"zwnj", "\u200C"}, {"zwj", "\u200D"},
-				{"lrm", "\u200E"}, {"rlm", "\u200F"}, {"ndash", "\u2013"}, {"mdash", "\u2014"},
-				{"lsquo", "\u2018"}, {"rsquo", "\u2019"}, {"sbquo", "\u201A"}, {"ldquo", "\u201C"},
-				{"rdquo", "\u201D"}, {"bdquo", "\u201E"}, {"dagger", "\u2020"}, {"Dagger", "\u2021"},
-				{"bull", "\u2022"}, {"hellip", "\u2026"}, {"permil", "\u2030"}, {"prime", "\u2032"},
-				{"Prime", "\u2033"}, {"lsaquo", "\u2039"}, {"rsaquo", "\u203A"}, {"oline", "\u203E"},
-				{"frasl", "\u2044"}, {"euro", "\u20AC"}, {"image", "\u2111"}, {"weierp", "\u2118"},
-				{"real", "\u211C"}, {"trade", "\u2122"}, {"alefsym", "\u2135"}, {"larr", "\u2190"},
-				{"uarr", "\u2191"}, {"rarr", "\u2192"}, {"darr", "\u2193"}, {"harr", "\u2194"},
-				{"crarr", "\u21B5"}, {"lArr", "\u21D0"}, {"uArr", "\u21D1"}, {"rArr", "\u21D2"},
-				{"dArr", "\u21D3"}, {"hArr", "\u21D4"}, {"forall", "\u2200"}, {"part", "\u2202"},
-				{"exist", "\u2203"}, {"empty", "\u2205"}, {"nabla", "\u2207"}, {"isin", "\u2208"},
-				{"notin", "\u2209"}, {"ni", "\u220B"}, {"prod", "\u220F"}, {"sum", "\u2211"},
-				{"minus", "\u2212"}, {"lowast", "\u2217"}, {"radic", "\u221A"}, {"prop", "\u221D"},
-				{"infin", "\u221E"}, {"ang", "\u2220"}, {"and", "\u2227"}, {"or", "\u2228"},
-				{"cap", "\u2229"}, {"cup", "\u222A"}, {"int", "\u222B"}, {"there4", "\u2234"},
-				{"sim", "\u223C"}, {"cong", "\u2245"}, {"asymp", "\u2248"}, {"ne", "\u2260"},
-				{"equiv", "\u2261"}, {"le", "\u2264"}, {"ge", "\u2265"}, {"sub", "\u2282"},
-				{"sup", "\u2283"}, {"nsub", "\u2284"}, {"sube", "\u2286"}, {"supe", "\u2287"},
-				{"oplus", "\u2295"}, {"otimes", "\u2297"}, {"perp", "\u22A5"}, {"sdot", "\u22C5"},
-				{"lceil", "\u2308"}, {"rceil", "\u2309"}, {"lfloor", "\u230A"}, {"rfloor", "\u230B"},
-				{"lang", "\u2329"}, {"rang", "\u232A"}, {"loz", "\u25CA"}, {"spades", "\u2660"},
-				{"clubs", "\u2663"}, {"hearts", "\u2665"}, {"diams", "\u2666"}}) {
-			HTML_CHARACTERS.put(code[0], code[1]);
-			// htmlCodes.put(code[1], code[0]);
-		}
-	}
-
-	public static String toWideString(byte[] data) {
-		return new String(data, StandardCharsets.UTF_16LE);
-	}
-
-	public static byte[] toWideBytes(String wideString) {
-		return wideString.getBytes(StandardCharsets.UTF_16LE);
-	}
-
-	/**
-	 * Converts a {@code byte[]} to a {@link String}, with a null-delimiter. If no null-delimiter is found, the
-	 * entire array is converted to String.
-	 */
-	public static String fromCString(byte[] array) {
-		int i;
-		for (i = 0; i < array.length; i++) {
-			if (array[i] == 0) {
-				break;
-			}
-		}
-
-		return new String(array, 0, i, StandardCharsets.UTF_8);
-	}
-
-	public static byte[] toCString(String string, byte[] array) {
-		byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
-
-		int outLen = array.length;
-		int inLen  = Math.min(bytes.length, outLen);
-
-		System.arraycopy(bytes, 0, array, 0, inLen);
-		Arrays.fill(bytes, inLen, outLen, (byte)0);
-
-		return array;
-	}
-
-	/**
-	 * Replaces all illegal file name characters in a String with the specified character.
-	 * <p>
-	 * The filename should not contain a path, as path separators are also regarded as illegal file name characters.
-	 * <p>
-	 * "Illegal filename characters" are based on the Microsoft specification, and are: {@code / \ ? * : | " < >}.
-	 * Additionally, trailing periods are not allowed in Windows, so these can be removed.
-	 *
-	 * @param c the character to substitute the illegal characters with.
-	 */
-	public static String replaceIllegalFilenameChars(CharSequence name, boolean replaceTrailingPeriods, char c) {
-		return replaceIllegalFilenameChars(name, replaceTrailingPeriods, ignored -> c);
-	}
-
-	/**
-	 * Replaces all illegal file name characters in a String using the specified replacer.
-	 * <p>
-	 * The filename should not contain a path, as path separators are also regarded as illegal file name characters.
-	 * <p>
-	 * "Illegal filename characters" are based on the Microsoft specification, and are: {@code / \ ? * : | " < >}.
-	 * Additionally, trailing periods are not allowed in Windows, so these can be removed.
-	 *
-	 * @param replacer the function that maps any of the above mentioned 9 characters to another (sequence of)
-	 *                 characters.
-	 *                 There's no explicit check whether the replacement character is in fact illegal or not.
-	 */
-	public static String replaceIllegalFilenameChars(CharSequence name,
-	                                                 boolean replaceTrailingPeriods,
-	                                                 Function<Character, Character> replacer) {
-		requireNonNull(name, "name");
-
-		StringBuilder sb = new StringBuilder(name.length());
-
-		// Replace characters
-		name.codePoints()
-		    .forEach(c -> {
-			    int i = Arrays.binarySearch(ILLEGAL_FILE_NAME_CHARS, (char)c);
-			    if (i < 0) {
-				    sb.append((char)c);
-			    } else {
-				    sb.append(replacer.apply((char)c));
-			    }
-		    });
-
-		if (replaceTrailingPeriods) {
-			while (sb.length() > 0 && sb.charAt(sb.length() - 1) == '.') {
-				sb.setLength(sb.length() - 1);
-			}
-		}
-
-		return sb.toString();
-	}
-
-	public static String collateASCII(String text) {
-		return COMBINING_MARK_PATTERN.matcher(Normalizer.normalize(text, Normalizer.Form.NFD)).replaceAll("");
-	}
-
-	/**
-	 * Specialized instance of {#link {@link #replaceIllegalFilenameChars(CharSequence, boolean, Function)}} tailored for
-	 * filenames containing titles, which often includes colons.
-	 */
-	public static String replaceIllegalTitleFilenameChars(String name) {
-		name = COLON_MATCHER_1.matcher(name).replaceAll("\\2.\\3");
-		name = COLON_MATCHER_2.matcher(name).replaceAll(" - ");
-		name = COLON_MATCHER_3.matcher(name).replaceAll(" - ");
-		name = COLON_MATCHER_4.matcher(name).replaceAll(" - ");
-		name = collateASCII(name);
-
-		int[] codePoints = name.codePoints().map(c -> c <= 32 || c >= 127 ? '_' : c).toArray();
-		name = new String(codePoints, 0, codePoints.length);
-
-		return replaceIllegalFilenameChars(name, true, '_');
-	}
-
 	public static int utf8Length(CharSequence cs) {
 		return cs.length() + cs.codePoints()
 		                       .filter(cp -> cp >= 0x80)
@@ -256,44 +67,20 @@ public final class StringUtilities {
 		                       .sum();
 	}
 
-	public static boolean containsChar(String string, char ch) {
-		for (char c : string.toCharArray()) {
-			if (c == ch) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public static String getControlName(char c) {
-		if (c <= 0x20) {
-			return CONTROL_NAMES[c];
-		}
-
-		return null;
-	}
-
-	@SuppressWarnings("CharUsedInArithmeticContext")
+	/**
+	 * Java 1.8 equivalent of {@code String.repeat()}, simplified for single characters.
+	 * <p>
+	 * Once {@code String.repeat()} becomes available, this function can be dropped.
+	 */
 	public static String repeatChar(char ch, int count) {
-		requireRange(1, 127, ch, "ch");
 		requireAtLeast(0, count, "count");
 
 		if (count == 0) {
 			return "";
-		} else if (count > 64) {
+		} else {
 			char[] chars = new char[count];
 			Arrays.fill(chars, ch);
 			return new String(chars);
-		} else {
-			String cachedLine = REPEATING_CHARS_CACHE[ch - 1];
-			if (cachedLine == null) {
-				char[] chars = new char[64];
-				Arrays.fill(chars, ch);
-				cachedLine                    = new String(chars);
-				REPEATING_CHARS_CACHE[ch - 1] = cachedLine;
-			}
-
-			return cachedLine.substring(0, count);
 		}
 	}
 
@@ -317,7 +104,39 @@ public final class StringUtilities {
 		return s + repeatChar(' ', Math.max(0, length - s.length()));
 	}
 
-	public static String removeQuotes(String string) {
+	/**
+	 * Converts a {@code byte[]} with a null-delimiter to a {@link String}. If no null-delimiter is found, the
+	 * entire array is converted to String.
+	 */
+	public static String fromCString(byte[] array) {
+		int i;
+		for (i = 0; i < array.length; i++) {
+			if (array[i] == 0) {
+				break;
+			}
+		}
+
+		return new String(array, 0, i, StandardCharsets.UTF_8);
+	}
+
+	/**
+	 * Converts a String to a null-delimited {@code byte[]}. If the string doesn't fit into the array, the entire
+	 * array will be filled and there will be no null-delimiter. This also means that a multi-byte encoded character
+	 * may be stored partially, resulting in an invalid string.
+	 */
+	public static byte[] toCString(String string, byte[] array) {
+		byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
+
+		int outLen = array.length;
+		int inLen  = Math.min(bytes.length, outLen);
+
+		System.arraycopy(bytes, 0, array, 0, inLen);
+		Arrays.fill(bytes, inLen, outLen, (byte)0);
+
+		return array;
+	}
+
+	public static @Nullable String removeQuotes(String string) {
 		if (string == null ||
 		    string.length() < 2 ||
 		    string.charAt(0) != '"' ||
@@ -326,6 +145,69 @@ public final class StringUtilities {
 		}
 
 		return string.substring(1, string.length() - 1);
+	}
+
+	public static String snakeToCamelCase(String text) {
+		return Stream.of(text.split("_"))
+		             .map(s -> s.isEmpty() ? "" : s.charAt(0) + s.substring(1).toLowerCase())
+		             .collect(Collectors.joining());
+	}
+
+	public static String camelToSnakeCase(String text) {
+		StringBuilder sb = new StringBuilder(text.length() * 3 / 2);
+
+		boolean lastIsLetter = false;
+		boolean lastIsUpper  = true;
+
+		for (int i = 0; i < text.length(); i++) {
+			char c1 = text.charAt(i);
+			char c2 = i + 1 < text.length() ? text.charAt(i + 1) : 'A';
+
+			boolean isUpper = Character.isUpperCase(c1);
+
+			if (lastIsLetter && isUpper && !Character.isUpperCase(c2)) {
+				sb.append('_');
+			} else if (!lastIsUpper && Character.isUpperCase(c1)) {
+				sb.append('_');
+			}
+
+			sb.append(Character.toUpperCase(c1));
+
+			lastIsLetter = Character.isLetter(c1);
+			lastIsUpper  = isUpper;
+		}
+
+		return sb.toString();
+	}
+
+	public static String collateASCII(String text) {
+		return COMBINING_MARK_PATTERN.matcher(Normalizer.normalize(text, Normalizer.Form.NFD)).replaceAll("");
+	}
+
+	public static String toEnglishCardinal(int i) {
+		if (i >= 11 && i <= 13) {
+			return i + "th";
+		}
+
+		int lastDigit = Math.abs(i) % 10;
+		switch (lastDigit) {
+			case 1:
+				return i + "st";
+			case 2:
+				return i + "nd";
+			case 3:
+				return i + "rd";
+			default:
+				return i + "th";
+		}
+	}
+
+	public static @Nullable String getControlName(char c) {
+		if (c <= 0x20) {
+			return CONTROL_NAMES[c];
+		}
+
+		return null;
 	}
 
 	public static String toSuperScriptUnicode(String in) {

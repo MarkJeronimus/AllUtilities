@@ -54,30 +54,26 @@ public class ProgressEvent extends EventObject {
 	}
 
 	@Override
-	public int hashCode() {
-		int hash = 0x811C9DC5;
-		hash ^= Integer.hashCode(progress);
-		hash *= 0x01000193;
-		hash ^= Integer.hashCode(total);
-		hash *= 0x01000193;
-		hash ^= text.hashCode();
-		hash *= 0x01000193;
-		return hash;
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		} else if (!(o instanceof ProgressEvent)) {
+			return false;
+		}
+
+		ProgressEvent other = (ProgressEvent)o;
+		return progress == other.progress &&
+		       total == other.total &&
+		       text.equals(other.text);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		ProgressEvent other = (ProgressEvent)obj;
-		return progress == other.progress && total == other.total && text.equals(other.text);
+	public int hashCode() {
+		int hashCode = 0x811C9DC5;
+		hashCode = 0x01000193 * (hashCode ^ progress);
+		hashCode = 0x01000193 * (hashCode ^ total);
+		hashCode = 0x01000193 * (hashCode ^ text.hashCode());
+		return hashCode;
 	}
 
 	@Override

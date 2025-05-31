@@ -1,228 +1,205 @@
 package nl.airsupplies.utilities;
 
+import java.util.Arrays;
+
 import nl.airsupplies.utilities.annotation.UtilityClass;
-import static nl.airsupplies.utilities.NumberUtilities.DIGITS;
+import static nl.airsupplies.utilities.NumberUtilities.RADIX_DIGITS;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireAtLeast;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
 
 /**
  * @author Mark Jeronimus
  */
-// Created 2019-08-08
+// Created 2018-05-17
 @UtilityClass
 public final class HexUtilities {
-	public static String toString(int i) {
-		char[] buf     = new char[33];
-		int    charPos = 32;
-
-		boolean negative = i < 0;
-		if (!negative) {
-			i = -i;
-		}
-
-		while (i <= -16) {
-			buf[charPos] = DIGITS[-(i % 16)];
-			charPos--;
-			i /= 16;
-		}
-		buf[charPos] = DIGITS[-i];
-
-		if (negative) {
-			--charPos;
-			buf[charPos] = '-';
-		}
-
-		return new String(buf, charPos, 33 - charPos);
-	}
-
-	public static String toUnsignedString(int v) {
-		char[] buf = new char[8];
-
-		for (int i = 7; i >= 0; i--) {
-			buf[i] = DIGITS[v & 0xF];
-			v >>>= 4;
-		}
-
-		return new String(buf);
-	}
-
-	public static String toString(long l) {
-		char[] buf     = new char[65];
-		int    charPos = 64;
-
-		boolean negative = l < 0;
-		if (!negative) {
-			l = -l;
-		}
-
-		while (l <= -16) {
-			buf[charPos] = DIGITS[(int)-(l % 16)];
-			charPos--;
-			l /= 16;
-		}
-		buf[charPos] = DIGITS[(int)-l];
-
-		if (negative) {
-			--charPos;
-			buf[charPos] = '-';
-		}
-
-		return new String(buf, charPos, 65 - charPos);
-	}
-
-	public static String toUnsignedString(long l) {
-		char[] buf     = new char[64];
-		int    charPos = 63;
-
-		while (l != 0) {
-			buf[charPos] = DIGITS[(int)l & 0xF];
-			charPos--;
-			l >>>= 4;
-		}
-
-		return new String(buf, charPos, 64 - charPos);
-	}
-
-	public static String toUnsignedWordString(byte b) {
+	public static String toUnsignedHex(byte b) {
 		int i = b & 0xFF;
-		char[] out = {DIGITS[i >>> 4],
-		              DIGITS[i & 0xF]};
+		char[] out = {RADIX_DIGITS.charAt(i >>> 4),
+		              RADIX_DIGITS.charAt(i & 0xF)};
 		return new String(out);
 	}
 
-	public static String toUnsignedWordString(short sh) {
+	public static String toUnsignedHex(short sh) {
 		int i = sh & 0xFFFF;
-		char[] out = {DIGITS[i >>> 12],
-		              DIGITS[i >>> 8 & 0xF],
-		              DIGITS[i >>> 4 & 0xF],
-		              DIGITS[i & 0xF]};
-		return new String(out);
+		return new String(new char[]{RADIX_DIGITS.charAt(i >>> 12),
+		                             RADIX_DIGITS.charAt(i >>> 8 & 0xF),
+		                             RADIX_DIGITS.charAt(i >>> 4 & 0xF),
+		                             RADIX_DIGITS.charAt(i & 0xF)});
 	}
 
 	public static String toColorString(int i) {
-		char[] out = {DIGITS[i >>> 20 & 0xF],
-		              DIGITS[i >>> 16 & 0xF],
-		              DIGITS[i >>> 12 & 0xF],
-		              DIGITS[i >>> 8 & 0xF],
-		              DIGITS[i >>> 4 & 0xF],
-		              DIGITS[i & 0xF]};
-		return new String(out);
+		return new String(new char[]{RADIX_DIGITS.charAt(i >>> 20 & 0xF),
+		                             RADIX_DIGITS.charAt(i >>> 16 & 0xF),
+		                             RADIX_DIGITS.charAt(i >>> 12 & 0xF),
+		                             RADIX_DIGITS.charAt(i >>> 8 & 0xF),
+		                             RADIX_DIGITS.charAt(i >>> 4 & 0xF),
+		                             RADIX_DIGITS.charAt(i & 0xF)});
 	}
 
-	public static String toColorStringWithAlpha(int i) {
-		char[] out = {DIGITS[i >>> 28 & 0xF],
-		              DIGITS[i >>> 24 & 0xF],
-		              DIGITS[i >>> 20 & 0xF],
-		              DIGITS[i >>> 16 & 0xF],
-		              DIGITS[i >>> 12 & 0xF],
-		              DIGITS[i >>> 8 & 0xF],
-		              DIGITS[i >>> 4 & 0xF],
-		              DIGITS[i & 0xF]};
-		return new String(out);
+	public static String toUnsignedHex(int i) {
+		return new String(new char[]{RADIX_DIGITS.charAt(i >>> 28),
+		                             RADIX_DIGITS.charAt(i >>> 24 & 0xF),
+		                             RADIX_DIGITS.charAt(i >>> 20 & 0xF),
+		                             RADIX_DIGITS.charAt(i >>> 16 & 0xF),
+		                             RADIX_DIGITS.charAt(i >>> 12 & 0xF),
+		                             RADIX_DIGITS.charAt(i >>> 8 & 0xF),
+		                             RADIX_DIGITS.charAt(i >>> 4 & 0xF),
+		                             RADIX_DIGITS.charAt(i & 0xF)});
 	}
 
-	public static String toUnsignedWordString(int i) {
-		char[] out = {DIGITS[i >>> 28],
-		              DIGITS[i >>> 24 & 0xF],
-		              DIGITS[i >>> 20 & 0xF],
-		              DIGITS[i >>> 16 & 0xF],
-		              DIGITS[i >>> 12 & 0xF],
-		              DIGITS[i >>> 8 & 0xF],
-		              DIGITS[i >>> 4 & 0xF],
-		              DIGITS[i & 0xF]};
-		return new String(out);
+	public static String toUnsignedHexWithSpaces(int value) {
+		return toUnsignedHexWithSpaces(value, 4);
 	}
 
-	public static String toUnsignedWordString(long l) {
+	/**
+	 * Converts N least significant octets of an int to hexadecimal, separated by spaces.
+	 */
+	public static String toUnsignedHexWithSpaces(int value, int len) {
+		requireRange(1, 4, len, "len");
+
+		StringBuilder sb = new StringBuilder(len * 3 - 1);
+		for (int i = len - 1; i >= 0; i--) {
+			if (i > 0) {
+				sb.append(' ');
+			}
+
+			appendHexByte(sb, value >>> i * 8);
+		}
+
+		return sb.toString();
+	}
+
+	public static String toUnsignedHex(long l) {
 		int hi = (int)(l >>> 32);
 		int lo = (int)l;
-		char[] out = {DIGITS[hi >>> 28],
-		              DIGITS[hi >>> 24 & 0xF],
-		              DIGITS[hi >>> 20 & 0xF],
-		              DIGITS[hi >>> 16 & 0xF],
-		              DIGITS[hi >>> 12 & 0xF],
-		              DIGITS[hi >>> 8 & 0xF],
-		              DIGITS[hi >>> 4 & 0xF],
-		              DIGITS[hi & 0xF],
-		              DIGITS[lo >>> 28],
-		              DIGITS[lo >>> 24 & 0xF],
-		              DIGITS[lo >>> 20 & 0xF],
-		              DIGITS[lo >>> 16 & 0xF],
-		              DIGITS[lo >>> 12 & 0xF],
-		              DIGITS[lo >>> 8 & 0xF],
-		              DIGITS[lo >>> 4 & 0xF],
-		              DIGITS[lo & 0xF]};
-		return new String(out);
+		return new String(new char[]{RADIX_DIGITS.charAt(hi >>> 28),
+		                             RADIX_DIGITS.charAt(hi >>> 24 & 0xF),
+		                             RADIX_DIGITS.charAt(hi >>> 20 & 0xF),
+		                             RADIX_DIGITS.charAt(hi >>> 16 & 0xF),
+		                             RADIX_DIGITS.charAt(hi >>> 12 & 0xF),
+		                             RADIX_DIGITS.charAt(hi >>> 8 & 0xF),
+		                             RADIX_DIGITS.charAt(hi >>> 4 & 0xF),
+		                             RADIX_DIGITS.charAt(hi & 0xF),
+		                             RADIX_DIGITS.charAt(lo >>> 28),
+		                             RADIX_DIGITS.charAt(lo >>> 24 & 0xF),
+		                             RADIX_DIGITS.charAt(lo >>> 20 & 0xF),
+		                             RADIX_DIGITS.charAt(lo >>> 16 & 0xF),
+		                             RADIX_DIGITS.charAt(lo >>> 12 & 0xF),
+		                             RADIX_DIGITS.charAt(lo >>> 8 & 0xF),
+		                             RADIX_DIGITS.charAt(lo >>> 4 & 0xF),
+		                             RADIX_DIGITS.charAt(lo & 0xF)});
 	}
 
-	public static String byteArrayToHexString(byte[] array) {
-		StringBuilder out = new StringBuilder(array.length * 2);
-		for (byte b : array) {
-			out.append(toUnsignedWordString(b));
+	public static String toUnsignedHexWithSpaces(long value) {
+		return toUnsignedHexWithSpaces(value, 8);
+	}
+
+	/**
+	 * Converts N least significant octets of a long to hexadecimal, separated by spaces.
+	 */
+	public static String toUnsignedHexWithSpaces(long value, int len) {
+		requireRange(1, 8, len, "len");
+
+		StringBuilder sb = new StringBuilder(len * 3 - 1);
+
+		for (int i = len - 1; i >= 0; i--) {
+			if (i > 0) {
+				sb.append(' ');
+			}
+
+			appendHexByte(sb, (int)(value >>> i * 8));
 		}
+
+		return sb.toString();
+	}
+
+	public static String toUnsignedHex(byte[] array) {
+		StringBuilder out = new StringBuilder(array.length * 2);
+
+		for (byte b : array) {
+			appendHexByte(out, b);
+		}
+
 		return out.toString().toUpperCase();
 	}
 
-	public static String toHexFloat(double value) {
-		long bits = Double.doubleToRawLongBits(value);
-
-		boolean negative = bits < 0;
-		bits &= 0x7FFFFFFFFFFFFFFFL;
-
-		int exponent = (int)(bits >>> 52);
-		bits &= 0xFFFFFFFFFFFFFL;
-
-		if (exponent == 2047) {
-			return bits != 0 ? "NaN" : negative ? "-Infinity" : "Infinity";
-		}
-
-		if (exponent == 0) {
-			if (bits == 0) {
-				return negative ? "-0" : "0";
-			}
-			exponent = -1022;
-			while (bits <= 0xFFFFFFFFFFFFFL) {
-				bits <<= 1;
-				exponent--;
-			}
-		} else {
-			exponent += -1023;
-			bits |= 0x10000000000000L;
-		}
-		bits <<= exponent & 3;
-		exponent >>= 2;
-
-		String out = Long.toHexString(bits).toUpperCase();
-
-		if (exponent < -3 || exponent > 6) {
-			out = removeTrailingZeroes(out);
-			if (out.length() > 1) {
-				out = out.charAt(0) + '.' + out.substring(1);
-			}
-			out += "e" + exponent;
-		} else if (exponent >= 0) {
-			if (out.length() > 1) {
-				out = out.substring(0, exponent + 1) + '.' + out.substring(exponent + 1);
-			}
-			out = removeTrailingZeroes(out);
-		} else {
-			out = removeTrailingZeroes(out);
-			for (int i = exponent + 1; i < 0; i++) {
-				out = '0' + out;
-			}
-			out = "0." + out;
-		}
-
-		return negative ? '-' + out : out;
+	public static String toUnsignedHexWithSpaces(byte[] array) {
+		return toUnsignedHexWithSpaces(array, array.length);
 	}
 
-	private static String removeTrailingZeroes(String s) {
-		for (int i = s.length() - 1; i >= 0; i--) {
-			if (s.charAt(i) != '0') {
-				if (s.charAt(i) == '.') {
-					return s.substring(0, i + 2);
-				}
-				return s.substring(0, i + 1);
+	public static String toUnsignedHexWithSpaces(byte[] array, int len) {
+		StringBuilder sb = new StringBuilder(len * 3 + 2);
+
+		for (int i = 0; i < len; i++) {
+			if (i > 0) {
+				sb.append(' ');
 			}
+
+			appendHexByte(sb, array[i]);
 		}
-		return s.substring(0, 1);
+
+		return sb.toString();
+	}
+
+	/**
+	 * Converts N least significant octets of a long to hexadecimal, separated by spaces.
+	 * <p>
+	 * If the array is longer than the specified length, a string like " (1234 total)" is appended.
+	 */
+	public static String toUnsignedHexWithSpacesTruncated(byte[] array, int len) {
+		requireAtLeast(1, len, "len");
+
+		// 20 assumes at most 2**31-1 = 2147483647 more elements: "xx, yy, (2147483647 total)"
+		StringBuilder sb = new StringBuilder(len * 4 + 18);
+
+		for (int i = 0; i < array.length && i < len; i++) {
+			if (i > 0) {
+				sb.append(' ');
+			}
+
+			appendHexByte(sb, array[i]);
+		}
+
+		if (array.length > len) {
+			sb.append(" (").append(array.length).append(" total)");
+		}
+
+		return sb.toString();
+	}
+
+	private static void appendHexByte(StringBuilder sb, int b) {
+		sb.append(RADIX_DIGITS.charAt(b >>> 4 & 0xF));
+		sb.append(RADIX_DIGITS.charAt(b & 0xF));
+	}
+
+	public static byte[] parseHexString(String s) {
+		byte[] bytes = new byte[s.length() / 2];
+		int    count = 0;
+
+		int     upper     = 0;
+		boolean upperRead = false;
+
+		for (int i = 0; i < s.length(); i++) {
+			int digit = Character.digit(s.charAt(i), 16);
+			if (digit < 0) {
+				continue;
+			}
+
+			if (!upperRead) {
+				upper = digit;
+			} else {
+				bytes[count] = (byte)(upper << 4 | digit);
+				count++;
+			}
+
+			upperRead = !upperRead;
+		}
+
+		if (upperRead) {
+			throw new AssertionError("Odd number of hexadecimal digits: " + s);
+		}
+
+		return Arrays.copyOf(bytes, count);
 	}
 }

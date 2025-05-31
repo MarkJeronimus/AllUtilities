@@ -8,7 +8,7 @@ import java.io.OutputStream;
 import net.jcip.annotations.GuardedBy;
 import org.jetbrains.annotations.Nullable;
 
-import nl.airsupplies.utilities.ArrayUtilities;
+import nl.airsupplies.utilities.HexUtilities;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
 
@@ -129,6 +129,33 @@ public class CircularBufferInputStream extends InputStream {
 		}
 	}
 
+	public byte[] toArray() throws IOException {
+		synchronized (lock) {
+			byte[] result  = new byte[size];
+			int    numRead = read(result);
+			if (numRead != size) {
+				throw new AssertionError(numRead + " read but " + size + " available");
+			}
+
+			return result;
+		}
+	}
+
+	public byte[] toArray(byte[] array) throws IOException {
+		synchronized (lock) {
+			if (array.length < size) {
+				array = new byte[size];
+			}
+
+			int numRead = read(array);
+			if (numRead != size) {
+				throw new AssertionError(numRead + " read but " + size + " available");
+			}
+
+			return array;
+		}
+	}
+
 	public void clear() {
 		synchronized (lock) {
 			readPointer  = 0;
@@ -221,7 +248,7 @@ public class CircularBufferInputStream extends InputStream {
 			System.arraycopy(buffer, readPointer, peek, 0, lenBeforeWrap);
 			System.arraycopy(buffer, 0, peek, lenBeforeWrap, lenAfterWrap);
 
-			return "CircularBufferInputStream" + ArrayUtilities.toHexStringTruncated(peek, 16);
+			return "CircularBufferInputStream" + HexUtilities.toUnsignedHexWithSpacesTruncated(peek, 16);
 		}
 	}
 }

@@ -39,7 +39,8 @@ public class Tuple<K extends Comparable<K>, V extends Comparable<V>> implements 
 	public boolean equals(Object o) {
 		if (this == o) {
 			return true;
-		} else if (o instanceof Tuple<?, ?> other) {
+		} else if (o instanceof Tuple<?, ?>) {
+			Tuple<?, ?> other = (Tuple<?, ?>)o;
 			return first.equals(other.first) && second.equals(other.second);
 		} else {
 			return false;

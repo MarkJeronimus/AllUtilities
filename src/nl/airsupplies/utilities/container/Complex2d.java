@@ -484,7 +484,14 @@ public class Complex2d implements Serializable {
 	@Override
 	@SuppressWarnings("NonFinalFieldReferenceInEquals")
 	public boolean equals(Object other) {
-		return other instanceof Complex2d c && real == c.real && imag == c.imag;
+		if (other instanceof Complex2d) {
+			Complex2d c = (Complex2d)other;
+			if (real == c.real && imag == c.imag) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override

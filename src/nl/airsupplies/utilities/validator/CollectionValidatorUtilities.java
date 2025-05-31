@@ -376,7 +376,7 @@ public final class CollectionValidatorUtilities {
 
 		for (V value : actual) {
 			if (value == null) {
-				throw new IllegalArgumentException('\'' + varName + "' contains a null value");
+				throw new NullPointerException('\'' + varName + "' contains a null value");
 			}
 		}
 
@@ -388,7 +388,7 @@ public final class CollectionValidatorUtilities {
 
 		for (int i = 0; i < actual.size(); i++) {
 			if (actual.get(i) == null) {
-				throw new IllegalArgumentException('\'' + varName + '[' + i + "]' can't be null");
+				throw new NullPointerException('\'' + varName + '[' + i + "]' can't be null");
 			}
 		}
 
@@ -400,7 +400,7 @@ public final class CollectionValidatorUtilities {
 
 		for (V value : actual.values()) {
 			if (value == null) {
-				throw new IllegalArgumentException('\'' + varName + "' contains a null value");
+				throw new NullPointerException('\'' + varName + "' contains a null value");
 			}
 		}
 
@@ -415,7 +415,7 @@ public final class CollectionValidatorUtilities {
 
 		for (V value : actual) {
 			if (value == null) {
-				throw new IllegalArgumentException('\'' + varName + "' contains a null value");
+				throw new NullPointerException('\'' + varName + "' contains a null value");
 			}
 		}
 
@@ -429,7 +429,7 @@ public final class CollectionValidatorUtilities {
 
 		for (int i = 0; i < actual.size(); i++) {
 			if (actual.get(i) == null) {
-				throw new IllegalArgumentException('\'' + varName + '[' + i + "]' can't be null");
+				throw new NullPointerException('\'' + varName + '[' + i + "]' can't be null");
 			}
 		}
 
@@ -444,7 +444,7 @@ public final class CollectionValidatorUtilities {
 
 		for (V value : actual.values()) {
 			if (value == null) {
-				throw new IllegalArgumentException('\'' + varName + "' contains a null value");
+				throw new NullPointerException('\'' + varName + "' contains a null value");
 			}
 		}
 

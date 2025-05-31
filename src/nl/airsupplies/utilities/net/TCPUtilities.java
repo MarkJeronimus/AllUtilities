@@ -1,9 +1,16 @@
 package nl.airsupplies.utilities.net;
 
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.NetworkInterface;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.UnknownHostException;
+import java.util.Enumeration;
+
+import org.jetbrains.annotations.Nullable;
 
 import nl.airsupplies.utilities.annotation.UtilityClass;
 import static nl.airsupplies.utilities.validator.StringValidatorUtilities.requireStringNotEmpty;
@@ -51,5 +58,48 @@ public final class TCPUtilities {
 			ex2.setStackTrace(ex.getStackTrace());
 			throw ex2;
 		}
+	}
+
+	public static InetAddress getLocalAddress() throws SocketException, UnknownHostException {
+		@Nullable InetAddress candidate = null;
+
+		Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+		while (networkInterfaces.hasMoreElements()) {
+			NetworkInterface networkInterface = networkInterfaces.nextElement();
+
+			if (networkInterface.isLoopback()) {
+				continue;
+			}
+
+			Enumeration<InetAddress> inetAddresses = networkInterface.getInetAddresses();
+			while (inetAddresses.hasMoreElements()) {
+				InetAddress inetAddress = inetAddresses.nextElement();
+
+				if (inetAddress.isSiteLocalAddress()) {
+					return inetAddress;
+				}
+
+				if (inetAddress.isLoopbackAddress() ||
+				    inetAddress.isLinkLocalAddress() ||
+				    inetAddress.isMulticastAddress()) {
+					continue;
+				}
+
+				if (candidate == null) {
+					candidate = inetAddress;
+				}
+			}
+		}
+
+		if (candidate != null) {
+			return candidate;
+		}
+
+		candidate = InetAddress.getLocalHost();
+		if (candidate == null) {
+			throw new UnknownHostException("InetAddress.getLocalHost() method unexpectedly returned null.");
+		}
+
+		return candidate;
 	}
 }

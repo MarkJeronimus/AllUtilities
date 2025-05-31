@@ -2,14 +2,17 @@ package nl.airsupplies.utilities.io;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
+import java.util.regex.Pattern;
 
 import nl.airsupplies.utilities.concurrent.NamedThreadFactory;
+import nl.airsupplies.utilities.container.StringBuilderByte;
 import static nl.airsupplies.utilities.validator.ArrayValidatorUtilities.requireArrayLengthAtLeast;
 
 /**
@@ -21,6 +24,8 @@ public class SimpleProcessExecutor {
 	private static final ThreadFactory   THREAD_FACTORY =
 			new NamedThreadFactory(Executors.defaultThreadFactory(), "SimpleProcessExecutor");
 	private static final ExecutorService EXECUTOR       = Executors.newCachedThreadPool(THREAD_FACTORY);
+
+	private static final Pattern CRLF_PATTERN = Pattern.compile("\r+\n");
 
 	private final String[] cmdArray;
 
@@ -34,6 +39,7 @@ public class SimpleProcessExecutor {
 		this.cmdArray = cmdArray.clone();
 	}
 
+	@SuppressWarnings("ProhibitedExceptionThrown")
 	public SimpleProcessExecutor exec() throws IOException, InterruptedException {
 		exitCode = 0;
 		stdOut   = "";
@@ -50,17 +56,17 @@ public class SimpleProcessExecutor {
 			exitCode = process.waitFor();
 			stdOut   = stdOutFuture.get();
 			stdErr   = stdErrFuture.get();
-		} catch (InterruptedException ignored) {
 		} catch (ExecutionException ex) {
-			Throwable th = ex.getCause();
-			if (th instanceof IOException) {
-				throw (IOException)th;
-			} else if (th instanceof InterruptedException) {
-				throw (InterruptedException)th;
-			} else if (th instanceof RuntimeException) {
-				throw (RuntimeException)th;
+			// Launder the thrown exception
+			Throwable cause = ex.getCause();
+			if (cause instanceof IOException) {
+				throw (IOException)cause;
+			} else if (cause instanceof InterruptedException) {
+				throw (InterruptedException)cause;
+			} else if (cause instanceof RuntimeException) {
+				throw (RuntimeException)cause;
 			} else {
-				throw new RuntimeException(th);
+				throw new RuntimeException(cause);
 			}
 		}
 
@@ -76,7 +82,7 @@ public class SimpleProcessExecutor {
 
 		@Override
 		public String call() throws Exception {
-			StringBuilder sb = new StringBuilder(1024);
+			StringBuilderByte sb = new StringBuilderByte(1024, StandardCharsets.UTF_8);
 
 			while (true) {
 				int b = in.read();
@@ -84,10 +90,10 @@ public class SimpleProcessExecutor {
 					break;
 				}
 
-				sb.append((char)b);
+				sb.append((byte)b);
 			}
 
-			return sb.toString();
+			return CRLF_PATTERN.matcher(sb.toString()).replaceAll("\n");
 		}
 	}
 

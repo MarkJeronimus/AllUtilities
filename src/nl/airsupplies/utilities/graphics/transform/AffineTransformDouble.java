@@ -70,14 +70,16 @@ public class AffineTransformDouble implements TransformDouble {
 	}
 
 	public void set(TransformDouble tr) {
-		if (tr instanceof AffineTransformDouble t) {
+		if (tr instanceof AffineTransformDouble) {
+			AffineTransformDouble t = (AffineTransformDouble)tr;
 			x0 = t.x0;
 			y0 = t.y0;
 			x1 = t.x1;
 			y1 = t.y1;
 			x2 = t.x2;
 			y2 = t.y2;
-		} else if (tr instanceof HomotheticTransformDouble t) {
+		} else if (tr instanceof HomotheticTransformDouble) {
+			HomotheticTransformDouble t = (HomotheticTransformDouble)tr;
 			x0 = t.sx;
 			y0 = 0;
 			x1 = 0;
@@ -99,19 +101,22 @@ public class AffineTransformDouble implements TransformDouble {
 	}
 
 	public void concatenate(TransformDouble tr) {
-		if (tr instanceof AffineTransformDouble t) {
-			double x = x0;
-			double y = x1;
-			x2 += x * t.x2 + y * t.y2;
-			x0 = x * t.x0 + y * t.y0;
-			x1 = x * t.x1 + y * t.y1;
+		if (tr instanceof AffineTransformDouble) {
+			AffineTransformDouble t = (AffineTransformDouble)tr;
 
-			x  = y0;
-			y  = y1;
-			y2 += x * t.x2 + y * t.y2;
-			y0 = x * t.x0 + y * t.y0;
-			y1 = x * t.x1 + y * t.y1;
-		} else if (tr instanceof HomotheticTransformDouble t) {
+			double z0 = x0;
+			double z1 = x1;
+			x2 += z0 * t.x2 + z1 * t.y2;
+			x0 = z0 * t.x0 + z1 * t.y0;
+			x1 = z0 * t.x1 + z1 * t.y1;
+
+			z0 = y0;
+			z1 = y1;
+			y2 += z0 * t.x2 + z1 * t.y2;
+			y0 = z0 * t.x0 + z1 * t.y0;
+			y1 = z0 * t.x1 + z1 * t.y1;
+		} else if (tr instanceof HomotheticTransformDouble) {
+			HomotheticTransformDouble t = (HomotheticTransformDouble)tr;
 			x2 += t.tx * x0 + t.ty * x1;
 			x0 *= t.sx;
 			x1 *= t.sy;

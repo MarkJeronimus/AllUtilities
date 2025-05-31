@@ -8,9 +8,9 @@ import java.util.function.Supplier;
 
 import org.jetbrains.annotations.Nullable;
 
+import nl.airsupplies.utilities.NumberUtilities;
 import nl.airsupplies.utilities.annotation.UtilityClass;
 import static nl.airsupplies.utilities.validator.ArrayValidatorUtilities.requireArrayLengthAtLeast;
-import static nl.airsupplies.utilities.NumberUtilities.isDegenerate;
 
 /**
  * @author Mark Jeronimus
@@ -66,7 +66,7 @@ public final class ValidatorUtilities {
 	}
 
 	public static float assertNotDegenerate(float actual, String varName) {
-		if (isDegenerate(actual)) {
+		if (NumberUtilities.isDegenerate(actual)) {
 			throw new AssertionError('\'' + varName + "' is degenerate: " + actual);
 		}
 
@@ -74,7 +74,7 @@ public final class ValidatorUtilities {
 	}
 
 	public static double assertNotDegenerate(double actual, String varName) {
-		if (isDegenerate(actual)) {
+		if (NumberUtilities.isDegenerate(actual)) {
 			throw new AssertionError('\'' + varName + "' is degenerate: " + actual);
 		}
 
@@ -82,7 +82,7 @@ public final class ValidatorUtilities {
 	}
 
 	public static float requireNotDegenerate(float actual, String varName) {
-		if (isDegenerate(actual)) {
+		if (NumberUtilities.isDegenerate(actual)) {
 			throw new IllegalArgumentException('\'' + varName + "' is degenerate: " + actual);
 		}
 
@@ -90,7 +90,7 @@ public final class ValidatorUtilities {
 	}
 
 	public static double requireNotDegenerate(double actual, String varName) {
-		if (isDegenerate(actual)) {
+		if (NumberUtilities.isDegenerate(actual)) {
 			throw new IllegalArgumentException('\'' + varName + "' is degenerate: " + actual);
 		}
 
@@ -663,6 +663,76 @@ public final class ValidatorUtilities {
 		return actual;
 	}
 
+	public static int requireZeroOrRange(int min, int max, int actual, String varName) {
+		assertThat(min <= max, () -> "Range is invalid: [" + min + ", " + max + ']');
+
+		if (actual != 0 && (actual < min || actual > max)) {
+			if (min == max) {
+				throw new IllegalArgumentException('\'' + varName + "' must either be zero or exactly " +
+				                                   min + ": " + actual);
+			} else {
+				throw new IllegalArgumentException('\'' + varName + "' must either be zero or in the range [" +
+				                                   min + ", " + max + "]: " + actual);
+			}
+		}
+
+		return actual;
+	}
+
+	public static long requireZeroOrRange(long min, long max, long actual, String varName) {
+		assertThat(min <= max, () -> "Range is invalid: [" + min + ", " + max + ']');
+
+		if (actual != 0 && (actual < min || actual > max)) {
+			if (min == max) {
+				throw new IllegalArgumentException('\'' + varName + "' must either be zero or exactly " +
+				                                   min + ": " + actual);
+			} else {
+				throw new IllegalArgumentException('\'' + varName + "' must either be zero or in the range [" +
+				                                   min + ", " + max + "]: " + actual);
+			}
+		}
+
+		return actual;
+	}
+
+	public static float requireZeroOrRange(float min, float max, float actual, String varName) {
+		assertNotDegenerate(min, "min");
+		assertNotDegenerate(max, "max");
+		assertThat(min <= max, () -> "Range is invalid: [" + min + ", " + max + ']');
+		requireNotDegenerate(actual, "actual");
+
+		if (actual != 0.0f && (actual < min || actual > max)) {
+			if (min == max) {
+				throw new IllegalArgumentException('\'' + varName + "' must either be zero or exactly " +
+				                                   min + ": " + actual);
+			} else {
+				throw new IllegalArgumentException('\'' + varName + "' must either be zero or in the range [" +
+				                                   min + ", " + max + "]: " + actual);
+			}
+		}
+
+		return actual;
+	}
+
+	public static double requireZeroOrRange(double min, double max, double actual, String varName) {
+		assertNotDegenerate(min, "min");
+		assertNotDegenerate(max, "max");
+		assertThat(min <= max, () -> "Range is invalid: [" + min + ", " + max + ']');
+		requireNotDegenerate(actual, "actual");
+
+		if (actual != 0.0 && (actual < min || actual > max)) {
+			if (min == max) {
+				throw new IllegalArgumentException('\'' + varName + "' must either be zero or exactly " +
+				                                   min + ": " + actual);
+			} else {
+				throw new IllegalArgumentException('\'' + varName + "' must either be zero or in the range [" +
+				                                   min + ", " + max + "]: " + actual);
+			}
+		}
+
+		return actual;
+	}
+
 	public static void requireDistance(long minDistance,
 	                                   long maxDistance,
 	                                   int actualMin,
@@ -745,7 +815,7 @@ public final class ValidatorUtilities {
 	public static <P extends Point2D> P requirePointNotDegenerate(P actual, String varName) {
 		requireNonNull(actual, varName);
 
-		if (isDegenerate(actual)) {
+		if (NumberUtilities.isDegenerate(actual)) {
 			throw new IllegalArgumentException('\'' + varName + "' is degenerate: " + actual);
 		}
 

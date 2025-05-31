@@ -7,7 +7,7 @@ import nl.airsupplies.utilities.graphics.svg.core.SVGDef;
 import nl.airsupplies.utilities.graphics.svg.core.SVGDistance;
 import nl.airsupplies.utilities.graphics.svg.core.SVGFill;
 import nl.airsupplies.utilities.graphics.svg.core.SVGLength;
-import static nl.airsupplies.utilities.validator.StringValidatorUtilities.requireStringLengthAtLeast;
+import static nl.airsupplies.utilities.validator.StringValidatorUtilities.requireStringNotEmpty;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
 
 /**
@@ -23,7 +23,7 @@ public final class SVGPattern extends SVGContainer implements SVGDef, SVGFill {
 	public SVGPattern(String id, float x, float y, float width, float height) {
 		super("pattern", 8);
 
-		getAttributes().setID(requireStringLengthAtLeast(1, id, "id"));
+		getAttributes().setID(requireStringNotEmpty(id, "id"));
 		setCoordinate(x, y);
 		setSize(width, height);
 	}
@@ -31,7 +31,7 @@ public final class SVGPattern extends SVGContainer implements SVGDef, SVGFill {
 	public SVGPattern(String id, SVGDistance x, SVGDistance y, SVGDistance width, SVGDistance height) {
 		super("pattern", 8);
 
-		getAttributes().setID(requireStringLengthAtLeast(1, id, "id"));
+		getAttributes().setID(requireStringNotEmpty(id, "id"));
 		setCoordinate(x, y);
 		setSize(width, height);
 	}

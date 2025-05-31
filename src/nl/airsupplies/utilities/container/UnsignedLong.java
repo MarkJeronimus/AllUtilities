@@ -105,7 +105,7 @@ public class UnsignedLong extends Number implements Comparable<UnsignedLong> {
 		StringBuilder out = new StringBuilder(64);
 
 		for (int i = (length - 1) * 4; i >= 0; i -= 4) {
-			out.append(NumberUtilities.DIGITS[(int)(value >>> i) & 0xF]);
+			out.append(NumberUtilities.RADIX_DIGITS.charAt((int)(value >>> i) & 0xF));
 		}
 
 		return out.toString();

@@ -68,12 +68,19 @@ public abstract class Gradient {
 	}
 
 	protected double applyEdgeBehavior(double position) {
-		return switch (clampingMode) {
-			case CLAMP -> NumberUtilities.clamp(position, 0.0, 1.0);
-			case REPEAT -> Math.max(position, 0.0) % 1.0;
-			case LOOP -> NumberUtilities.modulo(position, 1.0);
-			case BOUNCE_HALF -> 1.0 - Math.abs(Math.max(position, 0.0) % 2.0 - 1.0);
-			case BOUNCE -> 1.0 - Math.abs(NumberUtilities.modulo(position, 2.0) - 1.0);
-		};
+		switch (clampingMode) {
+			case CLAMP:
+				return NumberUtilities.clamp(position, 0.0, 1.0);
+			case REPEAT:
+				return Math.max(position, 0.0) % 1.0;
+			case LOOP:
+				return NumberUtilities.modulo(position, 1.0);
+			case BOUNCE_HALF:
+				return 1.0 - Math.abs(Math.max(position, 0.0) % 2.0 - 1.0);
+			case BOUNCE:
+				return 1.0 - Math.abs(NumberUtilities.modulo(position, 2.0) - 1.0);
+			default:
+				throw new IllegalArgumentException();
+		}
 	}
 }

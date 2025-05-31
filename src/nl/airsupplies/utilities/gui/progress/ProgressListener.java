@@ -7,4 +7,6 @@ import java.util.EventListener;
  */
 public interface ProgressListener extends EventListener {
 	void progressUpdated(ProgressEvent e);
+
+	void progressCompleted(ProgressEvent e);
 }

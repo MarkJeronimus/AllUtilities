@@ -14,6 +14,7 @@ public final class Sizes {
 		for (int i = 0; i < componentSizes.length; i++) {
 			sizes[i] = new Size(componentSizes[i]);
 		}
+
 		return sizes;
 	}
 
@@ -23,6 +24,7 @@ public final class Sizes {
 				return true;
 			}
 		}
+
 		return false;
 	}
 
@@ -32,6 +34,7 @@ public final class Sizes {
 				return true;
 			}
 		}
+
 		return false;
 	}
 
@@ -52,6 +55,7 @@ public final class Sizes {
 				count++;
 			}
 		}
+
 		return count;
 	}
 
@@ -68,6 +72,7 @@ public final class Sizes {
 		for (int i = 0; i < length; i++) {
 			totalMinimum += sizes[Math.min(i, sizes.length - 1)].getMinimum();
 		}
+
 		return totalMinimum;
 	}
 
@@ -76,6 +81,7 @@ public final class Sizes {
 		for (Size size : sizes) {
 			totalPreferred += size.getPreferred();
 		}
+
 		return totalPreferred;
 	}
 
@@ -84,6 +90,7 @@ public final class Sizes {
 		for (int i = 0; i < length; i++) {
 			totalPreferred += sizes[Math.min(i, sizes.length - 1)].getPreferred();
 		}
+
 		return totalPreferred;
 	}
 
@@ -92,6 +99,7 @@ public final class Sizes {
 		for (Size size : sizes) {
 			totalStretch += size.getStretchFactor();
 		}
+
 		return totalStretch;
 	}
 
@@ -100,6 +108,7 @@ public final class Sizes {
 		for (int i = 0; i < sizes.length; i++) {
 			totalStretch += sizes[Math.min(i, sizes.length)].getStretchFactor();
 		}
+
 		return totalStretch;
 	}
 
@@ -110,6 +119,7 @@ public final class Sizes {
 				totalPreferred += size.getPreferred();
 			}
 		}
+
 		return totalPreferred;
 	}
 

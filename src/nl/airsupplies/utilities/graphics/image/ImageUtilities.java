@@ -13,9 +13,9 @@ import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -75,29 +75,44 @@ public final class ImageUtilities {
 	}
 
 	public static String typeString(int bufferedImageType) {
-		return switch (bufferedImageType) {
-			case 0 -> "TYPE_CUSTOM";
-			case 1 -> "TYPE_INT_RGB";
-			case 2 -> "TYPE_INT_ARGB";
-			case 3 -> "TYPE_INT_ARGB_PRE";
-			case 4 -> "TYPE_INT_BGR";
-			case 5 -> "TYPE_3BYTE_BGR";
-			case 6 -> "TYPE_4BYTE_ABGR";
-			case 7 -> "TYPE_4BYTE_ABGR_PRE";
-			case 8 -> "TYPE_USHORT_565_RGB";
-			case 9 -> "TYPE_USHORT_555_RGB";
-			case 10 -> "TYPE_BYTE_GRAY";
-			case 11 -> "TYPE_USHORT_GRAY";
-			case 12 -> "TYPE_BYTE_BINARY";
-			case 13 -> "TYPE_BYTE_INDEXED";
-			default -> "Invalid type " + bufferedImageType;
-		};
+		switch (bufferedImageType) {
+			case 0:
+				return "TYPE_CUSTOM";
+			case 1:
+				return "TYPE_INT_RGB";
+			case 2:
+				return "TYPE_INT_ARGB";
+			case 3:
+				return "TYPE_INT_ARGB_PRE";
+			case 4:
+				return "TYPE_INT_BGR";
+			case 5:
+				return "TYPE_3BYTE_BGR";
+			case 6:
+				return "TYPE_4BYTE_ABGR";
+			case 7:
+				return "TYPE_4BYTE_ABGR_PRE";
+			case 8:
+				return "TYPE_USHORT_565_RGB";
+			case 9:
+				return "TYPE_USHORT_555_RGB";
+			case 10:
+				return "TYPE_BYTE_GRAY";
+			case 11:
+				return "TYPE_USHORT_GRAY";
+			case 12:
+				return "TYPE_BYTE_BINARY";
+			case 13:
+				return "TYPE_BYTE_INDEXED";
+			default:
+				return "Invalid type " + bufferedImageType;
+		}
 	}
 
 	public static @Nullable List<AnimationFrame> readAnimation(File file) throws IOException {
 		String fileName = file.getName();
 		if (fileName.length() >= 5 && fileName.toLowerCase().endsWith(".gif")) {
-			try (InputStream in = new BufferedInputStream(new FileInputStream(file))) {
+			try (InputStream in = new BufferedInputStream(Files.newInputStream(file.toPath()))) {
 				GifImage gifImage = GifDecoder.read(in);
 
 				int                  frameCount = gifImage.getFrameCount();
@@ -120,13 +135,14 @@ public final class ImageUtilities {
 
 	@SuppressWarnings("StringConcatenationMissingWhitespace")
 	public static String analyzeImage(Image img) {
-		if (img instanceof BufferedImage image) {
-			int     srcDataType             = image.getRaster().getDataBuffer().getDataType();
-			int     srcColorType            = getColorSpaceType(image.getColorModel().getColorSpace());
-			int     numComponents           = image.getColorModel().getColorSpace().getNumComponents();
-			boolean hasAlpha                = image.getColorModel().hasAlpha();
-			boolean srcIsAlphaPremultiplied = image.getColorModel().isAlphaPremultiplied();
-			boolean srcIsSRGB               = srcColorType != ColorSpace.CS_LINEAR_RGB;
+		if (img instanceof BufferedImage) {
+			BufferedImage image                   = (BufferedImage)img;
+			int           srcDataType             = image.getRaster().getDataBuffer().getDataType();
+			int           srcColorType            = getColorSpaceType(image.getColorModel().getColorSpace());
+			int           numComponents           = image.getColorModel().getColorSpace().getNumComponents();
+			boolean       hasAlpha                = image.getColorModel().hasAlpha();
+			boolean       srcIsAlphaPremultiplied = image.getColorModel().isAlphaPremultiplied();
+			boolean       srcIsSRGB               = srcColorType != ColorSpace.CS_LINEAR_RGB;
 
 			return imageTypeName(image.getType())
 			       + " / " + dataTypeName(srcDataType)

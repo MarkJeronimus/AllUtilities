@@ -14,7 +14,7 @@ import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange
  */
 public class MonotoneInterpolator implements DoubleUnaryOperator {
 	private final double   cycleWidth;
-	private final double   slopeFix = 2.0; // Correct = 2.0, UF = 3.0
+	private final double   slopeFix = 2.0; // Correct = 2.0, Ultra Fractal = 3.0
 	private final int      numPoints;
 	private final double[] cpx;
 	private final double[] cpy;

@@ -10,7 +10,7 @@ import java.util.List;
 import nl.airsupplies.utilities.graphics.svg.core.SVGDef;
 import nl.airsupplies.utilities.graphics.svg.core.SVGElement;
 import nl.airsupplies.utilities.graphics.svg.core.SVGFill;
-import static nl.airsupplies.utilities.validator.StringValidatorUtilities.requireStringLengthAtLeast;
+import static nl.airsupplies.utilities.validator.StringValidatorUtilities.requireStringNotEmpty;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireAtLeast;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
@@ -28,7 +28,7 @@ public final class SVGLinearGradient extends SVGElement implements SVGDef, SVGFi
 	public SVGLinearGradient(String id, float fromX, float fromY, float toX, float toY) {
 		super("linearGradient");
 
-		getAttributes().setID(requireStringLengthAtLeast(1, id, "id"));
+		getAttributes().setID(requireStringNotEmpty(id, "id"));
 		setFromCoordinate(fromX, fromY);
 		setToCoordinate(toX, toY);
 	}
@@ -36,7 +36,7 @@ public final class SVGLinearGradient extends SVGElement implements SVGDef, SVGFi
 	public SVGLinearGradient(String id, Point2D fromCoordinate, Point2D toCoordinate) {
 		super("linearGradient");
 
-		getAttributes().setID(requireStringLengthAtLeast(1, id, "id"));
+		getAttributes().setID(requireStringNotEmpty(id, "id"));
 		setFromCoordinate(fromCoordinate);
 		setToCoordinate(toCoordinate);
 	}

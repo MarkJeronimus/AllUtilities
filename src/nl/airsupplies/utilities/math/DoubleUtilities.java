@@ -1,6 +1,11 @@
 package nl.airsupplies.utilities.math;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import nl.airsupplies.utilities.annotation.UtilityClass;
+import static nl.airsupplies.utilities.validator.ArrayValidatorUtilities.requireArrayLengthsMatch;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
 
 /**
  * @author Mark Jeronimus
@@ -87,5 +92,45 @@ public final class DoubleUtilities {
 		}
 
 		return product;
+	}
+
+	public static double[] sumByElements(double[] lhs, double[] rhs) {
+		requireNonNull(lhs, "lhs");
+		requireNonNull(rhs, "rhs");
+		requireArrayLengthsMatch(lhs, rhs, "lhs", "rhs");
+
+		double[] result = new double[lhs.length];
+
+		for (int i = 0; i < lhs.length; i++) {
+			result[i] = lhs[i] + rhs[i];
+		}
+
+		return result;
+	}
+
+	public static double[] multiplyByElements(double[] lhs, double[] rhs) {
+		requireNonNull(lhs, "lhs");
+		requireNonNull(rhs, "rhs");
+		requireArrayLengthsMatch(lhs, rhs, "lhs", "rhs");
+
+		double[] result = new double[lhs.length];
+
+		for (int i = 0; i < lhs.length; i++) {
+			result[i] = lhs[i] * rhs[i];
+		}
+
+		return result;
+	}
+
+	public static double[] toDoubleArray(Collection<Double> integers) {
+		double[] result = new double[integers.size()];
+
+		int i = 0;
+		for (Iterator<Double> iter = integers.iterator(); iter.hasNext(); i++) {
+			result[i] = iter.next();
+			i++;
+		}
+
+		return result;
 	}
 }

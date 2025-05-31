@@ -33,12 +33,12 @@ public class TableLayout implements LayoutManager2 {
 	private final Number[] horizontalWeights;
 	private final Number[] verticalWeights;
 
-	private @Nullable Size[] preferredWidths  = null;
-	private @Nullable Size[] preferredHeights = null;
-	private @Nullable Size[] layoutWidths     = null;
-	private @Nullable Size[] layoutHeights    = null;
-	private           int    lastWidth        = -1;
-	private           int    lastHeight       = -1;
+	private Size @Nullable [] preferredWidths  = null;
+	private Size @Nullable [] preferredHeights = null;
+	private Size @Nullable [] layoutWidths     = null;
+	private Size @Nullable [] layoutHeights    = null;
+	private int               lastWidth        = -1;
+	private int               lastHeight       = -1;
 
 	/**
 	 * Allowed weight values:
@@ -100,7 +100,7 @@ public class TableLayout implements LayoutManager2 {
 	}
 
 	@Override
-	public void addLayoutComponent(Component comp, Object constraints) {
+	public void addLayoutComponent(Component comp, @Nullable Object constraints) {
 		invalidateLayout(null);
 	}
 
@@ -237,7 +237,7 @@ public class TableLayout implements LayoutManager2 {
 	}
 
 	@Override
-	public void invalidateLayout(Container parent) {
+	public void invalidateLayout(@Nullable Container parent) {
 		preferredWidths  = null;
 		preferredHeights = null;
 		layoutWidths     = null;
@@ -261,6 +261,8 @@ public class TableLayout implements LayoutManager2 {
 
 			prepareLayoutWidths();
 			prepareLayoutHeights(numRows);
+			assert layoutWidths != null;
+			assert layoutHeights != null;
 
 			LayoutSizeCalculator.debug = debug == GridBagConstraints.HORIZONTAL;
 			LayoutSizeCalculator.calculateLayoutSizes(layoutWidths, availableWidth);

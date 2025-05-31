@@ -52,10 +52,12 @@ public class Vector3i implements Comparable<Vector3i> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Vector3i v) {
+		if (obj instanceof Vector3i) {
+			Vector3i v = (Vector3i)obj;
 			return x == v.x && y == v.y && z == v.z;
 		}
-		return super.equals(obj);
+
+		return false;
 	}
 
 	@Override

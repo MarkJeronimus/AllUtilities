@@ -253,8 +253,8 @@ public class TextShape {
 		assert bounds != null;
 		assert transform != null;
 
-		Path2D.Float box   = new Path2D.Float();
-		Point2D      point = transform.transform(new Point2D.Double(bounds.getMinX(), bounds.getMinY()), null);
+		Path2D  box   = new Path2D.Float();
+		Point2D point = transform.transform(new Point2D.Double(bounds.getMinX(), bounds.getMinY()), null);
 		box.moveTo(point.getX(), point.getY());
 		point = transform.transform(new Point2D.Double(bounds.getMaxX(), bounds.getMinY()), point);
 		box.lineTo(point.getX(), point.getY());
@@ -276,8 +276,8 @@ public class TextShape {
 		assert bounds != null;
 		assert transform != null;
 
-		Point2D            point = transform.transform(new Point2D.Double(bounds.getMinX(), bounds.getMinY()), null);
-		Rectangle2D.Double rect  = new Rectangle2D.Double(point.getX(), point.getY(), 0, 0);
+		Point2D     point = transform.transform(new Point2D.Double(bounds.getMinX(), bounds.getMinY()), null);
+		Rectangle2D rect  = new Rectangle2D.Double(point.getX(), point.getY(), 0, 0);
 		point = transform.transform(new Point2D.Double(bounds.getMaxX(), bounds.getMinY()), point);
 		rect.add(point);
 		point = transform.transform(new Point2D.Double(bounds.getMaxX(), bounds.getMaxY()), point);

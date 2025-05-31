@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * @author Mark Jeronimus
  */
@@ -23,31 +25,28 @@ public class Configuration implements Iterable<Entry<String, String>> {
 		defaults.setProperty(key, value);
 	}
 
-	public synchronized void set(String key, String value) {
-		properties.setProperty(key, value);
-	}
-
-	public synchronized String get(String key) {
-		String value = properties.getProperty(key);
+	public synchronized String getDefault(String key) {
+		@Nullable String value = defaults.getProperty(key);
 
 		if (value == null) {
-			value = defaults.getProperty(key);
-			if (value == null) {
-				throw new IllegalArgumentException("No default value set: " + key);
-			}
+			throw new IllegalArgumentException("No default value set: " + key);
 		}
 
 		return value;
 	}
 
-	/**
-	 * Checks if {@link #get(String)} will succeed. In other words, if the key has a default and/or a specific value.
-	 * <p>
-	 * Equal to: {@link #hasDefaultValue(String) hasDefaultValue}{@code (key) || }
-	 * {@link #hasDefaultValue(String) hasSpecificValue}{@code (key); }
-	 */
-	public synchronized boolean hasValue(String key) {
-		return defaults.contains(key) || properties.contains(key);
+	public synchronized void set(String key, @Nullable String value) {
+		properties.setProperty(key, value);
+	}
+
+	public synchronized String get(String key) {
+		if (properties.containsKey(key)) {
+			return properties.getProperty(key);
+		} else if (defaults.containsKey(key)) {
+			return defaults.getProperty(key);
+		}
+
+		throw new IllegalArgumentException("No default value set: " + key);
 	}
 
 	/**
@@ -57,7 +56,7 @@ public class Configuration implements Iterable<Entry<String, String>> {
 	 * @see #hasSpecificValue(String)
 	 */
 	public synchronized boolean hasDefaultValue(String key) {
-		return defaults.contains(key);
+		return defaults.containsKey(key);
 	}
 
 	/**
@@ -67,7 +66,59 @@ public class Configuration implements Iterable<Entry<String, String>> {
 	 * @see #hasDefaultValue(String)
 	 */
 	public synchronized boolean hasSpecificValue(String key) {
-		return properties.contains(key);
+		return properties.containsKey(key);
+	}
+
+	/**
+	 * Checks if {@link #get(String)} will succeed. In other words, if the key has a default and/or a specific value.
+	 * <p>
+	 * Equal to: {@link #hasDefaultValue(String) hasDefaultValue}{@code (key) || }
+	 * {@link #hasDefaultValue(String) hasSpecificValue}{@code (key); }
+	 */
+	public synchronized boolean hasValue(String key) {
+		return defaults.containsKey(key) || properties.containsKey(key);
+	}
+
+	public synchronized void restoreDefault(String key) {
+		properties.remove(key);
+	}
+
+	public synchronized void restoreAllDefault() {
+		properties.clear();
+	}
+
+	public synchronized boolean getBoolean(String key) {
+		boolean valueExists = false;
+
+		try {
+			String value = properties.getProperty(key);
+			valueExists = value != null;
+			if (valueExists) {
+				return Boolean.parseBoolean(value);
+			}
+		} catch (NumberFormatException ignored) {
+		}
+
+		try {
+			String value = defaults.getProperty(key);
+
+			if (value == null) {
+				if (valueExists) {
+					throw new IllegalArgumentException("Value not a boolean, and no default value set, for: " + key);
+				} else {
+					throw new IllegalArgumentException("No default value set, for: " + key);
+				}
+			}
+
+			return Boolean.parseBoolean(value);
+		} catch (NumberFormatException ignored) {
+		}
+
+		if (valueExists) {
+			throw new IllegalArgumentException("Value not a boolean, and default value not an integer, for: " + key);
+		} else {
+			throw new IllegalArgumentException("Default value not a boolean, for: " + key);
+		}
 	}
 
 	public synchronized int getInt(String key) {
@@ -77,7 +128,7 @@ public class Configuration implements Iterable<Entry<String, String>> {
 			String value = properties.getProperty(key);
 			valueExists = value != null;
 			if (valueExists) {
-				return Integer.parseInt(value);
+				return Integer.decode(value);
 			}
 		} catch (NumberFormatException ignored) {
 		}
@@ -93,7 +144,7 @@ public class Configuration implements Iterable<Entry<String, String>> {
 				}
 			}
 
-			return Integer.parseInt(value);
+			return Integer.decode(value);
 		} catch (NumberFormatException ignored) {
 		}
 
@@ -104,12 +155,38 @@ public class Configuration implements Iterable<Entry<String, String>> {
 		}
 	}
 
-	public synchronized void restoreDefault(String key) {
-		properties.remove(key);
-	}
+	public synchronized double getDouble(String key) {
+		boolean valueExists = false;
 
-	public synchronized void restoreAllDefault() {
-		properties.clear();
+		try {
+			String value = properties.getProperty(key);
+			valueExists = value != null;
+			if (valueExists) {
+				return Double.parseDouble(value);
+			}
+		} catch (NumberFormatException ignored) {
+		}
+
+		try {
+			String value = defaults.getProperty(key);
+
+			if (value == null) {
+				if (valueExists) {
+					throw new IllegalArgumentException("Value not a double, and no default value set, for: " + key);
+				} else {
+					throw new IllegalArgumentException("No default value set, for: " + key);
+				}
+			}
+
+			return Double.parseDouble(value);
+		} catch (NumberFormatException ignored) {
+		}
+
+		if (valueExists) {
+			throw new IllegalArgumentException("Value not a double, and default value not a double, for: " + key);
+		} else {
+			throw new IllegalArgumentException("Default value not a double, for: " + key);
+		}
 	}
 
 	public final synchronized void read(InputStream in) throws IOException {

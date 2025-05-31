@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.jetbrains.annotations.Nullable;
 
-import static nl.airsupplies.utilities.validator.StringValidatorUtilities.requireStringLengthAtLeast;
+import static nl.airsupplies.utilities.validator.StringValidatorUtilities.requireStringNotEmpty;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
 
 /**
@@ -18,7 +18,7 @@ public abstract class SVGElement {
 	private SVGTransform  transform  = SVGTransform.IDENTITY;
 
 	protected SVGElement(String tagName) {
-		this.tagName = requireStringLengthAtLeast(1, tagName, "tagName");
+		this.tagName = requireStringNotEmpty(tagName, "tagName");
 	}
 
 	public String getTagName() {

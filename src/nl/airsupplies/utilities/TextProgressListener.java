@@ -27,10 +27,9 @@ public class TextProgressListener implements ProgressListener {
 	public void progressUpdated(ProgressEvent evt) {
 		boolean indeterminate = evt.getTotal() <= 0;
 		long    progress      = evt.getProgress();
-		boolean complete      = !indeterminate && progress >= evt.getTotal();
 
 		long overshotBy = progress - nextUpdateAt;
-		if (overshotBy < 0 && !complete) {
+		if (overshotBy < 0) {
 			return;
 		}
 
@@ -39,17 +38,28 @@ public class TextProgressListener implements ProgressListener {
 		eraseLine();
 
 		lastPrinted = indeterminate
-		              ? HexUtilities.toString(progress) + ' ' + evt.getText()
-		              : HexUtilities.toString(progress) + '/' + HexUtilities.toString(evt.getTotal()) + ' ' +
-		                evt.getText();
+		              ? progress + " " + evt.getText()
+		              : progress + "/" + evt.getTotal() + ' ' + evt.getText();
+
+		writer.print(lastPrinted);
+	}
+
+	@Override
+	public void progressCompleted(ProgressEvent evt) {
+		boolean indeterminate = evt.getTotal() <= 0;
+		long    progress      = evt.getProgress();
+
+		eraseLine();
+
+		lastPrinted = indeterminate
+		              ? progress + " " + evt.getText()
+		              : progress + "/" + evt.getTotal() + ' ' + evt.getText();
 
 		writer.print(lastPrinted);
 
-		if (complete) {
-			writer.println();
-			lastPrinted  = "";
-			nextUpdateAt = 0;
-		}
+		writer.println();
+		lastPrinted  = "";
+		nextUpdateAt = 0;
 	}
 
 	private void eraseLine() {

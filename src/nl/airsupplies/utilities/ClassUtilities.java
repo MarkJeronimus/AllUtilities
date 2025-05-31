@@ -11,7 +11,7 @@ import nl.airsupplies.utilities.annotation.UtilityClass;
 // Created 2017-05-23
 @UtilityClass
 public final class ClassUtilities {
-	private static final Map<Class<?>, Class<?>> BOXED_TO_PRIMITIVE = new HashMap<>();
+	private static final Map<Class<?>, Class<?>> BOXED_TO_PRIMITIVE = new HashMap<>(8);
 
 	static {
 		BOXED_TO_PRIMITIVE.put(Boolean.class, Boolean.TYPE);

@@ -1,12 +1,14 @@
 package nl.airsupplies.utilities.container;
 
+import nl.airsupplies.utilities.StringUtilities;
+
 /**
  * @author Mark Jeronimus
  */
 // Created 2023-11-21
-public final class BitBufferTestMain {
+public final class BitBufferOldTestMain {
 	public static void main(String... args) {
-		BitBuffer buf1 = getTestVector();
+		BitBufferOld buf1 = getTestVector();
 
 		testGet(buf1, 0, 1, 1);
 		testGet(buf1, 0, 2, 3);
@@ -610,67 +612,70 @@ public final class BitBufferTestMain {
 		testSet(buf1, 23, 1, 1, "000000000000000000000001");
 	}
 
-	private static BitBuffer getTestVector() {
-		BitBuffer buf = new BitBuffer(24);
+	private static BitBufferOld getTestVector() {
+		BitBufferOld buf = new BitBufferOld(24);
 
-		buf.putBit(1);
-		buf.putBit(1);
-		buf.putBit(1);
-		buf.putBit(0);
-		buf.putBit(0);
-		buf.putBit(1);
-		buf.putBit(0);
-		buf.putBit(1);
+		buf.putBits(1, 1);
+		buf.putBits(1, 1);
+		buf.putBits(1, 1);
+		buf.putBits(1, 0);
+		buf.putBits(1, 0);
+		buf.putBits(1, 1);
+		buf.putBits(1, 0);
+		buf.putBits(1, 1);
 
-		buf.putBit(1);
-		buf.putBit(1);
-		buf.putBit(0);
-		buf.putBit(1);
-		buf.putBit(1);
-		buf.putBit(0);
-		buf.putBit(1);
-		buf.putBit(1);
+		buf.putBits(1, 1);
+		buf.putBits(1, 1);
+		buf.putBits(1, 0);
+		buf.putBits(1, 1);
+		buf.putBits(1, 1);
+		buf.putBits(1, 0);
+		buf.putBits(1, 1);
+		buf.putBits(1, 1);
 
-		buf.putBit(1);
-		buf.putBit(1);
-		buf.putBit(1);
-		buf.putBit(0);
-		buf.putBit(0);
-		buf.putBit(1);
-		buf.putBit(1);
-		buf.putBit(1);
-		buf.setBitPosition(0);
+		buf.putBits(1, 1);
+		buf.putBits(1, 1);
+		buf.putBits(1, 1);
+		buf.putBits(1, 0);
+		buf.putBits(1, 0);
+		buf.putBits(1, 1);
+		buf.putBits(1, 1);
+		buf.putBits(1, 1);
+		buf.bitPosition(0);
 
 		System.out.println(buf);
 
 		return buf;
 	}
 
-	private static void testGet(BitBuffer buf1, int bitPosition, int numBits, int truth) {
-		int bits = buf1.getBits(bitPosition, numBits);
+	private static void testGet(BitBufferOld buf1, int bitPosition, int numBits, int truth) {
+		buf1.bitPosition(bitPosition);
+		int bits = buf1.getBits(numBits);
 		if (bits != truth) {
 			System.out.println("buf1.getBits(" + bitPosition + ", " + numBits + ") = " +
-			                   new BitBuffer(numBits, bits) + " (should be " +
-			                   new BitBuffer(numBits, truth) + ')');
-			System.out.println(".".repeat(bitPosition) +
-			                   "#".repeat(numBits) +
-			                   ".".repeat(buf1.getBitSize() - numBits - bitPosition) +
-			                   ' ' + new BitBuffer(numBits, bits));
+			                   new BitBufferOld(numBits, bits) + " (should be " +
+			                   new BitBufferOld(numBits, truth) + ')');
+			System.out.println(StringUtilities.repeatChar('.', bitPosition) +
+			                   StringUtilities.repeatChar('#', numBits) +
+			                   StringUtilities.repeatChar('.', 24 - numBits - bitPosition) +
+			                   ' ' + new BitBufferOld(numBits, bits));
 		}
 	}
 
-	private static void testSet(BitBuffer buf1, int bitPosition, int numBits, int buts, String truth) {
-		int bits = buf1.getBits(bitPosition, numBits);
+	private static void testSet(BitBufferOld buf1, int bitPosition, int numBits, int buts, String truth) {
+		buf1.bitPosition(bitPosition);
+		int bits = buf1.getBits(numBits);
 
-		BitBuffer buf2 = new BitBuffer(buf1.getBitSize());
-		buf2.setBitSize(buf1.getBitSize());
-		buf2.putBits(bitPosition, numBits, bits);
+		BitBufferOld buf2 = new BitBufferOld(24);
+//		buf2.setBitSize(24);
+		buf2.bitPosition(bitPosition);
+		buf2.putBits(numBits, bits);
 		if (!buf2.toString().equals(truth)) {
 			System.out.println("buf2.putBits(" + bitPosition + ", " + numBits + ", " + bits + ") = " +
 			                   buf2 + " (should be " + truth + ')');
-			System.out.println(".".repeat(bitPosition) +
-			                   "#".repeat(numBits) +
-			                   ".".repeat(buf1.getBitSize() - numBits - bitPosition) +
+			System.out.println(StringUtilities.repeatChar('.', bitPosition) +
+			                   StringUtilities.repeatChar('#', numBits) +
+			                   StringUtilities.repeatChar('.', 24 - numBits - bitPosition) +
 			                   ' ' + buf2);
 		}
 	}

@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -105,7 +106,7 @@ public class ColorLogger extends Handler {
 			return;
 		}
 
-		ZonedDateTime zdt  = ZonedDateTime.ofInstant(record.getInstant(), ZoneId.systemDefault());
+		ZonedDateTime zdt  = ZonedDateTime.ofInstant(Instant.ofEpochMilli(record.getMillis()), ZoneId.systemDefault());
 		String        line = '[' + LOG_INSTANT_FORMATTER.format(zdt) + "] " + record.getMessage();
 
 		if (logToStdOut) {

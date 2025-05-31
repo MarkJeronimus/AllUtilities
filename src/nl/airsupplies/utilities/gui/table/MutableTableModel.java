@@ -1,7 +1,6 @@
 package nl.airsupplies.utilities.gui.table;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -26,9 +25,8 @@ public class MutableTableModel extends AbstractTableModel implements List<Object
 	public MutableTableModel(String... tableColumnNames) {
 		this.tableColumnNames = tableColumnNames.clone();
 		editable              = new boolean[tableColumnNames.length];
-		Arrays.fill(editable, false);
 
-		fireTableRowsInserted(0, tableData.size() - 1);
+		fireTableRowsInserted(0, -1);
 	}
 
 	@SuppressWarnings("OverridableMethodCallDuringObjectConstruction")
@@ -36,7 +34,7 @@ public class MutableTableModel extends AbstractTableModel implements List<Object
 		this.tableColumnNames = tableColumnNames.clone();
 		this.editable         = editable.clone();
 
-		fireTableRowsInserted(0, tableData.size() - 1);
+		fireTableRowsInserted(0, -1);
 	}
 
 	@SuppressWarnings("OverridableMethodCallDuringObjectConstruction")
@@ -49,6 +47,7 @@ public class MutableTableModel extends AbstractTableModel implements List<Object
 	}
 
 	@Override
+	@SuppressWarnings("OverloadedVarargsMethod")
 	public boolean add(Object... elements) {
 		int i = size();
 		tableData.add(elements);
@@ -57,6 +56,7 @@ public class MutableTableModel extends AbstractTableModel implements List<Object
 	}
 
 	@Override
+	@SuppressWarnings("OverloadedVarargsMethod")
 	public void add(int index, Object... element) {
 		tableData.add(index, element);
 		fireTableRowsInserted(index, index);

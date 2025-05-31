@@ -1,5 +1,6 @@
 package nl.airsupplies.utilities.gui.tablelayout;
 
+import nl.airsupplies.utilities.annotation.UtilityClass;
 import nl.airsupplies.utilities.gui.tablelayout.Size.Priority;
 import static nl.airsupplies.utilities.gui.tablelayout.Size.Priority.PREFERRED;
 import static nl.airsupplies.utilities.gui.tablelayout.Size.Priority.RELATIVE;
@@ -8,8 +9,10 @@ import static nl.airsupplies.utilities.gui.tablelayout.Size.Priority.RELATIVE;
  * @author Mark Jeronimus
  */
 // Created 2017-02-10
+@UtilityClass
 public final class LayoutSizeCalculator {
-	public static boolean debug = true;
+	@SuppressWarnings({"PublicField", "StaticNonFinalField"})
+	public static boolean debug = false;
 
 	public static void calculateLayoutSizes(Size[] layoutSizes, int containerSize) {
 		int totalMinimum = Sizes.getTotalMinimum(layoutSizes);
@@ -49,9 +52,11 @@ public final class LayoutSizeCalculator {
 		for (int i = 0; i < layoutSizes.length; i++) {
 			Size size    = layoutSizes[i];
 			int  rounded = (int)Math.round(size.getPreferred());
+
 			if (i + 1 < layoutSizes.length) {
 				layoutSizes[i + 1].setPreferred(layoutSizes[i + 1].getPreferred() + size.getPreferred() - rounded);
 			}
+
 			size.setPreferred(rounded);
 		}
 	}
@@ -62,6 +67,7 @@ public final class LayoutSizeCalculator {
 		if (debug) {
 			System.out.println("squishSizes");
 		}
+
 		for (Size size : layoutSizes) {
 			size.setPreferred(size.getMinimum() * toSize / fromSize);
 		}
@@ -97,16 +103,19 @@ public final class LayoutSizeCalculator {
 			if (debug) {
 				System.out.println("stretchRelativeSizes");
 			}
+
 			stretchRelativeSizes(layoutSizes, toSize - fromSize);
 		} else if (Sizes.containsPriority(layoutSizes, PREFERRED)) {
 			if (debug) {
 				System.out.println("stretchPreferredSizes");
 			}
+
 			stretchPreferredSizes(layoutSizes, toSize - fromSize, PREFERRED);
 		} else if (Sizes.containsPriority(layoutSizes, Priority.MINIMUM)) {
 			if (debug) {
 				System.out.println("stretchMinimumSizes");
 			}
+
 			stretchPreferredSizes(layoutSizes, toSize - fromSize, Priority.MINIMUM);
 		}
 	}

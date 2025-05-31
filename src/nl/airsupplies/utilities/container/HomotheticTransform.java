@@ -72,36 +72,36 @@ public class HomotheticTransform implements Serializable {
 		                               ty);
 	}
 
-	public double transformX(double x, double y) {
+	public double transformX(double x) {
 		return sx * x + tx;
 	}
 
-	public double transformY(double x, double y) {
+	public double transformY(double y) {
 		return sy * y + ty;
 	}
 
-	public double transformRelativeX(double x, double y) {
-		return sx * x;
+	public double transformRelativeX(double dx) {
+		return sx * dx;
 	}
 
-	public double transformRelativeY(double x, double y) {
-		return sy * y;
+	public double transformRelativeY(double dy) {
+		return sy * dy;
 	}
 
-	public double reverseX(double x, double y) {
+	public double reverseX(double x) {
 		return (x - tx) / sx;
 	}
 
-	public double reverseY(double x, double y) {
+	public double reverseY(double y) {
 		return (y - ty) / sy;
 	}
 
-	public double reverseRelativeX(double x, double y) {
-		return x / sx;
+	public double reverseRelativeX(double dx) {
+		return dx / sx;
 	}
 
-	public double reverseRelativeY(double x, double y) {
-		return y / sy;
+	public double reverseRelativeY(double dy) {
+		return dy / sy;
 	}
 
 	public HomotheticTransform concat(HomotheticTransform transform) {
@@ -127,29 +127,28 @@ public class HomotheticTransform implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (obj == null || getClass() != obj.getClass()) {
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		} else if (!(o instanceof HomotheticTransform)) {
 			return false;
 		}
-		HomotheticTransform other = (HomotheticTransform)obj;
+
+		HomotheticTransform other = (HomotheticTransform)o;
 		return Double.doubleToLongBits(sx) == Double.doubleToLongBits(other.sx) &&
-		       Double.doubleToLongBits(sy) == Double.doubleToLongBits(other.sy) &&
 		       Double.doubleToLongBits(tx) == Double.doubleToLongBits(other.tx) &&
+		       Double.doubleToLongBits(sy) == Double.doubleToLongBits(other.sy) &&
 		       Double.doubleToLongBits(ty) == Double.doubleToLongBits(other.ty);
 	}
 
 	@Override
 	public int hashCode() {
-		int hash = 0x811C9DC5;
-		hash ^= Double.hashCode(sx);
-		hash *= 0x01000193;
-		hash ^= Double.hashCode(sy);
-		hash *= 0x01000193;
-		hash ^= Double.hashCode(tx);
-		hash *= 0x01000193;
-		hash ^= Double.hashCode(ty);
-		hash *= 0x01000193;
-		return hash;
+		int hashCode = 0x811C9DC5;
+		hashCode = 0x01000193 * (hashCode ^ Double.hashCode(sx));
+		hashCode = 0x01000193 * (hashCode ^ Double.hashCode(tx));
+		hashCode = 0x01000193 * (hashCode ^ Double.hashCode(sy));
+		hashCode = 0x01000193 * (hashCode ^ Double.hashCode(ty));
+		return hashCode;
 	}
 
 	@Override

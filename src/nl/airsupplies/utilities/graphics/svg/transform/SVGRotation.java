@@ -41,7 +41,8 @@ public final class SVGRotation implements SVGTransform {
 
 	@Override
 	public SVGTransform overwrite(SVGTransform transform) {
-		if (transform instanceof SVGRotation other) {
+		if (transform instanceof SVGRotation) {
+			SVGRotation other = (SVGRotation)transform;
 			return new SVGRotation(other.rotation - rotation, other.rotationOriginX, other.rotationOriginY);
 		}
 

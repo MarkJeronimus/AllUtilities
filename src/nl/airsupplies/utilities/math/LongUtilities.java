@@ -1,6 +1,11 @@
 package nl.airsupplies.utilities.math;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import nl.airsupplies.utilities.annotation.UtilityClass;
+import static nl.airsupplies.utilities.validator.ArrayValidatorUtilities.requireArrayLengthsMatch;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
 
 /**
  * @author Mark Jeronimus
@@ -92,5 +97,45 @@ public final class LongUtilities {
 		}
 
 		return product;
+	}
+
+	public static long[] sumByElements(long[] lhs, long[] rhs) {
+		requireNonNull(lhs, "lhs");
+		requireNonNull(rhs, "rhs");
+		requireArrayLengthsMatch(lhs, rhs, "lhs", "rhs");
+
+		long[] result = new long[lhs.length];
+
+		for (int i = 0; i < lhs.length; i++) {
+			result[i] = lhs[i] + rhs[i];
+		}
+
+		return result;
+	}
+
+	public static long[] multiplyByElements(long[] lhs, long[] rhs) {
+		requireNonNull(lhs, "lhs");
+		requireNonNull(rhs, "rhs");
+		requireArrayLengthsMatch(lhs, rhs, "lhs", "rhs");
+
+		long[] result = new long[lhs.length];
+
+		for (int i = 0; i < lhs.length; i++) {
+			result[i] = lhs[i] * rhs[i];
+		}
+
+		return result;
+	}
+
+	public static long[] toLongArray(Collection<Long> integers) {
+		long[] result = new long[integers.size()];
+
+		int i = 0;
+		for (Iterator<Long> iter = integers.iterator(); iter.hasNext(); i++) {
+			result[i] = iter.next();
+			i++;
+		}
+
+		return result;
 	}
 }

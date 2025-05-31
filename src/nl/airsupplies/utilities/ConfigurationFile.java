@@ -1,15 +1,19 @@
 package nl.airsupplies.utilities;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import static java.nio.file.StandardCopyOption.ATOMIC_MOVE;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
+import net.jcip.annotations.ThreadSafe;
+
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
 
 /**
  * Contains persistable key/value pairs, as well as run-time configurable default key/value pairs which are used in case
@@ -18,25 +22,31 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
  * @author Mark Jeronimus
  */
 // Created 2017-02-17
+@ThreadSafe
 public class ConfigurationFile extends Configuration {
-	private final String filename;
+	private final Path file;
 
-	public ConfigurationFile(String filename) {
-		this.filename = filename;
+	public ConfigurationFile(Path file) {
+		this.file = requireNonNull(file, "file");
+	}
+
+	public Path getFile() {
+		return file;
 	}
 
 	public final synchronized void load() throws IOException {
-		try {
-			properties.load(new FileInputStream(filename));
-		} catch (FileNotFoundException ignored) {
+		try (Reader in = Files.newBufferedReader(file)) {
+			properties.load(in);
+		} catch (NoSuchFileException ignored) {
 		}
 	}
 
 	public final synchronized void save() throws IOException {
-		Path tempFile = Paths.get(filename + ".tmp");
-		Path file     = Paths.get(filename);
+		Path tempFile = Paths.get(file + ".tmp");
 
-		properties.store(new FileOutputStream(tempFile.toFile()), null);
+		try (Writer out = Files.newBufferedWriter(tempFile)) {
+			properties.store(out, null);
+		}
 
 		try {
 			Files.move(tempFile, file, REPLACE_EXISTING, ATOMIC_MOVE);
@@ -46,19 +56,19 @@ public class ConfigurationFile extends Configuration {
 	}
 
 	/** Three-way non-atomic move with overwrite: Back-up original, rename new, delete original. */
-	private void moveNonAtomic(Path tempFile, Path file) throws IOException {
-		Path backup = Files.exists(file) ?
-		              Paths.get(filename + ".bak") :
-		              null;
+	private static void moveNonAtomic(Path tempFile, Path file) throws IOException {
+		Path backupFile = Files.exists(file) ?
+		                  Paths.get(file + ".bak") :
+		                  null;
 
-		if (backup != null) {
-			Files.move(file, backup, REPLACE_EXISTING);
+		if (backupFile != null) {
+			Files.move(file, backupFile, REPLACE_EXISTING);
 		}
 
 		Files.move(tempFile, file);
 
-		if (backup != null) {
-			Files.delete(backup);
+		if (backupFile != null) {
+			Files.delete(backupFile);
 		}
 	}
 }
