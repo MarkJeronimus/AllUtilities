@@ -29,14 +29,14 @@ import nl.airsupplies.utilities.NumberUtilities;
  * @author Mark Jeronimus
  */
 // Created 2014-04-14
-public class Range2i {
+public class RangeInt {
 	private int begin;
 	private int end;
 
 	/**
 	 * Creates a new range of [0,0].
 	 */
-	public Range2i() {
+	public RangeInt() {
 		begin = 0;
 		end   = 0;
 	}
@@ -47,7 +47,7 @@ public class Range2i {
 	 * @throws IllegalArgumentException when begin &gt; end. If thrown, split it up in empty constructor and
 	 *                                  <tt>set</tt> method and handle swapping properly.
 	 */
-	public Range2i(int begin, int end) throws IllegalArgumentException {
+	public RangeInt(int begin, int end) throws IllegalArgumentException {
 		this.begin = begin;
 		this.end   = end;
 		if (normalize()) {
@@ -73,7 +73,7 @@ public class Range2i {
 	/**
 	 * Sets the range of this range to that of another range.
 	 */
-	public void set(Range2i other) {
+	public void set(RangeInt other) {
 		begin = other.begin;
 		end   = other.end;
 	}
@@ -88,7 +88,7 @@ public class Range2i {
 	/**
 	 * Copy constructor.
 	 */
-	public Range2i(Range2i other) {
+	public RangeInt(RangeInt other) {
 		begin = other.begin;
 		end   = other.end;
 	}
@@ -194,7 +194,7 @@ public class Range2i {
 	 * <p>
 	 * Null-safe. If the parameter is {@code null}, it returns {@code this}.
 	 */
-	public void union(Range2i other) {
+	public void union(RangeInt other) {
 		if (equals(other)) {
 			return;
 		}
@@ -210,7 +210,7 @@ public class Range2i {
 	 * <p>
 	 * Null-safe. If the parameter is {@code null}, it returns {@code this}.
 	 */
-	public void intersect(Range2i other) {
+	public void intersect(RangeInt other) {
 		if (equals(other)) {
 			return;
 		}
@@ -281,16 +281,16 @@ public class Range2i {
 			return false;
 		}
 
-		Range2i other = (Range2i)o;
-		return getBegin() == other.getBegin() &&
-		       getEnd() == other.getEnd();
+		RangeInt other = (RangeInt)o;
+		return begin() == other.begin() &&
+		       end() == other.end();
 	}
 
 	@Override
 	public int hashCode() {
 		int hashCode = 0x811C9DC5;
-		hashCode = 0x01000193 * (hashCode ^ getBegin());
-		hashCode = 0x01000193 * (hashCode ^ getEnd());
+		hashCode = 0x01000193 * (hashCode ^ begin());
+		hashCode = 0x01000193 * (hashCode ^ end());
 		return hashCode;
 	}
 
