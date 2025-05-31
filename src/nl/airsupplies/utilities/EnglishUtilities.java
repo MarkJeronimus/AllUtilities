@@ -5,7 +5,7 @@ import java.util.Map;
 import nl.airsupplies.utilities.annotation.UtilityClass;
 
 /**
- * @author zom-b
+ * @author Mark Jeronimus
  */
 // Created 2025-04-27
 @SuppressWarnings("SpellCheckingInspection")

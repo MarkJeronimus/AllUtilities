@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * @author zom-b
+ * @author Mark Jeronimus
  */
 // Created 2025-02-28
 public class MapUtilities {

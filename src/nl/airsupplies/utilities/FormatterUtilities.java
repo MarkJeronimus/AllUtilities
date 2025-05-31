@@ -11,7 +11,7 @@ import nl.airsupplies.utilities.annotation.UtilityClass;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
 
 /**
- * @author zom-b
+ * @author Mark Jeronimus
  */
 // Created 2025-04-13
 @UtilityClass
