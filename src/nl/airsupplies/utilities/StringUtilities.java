@@ -275,63 +275,6 @@ public final class StringUtilities {
 		                       .sum();
 	}
 
-	/**
-	 * Decodes "HTML-encoded characters" in a phrase to their respective human-readable characters. The phrase should
-	 * not contain HTML tags or the result will be an invalid mix of HTML tags and non-HTML characters. For example,
-	 * this converts "&amp;lt;" to "&lt;".
-	 *
-	 * @param string a phrase in valid HTML, without actual HTML tags.
-	 * @return the equivalent human-readable phrase.
-	 */
-	@Deprecated
-	public static String htmlCharsDecode(String string) {
-		throw new UnsupportedCharsetException("Treading on dangerous waters");
-//		return URLDecoder.decode(string, StandardCharsets.UTF_8);
-
-//		int           l   = string.length();
-//		StringBuilder out = new StringBuilder(l);
-//
-//		for (int i = 0; i < l; i++) {
-//			char c = string.charAt(i);
-//
-//			if (c == '&') {
-//				int j = string.indexOf(';', i + 1);
-//				if (j > i && j <= i + 9) {
-//					String replacement = string.substring(i + 1, j);
-//
-//					if (replacement.charAt(0) == '#') {
-//						out.append((char)Integer.parseInt(replacement.substring(1)));
-//						i = j;
-//						continue;
-//					}
-//
-//					replacement = HTML_CHARACTERS.get(replacement);
-//					if (replacement != null) {
-//						out.append(replacement);
-//						i = j;
-//						continue;
-//					}
-//				}
-//			} else if (c == '%' && string.length() - i >= 3) {
-//				String code = string.substring(i + 1, i + 3);
-//				int    hi   = Character.digit(code.charAt(0), 16);
-//				int    lo   = Character.digit(code.charAt(1), 16);
-//				if (hi >= 0 && lo >= 0) {
-//					int j = hi * 16 + lo;
-//					if (j >= 20 && j <= 126) {
-//						out.append((char)j);
-//						i += 2;
-//						continue;
-//					}
-//				}
-//			}
-//
-//			out.append(c);
-//		}
-//
-//		return out.toString();
-	}
-
 	public static boolean containsChar(String string, char ch) {
 		for (char c : string.toCharArray()) {
 			if (c == ch) {

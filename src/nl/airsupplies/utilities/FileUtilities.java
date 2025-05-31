@@ -54,7 +54,6 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.util.Objects.requireNonNull;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -174,114 +173,6 @@ public final class FileUtilities {
 	}
 
 	/**
-	 * @deprecated replaced by renameMoveFile(File, File)
-	 */
-	@Deprecated
-	public static boolean renameMoveFile(Component owner, File src, File dst) {
-		if (src.equals(dst)) {
-			return true;
-		}
-
-		while (!src.canRead()) {
-			if (JOptionPane.showConfirmDialog(
-					owner,
-					new String[]{"Error moving file.",
-					             "Source file not readable: " + src.getPath(),
-					             "(Destination: " + dst.getPath() + ')', "Retry?"},
-					owner.getName() != null ? owner.getName()
-					                        : "Filesystem",
-					JOptionPane.YES_NO_OPTION,
-					JOptionPane.ERROR_MESSAGE) != JOptionPane.YES_OPTION) {
-				return false;
-			}
-		}
-
-		while (!src.canWrite()) {
-			if (JOptionPane.showConfirmDialog(
-					owner,
-					new String[]{"Error moving file.",
-					             "Source file is read-only: " + src.getPath(),
-					             "(Destination: " + dst.getPath() + ')', "Retry?"},
-					owner.getName() != null ? owner.getName()
-					                        : "Filesystem",
-					JOptionPane.YES_NO_OPTION,
-					JOptionPane.ERROR_MESSAGE) != JOptionPane.YES_OPTION) {
-				return false;
-			}
-		}
-
-		while (dst.exists() && dst.isFile()) {
-			int i = JOptionPane.showConfirmDialog(owner, new String[]{"Error moving file.",
-			                                                          "Destination file already exists: " +
-			                                                          dst.getPath(), "(Source: " + src.getPath() + ')',
-			                                                          "Remove destination? (press NO to retry)"},
-			                                      owner.getName() != null ? owner.getName() : "Filesystem",
-			                                      JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
-			if (i == JOptionPane.CANCEL_OPTION) {
-				return false;
-			}
-			if (i == JOptionPane.YES_OPTION) {
-				if (!remove(owner, dst)) {
-					return false;
-				}
-			}
-		}
-
-		while (!src.renameTo(dst)) {
-			if (JOptionPane.showConfirmDialog(owner, new String[]{"Error moving file.",
-			                                                      "Source might be in use by another application.",
-			                                                      "Src: " + src.getPath(),
-			                                                      "Dst: " + dst.getPath(), "Retry?"},
-			                                  owner.getName() != null ? owner.getName() : "Filesystem",
-			                                  JOptionPane.YES_NO_OPTION,
-			                                  JOptionPane.ERROR_MESSAGE) != JOptionPane.YES_OPTION) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	private static boolean remove(Component owner, File file) {
-		while (!file.canRead()) {
-			if (JOptionPane.showConfirmDialog(owner,
-			                                  new String[]{"Error deleting file.",
-			                                               "File not readable: " + file.getPath(),
-			                                               "Retry?"},
-			                                  owner.getName() != null ? owner.getName() : "Filesystem",
-			                                  JOptionPane.YES_NO_OPTION,
-			                                  JOptionPane.ERROR_MESSAGE) != JOptionPane.YES_OPTION) {
-				return false;
-			}
-		}
-
-		while (!file.canWrite()) {
-			if (JOptionPane.showConfirmDialog(owner,
-			                                  new String[]{"Error deleting file.",
-			                                               "File not writable: " + file.getPath(),
-			                                               "Retry?"},
-			                                  owner.getName() != null ? owner.getName() : "Filesystem",
-			                                  JOptionPane.YES_NO_OPTION,
-			                                  JOptionPane.ERROR_MESSAGE) != JOptionPane.YES_OPTION) {
-				return false;
-			}
-		}
-
-		while (!file.delete()) {
-			if (JOptionPane.showConfirmDialog(owner, new String[]{"Error deleting file.",
-			                                                      "File might be in use by another application.",
-			                                                      "File: " + file.getPath(), "Retry?"},
-			                                  owner.getName() != null ? owner.getName() : "Filesystem",
-			                                  JOptionPane.YES_NO_OPTION,
-			                                  JOptionPane.ERROR_MESSAGE) != JOptionPane.YES_OPTION) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	/**
 	 * Checks if a path represented by a String is a valid file, directory or link. This differs from
 	 * {@link Files#exists(Path, LinkOption...)} in that the prerequisite call to {@link Paths#get(String, String...)}
 	 * may throw if the String doesn't represent a valid path, and this function just returns {@code false}.
@@ -319,29 +210,6 @@ public final class FileUtilities {
 		String ext  = i <= 0 ? "" : filename.substring(i + 1);
 
 		return new String[]{dir, file, ext};
-	}
-
-	@Deprecated
-	public static String getFilename(String path) {
-		return splitDirFileExt(path)[1];
-	}
-
-	@Deprecated
-	public static String getExtension(String path) {
-		return splitDirFileExt(path)[2];
-	}
-
-	@Deprecated
-	public static String getExtensionWithDot(String path) {
-		return '.' + splitDirFileExt(path)[2];
-	}
-
-	@Deprecated
-	public static String stripExtension(String filename) {
-		requireNonNull(filename);
-
-		int i = filename.lastIndexOf('.');
-		return i <= 0 ? filename : filename.substring(0, i);
 	}
 
 	public static File addExtensionIfMissing(File path, String extension) {
@@ -407,26 +275,6 @@ public final class FileUtilities {
 			// Class[]{String.class});
 			// openURL.invoke(null, new Object[]{url});
 		}
-	}
-
-	public static File checkPath(String pathname) {
-		File path = new File(pathname);
-		if (!path.isDirectory()) {
-			return null;
-		}
-		return path;
-	}
-
-	public static boolean checkPathTextField(Component owner, JTextField pathField) {
-		File path = new File(pathField.getText());
-		if (!path.isDirectory()) {
-			JOptionPane.showMessageDialog(owner, '"' + pathField.getText() + "\" is not a valid path.",
-			                              owner.getName(),
-			                              JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
-		pathField.setText(path.getPath());
-		return true;
 	}
 
 	/**

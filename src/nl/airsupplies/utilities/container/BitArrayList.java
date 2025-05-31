@@ -20,9 +20,9 @@ package nl.airsupplies.utilities.container;
  */
 
 import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
 
 import nl.airsupplies.utilities.NumberUtilities;
-import nl.airsupplies.utilities.math.RandomUtilities;
 
 /**
  * @author Mark Jeronimus
@@ -441,13 +441,13 @@ public class BitArrayList implements BitList {
 
 		// Append bits until aligned.
 		for (int i = bitLength; i < (bitLength + 7) / 8 * 8; i++) {
-			appendBit(RandomUtilities.RND.nextBoolean());
+			appendBit(ThreadLocalRandom.current().nextBoolean());
 			count--;
 		}
 
 		// Append aligned bytes.
 		while (count > 8) {
-			int rnd = RandomUtilities.RND.nextInt();
+			int rnd = ThreadLocalRandom.current().nextInt();
 			for (int n = Math.min(count / 8, 4); n > 0; n--) {
 				appendByteAligned(rnd);
 				rnd >>= 8;
@@ -457,7 +457,7 @@ public class BitArrayList implements BitList {
 
 		// Append tailing bits.
 		for (; count > 0; count++) {
-			appendBit(RandomUtilities.RND.nextBoolean());
+			appendBit(ThreadLocalRandom.current().nextBoolean());
 		}
 
 		return this;

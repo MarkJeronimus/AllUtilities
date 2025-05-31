@@ -140,6 +140,7 @@ public class Size {
 			case PREFERRED -> "PreferredSize{priority=" + priority + ", " + preferred + " (minimum=" + minimum + ")}";
 			case RELATIVE -> "RelativeSize {priority=" + priority + ", " + preferred + " (minimum=" + minimum + ")}" +
 			                 ", stretchFactor=" + stretchFactor + '}';
+			default -> throw new AssertionError("Unknown value: " + this);
 		};
 	}
 }
