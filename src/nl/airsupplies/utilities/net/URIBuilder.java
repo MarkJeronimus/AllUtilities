@@ -28,6 +28,7 @@ public class URIBuilder {
 		this.hostURI = requireNonNull(hostURI, "hostURI");
 	}
 
+	@SuppressWarnings("UnusedReturnValue")
 	public URIBuilder addParameter(String parameter) {
 		if (parameter.indexOf('?') != -1) {
 			throw new IllegalArgumentException("parameter may not contain unescaped '?': " + parameter);

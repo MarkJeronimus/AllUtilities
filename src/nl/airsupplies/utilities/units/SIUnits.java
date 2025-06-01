@@ -5,10 +5,8 @@ import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireThat;
 
 /**
  * @author Mark Jeronimus
- * @deprecated Merge into LengthUnit
  */
 @UtilityClass
-@Deprecated
 public final class SIUnits {
 	private static final String[] PREFIXES            =
 			{"y", "z", "a", "f", "p", "n", "µ", "m", "", "k", "M", "G", "T", "P", "E", "Z", "Y"};

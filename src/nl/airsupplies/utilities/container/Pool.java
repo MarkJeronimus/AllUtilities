@@ -109,7 +109,9 @@ public final class Pool<T> {
 	private T create() throws Throwable {
 		try {
 			return clazz.getConstructor().newInstance();
-		} catch (NoSuchMethodException | IllegalAccessException | InstantiationException ex) {
+		} catch (NoSuchMethodException ex) {
+			throw new NoSuchMethodException("No no-arg constructor found for " + clazz.getName());
+		} catch (IllegalAccessException | InstantiationException ex) {
 			throw ex.getCause() != null ? ex.getCause() : ex;
 		} catch (InvocationTargetException ex) {
 			throw ex.getTargetException();

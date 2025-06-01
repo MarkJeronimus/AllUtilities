@@ -29,19 +29,6 @@ import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireBetwe
 // 2015-01-13 Bugfix: log3 & exp3 worked in float instead of double
 @UtilityClass
 public final class NumberUtilities {
-	public static final DoubleUnaryOperator  ZERO_OPERATOR       = ignored -> 0;
-	public static final DoubleUnaryOperator  UNITY_OPERATOR      = ignored -> 1;
-	public static final DoubleUnaryOperator  NAN_OPERATOR        = ignored -> Double.NaN;
-	public static final DoubleBinaryOperator ADD                 = Double::sum;
-	public static final DoubleBinaryOperator SUBTRACT            = (a, b) -> a - b;
-	public static final DoubleBinaryOperator SUBTRACT_REVERSE    = (a, b) -> b - a;
-	public static final DoubleBinaryOperator MULTIPLY            = (a, b) -> a * b;
-	public static final DoubleBinaryOperator DIVIDE              = (a, b) -> a / b;
-	public static final DoubleBinaryOperator DIVIDE_REVERSE      = (a, b) -> b / a;
-	public static final DoubleBinaryOperator SAFE_DIVIDE         = (a, b) -> Math.abs(b) < 1.0e-8 ? 0 : a / b;
-	public static final DoubleBinaryOperator SAFE_DIVIDE_REVERSE = (a, b) -> Math.abs(a) < 1.0e-8 ? 0 : b / a;
-	public static final DoubleBinaryOperator MIN                 = Double::min;
-	public static final DoubleBinaryOperator MAX                 = Double::max;
 
 	/**
 	 * All possible chars for representing a number as a String
@@ -49,8 +36,6 @@ public final class NumberUtilities {
 	@SuppressWarnings("SpellCheckingInspection")
 	public static final String RADIX_DIGITS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-	public static final  DecimalFormatSymbols US_FORMATTER_SYMBOLS = DecimalFormatSymbols.getInstance(Locale.US);
-	private static final DecimalFormat[]      PRECISION_FORMATTERS = new DecimalFormat[17];
 
 	private static SecureRandom secureRnd = null;
 
@@ -60,21 +45,6 @@ public final class NumberUtilities {
 		}
 
 		return secureRnd;
-	}
-
-	public static String formatNumber(double value, int minPrecision) {
-		requireBetween(0, PRECISION_FORMATTERS.length - 1, minPrecision, "minPrecision");
-
-		// No synchronization necessary because the initialization function is idempotent and has low overhead.
-		if (PRECISION_FORMATTERS[minPrecision] == null) {
-			PRECISION_FORMATTERS[minPrecision] = new DecimalFormat();
-			PRECISION_FORMATTERS[minPrecision].setMinimumFractionDigits(minPrecision);
-			PRECISION_FORMATTERS[minPrecision].setMaximumFractionDigits(minPrecision);
-			PRECISION_FORMATTERS[minPrecision].setGroupingUsed(false);
-			PRECISION_FORMATTERS[minPrecision].setDecimalFormatSymbols(US_FORMATTER_SYMBOLS);
-		}
-
-		return PRECISION_FORMATTERS[minPrecision].format(value);
 	}
 
 	public static boolean isNegative(float value) {

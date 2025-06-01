@@ -2,10 +2,13 @@ package nl.airsupplies.utilities.graphics.color;
 
 import java.awt.image.IndexColorModel;
 
+import nl.airsupplies.utilities.annotation.StaticClass;
+
 /**
  * @author Mark Jeronimus
  */
 // Created 2009-09-28
+@StaticClass
 public abstract class StaticColorModels {
 	private static IndexColorModel bwDefault   = null;
 	private static IndexColorModel grayDefault = null;

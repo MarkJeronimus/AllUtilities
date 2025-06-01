@@ -184,24 +184,6 @@ public final class StringUtilities {
 		return COMBINING_MARK_PATTERN.matcher(Normalizer.normalize(text, Normalizer.Form.NFD)).replaceAll("");
 	}
 
-	public static String toEnglishCardinal(int i) {
-		if (i >= 11 && i <= 13) {
-			return i + "th";
-		}
-
-		int lastDigit = Math.abs(i) % 10;
-		switch (lastDigit) {
-			case 1:
-				return i + "st";
-			case 2:
-				return i + "nd";
-			case 3:
-				return i + "rd";
-			default:
-				return i + "th";
-		}
-	}
-
 	public static @Nullable String getControlName(char c) {
 		if (c <= 0x20) {
 			return CONTROL_NAMES[c];

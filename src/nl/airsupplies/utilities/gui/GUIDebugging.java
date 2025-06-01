@@ -13,7 +13,7 @@ import nl.airsupplies.utilities.annotation.StaticClass;
 // Created 2005-04-22
 @StaticClass
 public final class GUIDebugging {
-	public static boolean enabled = false;
+	private static boolean enabled = false;
 
 	public static boolean isEnabled() {
 		return enabled;

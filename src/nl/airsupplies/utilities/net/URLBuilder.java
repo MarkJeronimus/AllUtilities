@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.jetbrains.annotations.Nullable;
+
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
 
 /**
@@ -12,9 +14,9 @@ import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNu
  */
 // Created 2016-04-17
 public class URLBuilder {
-	private final String             host;
-	private final URL                hostURL;
-	private final Collection<String> parameters = new ArrayList<>(4);
+	private final           String             host;
+	private final @Nullable URL                hostURL;
+	private final           Collection<String> parameters = new ArrayList<>(4);
 
 	public URLBuilder(String host) {
 		this.host = requireNonNull(host, "host");
@@ -26,6 +28,7 @@ public class URLBuilder {
 		this.hostURL = requireNonNull(hostURL, "hostURL");
 	}
 
+	@SuppressWarnings("UnusedReturnValue")
 	public URLBuilder addParameter(String parameter) {
 		if (parameter.indexOf('?') != -1) {
 			throw new IllegalArgumentException("parameter may not contain unescaped '?': " + parameter);

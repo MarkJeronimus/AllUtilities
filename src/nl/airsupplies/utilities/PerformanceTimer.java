@@ -8,12 +8,14 @@ import java.util.List;
  */
 // Created 2015-09-08
 public class PerformanceTimer {
-	private final String       format       = "%7.2f";
+	private static final String FORMAT = "%7.2f";
+
 	private final List<Long>   durations    = new ArrayList<>();
 	private final List<String> descriptions = new ArrayList<>();
-	private       long         startTime;
-	private       long         lastTime;
-	private       int          longestDescription;
+
+	private long startTime          = 0;
+	private long lastTime           = 0;
+	private int  longestDescription = 0;
 
 	public void reset() {
 		durations.clear();
@@ -35,7 +37,7 @@ public class PerformanceTimer {
 	}
 
 	public void printResults() {
-		String formatString = "%-" + longestDescription + "s " + format + '\n';
+		String formatString = "%-" + longestDescription + "s " + FORMAT + '\n';
 		for (int i = 0; i < durations.size(); i++) {
 			long   duration    = durations.get(i);
 			String description = descriptions.get(i);
@@ -47,7 +49,7 @@ public class PerformanceTimer {
 	 * Prints the durations of each record and the amount of work performed per second in each step.
 	 */
 	public void printResults(double workload) {
-		String formatString = "%-" + longestDescription + "s " + format + " (%,9.2f)\n";
+		String formatString = "%-" + longestDescription + "s " + FORMAT + " (%,9.2f)\n";
 		for (int i = 0; i < durations.size(); i++) {
 			long   duration    = durations.get(i);
 			String description = descriptions.get(i);
@@ -56,7 +58,7 @@ public class PerformanceTimer {
 	}
 
 	public void printTotal() {
-		String formatString = "%-" + longestDescription + "s " + format + '\n';
+		String formatString = "%-" + longestDescription + "s " + FORMAT + '\n';
 		long   duration     = lastTime - startTime;
 		String description  = "Total";
 		System.out.printf(formatString, description, duration / 1.0e6);
@@ -64,9 +66,11 @@ public class PerformanceTimer {
 
 	/**
 	 * Prints the total duration and the amount of work performed per second.
+	 *
+	 * @param workload the total amount of work items processed
 	 */
 	public void printTotal(long workload) {
-		String formatString = "%-" + longestDescription + "s " + format + " (%,9.2f)\n";
+		String formatString = "%-" + longestDescription + "s " + FORMAT + " (%,9.2f)\n";
 		for (int i = 0; i < durations.size(); i++) {
 			long   duration    = lastTime - startTime;
 			String description = "Total";

@@ -33,6 +33,24 @@ public final class EnglishUtilities {
 		IRREGULAR_PLURALS.put("vortices", "vortex");
 	}
 
+	public static String toCardinalNumber(int i) {
+		if (i >= 11 && i <= 13) {
+			return i + "th";
+		}
+
+		int lastDigit = Math.abs(i) % 10;
+		switch (lastDigit) {
+			case 1:
+				return i + "st";
+			case 2:
+				return i + "nd";
+			case 3:
+				return i + "rd";
+			default:
+				return i + "th";
+		}
+	}
+
 	public static String makeSingular(String phrase) {
 		int i = phrase.lastIndexOf(' ');
 		if (i < 0) {

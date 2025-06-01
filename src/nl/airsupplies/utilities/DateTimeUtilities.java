@@ -23,39 +23,6 @@ public final class DateTimeUtilities {
 	 *             {@link ChronoUnit#MONTHS MONTHS},
 	 *             {@link ChronoUnit#YEARS YEARS}]
 	 */
-	public static TemporalAdjuster quantize(int multiple, ChronoUnit unit) {
-		switch (unit) {
-			case NANOS:
-				return quantizeNano(multiple);
-			case MILLIS:
-				return quantizeNano(multiple * 1000000);
-			case SECONDS:
-				return quantizeSecond(multiple);
-			case MINUTES:
-				return quantizeMinute(multiple);
-			case HOURS:
-				return quantizeHour(multiple);
-			case DAYS:
-				return quantizeDay(multiple);
-			case MONTHS:
-				return quantizeMonth(multiple);
-			case YEARS:
-				return quantizeYear(multiple);
-			default:
-				throw new UnsupportedOperationException(unit.toString());
-		}
-	}
-
-	/**
-	 * @param unit One of [{@link ChronoUnit#NANOS NANOS},
-	 *             {@link ChronoUnit#MILLIS MILLIS},
-	 *             {@link ChronoUnit#SECONDS SECONDS},
-	 *             {@link ChronoUnit#MINUTES MINUTES},
-	 *             {@link ChronoUnit#HOURS HOURS},
-	 *             {@link ChronoUnit#DAYS DAYS},
-	 *             {@link ChronoUnit#MONTHS MONTHS},
-	 *             {@link ChronoUnit#YEARS YEARS}]
-	 */
 	public static TemporalAdjuster nextAligned(int multiple, ChronoUnit unit) {
 		switch (unit) {
 			case NANOS:
@@ -74,6 +41,39 @@ public final class DateTimeUtilities {
 				return temporal -> temporal.with(quantizeMonth(multiple)).plus(multiple, ChronoUnit.MONTHS);
 			case YEARS:
 				return temporal -> temporal.with(quantizeYear(multiple)).plus(multiple, ChronoUnit.YEARS);
+			default:
+				throw new UnsupportedOperationException(unit.toString());
+		}
+	}
+
+	/**
+	 * @param unit One of [{@link ChronoUnit#NANOS NANOS},
+	 *             {@link ChronoUnit#MILLIS MILLIS},
+	 *             {@link ChronoUnit#SECONDS SECONDS},
+	 *             {@link ChronoUnit#MINUTES MINUTES},
+	 *             {@link ChronoUnit#HOURS HOURS},
+	 *             {@link ChronoUnit#DAYS DAYS},
+	 *             {@link ChronoUnit#MONTHS MONTHS},
+	 *             {@link ChronoUnit#YEARS YEARS}]
+	 */
+	public static TemporalAdjuster makeQuantizer(int multiple, ChronoUnit unit) {
+		switch (unit) {
+			case YEARS:
+				return quantizeYear(multiple);
+			case MONTHS:
+				return quantizeMonth(multiple);
+			case DAYS:
+				return quantizeDay(multiple);
+			case HOURS:
+				return quantizeHour(multiple);
+			case MINUTES:
+				return quantizeMinute(multiple);
+			case SECONDS:
+				return quantizeSecond(multiple);
+			case MILLIS:
+				return quantizeNano(multiple * 1000000);
+			case NANOS:
+				return quantizeNano(multiple);
 			default:
 				throw new UnsupportedOperationException(unit.toString());
 		}
