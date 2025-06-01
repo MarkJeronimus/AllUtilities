@@ -1,4 +1,4 @@
-package nl.airsupplies.utilities.graphics.color;
+package nl.airsupplies.utilities.broken;
 
 import java.awt.Color;
 

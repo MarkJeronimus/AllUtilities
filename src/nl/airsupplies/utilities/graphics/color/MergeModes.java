@@ -6,7 +6,7 @@ import nl.airsupplies.utilities.math.FastTrig;
  * @author Mark Jeronimus
  */
 // Created 2009-05-08
-public enum MergeMode {
+public enum MergeModes {
 	NORMAL {
 		@Override
 		public void apply(Color4fOld bot, Color4fOld top) {
