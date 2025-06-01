@@ -1,4 +1,4 @@
-package nl.airsupplies.utilities.container;
+package nl.airsupplies.utilities.complex;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -65,7 +65,7 @@ public class DoubleDouble {
 
 	public void set(double hi) {
 		this.hi = hi;
-		lo = 0;
+		lo      = 0;
 	}
 
 	public void set(double hi, double lo) {

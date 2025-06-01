@@ -1,5 +1,7 @@
 package nl.airsupplies.utilities.container;
 
+import nl.airsupplies.utilities.complex.DoubleDouble;
+
 /**
  * @author Mark Jeronimus
  */

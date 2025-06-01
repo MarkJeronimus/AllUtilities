@@ -1,4 +1,4 @@
-package nl.airsupplies.utilities.container;
+package nl.airsupplies.utilities.complex;
 
 import nl.airsupplies.utilities.annotation.UtilityClass;
 import static nl.airsupplies.utilities.constant.NumberConstants.LOG10;

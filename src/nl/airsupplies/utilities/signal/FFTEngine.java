@@ -1,7 +1,7 @@
 package nl.airsupplies.utilities.signal;
 
 import nl.airsupplies.utilities.NumberUtilities;
-import nl.airsupplies.utilities.container.Complex2d;
+import nl.airsupplies.utilities.complex.Complex2d;
 import static nl.airsupplies.utilities.validator.ArrayValidatorUtilities.requireArrayValuesNonNull;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireAtLeast;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;

@@ -1,14 +1,14 @@
-package nl.airsupplies.utilities.container;
+package nl.airsupplies.utilities.complex;
 
 import nl.airsupplies.utilities.annotation.UtilityClass;
+import static nl.airsupplies.utilities.complex.ComplexMath.exp;
+import static nl.airsupplies.utilities.complex.ComplexMath.log;
+import static nl.airsupplies.utilities.complex.ComplexMath.pow;
+import static nl.airsupplies.utilities.complex.ComplexMath.recip;
+import static nl.airsupplies.utilities.complex.ComplexMath.sqr;
 import static nl.airsupplies.utilities.constant.NumberConstants.FIBONACCI_PHI1;
 import static nl.airsupplies.utilities.constant.NumberConstants.PHI;
 import static nl.airsupplies.utilities.constant.NumberConstants.SQRT02;
-import static nl.airsupplies.utilities.container.ComplexMath.exp;
-import static nl.airsupplies.utilities.container.ComplexMath.log;
-import static nl.airsupplies.utilities.container.ComplexMath.pow;
-import static nl.airsupplies.utilities.container.ComplexMath.recip;
-import static nl.airsupplies.utilities.container.ComplexMath.sqr;
 
 // https://mpmath.org/gallery/
 

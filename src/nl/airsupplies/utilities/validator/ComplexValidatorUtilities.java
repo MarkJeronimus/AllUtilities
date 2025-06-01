@@ -3,7 +3,7 @@ package nl.airsupplies.utilities.validator;
 import org.jetbrains.annotations.Nullable;
 
 import nl.airsupplies.utilities.annotation.UtilityClass;
-import nl.airsupplies.utilities.container.Complex2d;
+import nl.airsupplies.utilities.complex.Complex2d;
 import static nl.airsupplies.utilities.NumberUtilities.isDegenerate;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.assertNonNull;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
