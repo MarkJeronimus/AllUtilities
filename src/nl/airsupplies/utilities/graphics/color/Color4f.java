@@ -1,4 +1,3 @@
-
 package nl.airsupplies.utilities.graphics.color;
 
 import java.awt.Color;

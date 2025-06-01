@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
-import static nl.airsupplies.utilities.gui.GUIUtilities.setAntialiased;
 import static nl.airsupplies.utilities.graphics.StaticShapes.PATH;
+import static nl.airsupplies.utilities.gui.GUIUtilities.setAntialiased;
 
 /**
  * @author Mark Jeronimus

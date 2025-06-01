@@ -3,8 +3,8 @@ package nl.airsupplies.utilities.signal.window;
 import nl.airsupplies.utilities.NumberUtilities;
 import nl.airsupplies.utilities.nodes.IntParam;
 import nl.airsupplies.utilities.nodes.Node;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireAtLeast;
 import static nl.airsupplies.utilities.constant.NumberConstants.TAU;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireAtLeast;
 
 /**
  * A sinc {@link WindowFunction}.

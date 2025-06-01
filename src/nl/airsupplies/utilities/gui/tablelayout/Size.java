@@ -128,7 +128,7 @@ public class Size {
 				return "PreferredSize{priority=" + priority + ", " + preferred + " (minimum=" + minimum + ")}";
 			case RELATIVE:
 				return "RelativeSize {priority=" + priority + ", " + preferred + " (minimum=" + minimum + ")}" +
-			                 ", stretchFactor=" + stretchFactor + '}';
+				       ", stretchFactor=" + stretchFactor + '}';
 			default:
 				throw new AssertionError("Unknown value: " + this);
 		}

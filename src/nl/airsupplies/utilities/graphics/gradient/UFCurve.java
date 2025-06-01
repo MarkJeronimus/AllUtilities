@@ -68,7 +68,7 @@ public class UFCurve {
 
 	private final List<ControlPoint> points = new ArrayList<>(16);
 
-	private @Nullable MonotoneInterpolator          interpolator  = null;
+	private @Nullable MonotoneInterpolator interpolator = null;
 
 	public int addPoint(double position, double value) {
 		return addPoint(new ControlPoint(position, value, true, true));
@@ -90,12 +90,12 @@ public class UFCurve {
 			points.add(index, point);
 		}
 
-		interpolator  = null;
+		interpolator = null;
 		return index;
 	}
 
 	public ControlPoint removePoint(int index) {
-		interpolator  = null;
+		interpolator = null;
 		return points.remove(index);
 	}
 
@@ -126,6 +126,6 @@ public class UFCurve {
 			pointsY[i] = point.getValue();
 		}
 
-		interpolator  = new MonotoneInterpolator(pointsX, pointsY, 0.0);
+		interpolator = new MonotoneInterpolator(pointsX, pointsY, 0.0);
 	}
 }

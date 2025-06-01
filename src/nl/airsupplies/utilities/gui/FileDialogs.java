@@ -53,6 +53,7 @@ public final class FileDialogs {
 
 		return true;
 	}
+
 	/**
 	 * @return the chosen file, or {@code null} if the user canceled.
 	 */

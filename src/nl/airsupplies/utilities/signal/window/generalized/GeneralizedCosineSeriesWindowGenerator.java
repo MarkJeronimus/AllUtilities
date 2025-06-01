@@ -17,9 +17,9 @@ import nl.airsupplies.utilities.signal.window.MinimalHammingWindowFunction;
 import nl.airsupplies.utilities.signal.window.NarrowBlackmanHarris3WindowFunction;
 import nl.airsupplies.utilities.signal.window.NarrowBlackmanHarris4WindowFunction;
 import nl.airsupplies.utilities.signal.window.WindowFunction;
+import static nl.airsupplies.utilities.constant.NumberConstants.TAU;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireAtLeast;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
-import static nl.airsupplies.utilities.constant.NumberConstants.TAU;
 
 /**
  * A cosine series {@link WindowFunction}.

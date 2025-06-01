@@ -5,10 +5,10 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 import nl.airsupplies.utilities.encoding.CharacterEncoding;
-import nl.airsupplies.utilities.gui.window.PixelWindow;
 import nl.airsupplies.utilities.graphics.terminal.framebuffer.AbstractFrameBuffer;
 import nl.airsupplies.utilities.graphics.terminal.terminalfont.AbstractGlyph;
 import nl.airsupplies.utilities.graphics.terminal.terminalfont.AbstractTerminalFont;
+import nl.airsupplies.utilities.gui.window.PixelWindow;
 
 /**
  * @author Mark Jeronimus

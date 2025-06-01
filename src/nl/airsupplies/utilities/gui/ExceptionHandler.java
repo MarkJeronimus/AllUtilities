@@ -9,8 +9,8 @@ import java.util.function.Consumer;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
-import nl.airsupplies.utilities.exception.ExceptionUtilities;
 import nl.airsupplies.utilities.exception.ExceptionManager;
+import nl.airsupplies.utilities.exception.ExceptionUtilities;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
 
 /**

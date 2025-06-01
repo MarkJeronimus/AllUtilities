@@ -11,7 +11,7 @@ import nl.airsupplies.utilities.graphics.image.generator.ImageGenerator;
  */
 // Created 2012-04-05
 public class MultiGenerator extends ImageGenerator {
-	private List<ImageGenerator> generators = new ArrayList<>();
+	private final List<ImageGenerator> generators = new ArrayList<>();
 
 	public void add(ImageGenerator generator) {
 		generators.add(generator);

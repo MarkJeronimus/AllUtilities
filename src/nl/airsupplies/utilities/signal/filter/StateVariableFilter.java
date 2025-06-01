@@ -1,8 +1,8 @@
 package nl.airsupplies.utilities.signal.filter;
 
 import static nl.airsupplies.utilities.NumberUtilities.clamp;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNotDegenerate;
 import static nl.airsupplies.utilities.constant.NumberConstants.TAU;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNotDegenerate;
 
 /**
  * @author Mark Jeronimus
