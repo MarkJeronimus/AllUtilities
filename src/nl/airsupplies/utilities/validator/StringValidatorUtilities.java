@@ -9,14 +9,15 @@ import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNu
 /**
  * @author Mark Jeronimus
  */
-// Created 2016-12-21
+// Created 2024-??-?? Split from ValidatorUtilities
+@SuppressWarnings("UnusedReturnValue")
 @UtilityClass
 public final class StringValidatorUtilities {
 	public static String requireStringNotEmpty(String actual, String varName) {
 		requireNonNull(actual, varName);
 
 		if (actual.isEmpty()) {
-			throw new IllegalArgumentException('\'' + varName + "' must not me empty");
+			throw new IllegalArgumentException('\'' + varName + "' must not be empty");
 		}
 
 		return actual;
@@ -24,7 +25,7 @@ public final class StringValidatorUtilities {
 
 	public static @Nullable String requireNullOrStringNotEmpty(@Nullable String actual, String varName) {
 		if (actual != null && actual.isEmpty()) {
-			throw new IllegalArgumentException('\'' + varName + "' must not me empty");
+			throw new IllegalArgumentException('\'' + varName + "' must be null or not be empty");
 		}
 
 		return actual;
@@ -35,8 +36,8 @@ public final class StringValidatorUtilities {
 		requireNonNull(actual, varName);
 
 		if (actual.length() != length) {
-			throw new IllegalArgumentException('\'' + varName + "' must have a length of exactly " +
-			                                   length + ": " + actual.length());
+			throw new IllegalArgumentException('\'' + varName + "' must be exactly " +
+			                                   length + " characters long: " + actual.length());
 		}
 
 		return actual;
@@ -47,8 +48,8 @@ public final class StringValidatorUtilities {
 		assertThat(length >= 0, () -> "'length' is invalid: " + length);
 
 		if (actual != null && actual.length() != length) {
-			throw new IllegalArgumentException('\'' + varName + "' must have a length of exactly " +
-			                                   length + ": " + actual.length());
+			throw new IllegalArgumentException('\'' + varName + "' must be null or exactly " +
+			                                   length + " characters long: " + actual.length());
 		}
 
 		return actual;
@@ -59,8 +60,8 @@ public final class StringValidatorUtilities {
 		requireNonNull(actual, varName);
 
 		if (actual.length() < min) {
-			throw new IllegalArgumentException('\'' + varName + "' must have a length of at least " +
-			                                   min + ": " + actual.length());
+			throw new IllegalArgumentException('\'' + varName + "' must be at least " +
+			                                   min + " characters long: " + actual.length());
 		}
 
 		return actual;
@@ -70,8 +71,8 @@ public final class StringValidatorUtilities {
 		assertThat(min >= 0, () -> "'min' is invalid: " + min);
 
 		if (actual != null && actual.length() < min) {
-			throw new IllegalArgumentException('\'' + varName + "' must either be null or have a length of at least " +
-			                                   min + ": " + actual.length());
+			throw new IllegalArgumentException('\'' + varName + "' must be null or at least " +
+			                                   min + " characters long: " + actual.length());
 		}
 
 		return actual;
@@ -82,8 +83,8 @@ public final class StringValidatorUtilities {
 		requireNonNull(actual, varName);
 
 		if (actual.length() > max) {
-			throw new IllegalArgumentException('\'' + varName + "' must have a length of at least " +
-			                                   max + ": " + actual.length());
+			throw new IllegalArgumentException('\'' + varName + "' must be at most " +
+			                                   max + " characters long: " + actual.length());
 		}
 
 		return actual;
@@ -93,8 +94,8 @@ public final class StringValidatorUtilities {
 		assertThat(max >= 0, () -> "'max' is invalid: " + max);
 
 		if (actual != null && actual.length() > max) {
-			throw new IllegalArgumentException('\'' + varName + "' must either be null or have a length of at least " +
-			                                   max + ": " + actual.length());
+			throw new IllegalArgumentException('\'' + varName + "' must be null or at most " +
+			                                   max + " characters long: " + actual.length());
 		}
 
 		return actual;
@@ -105,8 +106,8 @@ public final class StringValidatorUtilities {
 		requireNonNull(actual, varName);
 
 		if (actual.length() <= min) {
-			throw new IllegalArgumentException('\'' + varName + "' must have a length of at least " +
-			                                   min + ": " + actual.length());
+			throw new IllegalArgumentException('\'' + varName + "' must be more than " +
+			                                   min + " characters long: " + actual.length());
 		}
 
 		return actual;
@@ -116,8 +117,8 @@ public final class StringValidatorUtilities {
 		assertThat(min >= 0 && min < Integer.MAX_VALUE, () -> "'min' is invalid: " + min);
 
 		if (actual != null && actual.length() <= min) {
-			throw new IllegalArgumentException('\'' + varName + "' must either be null or have a length of at least " +
-			                                   min + ": " + actual.length());
+			throw new IllegalArgumentException('\'' + varName + "' must be null or more than " +
+			                                   min + " characters long: " + actual.length());
 		}
 
 		return actual;
@@ -128,8 +129,8 @@ public final class StringValidatorUtilities {
 		requireNonNull(actual, varName);
 
 		if (actual.length() >= max) {
-			throw new IllegalArgumentException('\'' + varName + "' must have a length of at least " +
-			                                   max + ": " + actual.length());
+			throw new IllegalArgumentException('\'' + varName + "' must be less than " +
+			                                   max + " characters long: " + actual.length());
 		}
 
 		return actual;
@@ -139,21 +140,26 @@ public final class StringValidatorUtilities {
 		assertThat(max > 0, () -> "'max' is invalid: " + max);
 
 		if (actual != null && actual.length() >= max) {
-			throw new IllegalArgumentException('\'' + varName + "' must either be null or have a length of at least " +
-			                                   max + ": " + actual.length());
+			throw new IllegalArgumentException('\'' + varName + "' must be null or less than " +
+			                                   max + " characters long: " + actual.length());
 		}
 
 		return actual;
 	}
 
 	public static String requireStringLengthBetween(int min, int max, String actual, String varName) {
-		assertThat(min < Integer.MAX_VALUE, () -> "'min' is invalid: " + min);
-		assertThat(max > Integer.MIN_VALUE, () -> "'max' is invalid: " + max);
+		assertThat(min >= 0, () -> "'min' is invalid: " + min);
+		assertThat(min <= max, () -> "Range is invalid: " + min + "..." + max);
 		requireNonNull(actual, varName);
 
 		if (actual.length() < min || actual.length() > max) {
-			throw new IllegalArgumentException('\'' + varName + "' must have a length of between " +
-			                                   min + " and " + max + ": " + actual.length());
+			if (min == max) {
+				throw new IllegalArgumentException('\'' + varName + "' must be exactly " +
+				                                   max + " characters long: " + actual.length());
+			} else {
+				throw new IllegalArgumentException('\'' + varName + "' must be between " + min + " and " +
+				                                   max + " characters long: " + actual.length());
+			}
 		}
 
 		return actual;
@@ -161,12 +167,17 @@ public final class StringValidatorUtilities {
 
 	public static @Nullable String requireNullOrStringLengthBetween(
 			int min, int max, @Nullable String actual, String varName) {
-		assertThat(min < Integer.MAX_VALUE, () -> "'min' is invalid: " + min);
-		assertThat(max > Integer.MIN_VALUE, () -> "'max' is invalid: " + max);
+		assertThat(min >= 0, () -> "'min' is invalid: " + min);
+		assertThat(min <= max, () -> "Range is invalid: " + min + "..." + max);
 
 		if (actual != null && (actual.length() < min || actual.length() > max)) {
-			throw new IllegalArgumentException('\'' + varName + "' must either be null or have a length of between " +
-			                                   min + " and " + max + ": " + actual.length());
+			if (min == max) {
+				throw new IllegalArgumentException('\'' + varName + "' must be null or exactly " +
+				                                   max + " characters long: " + actual.length());
+			} else {
+				throw new IllegalArgumentException('\'' + varName + "' must be null or between " + min + " and " +
+				                                   max + " characters long: " + actual.length());
+			}
 		}
 
 		return actual;
@@ -180,6 +191,20 @@ public final class StringValidatorUtilities {
 			throw new IllegalArgumentException('\'' + varName1 + "' and '" + varName2 + "' must have equal lengths: " +
 			                                   string1.length() + " != " + string2.length());
 		}
+	}
+
+	public static String requireStringPrintableASCII(String actual, String varName) {
+		requireNonNull(actual, varName);
+
+		for (int i = 0; i < actual.length(); i++) {
+			char c = actual.charAt(i);
+			if (c < 32 || c > 127) {
+				throw new IllegalArgumentException('\'' + varName +
+				                                   "' must consist of only printable ASCII characters: " + actual);
+			}
+		}
+
+		return actual;
 	}
 
 	public static String requireStringNotContaining(char disallowed, String actual, String varName) {

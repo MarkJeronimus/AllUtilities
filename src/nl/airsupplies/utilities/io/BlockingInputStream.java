@@ -4,8 +4,8 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireBetween;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
 
 /**
  * An input stream wrapper where even {@link #read(byte[], int, int)} blocks.
@@ -22,8 +22,8 @@ public class BlockingInputStream extends FilterInputStream {
 	@Override
 	public int read(byte[] b, int off, int len) throws IOException {
 		requireNonNull(b, "b");
-		requireRange(0, b.length - 1, off, "off");
-		requireRange(0, b.length - off, len, "len");
+		requireBetween(0, b.length - 1, off, "off");
+		requireBetween(0, b.length - off, len, "len");
 
 		if (len == 0) {
 			return 0;

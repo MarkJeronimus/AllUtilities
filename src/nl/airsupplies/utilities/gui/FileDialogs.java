@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 import nl.airsupplies.utilities.FileUtilities;
 import nl.airsupplies.utilities.annotation.UtilityClass;
 import static nl.airsupplies.utilities.validator.ArrayValidatorUtilities.requireArrayLengthAtLeast;
-import static nl.airsupplies.utilities.validator.ArrayValidatorUtilities.requireArrayValuesNonNull;
+import static nl.airsupplies.utilities.validator.ArrayValueValidatorUtilities.requireValuesNonNull;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireThat;
 
@@ -142,7 +142,7 @@ public final class FileDialogs {
 	                                              String[] fileTypeExtensions) {
 		requireNonNull(fileTypeDescription, "fileTypeDescription");
 		requireArrayLengthAtLeast(1, fileTypeExtensions, "fileTypeExtensions");
-		requireArrayValuesNonNull(fileTypeExtensions, "fileTypeExtensions");
+		requireValuesNonNull(fileTypeExtensions, "fileTypeExtensions");
 
 		for (int i = 0; i < fileTypeExtensions.length; i++) {
 			int index = i;

@@ -4,8 +4,8 @@ import nl.airsupplies.utilities.nodes.DoubleParam;
 import nl.airsupplies.utilities.nodes.EnumParam;
 import nl.airsupplies.utilities.nodes.Generator;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireAbove;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireBetween;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
 
 /**
  * a {@code AbstractWindowFunction} is a {@link Generator} that generates 'windowing functions'.
@@ -52,7 +52,7 @@ public abstract class AbstractGeneralizedWindowFunction extends AbstractWindowFu
 	}
 
 	public void setTaper(double taper) {
-		this.taper = requireRange(0, 1, taper, "taper");
+		this.taper = requireBetween(0, 1, taper, "taper");
 	}
 
 	public double getPower() {
@@ -60,7 +60,7 @@ public abstract class AbstractGeneralizedWindowFunction extends AbstractWindowFu
 	}
 
 	public void setPower(double power) {
-		this.power = requireRange(1, 10, power, "power");
+		this.power = requireBetween(1, 10, power, "power");
 	}
 
 	public double getInvPower() {
@@ -68,7 +68,7 @@ public abstract class AbstractGeneralizedWindowFunction extends AbstractWindowFu
 	}
 
 	public void setInvPower(double invPower) {
-		this.invPower = requireRange(0.01, 100, invPower, "invPower");
+		this.invPower = requireBetween(0.01, 100, invPower, "invPower");
 	}
 
 	public double getPowerLerp() {
@@ -76,7 +76,7 @@ public abstract class AbstractGeneralizedWindowFunction extends AbstractWindowFu
 	}
 
 	public void setPowerLerp(double powerLerp) {
-		this.powerLerp = requireRange(0, 1, powerLerp, "powerLerp");
+		this.powerLerp = requireBetween(0, 1, powerLerp, "powerLerp");
 	}
 
 	public double getTopScale() {

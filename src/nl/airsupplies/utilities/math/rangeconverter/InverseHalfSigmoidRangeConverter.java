@@ -1,8 +1,8 @@
 package nl.airsupplies.utilities.math.rangeconverter;
 
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireAtLeast;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireBetween;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireThat;
 
 /**
@@ -49,7 +49,7 @@ public class InverseHalfSigmoidRangeConverter implements RangeConverter {
 
 	@Override
 	public double toDomain(double value) {
-		requireRange(0, 1, value, "value");
+		requireBetween(0, 1, value, "value");
 
 		return scale / (1 - value) - offset;
 	}

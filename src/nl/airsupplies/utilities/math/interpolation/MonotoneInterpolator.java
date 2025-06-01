@@ -4,9 +4,9 @@ import java.util.function.DoubleUnaryOperator;
 
 import static nl.airsupplies.utilities.validator.ArrayValidatorUtilities.requireArrayLengthAtLeast;
 import static nl.airsupplies.utilities.validator.ArrayValidatorUtilities.requireArrayLengthsMatch;
-import static nl.airsupplies.utilities.validator.ArrayValidatorUtilities.requireArrayValuesNotDegenerate;
+import static nl.airsupplies.utilities.validator.ArrayValueValidatorUtilities.requireValuesNotDegenerate;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireAtLeast;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireBetween;
 
 /**
  * @author Mark Jeronimus
@@ -30,8 +30,8 @@ public class MonotoneInterpolator implements DoubleUnaryOperator {
 	public MonotoneInterpolator(double[] pointsX, double[] pointsY, double cycleWidth) {
 		requireArrayLengthsMatch(pointsX, pointsY, "pointsX", "pointsY");
 		requireArrayLengthAtLeast(1, pointsX, "pointsX");
-		requireArrayValuesNotDegenerate(pointsX, "pointsX");
-		requireArrayValuesNotDegenerate(pointsY, "pointsY");
+		requireValuesNotDegenerate(pointsX, "pointsX");
+		requireValuesNotDegenerate(pointsY, "pointsY");
 		this.cycleWidth = requireAtLeast(0.0, cycleWidth, "cycleWidth");
 
 		numPoints = pointsX.length;
@@ -119,13 +119,13 @@ public class MonotoneInterpolator implements DoubleUnaryOperator {
 	}
 
 	public double getX(int index) {
-		requireRange(0, numPoints, index, "index");
+		requireBetween(0, numPoints, index, "index");
 
 		return cpx[index + 1];
 	}
 
 	public double getY(int index) {
-		requireRange(0, numPoints, index, "index");
+		requireBetween(0, numPoints, index, "index");
 
 		return cpy[index + 1];
 	}

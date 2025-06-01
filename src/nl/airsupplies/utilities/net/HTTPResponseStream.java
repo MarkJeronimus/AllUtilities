@@ -11,8 +11,8 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import nl.airsupplies.utilities.gui.progress.ProgressEvent;
 import nl.airsupplies.utilities.gui.progress.ProgressListener;
 import nl.airsupplies.utilities.io.InputStreamWithLength;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireBetween;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
 
 /**
  * @author Mark Jeronimus
@@ -32,7 +32,7 @@ public class HTTPResponseStream extends InputStreamWithLength {
 	                          Map<String, List<String>> responseHeaders,
 	                          int length) {
 		super(in, length);
-		this.responseCode    = requireRange(100, 599, responseCode, "responseCode");
+		this.responseCode    = requireBetween(100, 599, responseCode, "responseCode");
 		this.responseHeaders = requireNonNull(responseHeaders, "responseHeaders");
 	}
 

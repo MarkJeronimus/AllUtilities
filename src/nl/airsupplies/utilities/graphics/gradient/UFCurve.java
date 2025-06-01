@@ -6,7 +6,7 @@ import java.util.List;
 import org.jetbrains.annotations.Nullable;
 
 import nl.airsupplies.utilities.math.interpolation.MonotoneInterpolator;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireBetween;
 
 /**
  * @author Mark Jeronimus
@@ -24,8 +24,8 @@ public class UFCurve {
 		private final boolean smoothOut;
 
 		private ControlPoint(double position, double value, boolean smoothIn, boolean smoothOut) {
-			this.position  = requireRange(0.0, 1.0, position, "position");
-			this.value     = requireRange(0.0, 1.0, value, "value");
+			this.position  = requireBetween(0.0, 1.0, position, "position");
+			this.value     = requireBetween(0.0, 1.0, value, "value");
 			this.smoothIn  = smoothIn;
 			this.smoothOut = smoothOut;
 		}
@@ -47,8 +47,8 @@ public class UFCurve {
 		}
 
 		public ControlPoint setCoordinate(double position, double value) {
-			requireRange(0.0, 1.0, position, "position");
-			requireRange(0.0, 1.0, value, "value");
+			requireBetween(0.0, 1.0, position, "position");
+			requireBetween(0.0, 1.0, value, "value");
 			return new ControlPoint(position, value, smoothIn, smoothOut);
 		}
 

@@ -21,8 +21,8 @@ import org.jetbrains.annotations.Nullable;
 import nl.airsupplies.utilities.gui.broken.MultiProgressListener;
 import static nl.airsupplies.utilities.validator.StringValidatorUtilities.requireStringNotEmpty;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireAtLeast;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireBetween;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
 
 /**
  * @author Mark Jeronimus
@@ -133,7 +133,7 @@ public class MultiProgressDialog extends JDialog implements MultiProgressListene
 
 	@Override
 	public void progressUpdated(int progressBarIndex, ProgressEvent evt) {
-		requireRange(0, progressBars.length - 1, progressBarIndex, "progressBarIndex");
+		requireBetween(0, progressBars.length - 1, progressBarIndex, "progressBarIndex");
 		requireNonNull(evt, "evt");
 
 		if (autoShow && !isVisible()) {

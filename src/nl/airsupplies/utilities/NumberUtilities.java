@@ -19,7 +19,7 @@ import nl.airsupplies.utilities.container.Rational;
 import nl.airsupplies.utilities.container.UnsignedByte;
 import nl.airsupplies.utilities.container.UnsignedInteger;
 import nl.airsupplies.utilities.container.UnsignedShort;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireBetween;
 
 /**
  * @author Mark Jeronimus
@@ -63,7 +63,7 @@ public final class NumberUtilities {
 	}
 
 	public static String formatNumber(double value, int minPrecision) {
-		requireRange(0, PRECISION_FORMATTERS.length - 1, minPrecision, "minPrecision");
+		requireBetween(0, PRECISION_FORMATTERS.length - 1, minPrecision, "minPrecision");
 
 		// No synchronization necessary because the initialization function is idempotent and has low overhead.
 		if (PRECISION_FORMATTERS[minPrecision] == null) {
@@ -271,7 +271,7 @@ public final class NumberUtilities {
 	 * <em>E.g.</em> {@code signExtend(0x0000FED, 12)} returns {@code 0bFFFFFFED}
 	 */
 	public static int signExtend(int value, int numBits) {
-		requireRange(1, 32, numBits, "numBits");
+		requireBetween(1, 32, numBits, "numBits");
 
 		int mask = 1 << (numBits - 1);
 		return (value ^ mask) - mask;
@@ -283,7 +283,7 @@ public final class NumberUtilities {
 	 * <em>E.g.</em> {@code signExtend(0x000000000000FED, 12)} returns {@code 0bFFFFFFFFFFFFFFED}
 	 */
 	public static long signExtend(long value, int numBits) {
-		requireRange(1, 64, numBits, "numBits");
+		requireBetween(1, 64, numBits, "numBits");
 
 		long mask = 1L << (numBits - 1);
 		return (value ^ mask) - mask;

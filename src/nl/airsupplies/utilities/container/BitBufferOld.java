@@ -4,8 +4,8 @@ import java.nio.Buffer;
 import java.nio.ByteBuffer;
 
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireAtLeast;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireBetween;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireThat;
 
 /**
@@ -24,7 +24,7 @@ public final class BitBufferOld {
 	}
 
 	public BitBufferOld(int bitSize, int bits) {
-		bitCapacity = requireRange(1, 32, bitSize, "bitSize");
+		bitCapacity = requireBetween(1, 32, bitSize, "bitSize");
 		buffer      = ByteBuffer.allocate((bitSize + 7) >> 3);
 
 		putBits(bitSize, bits);
@@ -108,7 +108,7 @@ public final class BitBufferOld {
 	}
 
 	public int getBits(int numBits) {
-		requireRange(1, 32, numBits, "numBits");
+		requireBetween(1, 32, numBits, "numBits");
 		if (numBits > remainingBits()) {
 			throw new IndexOutOfBoundsException(numBits + " > " + remainingBits());
 		}
@@ -151,7 +151,7 @@ public final class BitBufferOld {
 	}
 
 	public void putBits(int numBits, int bits) {
-		requireRange(1, 32, numBits, "numBits");
+		requireBetween(1, 32, numBits, "numBits");
 		if (numBits > remainingBits()) {
 			throw new IndexOutOfBoundsException(numBits + " > " + remainingBits());
 		}

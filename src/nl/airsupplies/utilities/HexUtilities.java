@@ -5,7 +5,7 @@ import java.util.Arrays;
 import nl.airsupplies.utilities.annotation.UtilityClass;
 import static nl.airsupplies.utilities.NumberUtilities.RADIX_DIGITS;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireAtLeast;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireBetween;
 
 /**
  * @author Mark Jeronimus
@@ -56,7 +56,7 @@ public final class HexUtilities {
 	 * Converts N least significant octets of an int to hexadecimal, separated by spaces.
 	 */
 	public static String toUnsignedHexWithSpaces(int value, int len) {
-		requireRange(1, 4, len, "len");
+		requireBetween(1, 4, len, "len");
 
 		StringBuilder sb = new StringBuilder(len * 3 - 1);
 		for (int i = len - 1; i >= 0; i--) {
@@ -99,7 +99,7 @@ public final class HexUtilities {
 	 * Converts N least significant octets of a long to hexadecimal, separated by spaces.
 	 */
 	public static String toUnsignedHexWithSpaces(long value, int len) {
-		requireRange(1, 8, len, "len");
+		requireBetween(1, 8, len, "len");
 
 		StringBuilder sb = new StringBuilder(len * 3 - 1);
 

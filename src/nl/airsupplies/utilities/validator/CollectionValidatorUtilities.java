@@ -3,7 +3,6 @@ package nl.airsupplies.utilities.validator;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -14,15 +13,15 @@ import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNu
 /**
  * @author Mark Jeronimus
  */
-// Created 2016-12-21
-@SuppressWarnings("OverlyComplexClass")
+// Created 2024-??-?? Split from ValidatorUtilities
+@SuppressWarnings({"OverlyComplexClass", "UnusedReturnValue"})
 @UtilityClass
 public final class CollectionValidatorUtilities {
 	public static <V, C extends Collection<V>> C requireNotEmpty(C actual, String varName) {
 		requireNonNull(actual, varName);
 
 		if (actual.isEmpty()) {
-			throw new IllegalArgumentException('\'' + varName + "' must not me empty");
+			throw new IllegalArgumentException('\'' + varName + "' must not be empty");
 		}
 
 		return actual;
@@ -32,23 +31,23 @@ public final class CollectionValidatorUtilities {
 		requireNonNull(actual, varName);
 
 		if (actual.isEmpty()) {
-			throw new IllegalArgumentException('\'' + varName + "' must not me empty");
+			throw new IllegalArgumentException('\'' + varName + "' must not be empty");
 		}
 
 		return actual;
 	}
 
-	public static @Nullable <V, C extends Collection<V>> C requireNullOrNotEmpty(@Nullable C actual, String varName) {
+	public static <V, C extends Collection<V>> @Nullable C requireNullOrNotEmpty(@Nullable C actual, String varName) {
 		if (actual != null && actual.isEmpty()) {
-			throw new IllegalArgumentException('\'' + varName + "' must not me empty");
+			throw new IllegalArgumentException('\'' + varName + "' must be null or not be empty");
 		}
 
 		return actual;
 	}
 
-	public static @Nullable <K, V, M extends Map<K, V>> M requireNullOrNotEmpty(@Nullable M actual, String varName) {
+	public static <K, V, M extends Map<K, V>> @Nullable M requireNullOrNotEmpty(@Nullable M actual, String varName) {
 		if (actual != null && actual.isEmpty()) {
-			throw new IllegalArgumentException('\'' + varName + "' must not me empty");
+			throw new IllegalArgumentException('\'' + varName + "' must not be empty");
 		}
 
 		return actual;
@@ -78,7 +77,7 @@ public final class CollectionValidatorUtilities {
 		return actual;
 	}
 
-	public static @Nullable <V, C extends Collection<V>> C requireNullOrSizeExactly(
+	public static <V, C extends Collection<V>> @Nullable C requireNullOrSizeExactly(
 			int size, @Nullable C actual, String varName) {
 		assertThat(size >= 0, () -> "'size' is invalid: " + size);
 
@@ -90,7 +89,7 @@ public final class CollectionValidatorUtilities {
 		return actual;
 	}
 
-	public static @Nullable <K, V, M extends Map<K, V>> M requireNullOrSizeExactly(
+	public static <K, V, M extends Map<K, V>> @Nullable M requireNullOrSizeExactly(
 			int size, @Nullable M actual, String varName) {
 		assertThat(size >= 0, () -> "'size' is invalid: " + size);
 
@@ -126,7 +125,7 @@ public final class CollectionValidatorUtilities {
 		return actual;
 	}
 
-	public static @Nullable <V, C extends Collection<V>> C requireNullOrSizeAtLeast(
+	public static <V, C extends Collection<V>> @Nullable C requireNullOrSizeAtLeast(
 			int min, @Nullable C actual, String varName) {
 		assertThat(min >= 0, () -> "'min' is invalid: " + min);
 
@@ -138,7 +137,7 @@ public final class CollectionValidatorUtilities {
 		return actual;
 	}
 
-	public static @Nullable <K, V, M extends Map<K, V>> M requireNullOrSizeAtLeast(
+	public static <K, V, M extends Map<K, V>> @Nullable M requireNullOrSizeAtLeast(
 			int min, @Nullable M actual, String varName) {
 		assertThat(min >= 0, () -> "'min' is invalid: " + min);
 
@@ -174,7 +173,7 @@ public final class CollectionValidatorUtilities {
 		return actual;
 	}
 
-	public static @Nullable <V, C extends Collection<V>> C requireNullOrSizeAtMost(
+	public static <V, C extends Collection<V>> @Nullable C requireNullOrSizeAtMost(
 			int max, @Nullable C actual, String varName) {
 		assertThat(max >= 0, () -> "'max' is invalid: " + max);
 
@@ -186,7 +185,7 @@ public final class CollectionValidatorUtilities {
 		return actual;
 	}
 
-	public static @Nullable <K, V, M extends Map<K, V>> M requireNullOrSizeAtMost(
+	public static <K, V, M extends Map<K, V>> @Nullable M requireNullOrSizeAtMost(
 			int max, @Nullable M actual, String varName) {
 		assertThat(max >= 0, () -> "'max' is invalid: " + max);
 
@@ -204,7 +203,7 @@ public final class CollectionValidatorUtilities {
 
 		if (actual.size() <= min) {
 			if (min == 0) {
-				throw new IllegalArgumentException('\'' + varName + "' must must not me empty");
+				throw new IllegalArgumentException('\'' + varName + "' must must not be empty");
 			} else {
 				throw new IllegalArgumentException('\'' + varName + "' must have a size above " +
 				                                   min + ": " + actual.size());
@@ -220,7 +219,7 @@ public final class CollectionValidatorUtilities {
 
 		if (actual.size() <= min) {
 			if (min == 0) {
-				throw new IllegalArgumentException('\'' + varName + "' must must not me empty");
+				throw new IllegalArgumentException('\'' + varName + "' must must not be empty");
 			} else {
 				throw new IllegalArgumentException('\'' + varName + "' must have a size above " +
 				                                   min + ": " + actual.size());
@@ -230,13 +229,13 @@ public final class CollectionValidatorUtilities {
 		return actual;
 	}
 
-	public static @Nullable <V, C extends Collection<V>> C requireNullOrSizeAbove(
+	public static <V, C extends Collection<V>> @Nullable C requireNullOrSizeAbove(
 			int min, @Nullable C actual, String varName) {
 		assertThat(min >= 0 && min < Integer.MAX_VALUE, () -> "'min' is invalid: " + min);
 
 		if (actual != null && actual.size() <= min) {
 			if (min == 0) {
-				throw new IllegalArgumentException('\'' + varName + "' must must not me empty");
+				throw new IllegalArgumentException('\'' + varName + "' must must not be empty");
 			} else {
 				throw new IllegalArgumentException('\'' + varName + "' must either be null or have a size above " +
 				                                   min + ": " + actual.size());
@@ -246,13 +245,13 @@ public final class CollectionValidatorUtilities {
 		return actual;
 	}
 
-	public static @Nullable <K, V, M extends Map<K, V>> M requireNullOrSizeAbove(
+	public static <K, V, M extends Map<K, V>> @Nullable M requireNullOrSizeAbove(
 			int min, @Nullable M actual, String varName) {
 		assertThat(min >= 0 && min < Integer.MAX_VALUE, () -> "'min' is invalid: " + min);
 
 		if (actual != null && actual.size() <= min) {
 			if (min == 0) {
-				throw new IllegalArgumentException('\'' + varName + "' must must not me empty");
+				throw new IllegalArgumentException('\'' + varName + "' must must not be empty");
 			} else {
 				throw new IllegalArgumentException('\'' + varName + "' must either be null or have a size above " +
 				                                   min + ": " + actual.size());
@@ -286,7 +285,7 @@ public final class CollectionValidatorUtilities {
 		return actual;
 	}
 
-	public static @Nullable <V, C extends Collection<V>> C requireNullOrSizeBelow(
+	public static <V, C extends Collection<V>> @Nullable C requireNullOrSizeBelow(
 			int max, @Nullable C actual, String varName) {
 		assertThat(max > 0, () -> "'max' is invalid: " + max);
 		if (actual != null && actual.size() >= max) {
@@ -297,7 +296,7 @@ public final class CollectionValidatorUtilities {
 		return actual;
 	}
 
-	public static @Nullable <K, V, M extends Map<K, V>> M requireNullOrSizeBelow(
+	public static <K, V, M extends Map<K, V>> @Nullable M requireNullOrSizeBelow(
 			int max, @Nullable M actual, String varName) {
 		assertThat(max > 0, () -> "'max' is invalid: " + max);
 		if (actual != null && actual.size() >= max) {
@@ -309,6 +308,8 @@ public final class CollectionValidatorUtilities {
 	}
 
 	public static <V, C extends Collection<V>> C requireSizeBetween(int min, int max, C actual, String varName) {
+		assertThat(min >= 0, () -> "'min' is invalid: " + min);
+		assertThat(max > min, () -> "Range is invalid: " + min + "..." + max);
 		requireNonNull(actual, varName);
 
 		if (actual.size() < min || actual.size() > max) {
@@ -320,6 +321,8 @@ public final class CollectionValidatorUtilities {
 	}
 
 	public static <K, V, M extends Map<K, V>> M requireSizeBetween(int min, int max, M actual, String varName) {
+		assertThat(min >= 0, () -> "'min' is invalid: " + min);
+		assertThat(max > min, () -> "Range is invalid: " + min + "..." + max);
 		requireNonNull(actual, varName);
 
 		if (actual.size() < min || actual.size() > max) {
@@ -330,8 +333,11 @@ public final class CollectionValidatorUtilities {
 		return actual;
 	}
 
-	public static @Nullable <V, C extends Collection<V>> C requireNullOrSizeBetween(
+	public static <V, C extends Collection<V>> @Nullable C requireNullOrSizeBetween(
 			int min, int max, @Nullable C actual, String varName) {
+		assertThat(min >= 0, () -> "'min' is invalid: " + min);
+		assertThat(max > min, () -> "Range is invalid: " + min + "..." + max);
+
 		if (actual != null && (actual.size() < min || actual.size() > max)) {
 			throw new IllegalArgumentException('\'' + varName + "' must either be null or have a size between [" +
 			                                   min + ", " + max + "]: " + actual.size());
@@ -340,8 +346,11 @@ public final class CollectionValidatorUtilities {
 		return actual;
 	}
 
-	public static @Nullable <K, V, M extends Map<K, V>> M requireNullOrSizeBetween(
+	public static <K, V, M extends Map<K, V>> @Nullable M requireNullOrSizeBetween(
 			int min, int max, @Nullable M actual, String varName) {
+		assertThat(min >= 0, () -> "'min' is invalid: " + min);
+		assertThat(max > min, () -> "Range is invalid: " + min + "..." + max);
+
 		if (actual != null && (actual.size() < min || actual.size() > max)) {
 			throw new IllegalArgumentException('\'' + varName + "' must either be null or have a size between [" +
 			                                   min + ", " + max + "]: " + actual.size());
@@ -384,7 +393,7 @@ public final class CollectionValidatorUtilities {
 	}
 
 	public static <V, L extends List<V>> L requireValuesNonNull(L actual, String varName) {
-		requireNonNull(actual, "actual");
+		requireNonNull(actual, varName);
 
 		for (int i = 0; i < actual.size(); i++) {
 			if (actual.get(i) == null) {
@@ -407,7 +416,7 @@ public final class CollectionValidatorUtilities {
 		return actual;
 	}
 
-	public static @Nullable <V, I extends Iterable<V>> I requireNullOrValuesNonNull(
+	public static <V, I extends Iterable<V>> @Nullable I requireNullOrValuesNonNull(
 			@Nullable I actual, String varName) {
 		if (actual == null) {
 			return null;
@@ -422,7 +431,7 @@ public final class CollectionValidatorUtilities {
 		return actual;
 	}
 
-	public static @Nullable <V, L extends List<V>> L requireNullOrValuesNonNull(@Nullable L actual, String varName) {
+	public static <V, L extends List<V>> @Nullable L requireNullOrValuesNonNull(@Nullable L actual, String varName) {
 		if (actual == null) {
 			return null;
 		}
@@ -436,7 +445,7 @@ public final class CollectionValidatorUtilities {
 		return actual;
 	}
 
-	public static @Nullable <K, V, M extends Map<K, V>> M requireNullOrValuesNonNull(
+	public static <K, V, M extends Map<K, V>> @Nullable M requireNullOrValuesNonNull(
 			@Nullable M actual, String varName) {
 		if (actual == null) {
 			return null;
@@ -451,8 +460,120 @@ public final class CollectionValidatorUtilities {
 		return actual;
 	}
 
-	public static <I extends Iterable<String>> I requireNonEmptyStrings(I actual, String varName) {
+	public static <V, I extends Iterable<?>> I requireValuesOfType(Class<V> type, I actual, String varName) {
+		requireNonNull(type, "type");
 		requireNonNull(actual, varName);
+
+		for (Object value : actual) {
+			if (value.getClass() != type) {
+				throw new IllegalArgumentException(
+						'\'' + varName + "' contains a value that's not of type " + type.getName());
+			}
+		}
+
+		return actual;
+	}
+
+	public static <V, L extends List<?>> L requireValuesOfType(Class<V> type, L actual, String varName) {
+		requireNonNull(type, "type");
+		requireNonNull(actual, varName);
+
+		for (int i = 0; i < actual.size(); i++) {
+			Object value = actual.get(i);
+			if (value.getClass() != type) {
+				throw new IllegalArgumentException('\'' + varName + '[' + i + "]' must be of type " + type.getName());
+			}
+		}
+
+		return actual;
+	}
+
+	public static <K, V, M extends Map<?, ?>> M requireKeysOfType(Class<K> type, M actual, String varName) {
+		requireNonNull(type, "type");
+		requireNonNull(actual, varName);
+
+		for (Object value : actual.keySet()) {
+			if (value.getClass() != type) {
+				throw new IllegalArgumentException(
+						'\'' + varName + "' contains a key that's not of type " + type.getName());
+			}
+		}
+
+		return actual;
+	}
+
+	public static <K, V, M extends Map<?, ?>> M requireValuesOfType(Class<V> type, M actual, String varName) {
+		requireNonNull(type, "type");
+		requireNonNull(actual, varName);
+
+		for (Object value : actual.values()) {
+			if (value.getClass() != type) {
+				throw new IllegalArgumentException(
+						'\'' + varName + "' contains a value that's not of type " + type.getName());
+			}
+		}
+
+		return actual;
+	}
+
+	public static <V, I extends Iterable<?>> I requireValuesInstanceOf(Class<V> type, I actual, String varName) {
+		requireNonNull(type, "type");
+		requireNonNull(actual, varName);
+
+		for (Object value : actual) {
+			if (!type.isInstance(value)) {
+				throw new IllegalArgumentException(
+						'\'' + varName + "' contains a value that's not an instance of " + type.getName());
+			}
+		}
+
+		return actual;
+	}
+
+	public static <V, L extends List<?>> L requireValuesInstanceOf(Class<V> type, L actual, String varName) {
+		requireNonNull(type, "type");
+		requireNonNull(actual, varName);
+
+		for (int i = 0; i < actual.size(); i++) {
+			Object value = actual.get(i);
+			if (!type.isInstance(value)) {
+				throw new IllegalArgumentException(
+						'\'' + varName + '[' + i + "]' must be an instance of " + type.getName());
+			}
+		}
+
+		return actual;
+	}
+
+	public static <K, V, M extends Map<?, ?>> M requireKeysInstanceOf(Class<K> type, M actual, String varName) {
+		requireNonNull(type, "type");
+		requireNonNull(actual, varName);
+
+		for (Object value : actual.keySet()) {
+			if (!type.isInstance(value)) {
+				throw new IllegalArgumentException(
+						'\'' + varName + "' contains a key that's not an instance of " + type.getName());
+			}
+		}
+
+		return actual;
+	}
+
+	public static <K, V, M extends Map<?, ?>> M requireValuesInstanceOf(Class<V> type, M actual, String varName) {
+		requireNonNull(type, "type");
+		requireNonNull(actual, varName);
+
+		for (Object value : actual.values()) {
+			if (!type.isInstance(value)) {
+				throw new IllegalArgumentException(
+						'\'' + varName + "' contains a value that's not an instance of " + type.getName());
+			}
+		}
+
+		return actual;
+	}
+
+	public static <I extends Iterable<String>> I requireStringsNotEmpty(I actual, String varName) {
 		requireValuesNonNull(actual, varName);
 
 		for (String value : actual) {
@@ -464,8 +585,7 @@ public final class CollectionValidatorUtilities {
 		return actual;
 	}
 
-	public static <L extends List<String>> L requireNonEmptyStrings(L actual, String varName) {
-		requireNonNull(actual, varName);
+	public static <L extends List<String>> L requireStringsNotEmpty(L actual, String varName) {
 		requireValuesNonNull(actual, varName);
 
 		for (int i = 0; i < actual.size(); i++) {
@@ -477,8 +597,7 @@ public final class CollectionValidatorUtilities {
 		return actual;
 	}
 
-	public static <K, M extends Map<K, String>> M requireNonEmptyStrings(M actual, String varName) {
-		requireNonNull(actual, varName);
+	public static <K, M extends Map<K, String>> M requireStringsNotEmpty(M actual, String varName) {
 		requireValuesNonNull(actual, varName);
 
 		for (String value : actual.values()) {
@@ -490,7 +609,7 @@ public final class CollectionValidatorUtilities {
 		return actual;
 	}
 
-	public static <I extends Iterable<String>> @Nullable I requireNullOrNonEmptyStrings(
+	public static <I extends Iterable<String>> @Nullable I requireNullOrStringsNotEmpty(
 			@Nullable I actual, String varName) {
 		if (actual == null) {
 			return null;
@@ -507,7 +626,7 @@ public final class CollectionValidatorUtilities {
 		return actual;
 	}
 
-	public static <L extends List<String>> @Nullable L requireNullOrNonEmptyStrings(
+	public static <L extends List<String>> @Nullable L requireNullOrStringsNotEmpty(
 			@Nullable L actual, String varName) {
 		if (actual == null) {
 			return null;
@@ -524,7 +643,7 @@ public final class CollectionValidatorUtilities {
 		return actual;
 	}
 
-	public static <K, M extends Map<K, String>> @Nullable M requireNullOrNonEmptyStrings(
+	public static <K, M extends Map<K, String>> @Nullable M requireNullOrStringsNotEmpty(
 			@Nullable M actual, String varName) {
 		if (actual == null) {
 			return null;
@@ -535,169 +654,6 @@ public final class CollectionValidatorUtilities {
 		for (String value : actual.values()) {
 			if (value.isEmpty()) {
 				throw new IllegalArgumentException('\'' + varName + "' contains an empty string");
-			}
-		}
-
-		return actual;
-	}
-
-	public static <I extends Iterable<V>, V> I requireValueType(Class<V> type, I actual, String varName) {
-		requireNonNull(type, "type");
-		requireNonNull(actual, varName);
-
-		for (Object value : actual) {
-			if (!type.isInstance(value)) {
-				throw new IllegalArgumentException('\'' + varName + "' contains a value not of type " + type.getName());
-			}
-		}
-
-		return actual;
-	}
-
-	public static <L extends List<V>, V> L requireValueType(Class<V> type, L actual, String varName) {
-		requireNonNull(type, "type");
-		requireNonNull(actual, varName);
-
-		for (int i = 0; i < actual.size(); i++) {
-			Object value = actual.get(i);
-			if (!type.isInstance(value)) {
-				throw new IllegalArgumentException('\'' + varName + '[' + i + "]' must be of type " + type.getName());
-			}
-		}
-
-		return actual;
-	}
-
-	public static <K, V, M extends Map<K, V>> M requireKeyType(Class<K> type, M actual, String varName) {
-		requireNonNull(type, "type");
-		requireNonNull(actual, varName);
-
-		for (Object value : actual.keySet()) {
-			if (!type.isInstance(value)) {
-				throw new IllegalArgumentException('\'' + varName + "' contains a key not of type " + type.getName());
-			}
-		}
-
-		return actual;
-	}
-
-	public static <K, V, M extends Map<K, V>> M requireValueType(Class<V> type, M actual, String varName) {
-		requireNonNull(type, "type");
-		requireNonNull(actual, varName);
-
-		for (Object value : actual.values()) {
-			if (!type.isInstance(value)) {
-				throw new IllegalArgumentException('\'' + varName + "' contains a value not of type " + type.getName());
-			}
-		}
-
-		return actual;
-	}
-
-	public static <K, V, M extends Map<K, V>> M requireEntryType(
-			Class<V> keyType, Class<V> valueType, M actual, String varName) {
-		requireNonNull(keyType, "keyType");
-		requireNonNull(valueType, "valueType");
-		requireNonNull(actual, varName);
-
-		for (Entry<?, ?> entry : ((Map<?, ?>)actual).entrySet()) {
-			if (!keyType.isInstance(entry.getKey())) {
-				throw new IllegalArgumentException('\'' + varName + "' contains a key not of type " +
-				                                   keyType.getName());
-			} else if (!valueType.isInstance(entry.getValue())) {
-				throw new IllegalArgumentException('\'' + varName + "' contains a value not of type " +
-				                                   valueType.getName());
-			}
-		}
-
-		return actual;
-	}
-
-	public static <I extends Iterable<V>, V> @Nullable I requireNullOrValueType(
-			Class<V> type, @Nullable I actual, String varName) {
-		requireNonNull(type, "type");
-
-		if (actual == null) {
-			return null;
-		}
-
-		for (Object value : actual) {
-			if (!type.isInstance(value)) {
-				throw new IllegalArgumentException('\'' + varName + "' contains a value not of type " + type.getName());
-			}
-		}
-
-		return actual;
-	}
-
-	public static <L extends List<V>, V> @Nullable L requireNullOrValueType(
-			Class<V> type, @Nullable L actual, String varName) {
-		requireNonNull(type, "type");
-
-		if (actual == null) {
-			return null;
-		}
-
-		for (int i = 0; i < actual.size(); i++) {
-			Object value = actual.get(i);
-			if (!type.isInstance(value)) {
-				throw new IllegalArgumentException('\'' + varName + '[' + i + "]' must be of type " + type.getName());
-			}
-		}
-
-		return actual;
-	}
-
-	public static <K, V, M extends Map<K, V>> @Nullable M requireNullOrKeyType(
-			Class<V> type, @Nullable M actual, String varName) {
-		requireNonNull(type, "type");
-
-		if (actual == null) {
-			return null;
-		}
-
-		for (Object value : actual.keySet()) {
-			if (!type.isInstance(value)) {
-				throw new IllegalArgumentException('\'' + varName + "' contains a key not of type " + type.getName());
-			}
-		}
-
-		return actual;
-	}
-
-	public static <K, V, M extends Map<K, V>> @Nullable M requireNullOrValueType(
-			Class<V> type, @Nullable M actual, String varName) {
-		requireNonNull(type, "type");
-
-		if (actual == null) {
-			return null;
-		}
-
-		for (Object value : actual.values()) {
-			if (!type.isInstance(value)) {
-				throw new IllegalArgumentException('\'' + varName + "' contains a value not of type " + type.getName());
-			}
-		}
-
-		return actual;
-	}
-
-	public static <K, V, M extends Map<K, V>> @Nullable M requireNullOrEntryType(
-			Class<V> keyType, Class<V> valueType, @Nullable M actual, String varName) {
-		requireNonNull(keyType, "keyType");
-		requireNonNull(valueType, "valueType");
-
-		if (actual == null) {
-			return null;
-		}
-
-		for (Entry<?, ?> entry : ((Map<?, ?>)actual).entrySet()) {
-			if (!keyType.isInstance(entry.getKey())) {
-				throw new IllegalArgumentException('\'' + varName + "' contains a key not of type " +
-				                                   keyType.getName());
-			} else if (!valueType.isInstance(entry.getValue())) {
-				throw new IllegalArgumentException('\'' + varName + "' contains a value not of type " +
-				                                   valueType.getName());
 			}
 		}
 

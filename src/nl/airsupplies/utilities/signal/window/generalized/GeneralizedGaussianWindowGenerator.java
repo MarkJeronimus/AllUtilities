@@ -5,7 +5,7 @@ import nl.airsupplies.utilities.nodes.Node;
 import nl.airsupplies.utilities.nodes.ParameterCurve;
 import nl.airsupplies.utilities.signal.window.AbstractGeneralizedWindowFunction;
 import nl.airsupplies.utilities.signal.window.WindowFunction;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireBetween;
 
 /**
  * A gaussian {@link WindowFunction}.
@@ -27,7 +27,7 @@ public class GeneralizedGaussianWindowGenerator extends
 	}
 
 	public void setSigma(double sigma) {
-		this.sigma = requireRange(0.01, 100, sigma, "sigma");
+		this.sigma = requireBetween(0.01, 100, sigma, "sigma");
 	}
 
 	@Override

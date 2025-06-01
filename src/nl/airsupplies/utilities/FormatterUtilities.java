@@ -8,7 +8,7 @@ import java.text.ParsePosition;
 import java.util.Locale;
 
 import nl.airsupplies.utilities.annotation.UtilityClass;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireBetween;
 
 /**
  * @author Mark Jeronimus
@@ -77,7 +77,7 @@ public final class FormatterUtilities {
 	}
 
 	public static NumberFormat getFixedPrecisionFormatter(int precision) {
-		requireRange(0, 15, precision, "precision");
+		requireBetween(0, 15, precision, "precision");
 
 		return new NumberFormat() {
 			@Override

@@ -23,8 +23,8 @@ import org.jetbrains.annotations.Nullable;
 import nl.airsupplies.utilities.annotation.UtilityClass;
 import static nl.airsupplies.utilities.validator.ArrayValidatorUtilities.requireArrayLengthAtLeast;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireAtLeast;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireBetween;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireThat;
 
 /**
@@ -371,7 +371,7 @@ public final class ArrayUtilities {
 	 * @see ByteBuffer#getInt()
 	 */
 	public static int getMediumInt(ByteBuffer buffer, int index) {
-		requireRange(0, buffer.limit() - 3, index, "index");
+		requireBetween(0, buffer.limit() - 3, index, "index");
 
 		if (buffer.order() == BIG_ENDIAN) {
 			return (buffer.get(index) & 0xFF) << 16 |

@@ -6,8 +6,8 @@ import net.jcip.annotations.NotThreadSafe;
 
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireAtLeast;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireAtMost;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireBetween;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
 
 /**
  * @author Mark Jeronimus
@@ -28,7 +28,7 @@ public final class BitBuffer {
 	}
 
 	public BitBuffer(int bitSize, int bits) {
-		bitCapacity = requireRange(1, 32, bitSize, "bitSize");
+		bitCapacity = requireBetween(1, 32, bitSize, "bitSize");
 		buffer      = ByteBuffer.allocate((bitSize + 7) >> 3);
 
 		putBits(0, bitSize, bits);
@@ -40,7 +40,7 @@ public final class BitBuffer {
 
 		int maxBitCapacity = buffer.capacity() * 8;
 		int minBitCapacity = maxBitCapacity - 7;
-		this.bitCapacity = requireRange(minBitCapacity, maxBitCapacity, bitCapacity, "bitCapacity");
+		this.bitCapacity = requireBetween(minBitCapacity, maxBitCapacity, bitCapacity, "bitCapacity");
 	}
 
 	public byte[] backingArray() {
@@ -56,7 +56,7 @@ public final class BitBuffer {
 	}
 
 	public void setBitSize(int bitSize) {
-		this.bitSize = requireRange(0, bitCapacity, bitSize, "bitSize");
+		this.bitSize = requireBetween(0, bitCapacity, bitSize, "bitSize");
 	}
 
 	public int getBitPosition() {
@@ -64,7 +64,7 @@ public final class BitBuffer {
 	}
 
 	public void setBitPosition(int bitPosition) {
-		this.bitPosition = requireRange(0, bitCapacity, bitPosition, "bitPosition");
+		this.bitPosition = requireBetween(0, bitCapacity, bitPosition, "bitPosition");
 	}
 
 	public int bitsRemaining() {
@@ -75,7 +75,7 @@ public final class BitBuffer {
 	 * Note that {@code getBit(bitPosition) ? 1 : 0} is still more efficient than {@code getBits(bitPosition, 1)}.
 	 */
 	public boolean getBit(int bitPosition) {
-		requireRange(0, bitSize, bitPosition, "bitPosition");
+		requireBetween(0, bitSize, bitPosition, "bitPosition");
 
 		int position = bitPosition >> 3;
 		int mask     = 0b10000000 >> (bitPosition - (position << 3));
@@ -92,7 +92,7 @@ public final class BitBuffer {
 
 	@SuppressWarnings("lossy-conversions")
 	public void putBit(int bitPosition, boolean bit) {
-		requireRange(0, bitSize, bitPosition, "bitPosition");
+		requireBetween(0, bitSize, bitPosition, "bitPosition");
 
 		int position = bitPosition >> 3;
 		int mask     = 0b10000000 >> (bitPosition - (position << 3));
@@ -117,8 +117,8 @@ public final class BitBuffer {
 	}
 
 	public int getBits(int bitPosition, int numBits) {
-		requireRange(1, 32, numBits, "numBits");
-		requireRange(0, bitSize - numBits, bitPosition, "bitPosition");
+		requireBetween(1, 32, numBits, "numBits");
+		requireBetween(0, bitSize - numBits, bitPosition, "bitPosition");
 
 		int toBitPosition = bitPosition + numBits - 1;
 
@@ -167,8 +167,8 @@ public final class BitBuffer {
 	}
 
 	public void putBits(int bitPosition, int numBits, int bits) {
-		requireRange(1, 32, numBits, "numBits");
-		requireRange(0, Math.min(bitSize + 1, bitCapacity - numBits), bitPosition, "bitPosition");
+		requireBetween(1, 32, numBits, "numBits");
+		requireBetween(0, Math.min(bitSize + 1, bitCapacity - numBits), bitPosition, "bitPosition");
 
 		int toBitPosition = bitPosition + numBits - 1;
 
@@ -227,7 +227,7 @@ public final class BitBuffer {
 //	public byte[] getArray(int bitPosition, int numBits) {
 //		requireThat((numBits & 7) == 0, () -> "numBits is not an integral number of bytes: " + numBits);
 //		int maxNumBits = (bitCapacity - bitSize) & 7;
-//		requireRange(8, maxNumBits, numBits, "numBits");
+//		requireBetween(8, maxNumBits, numBits, "numBits");
 //
 //		return getArray(bitPosition, numBits, null);
 //	}
@@ -238,8 +238,8 @@ public final class BitBuffer {
 //		int numBytes = array.length;
 //		requireThat(numBits == numBytes << 3, () -> "numBits is not an integral number of bytes: " + numBits);
 //		int maxNumBits = (bitCapacity - bitSize) & 7;
-//		requireRange(8, maxNumBits, numBits, "numBits");
-//		requireRange(0, Math.min(bitSize + 1, bitCapacity - numBits), bitPosition, "bitPosition");
+//		requireBetween(8, maxNumBits, numBits, "numBits");
+//		requireBetween(0, Math.min(bitSize + 1, bitCapacity - numBits), bitPosition, "bitPosition");
 //
 //		if (array == null) {
 //			array = new byte[numBytes];
@@ -272,7 +272,7 @@ public final class BitBuffer {
 //		int numBytes = array.length;
 //		requireNonNull(array, "array");
 //		int numBits = numBytes * 8;
-//		requireRange(0, Math.min(bitSize + 1, bitCapacity - numBits), bitPosition, "bitPosition");
+//		requireBetween(0, Math.min(bitSize + 1, bitCapacity - numBits), bitPosition, "bitPosition");
 //
 //		// Is the position byte-aligned?
 //		if ((bitPosition & 7) == 0) {

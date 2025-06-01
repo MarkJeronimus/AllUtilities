@@ -9,8 +9,8 @@ import net.jcip.annotations.GuardedBy;
 import org.jetbrains.annotations.Nullable;
 
 import nl.airsupplies.utilities.HexUtilities;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireBetween;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
 
 /**
  * An {@link InputStream} that draws bytes from an internal circular buffer, which can be filled by
@@ -78,8 +78,8 @@ public class CircularBufferInputStream extends InputStream {
 		}
 
 		requireNonNull(b, "b");
-		requireRange(0, b.length - 1, off, "off");
-		requireRange(0, b.length - off, len, "len");
+		requireBetween(0, b.length - 1, off, "off");
+		requireBetween(0, b.length - off, len, "len");
 
 		synchronized (lock) {
 			// Block for the first byte

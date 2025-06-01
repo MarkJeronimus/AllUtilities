@@ -16,7 +16,7 @@ import static nl.airsupplies.utilities.validator.ArrayValidatorUtilities.require
  * @author Mark Jeronimus
  */
 // Created 2016-12-21
-@SuppressWarnings({"OverloadedMethodsWithSameNumberOfParameters", "OverlyComplexClass", "UnusedReturnValue"})
+@SuppressWarnings({"OverlyComplexClass", "UnusedReturnValue"})
 @UtilityClass
 public final class ValidatorUtilities {
 	public static void assertThat(boolean condition, Supplier<String> message) {
@@ -102,7 +102,11 @@ public final class ValidatorUtilities {
 			return null;
 		}
 
-		return requireNotDegenerate(actual, varName);
+		if (NumberUtilities.isDegenerate(actual)) {
+			throw new IllegalArgumentException('\'' + varName + "' is degenerate: " + actual);
+		}
+
+		return actual;
 	}
 
 	public static @Nullable Double requireNullOrNotDegenerate(@Nullable Double actual, String varName) {
@@ -110,7 +114,19 @@ public final class ValidatorUtilities {
 			return null;
 		}
 
-		return requireNotDegenerate(actual, varName);
+		if (NumberUtilities.isDegenerate(actual)) {
+			throw new IllegalArgumentException('\'' + varName + "' is degenerate: " + actual);
+		}
+
+		return actual;
+	}
+
+	public static byte requireNonZero(byte actual, String varName) {
+		if (actual == 0) {
+			throw new IllegalArgumentException('\'' + varName + "' must be non-zero");
+		}
+
+		return actual;
 	}
 
 	public static int requireNonZero(int actual, String varName) {
@@ -144,6 +160,14 @@ public final class ValidatorUtilities {
 
 		if (actual == 0) {
 			throw new IllegalArgumentException('\'' + varName + "' must be non-zero");
+		}
+
+		return actual;
+	}
+
+	public static @Nullable Byte requireNullOrNonZero(@Nullable Byte actual, String varName) {
+		if (actual != null && actual == 0) {
+			throw new IllegalArgumentException('\'' + varName + "' must either be null or non-zero");
 		}
 
 		return actual;
@@ -185,6 +209,24 @@ public final class ValidatorUtilities {
 		return actual;
 	}
 
+	public static byte requireAtLeast(byte min, byte actual, String varName) {
+		if (actual < min) {
+			throw new IllegalArgumentException('\'' + varName + "' must be at least " + min + ": " + actual);
+		}
+
+		return actual;
+	}
+
+	public static byte requireAtLeastUnsigned(int min, byte actual, String varName) {
+		assertThat(min >= 0 && min <= 255, () -> "'min' is invalid: " + min);
+
+		if ((actual & 0xFF) < min) {
+			throw new IllegalArgumentException('\'' + varName + "' must be at least " + min + ": " + (actual & 0xFF));
+		}
+
+		return actual;
+	}
+
 	public static int requireAtLeast(int min, int actual, String varName) {
 		if (actual < min) {
 			throw new IllegalArgumentException('\'' + varName + "' must be at least " + min + ": " + actual);
@@ -218,6 +260,26 @@ public final class ValidatorUtilities {
 
 		if (actual < min) {
 			throw new IllegalArgumentException('\'' + varName + "' must be at least " + min + ": " + actual);
+		}
+
+		return actual;
+	}
+
+	public static @Nullable Byte requireNullOrAtLeast(byte min, @Nullable Byte actual, String varName) {
+		if (actual != null && actual < min) {
+			throw new IllegalArgumentException('\'' + varName + "' must either be null or at least " +
+			                                   min + ": " + actual);
+		}
+
+		return actual;
+	}
+
+	public static @Nullable Byte requireNullOrAtLeastUnsigned(int min, @Nullable Byte actual, String varName) {
+		assertThat(min >= 0 && min <= 255, () -> "'min' is invalid: " + min);
+
+		if (actual != null && actual < min) {
+			throw new IllegalArgumentException('\'' + varName + "' must either be null or at least " +
+			                                   min + ": " + actual);
 		}
 
 		return actual;
@@ -273,6 +335,24 @@ public final class ValidatorUtilities {
 		return actual;
 	}
 
+	public static byte requireAtMost(byte max, byte actual, String varName) {
+		if (actual > max) {
+			throw new IllegalArgumentException('\'' + varName + "' must be at most " + max + ": " + actual);
+		}
+
+		return actual;
+	}
+
+	public static byte requireAtMostUnsigned(int max, byte actual, String varName) {
+		assertThat(max >= 0 && max <= 255, () -> "'max' is invalid: " + max);
+
+		if (actual > max) {
+			throw new IllegalArgumentException('\'' + varName + "' must be at most " + max + ": " + actual);
+		}
+
+		return actual;
+	}
+
 	public static long requireAtMost(long max, long actual, String varName) {
 		if (actual > max) {
 			throw new IllegalArgumentException('\'' + varName + "' must be at most " + max + ": " + actual);
@@ -298,6 +378,26 @@ public final class ValidatorUtilities {
 
 		if (actual > max) {
 			throw new IllegalArgumentException('\'' + varName + "' must be at most " + max + ": " + actual);
+		}
+
+		return actual;
+	}
+
+	public static @Nullable Byte requireNullOrAtMost(byte max, @Nullable Byte actual, String varName) {
+		if (actual != null && actual > max) {
+			throw new IllegalArgumentException('\'' + varName + "' must either be null or at most " +
+			                                   max + ": " + actual);
+		}
+
+		return actual;
+	}
+
+	public static @Nullable Byte requireNullOrAtMostUnsigned(int max, @Nullable Byte actual, String varName) {
+		assertThat(max >= 0 && max <= 255, () -> "'max' is invalid: " + max);
+
+		if (actual != null && (actual & 0xFF) > max) {
+			throw new IllegalArgumentException('\'' + varName + "' must either be null or at most " +
+			                                   max + ": " + (actual & 0xFF));
 		}
 
 		return actual;
@@ -345,9 +445,28 @@ public final class ValidatorUtilities {
 		return actual;
 	}
 
+	public static byte requireAbove(byte min, byte actual, String varName) {
+		assertThat(min < Byte.MAX_VALUE, () -> "'min' must not be Byte.MAX_VALUE");
+
+		if (actual <= min) {
+			throw new IllegalArgumentException('\'' + varName + "' must be above " + min + ": " + actual);
+		}
+
+		return actual;
+	}
+
+	public static byte requireAboveUnsigned(int min, byte actual, String varName) {
+		assertThat(min >= 0 && min <= 254, () -> "'min' is invalid: " + min);
+
+		if ((actual & 0xFF) <= min) {
+			throw new IllegalArgumentException('\'' + varName + "' must be above " + min + ": " + (actual & 0xFF));
+		}
+
+		return actual;
+	}
+
 	public static int requireAbove(int min, int actual, String varName) {
-		assertThat(min < Integer.MAX_VALUE, () -> "'min' is degenerate: " + min);
-		requireNotDegenerate(actual, varName);
+		assertThat(min < Integer.MAX_VALUE, () -> "'min' must not be Integer.MAX_VALUE");
 
 		if (actual <= min) {
 			throw new IllegalArgumentException('\'' + varName + "' must be above " + min + ": " + actual);
@@ -357,8 +476,7 @@ public final class ValidatorUtilities {
 	}
 
 	public static long requireAbove(long min, long actual, String varName) {
-		assertThat(min < Long.MAX_VALUE, () -> "'min' is degenerate: " + min);
-		requireNotDegenerate(actual, varName);
+		assertThat(min < Long.MAX_VALUE, () -> "'min' must not be Long.MAX_VALUE");
 
 		if (actual <= min) {
 			throw new IllegalArgumentException('\'' + varName + "' must be above " + min + ": " + actual);
@@ -389,8 +507,30 @@ public final class ValidatorUtilities {
 		return actual;
 	}
 
+	public static @Nullable Byte requireNullOrAbove(byte min, @Nullable Byte actual, String varName) {
+		assertThat(min < Byte.MAX_VALUE, () -> "'min' must not be Byte.MAX_VALUE");
+
+		if (actual != null && actual <= min) {
+			throw new IllegalArgumentException('\'' + varName + "' must either be null or above " +
+			                                   min + ": " + actual);
+		}
+
+		return actual;
+	}
+
+	public static @Nullable Byte requireNullOrAboveUnsigned(int min, @Nullable Byte actual, String varName) {
+		assertThat(min >= 0 && min <= 254, () -> "'min' is invalid: " + min);
+
+		if (actual != null && (actual & 0xFF) <= min) {
+			throw new IllegalArgumentException('\'' + varName + "' must either be null or above " +
+			                                   min + ": " + (actual & 0xFF));
+		}
+
+		return actual;
+	}
+
 	public static @Nullable Integer requireNullOrAbove(int min, @Nullable Integer actual, String varName) {
-		assertThat(min < Integer.MAX_VALUE, () -> "'min' is degenerate: " + min);
+		assertThat(min < Integer.MAX_VALUE, () -> "'min' must not be Integer.MAX_VALUE");
 
 		if (actual != null && actual <= min) {
 			throw new IllegalArgumentException('\'' + varName + "' must either be null or above " +
@@ -401,7 +541,7 @@ public final class ValidatorUtilities {
 	}
 
 	public static @Nullable Long requireNullOrAbove(long min, @Nullable Long actual, String varName) {
-		assertThat(min < Long.MAX_VALUE, () -> "'min' is degenerate: " + min);
+		assertThat(min < Long.MAX_VALUE, () -> "'min' must not be Long.MAX_VALUE");
 
 		if (actual != null && actual <= min) {
 			throw new IllegalArgumentException('\'' + varName + "' must either be null or above " +
@@ -435,8 +575,28 @@ public final class ValidatorUtilities {
 		return actual;
 	}
 
+	public static byte requireBelow(byte max, byte actual, String varName) {
+		assertThat(max > Byte.MIN_VALUE, () -> "'max' must not be Byte.MIN_VALUE");
+
+		if (actual >= max) {
+			throw new IllegalArgumentException('\'' + varName + "' must be below " + max + ": " + actual);
+		}
+
+		return actual;
+	}
+
+	public static byte requireBelowUnsigned(int max, byte actual, String varName) {
+		assertThat(max >= 0 && max <= 255, () -> "'max' is invalid: " + max);
+
+		if ((actual & 0xFF) >= max) {
+			throw new IllegalArgumentException('\'' + varName + "' must be below " + max + ": " + (actual & 0xFF));
+		}
+
+		return actual;
+	}
+
 	public static int requireBelow(int max, int actual, String varName) {
-		assertThat(max > Integer.MIN_VALUE, () -> "'max' is degenerate: " + max);
+		assertThat(max > Integer.MIN_VALUE, () -> "'max' must not be Integer.MIN_VALUE");
 
 		if (actual >= max) {
 			throw new IllegalArgumentException('\'' + varName + "' must be below " + max + ": " + actual);
@@ -446,7 +606,7 @@ public final class ValidatorUtilities {
 	}
 
 	public static long requireBelow(long max, long actual, String varName) {
-		assertThat(max > Long.MIN_VALUE, () -> "'max' is degenerate: " + max);
+		assertThat(max > Long.MIN_VALUE, () -> "'max' must not be Long.MIN_VALUE");
 
 		if (actual >= max) {
 			throw new IllegalArgumentException('\'' + varName + "' must be below " + max + ": " + actual);
@@ -477,8 +637,30 @@ public final class ValidatorUtilities {
 		return actual;
 	}
 
+	public static @Nullable Byte requireNullOrBelow(byte max, @Nullable Byte actual, String varName) {
+		assertThat(max > Byte.MIN_VALUE, () -> "'max' must not be Byte.MIN_VALUE");
+
+		if (actual != null && actual >= max) {
+			throw new IllegalArgumentException('\'' + varName + "' must either be null or below " +
+			                                   max + ": " + actual);
+		}
+
+		return actual;
+	}
+
+	public static @Nullable Byte requireNullOrBelowUnsigned(int max, @Nullable Byte actual, String varName) {
+		assertThat(max >= 1 && max <= 255, () -> "'max' is invalid: " + max);
+
+		if (actual != null && (actual & 0xFF) >= max) {
+			throw new IllegalArgumentException('\'' + varName + "' must either be null or below " +
+			                                   max + ": " + (actual & 0xFF));
+		}
+
+		return actual;
+	}
+
 	public static @Nullable Integer requireNullOrBelow(int max, @Nullable Integer actual, String varName) {
-		assertThat(max > Integer.MIN_VALUE, () -> "'max' is degenerate: " + max);
+		assertThat(max > Integer.MIN_VALUE, () -> "'max' must not be Integer.MIN_VALUE");
 
 		if (actual != null && actual >= max) {
 			throw new IllegalArgumentException('\'' + varName + "' must either be null or below " +
@@ -489,7 +671,7 @@ public final class ValidatorUtilities {
 	}
 
 	public static @Nullable Long requireNullOrBelow(long max, @Nullable Long actual, String varName) {
-		assertThat(max > Long.MIN_VALUE, () -> "'max' is degenerate: " + max);
+		assertThat(max > Long.MIN_VALUE, () -> "'max' must not be Long.MIN_VALUE");
 
 		if (actual != null && actual >= max) {
 			throw new IllegalArgumentException('\'' + varName + "' must either be null or below " +
@@ -523,8 +705,8 @@ public final class ValidatorUtilities {
 		return actual;
 	}
 
-	public static int requireRange(int min, int max, int actual, String varName) {
-		assertThat(min <= max, () -> "Range is invalid: [" + min + ", " + max + ']');
+	public static byte requireBetween(byte min, byte max, byte actual, String varName) {
+		assertThat(min <= max, () -> "Range is invalid: " + min + "..." + max);
 
 		if (actual < min || actual > max) {
 			if (min == max) {
@@ -539,8 +721,10 @@ public final class ValidatorUtilities {
 		return actual;
 	}
 
-	public static long requireRange(long min, long max, long actual, String varName) {
-		assertThat(min <= max, () -> "Range is invalid: [" + min + ", " + max + ']');
+	public static byte requireBetweenUnsigned(int min, int max, byte actual, String varName) {
+		assertThat(min >= 0 && min <= 255, () -> "'min' is invalid: " + min);
+		assertThat(max >= 0 && max <= 255, () -> "'max' is invalid: " + max);
+		assertThat(min <= max, () -> "Range is invalid: " + min + "..." + max);
 
 		if (actual < min || actual > max) {
 			if (min == max) {
@@ -555,10 +739,42 @@ public final class ValidatorUtilities {
 		return actual;
 	}
 
-	public static float requireRange(float min, float max, float actual, String varName) {
+	public static int requireBetween(int min, int max, int actual, String varName) {
+		assertThat(min <= max, () -> "Range is invalid: " + min + "..." + max);
+
+		if (actual < min || actual > max) {
+			if (min == max) {
+				throw new IllegalArgumentException('\'' + varName + "' must be exactly " +
+				                                   min + ": " + actual);
+			} else {
+				throw new IllegalArgumentException('\'' + varName + "' must be in the range [" +
+				                                   min + ", " + max + "]: " + actual);
+			}
+		}
+
+		return actual;
+	}
+
+	public static long requireBetween(long min, long max, long actual, String varName) {
+		assertThat(min <= max, () -> "Range is invalid: " + min + "..." + max);
+
+		if (actual < min || actual > max) {
+			if (min == max) {
+				throw new IllegalArgumentException('\'' + varName + "' must be exactly " +
+				                                   min + ": " + actual);
+			} else {
+				throw new IllegalArgumentException('\'' + varName + "' must be in the range [" +
+				                                   min + ", " + max + "]: " + actual);
+			}
+		}
+
+		return actual;
+	}
+
+	public static float requireBetween(float min, float max, float actual, String varName) {
 		assertNotDegenerate(min, "min");
 		assertNotDegenerate(max, "max");
-		assertThat(min <= max, () -> "Range is invalid: [" + min + ", " + max + ']');
+		assertThat(min <= max, () -> "Range is invalid: " + min + "..." + max);
 		requireNotDegenerate(actual, varName);
 
 		if (actual < min || actual > max) {
@@ -574,10 +790,10 @@ public final class ValidatorUtilities {
 		return actual;
 	}
 
-	public static double requireRange(double min, double max, double actual, String varName) {
+	public static double requireBetween(double min, double max, double actual, String varName) {
 		assertNotDegenerate(min, "min");
 		assertNotDegenerate(max, "max");
-		assertThat(min <= max, () -> "Range is invalid: [" + min + ", " + max + ']');
+		assertThat(min <= max, () -> "Range is invalid: " + min + "..." + max);
 		requireNotDegenerate(actual, varName);
 
 		if (actual < min || actual > max) {
@@ -593,8 +809,8 @@ public final class ValidatorUtilities {
 		return actual;
 	}
 
-	public static @Nullable Integer requireNullOrRange(int min, int max, @Nullable Integer actual, String varName) {
-		assertThat(min <= max, () -> "Range is invalid: [" + min + ", " + max + ']');
+	public static @Nullable Integer requireNullOrBetween(int min, int max, @Nullable Integer actual, String varName) {
+		assertThat(min <= max, () -> "Range is invalid: " + min + "..." + max);
 
 		if (actual != null && (actual < min || actual > max)) {
 			if (min == max) {
@@ -609,8 +825,8 @@ public final class ValidatorUtilities {
 		return actual;
 	}
 
-	public static @Nullable Long requireNullOrRange(long min, long max, @Nullable Long actual, String varName) {
-		assertThat(min <= max, () -> "Range is invalid: [" + min + ", " + max + ']');
+	public static @Nullable Byte requireNullOrBetween(byte min, byte max, @Nullable Byte actual, String varName) {
+		assertThat(min <= max, () -> "Range is invalid: " + min + "..." + max);
 
 		if (actual != null && (actual < min || actual > max)) {
 			if (min == max) {
@@ -625,10 +841,44 @@ public final class ValidatorUtilities {
 		return actual;
 	}
 
-	public static @Nullable Float requireNullOrRange(float min, float max, @Nullable Float actual, String varName) {
+	public static @Nullable Byte requireNullOrBetweenUnsigned(int min, int max, @Nullable Byte actual, String varName) {
+		assertThat(min >= 0 && min <= 255, () -> "'min' is invalid: " + min);
+		assertThat(max >= 0 && max <= 255, () -> "'max' is invalid: " + max);
+		assertThat(min <= max, () -> "Range is invalid: " + min + "..." + max);
+
+		if (actual != null && (actual < min || actual > max)) {
+			if (min == max) {
+				throw new IllegalArgumentException('\'' + varName + "' must either be null or exactly " +
+				                                   min + ": " + actual);
+			} else {
+				throw new IllegalArgumentException('\'' + varName + "' must either be null or in the range [" +
+				                                   min + ", " + max + "]: " + actual);
+			}
+		}
+
+		return actual;
+	}
+
+	public static @Nullable Long requireNullOrBetween(long min, long max, @Nullable Long actual, String varName) {
+		assertThat(min <= max, () -> "Range is invalid: " + min + "..." + max);
+
+		if (actual != null && (actual < min || actual > max)) {
+			if (min == max) {
+				throw new IllegalArgumentException('\'' + varName + "' must either be null or exactly " +
+				                                   min + ": " + actual);
+			} else {
+				throw new IllegalArgumentException('\'' + varName + "' must either be null or in the range [" +
+				                                   min + ", " + max + "]: " + actual);
+			}
+		}
+
+		return actual;
+	}
+
+	public static @Nullable Float requireNullOrBetween(float min, float max, @Nullable Float actual, String varName) {
 		assertNotDegenerate(min, "min");
 		assertNotDegenerate(max, "max");
-		assertThat(min <= max, () -> "Range is invalid: [" + min + ", " + max + ']');
+		assertThat(min <= max, () -> "Range is invalid: " + min + "..." + max);
 		requireNullOrNotDegenerate(actual, varName);
 
 		if (actual != null && (actual < min || actual > max)) {
@@ -644,10 +894,11 @@ public final class ValidatorUtilities {
 		return actual;
 	}
 
-	public static @Nullable Double requireNullOrRange(double min, double max, @Nullable Double actual, String varName) {
+	public static @Nullable Double requireNullOrBetween(
+			double min, double max, @Nullable Double actual, String varName) {
 		assertNotDegenerate(min, "min");
 		assertNotDegenerate(max, "max");
-		assertThat(min <= max, () -> "Range is invalid: [" + min + ", " + max + ']');
+		assertThat(min <= max, () -> "Range is invalid: " + min + "..." + max);
 		requireNullOrNotDegenerate(actual, varName);
 
 		if (actual != null && (actual < min || actual > max)) {
@@ -664,7 +915,7 @@ public final class ValidatorUtilities {
 	}
 
 	public static int requireZeroOrRange(int min, int max, int actual, String varName) {
-		assertThat(min <= max, () -> "Range is invalid: [" + min + ", " + max + ']');
+		assertThat(min <= max, () -> "Range is invalid: " + min + "..." + max);
 
 		if (actual != 0 && (actual < min || actual > max)) {
 			if (min == max) {
@@ -680,7 +931,7 @@ public final class ValidatorUtilities {
 	}
 
 	public static long requireZeroOrRange(long min, long max, long actual, String varName) {
-		assertThat(min <= max, () -> "Range is invalid: [" + min + ", " + max + ']');
+		assertThat(min <= max, () -> "Range is invalid: " + min + "..." + max);
 
 		if (actual != 0 && (actual < min || actual > max)) {
 			if (min == max) {
@@ -698,7 +949,7 @@ public final class ValidatorUtilities {
 	public static float requireZeroOrRange(float min, float max, float actual, String varName) {
 		assertNotDegenerate(min, "min");
 		assertNotDegenerate(max, "max");
-		assertThat(min <= max, () -> "Range is invalid: [" + min + ", " + max + ']');
+		assertThat(min <= max, () -> "Range is invalid: " + min + "..." + max);
 		requireNotDegenerate(actual, "actual");
 
 		if (actual != 0.0f && (actual < min || actual > max)) {
@@ -717,7 +968,7 @@ public final class ValidatorUtilities {
 	public static double requireZeroOrRange(double min, double max, double actual, String varName) {
 		assertNotDegenerate(min, "min");
 		assertNotDegenerate(max, "max");
-		assertThat(min <= max, () -> "Range is invalid: [" + min + ", " + max + ']');
+		assertThat(min <= max, () -> "Range is invalid: " + min + "..." + max);
 		requireNotDegenerate(actual, "actual");
 
 		if (actual != 0.0 && (actual < min || actual > max)) {
@@ -733,42 +984,69 @@ public final class ValidatorUtilities {
 		return actual;
 	}
 
-	public static void requireDistance(long minDistance,
-	                                   long maxDistance,
-	                                   int actualMin,
-	                                   int actualMax,
-	                                   String varNameMin,
-	                                   String varNameMax) {
+	public static void requireDistanceBetween(
+			long minDist, long maxDist, int actualMin, int actualMax, String varNameMin, String varNameMax) {
+		assertThat(maxDist >= minDist, () -> "Range is invalid: " + minDist + "..." + maxDist);
 		long dist = (long)actualMax - actualMin;
 
-		if (dist < minDistance) {
+		if (dist < minDist) {
 			throw new IllegalArgumentException('\'' + varNameMin + "' and '" + varNameMax +
-			                                   "' must be at least " + minDistance + " apart: " + dist);
-		} else if (dist > maxDistance) {
+			                                   "' must be at least " + minDist + " apart: " + dist);
+		} else if (dist > maxDist) {
 			throw new IllegalArgumentException('\'' + varNameMin + "' and '" + varNameMax +
-			                                   "' must be at most " + maxDistance + " apart: " + dist);
+			                                   "' must be at most " + maxDist + " apart: " + dist);
 		}
 	}
 
-	public static void requireDistance(double minDistance,
-	                                   double maxDistance,
-	                                   double actualMin,
-	                                   double actualMax,
-	                                   String varNameMin,
-	                                   String varNameMax) {
-		requireNotDegenerate(minDistance, "minDistance");
-		requireNotDegenerate(maxDistance, "maxDistance");
+	public static void requireDistanceBetween(
+			long minDist, long maxDist, long actualMin, long actualMax, String varNameMin, String varNameMax) {
+		assertThat(maxDist >= minDist, () -> "Range is invalid: " + minDist + "..." + maxDist);
+		long dist = actualMax - actualMin;
+
+		if (dist < minDist) {
+			throw new IllegalArgumentException('\'' + varNameMin + "' and '" + varNameMax +
+			                                   "' must be at least " + minDist + " apart: " + dist);
+		} else if (dist > maxDist) {
+			throw new IllegalArgumentException('\'' + varNameMin + "' and '" + varNameMax +
+			                                   "' must be at most " + maxDist + " apart: " + dist);
+		}
+	}
+
+	public static void requireDistanceBetween(
+			float minDist, float maxDist, float actualMin, float actualMax, String varNameMin, String varNameMax) {
+		assertNotDegenerate(minDist, "minDist");
+		assertNotDegenerate(maxDist, "maxDist");
+		assertThat(maxDist >= minDist, () -> "Range is invalid: " + minDist + "..." + maxDist);
 		requireNotDegenerate(actualMin, varNameMin);
 		requireNotDegenerate(actualMax, varNameMax);
 
 		double dist = actualMax - actualMin;
 
-		if (dist < minDistance) {
+		if (dist < minDist) {
 			throw new IllegalArgumentException('\'' + varNameMin + "' and '" + varNameMax +
-			                                   "' must be at least " + minDistance + " apart: " + dist);
-		} else if (dist > maxDistance) {
+			                                   "' must be at least " + minDist + " apart: " + dist);
+		} else if (dist > maxDist) {
 			throw new IllegalArgumentException('\'' + varNameMin + "' and '" + varNameMax +
-			                                   "' must be at most " + maxDistance + " apart: " + dist);
+			                                   "' must be at most " + maxDist + " apart: " + dist);
+		}
+	}
+
+	public static void requireDistanceBetween(
+			double minDist, double maxDist, double actualMin, double actualMax, String varNameMin, String varNameMax) {
+		assertNotDegenerate(minDist, "minDist");
+		assertNotDegenerate(maxDist, "maxDist");
+		assertThat(maxDist >= minDist, () -> "Range is invalid: " + minDist + "..." + maxDist);
+		requireNotDegenerate(actualMin, varNameMin);
+		requireNotDegenerate(actualMax, varNameMax);
+
+		double dist = actualMax - actualMin;
+
+		if (dist < minDist) {
+			throw new IllegalArgumentException('\'' + varNameMin + "' and '" + varNameMax +
+			                                   "' must be at least " + minDist + " apart: " + dist);
+		} else if (dist > maxDist) {
+			throw new IllegalArgumentException('\'' + varNameMin + "' and '" + varNameMax +
+			                                   "' must be at most " + maxDist + " apart: " + dist);
 		}
 	}
 

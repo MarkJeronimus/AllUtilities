@@ -1,32 +1,30 @@
-package nl.airsupplies.utilities.validator;
+package nl.airsupplies.utilities.complex;
 
 import org.jetbrains.annotations.Nullable;
 
 import nl.airsupplies.utilities.annotation.UtilityClass;
-import nl.airsupplies.utilities.complex.Complex2d;
 import static nl.airsupplies.utilities.NumberUtilities.isDegenerate;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.assertNonNull;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
 
 /**
  * @author Mark Jeronimus
  */
-// Created 2016-12-21
-@SuppressWarnings("OverloadedMethodsWithSameNumberOfParameters")
+// Created 2024-??-?? Split from ValidatorUtilities
+@SuppressWarnings("UnusedReturnValue")
 @UtilityClass
 public final class ComplexValidatorUtilities {
 	public static Complex2d assertComplexNotDegenerate(Complex2d actual, String varName) {
-		assertNonNull(actual, varName);
+		requireNonNull(actual, varName);
 
 		if (isDegenerate(actual.real) || isDegenerate(actual.imag)) {
 			if (isDegenerate(actual.real)) {
 				if (isDegenerate(actual.imag)) {
-					throw new IllegalArgumentException(varName + ".re and .im are both degenerate: " + actual);
+					throw new IllegalArgumentException(varName + ".real and .imag are both degenerate: " + actual);
 				} else {
-					throw new IllegalArgumentException(varName + ".re is degenerate: " + actual);
+					throw new IllegalArgumentException(varName + ".real is degenerate: " + actual);
 				}
 			} else {
-				throw new IllegalArgumentException(varName + ".im is degenerate: " + actual);
+				throw new IllegalArgumentException(varName + ".imag is degenerate: " + actual);
 			}
 		}
 
@@ -39,12 +37,12 @@ public final class ComplexValidatorUtilities {
 		if (isDegenerate(actual.real) || isDegenerate(actual.imag)) {
 			if (isDegenerate(actual.real)) {
 				if (isDegenerate(actual.imag)) {
-					throw new IllegalArgumentException(varName + ".re and .im are both degenerate: " + actual);
+					throw new IllegalArgumentException(varName + ".real and .imag are both degenerate: " + actual);
 				} else {
-					throw new IllegalArgumentException(varName + ".re is degenerate: " + actual);
+					throw new IllegalArgumentException(varName + ".real is degenerate: " + actual);
 				}
 			} else {
-				throw new IllegalArgumentException(varName + ".im is degenerate: " + actual);
+				throw new IllegalArgumentException(varName + ".imag is degenerate: " + actual);
 			}
 		}
 
@@ -59,12 +57,12 @@ public final class ComplexValidatorUtilities {
 		if (isDegenerate(actual.real) || isDegenerate(actual.imag)) {
 			if (isDegenerate(actual.real)) {
 				if (isDegenerate(actual.imag)) {
-					throw new IllegalArgumentException(varName + ".re and .im are both degenerate: " + actual);
+					throw new IllegalArgumentException(varName + ".real and .imag are both degenerate: " + actual);
 				} else {
-					throw new IllegalArgumentException(varName + ".re is degenerate: " + actual);
+					throw new IllegalArgumentException(varName + ".real is degenerate: " + actual);
 				}
 			} else {
-				throw new IllegalArgumentException(varName + ".im is degenerate: " + actual);
+				throw new IllegalArgumentException(varName + ".imag is degenerate: " + actual);
 			}
 		}
 

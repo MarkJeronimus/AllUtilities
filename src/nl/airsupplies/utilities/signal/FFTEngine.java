@@ -2,10 +2,10 @@ package nl.airsupplies.utilities.signal;
 
 import nl.airsupplies.utilities.NumberUtilities;
 import nl.airsupplies.utilities.complex.Complex2d;
-import static nl.airsupplies.utilities.validator.ArrayValidatorUtilities.requireArrayValuesNonNull;
+import static nl.airsupplies.utilities.validator.ArrayValidatorUtilities.requireArrayLengthExactly;
+import static nl.airsupplies.utilities.validator.ArrayValueValidatorUtilities.requireValuesNonNull;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireAtLeast;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
 
 /**
  * This class performs conversion between time-domain and frequency-domain signals. <br> Few performance optimizations
@@ -69,10 +69,10 @@ public class FFTEngine {
 	 * Calculates the forward FFT using the Cooley-Tukey algorithm.
 	 */
 	public void transform(Complex2d[] in, Complex2d[] out) {
-		requireArrayValuesNonNull(in, "in");
-		requireArrayValuesNonNull(out, "out");
-		requireRange(size, size, in.length, "in.length");
-		requireRange(size, size, out.length, "out.length");
+		requireValuesNonNull(in, "in");
+		requireValuesNonNull(out, "out");
+		requireArrayLengthExactly(size, in.length, "in.length");
+		requireArrayLengthExactly(size, out.length, "out.length");
 
 		// Load the waveform, index bits reversed.
 		for (int i = size - 1; i >= 0; i--) {

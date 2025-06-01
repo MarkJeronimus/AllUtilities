@@ -6,9 +6,9 @@ import nl.airsupplies.utilities.graphics.color.Color3f;
 import nl.airsupplies.utilities.graphics.color.Color4f;
 import static nl.airsupplies.utilities.validator.ArrayValidatorUtilities.requireArrayLengthAtLeast;
 import static nl.airsupplies.utilities.validator.ArrayValidatorUtilities.requireArrayLengthsMatch;
-import static nl.airsupplies.utilities.validator.ArrayValidatorUtilities.requireArrayValueRange;
-import static nl.airsupplies.utilities.validator.ArrayValidatorUtilities.requireArrayValuesNonNull;
-import static nl.airsupplies.utilities.validator.ArrayValidatorUtilities.requireStrictlyIncreasing;
+import static nl.airsupplies.utilities.validator.ArrayValueValidatorUtilities.requireStrictlyIncreasing;
+import static nl.airsupplies.utilities.validator.ArrayValueValidatorUtilities.requireValuesBetween;
+import static nl.airsupplies.utilities.validator.ArrayValueValidatorUtilities.requireValuesNonNull;
 
 /**
  * @author Mark Jeronimus
@@ -33,16 +33,16 @@ public class ControlPointGradient extends Gradient {
 	public ControlPointGradient(Color3f[] colors, ClampingMode clampingMode, double[] fractions) {
 		super(clampingMode, false);
 		requireArrayLengthsMatch(colors, fractions, "colors", "fractions");
-		this.colors = toColor4f(requireArrayValuesNonNull(colors, "colors"));
-		requireArrayValueRange(0.0, 1.0, fractions, "fractions");
+		this.colors = toColor4f(requireValuesNonNull(colors, "colors"));
+		requireValuesBetween(0.0, 1.0, fractions, "fractions");
 		this.fractions = requireStrictlyIncreasing(fractions, "fractions");
 	}
 
 	public ControlPointGradient(Color4f[] colors, ClampingMode clampingMode, double[] fractions) {
 		super(clampingMode, true);
 		requireArrayLengthsMatch(colors, fractions, "colors", "fractions");
-		this.colors = requireArrayValuesNonNull(colors, "colors");
-		requireArrayValueRange(0.0, 1.0, fractions, "fractions");
+		this.colors = requireValuesNonNull(colors, "colors");
+		requireValuesBetween(0.0, 1.0, fractions, "fractions");
 		this.fractions = requireStrictlyIncreasing(fractions, "fractions");
 	}
 

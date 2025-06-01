@@ -11,8 +11,8 @@ import org.jetbrains.annotations.Nullable;
 import nl.airsupplies.utilities.graphics.svg.core.fill.SVGNoFill;
 import nl.airsupplies.utilities.graphics.svg.core.fill.SVGSolidColor;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireAtLeast;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireBetween;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
 
 /**
  * @author Mark Jeronimus
@@ -71,7 +71,7 @@ public class SVGAttributes {
 	}
 
 	public void setFillOpacity(double fillOpacity) {
-		requireRange(0.0f, 1.0f, (float)fillOpacity, "fillOpacity");
+		requireBetween(0.0f, 1.0f, (float)fillOpacity, "fillOpacity");
 
 		setCustomAttribute("fill-opacity", (float)fillOpacity);
 	}
@@ -107,7 +107,7 @@ public class SVGAttributes {
 	}
 
 	public void setOpacity(double opacity) {
-		requireRange(0.0f, 1.0f, (float)opacity, "opacity");
+		requireBetween(0.0f, 1.0f, (float)opacity, "opacity");
 
 		setCustomAttribute("opacity", (float)opacity);
 	}
@@ -173,7 +173,7 @@ public class SVGAttributes {
 	}
 
 	public void setStrokeOpacity(double strokeOpacity) {
-		requireRange(0.0f, 1.0f, (float)strokeOpacity, "strokeOpacity");
+		requireBetween(0.0f, 1.0f, (float)strokeOpacity, "strokeOpacity");
 
 		setCustomAttribute("stroke-opacity", (float)strokeOpacity);
 	}
@@ -183,7 +183,7 @@ public class SVGAttributes {
 	}
 
 	public void setStrokeWidth(double strokeWidth) {
-		requireRange(0.0f, 100.0f, (float)strokeWidth, "strokeWidth");
+		requireBetween(0.0f, 100.0f, (float)strokeWidth, "strokeWidth");
 
 		setCustomAttribute("stroke-width", (float)strokeWidth);
 	}

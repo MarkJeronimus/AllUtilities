@@ -2,8 +2,8 @@ package nl.airsupplies.utilities.signal;
 
 import nl.airsupplies.utilities.constant.NumberConstants;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireAtLeast;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireBetween;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
 
 /**
  * @author Mark Jeronimus
@@ -58,8 +58,8 @@ public class DCTEngine {
 	}
 
 	public void forward(double[] in, double[] out) {
-		requireRange(size, size, in.length, "in.length");
-		requireRange(size, size, out.length, "out.length");
+		requireBetween(size, size, in.length, "in.length");
+		requireBetween(size, size, out.length, "out.length");
 
 		for (int k = 0; k < size; k++) {
 			out[k] = 0;
@@ -90,8 +90,8 @@ public class DCTEngine {
 	}
 
 	public void reverse(double[] in, double[] out) {
-		requireRange(size, size, in.length, "in.length");
-		requireRange(size, size, out.length, "out.length");
+		requireBetween(size, size, in.length, "in.length");
+		requireBetween(size, size, out.length, "out.length");
 
 		for (int k = 0; k < size; k++) {
 			out[k] = 0;

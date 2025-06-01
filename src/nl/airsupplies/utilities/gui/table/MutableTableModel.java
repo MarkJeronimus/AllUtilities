@@ -10,7 +10,7 @@ import javax.swing.table.AbstractTableModel;
 
 import net.jcip.annotations.Immutable;
 
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireBetween;
 
 /**
  * @author Mark Jeronimus
@@ -197,8 +197,8 @@ public class MutableTableModel extends AbstractTableModel implements List<Object
 
 	@Override
 	public Object getValueAt(int row, int col) {
-		requireRange(0, size() - 1, row, "row");
-		requireRange(0, tableData.get(row).length - 1, col, "col");
+		requireBetween(0, size() - 1, row, "row");
+		requireBetween(0, tableData.get(row).length - 1, col, "col");
 
 		return tableData.get(row)[col];
 	}

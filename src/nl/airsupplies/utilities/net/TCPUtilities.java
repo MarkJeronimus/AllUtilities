@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 import nl.airsupplies.utilities.annotation.UtilityClass;
 import static nl.airsupplies.utilities.validator.StringValidatorUtilities.requireStringNotEmpty;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireBetween;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireThat;
 
 /**
@@ -38,7 +38,7 @@ public final class TCPUtilities {
 	 */
 	public static InetSocketAddress parseInetSocketAddress(String hostName, int defaultPort) {
 		requireStringNotEmpty(hostName, "hostName");
-		requireRange(0, 65535, defaultPort, "defaultPort");
+		requireBetween(0, 65535, defaultPort, "defaultPort");
 
 		try {
 			// WORKAROUND: add any scheme to make the resulting URI valid.

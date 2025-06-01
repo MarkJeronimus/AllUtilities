@@ -19,7 +19,7 @@ import nl.airsupplies.utilities.signal.window.NarrowBlackmanHarris4WindowFunctio
 import nl.airsupplies.utilities.signal.window.WindowFunction;
 import static nl.airsupplies.utilities.constant.NumberConstants.TAU;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireAtLeast;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireBetween;
 
 /**
  * A cosine series {@link WindowFunction}.
@@ -72,11 +72,11 @@ public class GeneralizedCosineSeriesWindowGenerator extends
 	}
 
 	public double getCoefficient(int index) {
-		return coefficients.get(requireRange(0, coefficients.size(), index, "index"));
+		return coefficients.get(requireBetween(0, coefficients.size(), index, "index"));
 	}
 
 	public void setCoefficient(int index, double coefficient) {
-		coefficients.set(requireRange(0, coefficients.size(), index, "index"), coefficient);
+		coefficients.set(requireBetween(0, coefficients.size(), index, "index"), coefficient);
 	}
 
 	@Override

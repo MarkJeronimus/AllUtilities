@@ -12,8 +12,8 @@ import nl.airsupplies.utilities.graphics.svg.core.SVGElement;
 import nl.airsupplies.utilities.graphics.svg.core.SVGFill;
 import static nl.airsupplies.utilities.validator.StringValidatorUtilities.requireStringNotEmpty;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireAtLeast;
+import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireBetween;
 import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNull;
-import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireRange;
 
 /**
  * @author Mark Jeronimus
@@ -80,7 +80,7 @@ public final class SVGLinearGradient extends SVGElement implements SVGDef, SVGFi
 	}
 
 	public void addStop(float offset, Color color) {
-		requireRange(0.0f, 1.0f, offset, "offset");
+		requireBetween(0.0f, 1.0f, offset, "offset");
 		requireNonNull(color, "color");
 		stops.add(new SVGGradientStop(offset, color));
 
