@@ -1,0 +1,58 @@
+<component name="ArtifactManager">
+  <artifact name="Libraries">
+    <output-path>$PROJECT_DIR$/out/artifacts/Libraries</output-path>
+    <root id="root">
+      <element id="archive" name="Airsupplies-chart.jar">
+        <element id="module-output" name="Chart" />
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/manifests/Airsupplies-chart/META-INF/MANIFEST.MF" />
+        </element>
+      </element>
+      <element id="archive" name="Airsupplies-common-utilities.jar">
+        <element id="module-output" name="Utilities" />
+        <element id="file-copy" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/19.0.0/annotations-19.0.0.jar" />
+        <element id="file-copy" path="$MAVEN_REPOSITORY$/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar" />
+        <element id="module-output" name="Log4j" />
+        <element id="file-copy" path="$PROJECT_DIR$/Log4j/log4j-1.2.17.jar" />
+        <element id="library" level="module" name="slf4j" module-name="Log4j" />
+        <element id="file-copy" path="$PROJECT_DIR$/Log4j/jul-to-slf4j-1.7.30.jar" />
+        <element id="module-output" name="HexReader" />
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/manifests/Airsupplies-common-utilities/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="module-output" name="Gson" />
+        <element id="file-copy" path="$PROJECT_DIR$/Gson/gson-2.8.5.jar" />
+      </element>
+      <element id="archive" name="Airsupplies-spectrometer.jar">
+        <element id="module-output" name="SpectrometerLib" />
+        <element id="module-output" name="SpectrumLib" />
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/manifests/Airsupplies-spectrometer/META-INF/MANIFEST.MF" />
+        </element>
+      </element>
+      <element id="archive" name="Airsupplies-communication.jar">
+        <element id="module-output" name="DeviceControlAPI" />
+        <element id="module-output" name="jSSC" />
+        <element id="module-output" name="SPSW" />
+        <element id="module-output" name="usb4java" />
+        <element id="file-copy" path="$PROJECT_DIR$/SPSW/de.ibapl.jnhw.libloader-1.0.0.jar" />
+        <element id="file-copy" path="$PROJECT_DIR$/jSSC/jssc-2.9.4.jar" />
+        <element id="module-output" name="TCPCommunicator" />
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/manifests/Airsupplies-communication/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="library" level="module" name="usb4java" module-name="usb4java" />
+        <element id="library" level="module" name="SPSW" module-name="SPSW" />
+        <element id="module-output" name="ABPCommunicator" />
+      </element>
+      <element id="archive" name="Airsupplies-mail.jar">
+        <element id="module-output" name="Mail" />
+        <element id="file-copy" path="$PROJECT_DIR$/Mail/jakarta.activation-1.2.2.jar" />
+        <element id="file-copy" path="$PROJECT_DIR$/Mail/jakarta.mail-1.6.5.jar" />
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/manifests/Airsupplies-mail/META-INF/MANIFEST.MF" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

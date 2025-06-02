@@ -1,30 +1,46 @@
-### IntelliJ IDEA ###
-/.idea/workspace.xml
-/.idea/dictionaries/*
+#Rev 8 (2018-06-11T13:10 Mark Jeronimus)
+# Migrated from .hgignore Rev 7
+# Reordered
+# Possibly fixed /history/
+# Unignored NetBeans' manifest.ml
+# Added KiCad
+#Rev 9
+# Added build.xml
+# Tweaked others
+
+#Generic (temp files, lock files, backup files)
+**/*.bak
+**/*~
+**/.DS_Store
+**/.~lock*#
+**/thumbs.db
+**/TODO
+
+#Binaries
 /build/
+/dist/
 /out/
 /release/
-/src/META-INF/
+
+#IntelliJ IDEA
+/.idea/dictionaries/
+/.idea/usage.statistics.xml
+/.idea/workspace.xml
+
+#Eclipse
+# Not used yet
+
+#NetBeans
+/nbproject/genfiles.properties
+/nbproject/private/
+/build.xml
 
 ### VS Code ###
 /.history/
 /.vscode/
 
-#OS
-/.DS_Store
-/thumbs.db
-
-#LibreOffice
-.~lock.*
-
-#Generic
-*.log
-*.bak
-/manifests/
-/TEMP
-/TODO
-
-### Mac OS ###
-.DS_Store
+#KiCad
+/*-backups/
 
 #Project-specific
+*.settings
