@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import nl.airsupplies.utilities.gui.GraphicsUtilities;
+import nl.airsupplies.utilities.graphics.GraphicsUtilities;
 import nl.airsupplies.utilities.graphics.image.PixelImage;
 
 /**

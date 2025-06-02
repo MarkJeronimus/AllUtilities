@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 import org.jetbrains.annotations.Nullable;
 
 import nl.airsupplies.utilities.NumberUtilities;
-import nl.airsupplies.utilities.gui.GUIUtilities;
+import nl.airsupplies.utilities.graphics.GraphicsUtilities;
 
 /**
  * @author Mark Jeronimus
@@ -137,7 +137,7 @@ public class TiledScrollPanel extends JPanel
 
 	@Override
 	public void paintComponent(Graphics g) {
-		GUIUtilities.setAntialiased((Graphics2D)g, false);
+		GraphicsUtilities.setAntialiased((Graphics2D)g, false);
 		g.drawImage(tileLayer,
 		            0, 0, width, height,
 		            -offsetX, -offsetY, width - offsetX, height - offsetY,

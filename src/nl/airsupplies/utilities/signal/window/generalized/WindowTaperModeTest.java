@@ -12,9 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
+import nl.airsupplies.utilities.graphics.GraphicsUtilities;
 import nl.airsupplies.utilities.signal.window.WindowTaperMode;
-import static nl.airsupplies.utilities.graphics.StaticShapes.PATH;
-import static nl.airsupplies.utilities.gui.GUIUtilities.setAntialiased;
+import static nl.airsupplies.utilities.brokenorold.StaticShapes.PATH;
 
 /**
  * @author Mark Jeronimus
@@ -36,9 +36,6 @@ public class WindowTaperModeTest extends JPanel implements MouseMotionListener {
 	private WindowTaperMode taperMode = WindowTaperMode.TRAPEZIUM;
 	private double          taper     = 0.5;
 
-	private int mouseX;
-	private int mouseY;
-
 	public WindowTaperModeTest() {
 		super(null);
 		setBackground(Color.BLACK);
@@ -57,7 +54,7 @@ public class WindowTaperModeTest extends JPanel implements MouseMotionListener {
 		int        width  = getWidth();
 		int        height = getHeight();
 
-		setAntialiased(g2, true);
+		GraphicsUtilities.setAntialiased(g2, true);
 
 		g2.setPaint(Color.WHITE);
 		for (int i = 0; i < width; i++) {
@@ -80,8 +77,6 @@ public class WindowTaperModeTest extends JPanel implements MouseMotionListener {
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		mouseX = e.getX();
-
 		if ((e.getModifiersEx() & InputEvent.BUTTON1_DOWN_MASK) != 0) {
 			taper = Math.max(0, Math.min(1, e.getX() / (getWidth() - 1.0)));
 			taper = 1 / (1 - taper) - 1;

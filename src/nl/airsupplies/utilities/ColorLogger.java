@@ -134,42 +134,43 @@ public class ColorLogger extends Handler {
 		}
 	}
 
-	@SuppressWarnings("AccessStaticViaInstance")
 	private static void logToStdOut(LogRecord record, String line) {
 		switch (record.getLevel().intValue()) {
 			case 300: // FINEST
-				AnsiConsole.setColor(FINEST_COLOR);
+				System.out.print(AnsiCodes.setColor(FINEST_COLOR));
 				break;
 			case 400: // FINER
-				AnsiConsole.setColor(FINER_COLOR);
+				System.out.print(AnsiCodes.setColor(FINER_COLOR));
 				break;
 			case 500: // FINE
-				AnsiConsole.setColor(FINE_COLOR);
+				System.out.print(AnsiCodes.setColor(FINE_COLOR));
 				break;
 			case 700: // CONFIG
-				AnsiConsole.setColor(CONFIG_COLOR).setReverseVideo(true);
+				System.out.print(AnsiCodes.setColor(CONFIG_COLOR));
+				System.out.print(AnsiCodes.setReverseVideo(true));
 				line = record.getMessage(); // No timestamp
 				break;
 			case 800: // INFO
-				AnsiConsole.setColor(INFO_COLOR).setBold(true);
+				System.out.print(AnsiCodes.setColor(INFO_COLOR));
+				System.out.print(AnsiCodes.setBold(true));
 				break;
 			case 900: // WARNING
-				AnsiConsole.setColor(WARNING_COLOR).setReverseVideo(true);
+				System.out.print(AnsiCodes.setColor(WARNING_COLOR));
+				System.out.print(AnsiCodes.setReverseVideo(true));
 				break;
 			default:
-				AnsiConsole.setColor(UNKNOWN_LEVEL_COLOR).setReverseVideo(true);
+				System.out.print(AnsiCodes.setColor(UNKNOWN_LEVEL_COLOR));
+				System.out.print(AnsiCodes.setReverseVideo(true));
 				System.out.print("Unknown log level " + record.getLevel() + ':' + record.getLevel().intValue() + ' ');
-				AnsiConsole.resetAll();
+				System.out.print(AnsiCodes.resetAll());
 		}
 
 		System.out.print(line);
-		AnsiConsole.resetAll();
-		System.out.println();
+		System.out.println(AnsiCodes.resetAll());
 	}
 
-	private void logExceptionToStdOut(String stackTrace) {
-		AnsiConsole.setColor(THROWABLE_COLOR);
-		System.out.println(stackTrace);
+	private static void logExceptionToStdOut(String stackTrace) {
+		System.out.println(AnsiCodes.setColor(THROWABLE_COLOR));
 	}
 
 	@Override

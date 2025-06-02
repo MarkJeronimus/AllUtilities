@@ -46,7 +46,7 @@ public class ExceptionHandler {
 			showing = true;
 			//noinspection OverlyBroadCatchBlock
 			try {
-				GraphicsUtilities.getFromEDT(() -> {
+				GUIUtilities.getFromEDT(() -> {
 					showUncaughtExceptionDialog(th);
 					return (Void)null;
 				});
@@ -93,7 +93,7 @@ public class ExceptionHandler {
 			showing = true;
 			//noinspection OverlyBroadCatchBlock
 			try {
-				GraphicsUtilities.getFromEDT(() -> {
+				GUIUtilities.getFromEDT(() -> {
 					showWarningDialog(message, ex);
 					return (Void)null;
 				});
@@ -143,7 +143,7 @@ public class ExceptionHandler {
 			//noinspection OverlyBroadCatchBlock
 			try {
 				//noinspection ConstantConditions
-				return GraphicsUtilities.getFromEDT(() -> showRetryableExceptionDialog(message, ex));
+				return GUIUtilities.getFromEDT(() -> showRetryableExceptionDialog(message, ex));
 			} catch (Throwable th) {
 				ExceptionManager.die(th);
 				return false;
@@ -193,7 +193,7 @@ public class ExceptionHandler {
 			showing = true;
 			//noinspection OverlyBroadCatchBlock
 			try {
-				GraphicsUtilities.getFromEDT(() -> {
+				GUIUtilities.getFromEDT(() -> {
 					showUnrecoverableErrorDialog(message, th);
 					return (Void)null;
 				});

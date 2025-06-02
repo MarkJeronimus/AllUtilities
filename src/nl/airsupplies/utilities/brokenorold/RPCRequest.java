@@ -2,6 +2,8 @@ package nl.airsupplies.utilities.brokenorold;
 
 import java.util.ArrayList;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * @author Mark Jeronimus
  */
@@ -11,9 +13,9 @@ public class RPCRequest {
 	public static final RPCRequest INVALID_REQUEST_ERROR        = new RPCRequest("invalidRequestError()");
 	public static final RPCRequest DISCONNECT_REQUEST           = new RPCRequest("disconnectRequest()");
 
-	public ArrayList<Object> requests;
+	public @Nullable ArrayList<Object> requests;
 
-	public RPCRequest(ArrayList<Object> requests) {
+	public RPCRequest(@Nullable ArrayList<Object> requests) {
 		this.requests = requests;
 	}
 
@@ -45,7 +47,7 @@ public class RPCRequest {
 					if (c == ',' || c == ')') {
 						parameter = parameter.trim();
 						if (parameter.length() > 0) {
-							this.requests.add(new Double(Double.parseDouble(parameter.trim())));
+							this.requests.add(Double.parseDouble(parameter.trim()));
 							parameter = "";
 						}
 						if (c == ')') {
@@ -53,7 +55,7 @@ public class RPCRequest {
 						}
 					} else {
 						if (c == '"') {
-							if (parameter.length() > 0) {
+							if (!parameter.isEmpty()) {
 								this.requests = null;
 								return;
 							}

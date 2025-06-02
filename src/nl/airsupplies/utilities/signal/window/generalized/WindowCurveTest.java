@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
-import static nl.airsupplies.utilities.graphics.StaticShapes.PATH;
-import static nl.airsupplies.utilities.gui.GUIUtilities.setAntialiased;
+import nl.airsupplies.utilities.graphics.GraphicsUtilities;
+import static nl.airsupplies.utilities.brokenorold.StaticShapes.PATH;
 
 /**
  * @author Mark Jeronimus
@@ -37,9 +37,6 @@ public class WindowCurveTest extends JPanel implements MouseMotionListener {
 	private double invPower      = 2;
 	private double invPowerFirst = 0.5;
 
-	private int mouseX;
-	private int mouseY;
-
 	public WindowCurveTest() {
 		super(null);
 		setBackground(Color.BLACK);
@@ -58,7 +55,7 @@ public class WindowCurveTest extends JPanel implements MouseMotionListener {
 		int        width  = getWidth();
 		int        height = getHeight();
 
-		setAntialiased(g2, true);
+		GraphicsUtilities.setAntialiased(g2, true);
 
 		g2.setPaint(Color.WHITE);
 		for (int n = 0; n < 9; n++) {
@@ -99,8 +96,6 @@ public class WindowCurveTest extends JPanel implements MouseMotionListener {
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		mouseX = e.getX();
-
 		if ((e.getModifiersEx() & InputEvent.BUTTON1_DOWN_MASK) != 0) {
 			power    = Math.max(0, Math.min(1, e.getX() / (getWidth() - 1.0)));
 			invPower = Math.max(0, Math.min(1, 1 - e.getY() / (getHeight() - 1.0)));

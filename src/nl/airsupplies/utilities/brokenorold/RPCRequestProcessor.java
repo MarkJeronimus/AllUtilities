@@ -11,19 +11,19 @@ public class RPCRequestProcessor {
 		this.functions = functions;
 	}
 
-	public NetRequest execute(NetRequest netRequest) {
+	public RPCRequest execute(RPCRequest netRequest) {
 		String function = netRequest.getFunction();
 
 		for (RPCFunction element : functions) {
 			if (function.equalsIgnoreCase(element.getName())) {
 				if (netRequest.getNumArguments() != element.getNumArguments()) {
-					return NetRequest.InvalidArgumentCountError;
+					return RPCRequest.INVALID_ARGUMENT_COUNT_ERROR;
 				}
 
-				return new NetRequest(element.process(netRequest.request));
+				return new RPCRequest(element.process(netRequest.requests));
 			}
 		}
 
-		return NetRequest.InvalidRequestError;
+		return RPCRequest.INVALID_REQUEST_ERROR;
 	}
 }

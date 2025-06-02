@@ -6,6 +6,7 @@ import java.awt.GraphicsDevice;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
+import nl.airsupplies.utilities.brokenorold.PixelPanel;
 import nl.airsupplies.utilities.gui.GUIUtilities;
 
 /**

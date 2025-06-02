@@ -1,7 +1,6 @@
 package nl.airsupplies.utilities.gui;
 
 import java.awt.DisplayMode;
-import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
@@ -9,37 +8,12 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.RunnableFuture;
-import static java.awt.RenderingHints.KEY_ALPHA_INTERPOLATION;
-import static java.awt.RenderingHints.KEY_ANTIALIASING;
-import static java.awt.RenderingHints.KEY_COLOR_RENDERING;
-import static java.awt.RenderingHints.KEY_DITHERING;
-import static java.awt.RenderingHints.KEY_FRACTIONALMETRICS;
-import static java.awt.RenderingHints.KEY_INTERPOLATION;
-import static java.awt.RenderingHints.KEY_RENDERING;
-import static java.awt.RenderingHints.KEY_STROKE_CONTROL;
-import static java.awt.RenderingHints.KEY_TEXT_ANTIALIASING;
-import static java.awt.RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY;
-import static java.awt.RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED;
-import static java.awt.RenderingHints.VALUE_ANTIALIAS_OFF;
-import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
-import static java.awt.RenderingHints.VALUE_COLOR_RENDER_QUALITY;
-import static java.awt.RenderingHints.VALUE_COLOR_RENDER_SPEED;
-import static java.awt.RenderingHints.VALUE_DITHER_DISABLE;
-import static java.awt.RenderingHints.VALUE_DITHER_ENABLE;
-import static java.awt.RenderingHints.VALUE_FRACTIONALMETRICS_OFF;
-import static java.awt.RenderingHints.VALUE_FRACTIONALMETRICS_ON;
-import static java.awt.RenderingHints.VALUE_INTERPOLATION_BICUBIC;
-import static java.awt.RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR;
-import static java.awt.RenderingHints.VALUE_RENDER_QUALITY;
-import static java.awt.RenderingHints.VALUE_RENDER_SPEED;
-import static java.awt.RenderingHints.VALUE_STROKE_DEFAULT;
-import static java.awt.RenderingHints.VALUE_STROKE_PURE;
-import static java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB;
-import static java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_OFF;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+
+import org.jetbrains.annotations.Nullable;
 
 import nl.airsupplies.utilities.annotation.UtilityClass;
 
@@ -99,12 +73,11 @@ public final class GUIUtilities {
 
 	/**
 	 * Get a valid display mode.
-	 * <p>
 	 *
 	 * @return the display mode, or null if none matching the parameters was
 	 * found.
 	 */
-	public static DisplayMode getDisplayMode(int width, int height) {
+	public static @Nullable DisplayMode getDisplayMode(int width, int height) {
 		GraphicsDevice displayDevice = getDisplayDevice();
 		DisplayMode    currentMode   = displayDevice.getDisplayMode();
 		DisplayMode[]  modes         = displayDevice.getDisplayModes();

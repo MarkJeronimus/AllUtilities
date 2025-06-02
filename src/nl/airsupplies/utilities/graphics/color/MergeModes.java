@@ -1,5 +1,6 @@
 package nl.airsupplies.utilities.graphics.color;
 
+import nl.airsupplies.utilities.brokenorold.Color4fOld;
 import nl.airsupplies.utilities.math.FastTrig;
 
 /**

@@ -7,7 +7,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -20,13 +20,13 @@ import static nl.airsupplies.utilities.validator.ValidatorUtilities.requireNonNu
 public class RPCConnection implements Runnable {
 	private static final int DEFAULT_TIMEOUT = 10000;
 
-	private Socket socket;
+	private final Socket socket;
 
-	private DataOutputStream dataOutputStream;
-	private DataInputStream  dataInputStream;
+	private DataOutputStream dataOutputStream = null;
+	private DataInputStream  dataInputStream  = null;
 
-	public  boolean             busy = false;
-	private RPCRequestProcessor netRequestProcessor;
+	public  boolean             busy                = false;
+	private RPCRequestProcessor netRequestProcessor = null;
 
 	public RPCConnection(String host, int port) throws IOException {
 		this(new Socket(host, port));
@@ -56,11 +56,11 @@ public class RPCConnection implements Runnable {
 		return b.toString();
 	}
 
-	public @Nullable NetRequest sendReceive(NetRequest message) {
+	public @Nullable RPCRequest sendReceive(RPCRequest message) {
 		try {
 			busy = true;
 			dataOutputStream.writeUTF(message.toString());
-			message = new NetRequest(dataInputStream.readUTF());
+			message = new RPCRequest(dataInputStream.readUTF());
 
 			return message;
 		} catch (IOException ex) {
@@ -78,7 +78,7 @@ public class RPCConnection implements Runnable {
 		}
 
 		try {
-			dataOutputStream.writeUTF(NetRequest.DisconnectRequest.toString());
+			dataOutputStream.writeUTF(RPCRequest.DISCONNECT_REQUEST.toString());
 		} catch (IOException ignored) {
 			close();
 		}
@@ -113,14 +113,14 @@ public class RPCConnection implements Runnable {
 			while (true) {
 				String requestString = dataInputStream.readUTF();
 
-				NetRequest request = new NetRequest(requestString);
+				RPCRequest request = new RPCRequest(requestString);
 
 				if (!busy) {
-					dataOutputStream.writeUTF(NetRequest.DisconnectRequest.toString());
+					dataOutputStream.writeUTF(RPCRequest.DISCONNECT_REQUEST.toString());
 					break;
 				}
 
-				NetRequest result = netRequestProcessor.execute(request);
+				RPCRequest result = netRequestProcessor.execute(request);
 
 				dataOutputStream.writeUTF(result.toString());
 			}
@@ -138,8 +138,8 @@ public class RPCConnection implements Runnable {
 		return String.valueOf(ip[0]) + '.' + ip[1] + '.' + ip[2] + '.' + ip[3];
 	}
 
-	public Vector<Object> toVector() {
-		Vector<Object> out = new Vector<>();
+	public ArrayList<Object> toList() {
+		ArrayList<Object> out = new ArrayList<>();
 		out.add(getIP());
 		out.add(String.valueOf(socket.getLocalPort()));
 		out.add(getHostName());
